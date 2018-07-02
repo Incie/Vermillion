@@ -4,6 +4,7 @@
 #include"Framework/log.h"
 
 #include"Test\Testing.h"
+#include"Framework\timer.h"
 
 int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int nShow) 
 {
@@ -23,6 +24,9 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 
 	window.Show();
 
+	Timer renderTimer;
+	renderTimer.LimitByFPS(60);
+
 	Testing testing;
 
 	MSG msg;
@@ -40,10 +44,14 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 			DispatchMessage(&msg);
 		}
 
-		renderer.StartFrame();
-		testing.Update();
-		testing.Render();
-		renderer.EndFrame();
+		if( renderTimer.Tick() )
+		{
+			renderer.StartFrame();
+			testing.Update(renderTimer.GetDelta());
+			testing.Render();
+			renderer.EndFrame();
+		}
+
 		Sleep(0);
 	}
 

@@ -6,9 +6,9 @@ public:
 	Testing();
 	~Testing();
 
-	void Update();
+	void Update(double deltaTime);
 	void Render();
 	
 private:
-
+	double rotation;
 };

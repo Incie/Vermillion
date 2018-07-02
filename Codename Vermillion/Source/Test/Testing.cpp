@@ -4,21 +4,27 @@
 
 Testing::Testing()
 {
+	rotation = 0.0;
 }
 
 Testing::~Testing()
 {
 }
 
-void Testing::Update()
+void Testing::Update(double deltaTime)
 {
+	rotation += 90 * deltaTime;
 }
 
 void Testing::Render()
 {
-	glBegin(GL_TRIANGLES);
-	glVertex2d(50, 50);
-	glVertex2d(50, 150);
-	glVertex2d(150, 50);
-	glEnd();
+	glPushMatrix();
+	glTranslated(75, 75, 0);
+		glRotated(rotation, 0, 0, 1);
+		glBegin(GL_TRIANGLES);
+		glVertex2d(-25, -25);
+		glVertex2d(25, -25);
+		glVertex2d(0, 25);
+		glEnd();
+	glPopMatrix();
 }

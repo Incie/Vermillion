@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Framework\input.cpp" />
     <ClCompile Include="Source\Framework\log.cpp" />
     <ClCompile Include="Source\Framework\opengl2.cpp" />
     <ClCompile Include="Source\Framework\timer.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="Source\Test\Testing.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Framework\input.h" />
     <ClInclude Include="Source\Framework\log.h" />
     <ClInclude Include="Source\Framework\opengl2.h" />
     <ClInclude Include="Source\Framework\timer.h" />
