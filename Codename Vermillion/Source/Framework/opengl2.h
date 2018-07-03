@@ -1,7 +1,7 @@
 #pragma once
 
 #include<Windows.h>
-#include<gl/GL.h>
+
 
 class GL2Renderer
 {
@@ -23,5 +23,4 @@ private:
 	HWND hWnd;
 	HDC hDC;
 	HGLRC hRC;
-
 };
