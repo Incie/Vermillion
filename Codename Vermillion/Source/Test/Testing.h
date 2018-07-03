@@ -10,5 +10,7 @@ public:
 	void Render();
 	
 private:
+	double x;
+	double y;
 	double rotation;
 };
