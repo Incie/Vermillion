@@ -33,6 +33,7 @@ void Window::Destroy()
 		DestroyWindow(hWnd);
 		hWnd = nullptr;
 	}
+
 	windowClass.Destroy();
 }
 
