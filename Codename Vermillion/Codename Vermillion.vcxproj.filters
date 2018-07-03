@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Framework">
+      <UniqueIdentifier>{5d696fb2-ad96-4b08-859a-4d9bada9eb95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Test">
+      <UniqueIdentifier>{4f3bc5bb-11f7-43f7-8649-cf27a2c9c577}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\window.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\windowclass.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\log.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\opengl2.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Test\Testing.cpp">
+      <Filter>Source Files\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\timer.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\windowprocedure.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\input.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Framework\window.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\log.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\opengl2.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Test\Testing.h">
+      <Filter>Source Files\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\timer.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\input.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.gitignore" />
+  </ItemGroup>
+</Project>
