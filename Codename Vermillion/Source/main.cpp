@@ -1,10 +1,12 @@
 #include<Windows.h>
-#include"Framework/window.h"
-#include"Framework/opengl2.h"
-#include"Framework/log.h"
+
+#include"Framework\window.h"
+#include"Framework\opengl2.h"
+#include"Framework\log.h"
+#include"Framework\timer.h"
+#include"Framework\input.h"
 
 #include"Test\Testing.h"
-#include"Framework\timer.h"
 
 int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int nShow) 
 {
@@ -23,6 +25,8 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	renderer.CreateRenderContext();
 
 	window.Show();
+
+	InputManager inputManager;
 
 	Timer renderTimer;
 	renderTimer.LimitByFPS(60);
@@ -46,6 +50,8 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 
 		if( renderTimer.Tick() )
 		{
+			inputManager.Update();
+
 			renderer.StartFrame();
 			testing.Update(renderTimer.GetDelta());
 			testing.Render();

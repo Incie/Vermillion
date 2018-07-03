@@ -2,7 +2,7 @@
 #include"GL/glew.h"
 #include<gl/glu.h>
 #include"log.h"
-#include"fmt/format.h"
+#include"fmt\format.h"
 
 GL2Renderer::GL2Renderer()
 {
@@ -36,7 +36,7 @@ void GL2Renderer::CreateRenderContext()
 		return;
 	}
 
-	if (SetPixelFormat(hDC, nPixelFormat, &pfd)) {
+	if (!SetPixelFormat(hDC, nPixelFormat, &pfd)) {
 		Log::Error("OpenGL2", "Could not find Set PixelFormat");
 		return;
 	}
@@ -47,14 +47,14 @@ void GL2Renderer::CreateRenderContext()
 		return;
 	}
 
-	if (wglMakeCurrent(hDC, hRC)) {
+	if (!wglMakeCurrent(hDC, hRC)) {
 		Log::Error("OpenGL2", "Could not make Rendering Context Current");
 		return;
 	}
 
 	auto glewInitResult = glewInit();
 	if (glewInitResult != GLEW_OK) {
-		Log::Error("OpenGL2", fmt::format("GL Extension Wrangler failed to initialize with code: {0}", glewInitResult).data() );
+		Log::Error("OpenGL2", fmt::format("GL Extension Wrangler failed to initialize with code: {0}", glewInitResult) );
 	}
 }
 
@@ -63,12 +63,12 @@ void GL2Renderer::DestroyRenderContext()
 	wglMakeCurrent(NULL, NULL);
 
 	if(hRC != nullptr) {
-		Log::Error("OpenGL2", "Deleting Rendering Context");
+		Log::Info("OpenGL2", "Deleting Rendering Context");
 		wglDeleteContext(hRC);
 	}
 
 	if(hDC != nullptr) {
-		Log::Error("OpenGL2", "Releasing DC");
+		Log::Info("OpenGL2", "Releasing DC");
 		ReleaseDC(hWnd, hDC);
 		hWnd = nullptr;
 		hDC = nullptr;
