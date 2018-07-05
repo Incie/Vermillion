@@ -1,4 +1,5 @@
 #include"window.h"
+#include"input.h"
 #include"opengl2.h"
 #include"log.h"
 #include"fmt\format.h"
@@ -6,10 +7,24 @@
 
 GL2Renderer* FrameworkPointers::renderer;
 Window* FrameworkPointers::window;
+InputManager* FrameworkPointers::inputManager;
 
 LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT   uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam)
 {
 	switch (uMsg) {
+		case WM_ACTIVATE:
+			break;
+
+
+		case WM_KEYDOWN:
+			Log::Info("WindowProc", fmt::format("KeyDown {0}", wParam));
+			InputState::SetKeyDown(wParam & 0xFF);
+			break;
+		case WM_KEYUP:
+			Log::Info("WindowProc", fmt::format("KeyUp {0}", wParam));
+			InputState::SetKeyUp(wParam & 0xFF);
+			break;
+
 		case WM_SIZE:
 		case WM_MOVE:
 		{

@@ -2,6 +2,11 @@
 #include"../Framework/input.h"
 #include<Windows.h>
 #include<gl/GL.h>
+#include"glm\glm.hpp"
+
+#include"../Framework/window.h"
+
+glm::vec2 position;
 
 Testing::Testing()
 {
@@ -18,21 +23,30 @@ void Testing::Update(double deltaTime)
 {
 	rotation += 90 * deltaTime;
 
-	if (InputManager::KeyDown('D'))
-		x -= 50 * deltaTime;
-	if (InputManager::KeyDown('A'))
-		x += 50 * deltaTime;
+	if (FrameworkPointers::inputManager->KeyDown(VK_LBUTTON)) {
+		auto p = FrameworkPointers::inputManager->mousePosition;
+		auto moveVec = glm::vec2(p.x - position.x, p.y - position.y);
+		moveVec = glm::normalize(moveVec);
 
-	if (InputManager::KeyDown('W'))
-		y -= 50 * deltaTime;
-	if (InputManager::KeyDown('S'))
-		y += 50 * deltaTime;
+		position += moveVec * 50.0f * (float)deltaTime;
+
+	}
+
+	if (FrameworkPointers::inputManager->KeyDown('A'))
+		position.x -= 50 * deltaTime;
+	if (FrameworkPointers::inputManager->KeyDown('D'))
+		position.x += 50 * deltaTime;
+
+	if (FrameworkPointers::inputManager->KeyDown('S'))
+		position.y -= 50 * deltaTime;
+	if (FrameworkPointers::inputManager->KeyDown('W'))
+		position.y += 50 * deltaTime;
 }
 
 void Testing::Render()
 {
 	glPushMatrix();
-	glTranslated(x, y, 0);
+	glTranslated(position.x, position.y, 0);
 		glRotated(rotation, 0, 0, 1);
 		glBegin(GL_TRIANGLES);
 		glVertex2d(-25, -25);

@@ -1,11 +1,14 @@
-#include "input.h"
+#include"input.h"
+#include"log.h"
+#include"fmt/format.h"
 #include<algorithm>
+#include<Windows.h>
 
-unsigned char InputManager::keyStates[256];
+unsigned char InputState::keyboardStates[256];
 
 InputManager::InputManager()
 {
-	memset(keyboardStates, 0, 256);
+	InputState::Reset();
 	memset(keyStates, 0, 256);
 }
 
@@ -15,42 +18,53 @@ InputManager::~InputManager()
 
 void InputManager::Update()
 {
+	UpdateMouse();
 	UpdateKeyboard();
+}
+
+void InputManager::UpdateMouse() 
+{
+	POINT cursorPos;
+	GetCursorPos(&cursorPos);
+
+	lastMousePosition.Set(mousePosition);
+	mousePosition.Set(cursorPos.x, cursorPos.y);
+
+	InputState::keyboardStates[VK_LBUTTON] = GetAsyncKeyState(VK_LBUTTON) ? 1 : 0;
+	InputState::keyboardStates[VK_RBUTTON] = GetAsyncKeyState(VK_RBUTTON) ? 1 : 0;
+}
+
+void InputManager::UpdateKeyboard()
+{
+	for (int key = 0; key < 256; ++key) 
+	{
+		if (InputState::keyboardStates[key] == 0) {
+			keyStates[key] = 0;
+			continue;
+		}
+		
+		++keyStates[key];
+		keyStates[key] = std::max<unsigned char>(keyStates[key], 2);
+	}
 }
 
 bool InputManager::KeyDown(char keyCode)
 {
-	return InputManager::keyStates[keyCode] > 0;
+	return keyStates[keyCode] > 0;
 }
 
 bool InputManager::KeyOnce(char keyCode)
 {
-	return InputManager::keyStates[keyCode] == 0;
+	return keyStates[keyCode] == 0;
 }
 
 bool InputManager::KeyUp(char keyCode)
 {
-	return InputManager::keyStates[keyCode] <= 0;
+	return keyStates[keyCode] <= 0;
 }
 
-
-#include<Windows.h>
-
-void InputManager::UpdateKeyboard()
+void InputState::Reset()
 {
-	//if (!GetKeyboardState(keyboardStates)) {
-		//Log
-		//GetLastError();
-	//}
-
-	for (int key = 0; key < 256; ++key) {
-		keyboardStates[key] = GetAsyncKeyState(key) ? 1 : 0;
-
-		if (keyboardStates[key] == 0) {
-			keyStates[key] = 0;
-			break;
-		}
-		
-		keyStates[key] = max(keyStates[key] + 1, (unsigned char)2);
-	}
+	Log::Info("InputState", "Reset");
+	memset(keyboardStates, 0, 256);
 }

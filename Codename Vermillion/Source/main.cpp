@@ -15,8 +15,10 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 
 	Window window;
 	GL2Renderer renderer;
+	InputManager inputManager;
 	FrameworkPointers::window = &window;
 	FrameworkPointers::renderer = &renderer;
+	FrameworkPointers::inputManager = &inputManager;
 
 
 	window.Create(hInstance);
@@ -26,7 +28,6 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 
 	window.Show();
 
-	InputManager inputManager;
 
 	Timer renderTimer;
 	renderTimer.LimitByFPS(60);

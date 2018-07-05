@@ -3,13 +3,14 @@
 #include<Windows.h>
 #include<string>
 
-
+class InputManager;
 class Window;
 class GL2Renderer;
 class FrameworkPointers {
 public:
 	static GL2Renderer* renderer;
 	static Window* window;
+	static InputManager* inputManager;
 };
 
 class Window
