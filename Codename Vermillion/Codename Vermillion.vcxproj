@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Framework\input.cpp" />
+    <ClCompile Include="Source\Framework\inputstate.cpp" />
     <ClCompile Include="Source\Framework\log.cpp" />
     <ClCompile Include="Source\Framework\opengl2.cpp" />
     <ClCompile Include="Source\Framework\timer.cpp" />

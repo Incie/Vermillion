@@ -7,6 +7,7 @@
 #include"../Framework/window.h"
 
 glm::vec2 position;
+glm::vec2 mousePos;
 
 Testing::Testing()
 {
@@ -25,11 +26,12 @@ void Testing::Update(double deltaTime)
 
 	if (FrameworkPointers::inputManager->KeyDown(VK_LBUTTON)) {
 		auto p = FrameworkPointers::inputManager->mousePosition;
+		mousePos.x = p.x;
+		mousePos.y = p.y;
 		auto moveVec = glm::vec2(p.x - position.x, p.y - position.y);
 		moveVec = glm::normalize(moveVec);
 
 		position += moveVec * 50.0f * (float)deltaTime;
-
 	}
 
 	if (FrameworkPointers::inputManager->KeyDown('A'))
@@ -54,4 +56,12 @@ void Testing::Render()
 		glVertex2d(0, 25);
 		glEnd();
 	glPopMatrix();
+
+	glBegin(GL_LINES);
+		glVertex2f(mousePos.x+20, mousePos.y+20);
+		glVertex2f(mousePos.x-20, mousePos.y-20);
+
+		glVertex2f(mousePos.x + 20, mousePos.y - 20);
+		glVertex2f(mousePos.x - 20, mousePos.y + 20);
+	glEnd();
 }

@@ -15,13 +15,10 @@ LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT   uMsg, _In_ WPARAM wParam
 		case WM_ACTIVATE:
 			break;
 
-
 		case WM_KEYDOWN:
-			Log::Info("WindowProc", fmt::format("KeyDown {0}", wParam));
 			InputState::SetKeyDown(wParam & 0xFF);
 			break;
 		case WM_KEYUP:
-			Log::Info("WindowProc", fmt::format("KeyUp {0}", wParam));
 			InputState::SetKeyUp(wParam & 0xFF);
 			break;
 
@@ -30,10 +27,12 @@ LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT   uMsg, _In_ WPARAM wParam
 		{
 			RECT clientRect;
 			GetClientRect(hwnd, &clientRect);
+			MapWindowPoints(hwnd, nullptr, reinterpret_cast<POINT*>(&clientRect), 2);
 
 			int width = clientRect.right - clientRect.left;
 			int height = clientRect.bottom - clientRect.top;
 
+			FrameworkPointers::inputManager->SetWindowBounds(clientRect.left, clientRect.top, width, height);
 			FrameworkPointers::renderer->SetViewport(width, height);
 			return 0;
 		}

@@ -9,6 +9,7 @@ public:
 	~InputManager();
 
 	void Update();
+	void SetWindowBounds(int x, int y, int width, int height);
 
 	bool KeyDown(char keyCode);
 	bool KeyOnce(char keyCode);
@@ -27,11 +28,13 @@ private:
 
 		int x, y;
 	};
-
 public:
 	Point mousePosition;
 	Point lastMousePosition;
 	Point deltaMousePosition;
+
+	Point windowPosition;
+	Point windowSize;
 };
 
 
