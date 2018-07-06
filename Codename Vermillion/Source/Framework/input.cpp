@@ -3,6 +3,7 @@
 #include"fmt/format.h"
 #include<algorithm>
 #include<Windows.h>
+#include<Xinput.h>
 
 InputManager::InputManager()
 {
@@ -17,6 +18,7 @@ InputManager::~InputManager()
 void InputManager::Update()
 {
 	UpdateMouse();
+	UpdateGamepad();
 	UpdateKeyboard();
 }
 
@@ -45,6 +47,17 @@ void InputManager::UpdateMouse()
 
 	InputState::keyboardStates[VK_LBUTTON] = GetAsyncKeyState(VK_LBUTTON) ? 1 : 0;
 	InputState::keyboardStates[VK_RBUTTON] = GetAsyncKeyState(VK_RBUTTON) ? 1 : 0;
+}
+
+void InputManager::UpdateGamepad()
+{
+	XINPUT_STATE state;
+	XInputGetState(0, &state);
+
+	gpX = fmaxf(-1, (float)state.Gamepad.sThumbLX / 32767);
+	gpY = -fmaxf(-1, (float)state.Gamepad.sThumbLY / 32767);
+
+	gpA = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0);
 }
 
 void InputManager::UpdateKeyboard()

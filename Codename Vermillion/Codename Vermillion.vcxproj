@@ -29,6 +29,7 @@
     <ClCompile Include="Source\Framework\windowclass.cpp" />
     <ClCompile Include="Source\Framework\windowprocedure.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Test\GamepadTest.cpp" />
     <ClCompile Include="Source\Test\Testing.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +38,7 @@
     <ClInclude Include="Source\Framework\opengl2.h" />
     <ClInclude Include="Source\Framework\timer.h" />
     <ClInclude Include="Source\Framework\window.h" />
+    <ClInclude Include="Source\Test\GamepadTest.h" />
     <ClInclude Include="Source\Test\Testing.h" />
   </ItemGroup>
   <ItemGroup>
@@ -136,7 +138,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>/VERBOSE:UNUSEDLIBS %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

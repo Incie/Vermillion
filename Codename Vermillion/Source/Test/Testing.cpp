@@ -34,6 +34,11 @@ void Testing::Update(double deltaTime)
 		position += moveVec * 50.0f * (float)deltaTime;
 	}
 
+	if (FrameworkPointers::inputManager->gpA) {
+		auto gpDir = glm::vec2(FrameworkPointers::inputManager->gpX, FrameworkPointers::inputManager->gpY);
+		position += gpDir * 150.0f * (float)deltaTime;
+	}
+
 	if (FrameworkPointers::inputManager->KeyDown('A'))
 		position.x -= 50 * deltaTime;
 	if (FrameworkPointers::inputManager->KeyDown('D'))

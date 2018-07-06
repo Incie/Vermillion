@@ -6,6 +6,7 @@
 #include"Framework\timer.h"
 #include"Framework\input.h"
 
+#include"Test\GamepadTest.h"
 #include"Test\Testing.h"
 
 int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int nShow) 
@@ -32,7 +33,8 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	Timer renderTimer;
 	renderTimer.LimitByFPS(60);
 
-	Testing testing;
+	//Testing testing;
+	GamepadTest testing;
 
 	MSG msg;
 	bool quitProgram = false;

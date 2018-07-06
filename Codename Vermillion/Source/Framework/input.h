@@ -17,6 +17,7 @@ public:
 private:
 	void UpdateKeyboard();
 	void UpdateMouse();
+	void UpdateGamepad();
 
 	unsigned char keyStates[256];
 
@@ -32,6 +33,9 @@ public:
 	Point mousePosition;
 	Point lastMousePosition;
 	Point deltaMousePosition;
+
+	float gpX, gpY;
+	bool gpA;
 
 	Point windowPosition;
 	Point windowSize;
