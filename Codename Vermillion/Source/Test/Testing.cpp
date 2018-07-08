@@ -25,18 +25,13 @@ void Testing::Update(double deltaTime)
 	rotation += 90 * deltaTime;
 
 	if (FrameworkPointers::inputManager->KeyDown(VK_LBUTTON)) {
-		auto p = FrameworkPointers::inputManager->mousePosition;
-		mousePos.x = p.x;
-		mousePos.y = p.y;
-		auto moveVec = glm::vec2(p.x - position.x, p.y - position.y);
-		moveVec = glm::normalize(moveVec);
+		//auto p = FrameworkPointers::inputManager->mousePosition;
+		//mousePos.x = p.x;
+		//mousePos.y = p.y;
+		//auto moveVec = glm::vec2(p.x - position.x, p.y - position.y);
+		//moveVec = glm::normalize(moveVec);
 
-		position += moveVec * 50.0f * (float)deltaTime;
-	}
-
-	if (FrameworkPointers::inputManager->gpA) {
-		auto gpDir = glm::vec2(FrameworkPointers::inputManager->gpX, FrameworkPointers::inputManager->gpY);
-		position += gpDir * 150.0f * (float)deltaTime;
+		//position += moveVec * 50.0f * (float)deltaTime;
 	}
 
 	if (FrameworkPointers::inputManager->KeyDown('A'))

@@ -1,8 +1,10 @@
 #include"window.h"
-#include"input.h"
 #include"opengl2.h"
 #include"log.h"
 #include"fmt\format.h"
+
+#include"inputstate.h"
+#include"windowstate.h"
 
 
 GL2Renderer* FrameworkPointers::renderer;
@@ -32,7 +34,7 @@ LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT   uMsg, _In_ WPARAM wParam
 			int width = clientRect.right - clientRect.left;
 			int height = clientRect.bottom - clientRect.top;
 
-			FrameworkPointers::inputManager->SetWindowBounds(clientRect.left, clientRect.top, width, height);
+			WindowState::SetWindowState(clientRect.left, clientRect.top, width, height);
 			FrameworkPointers::renderer->SetViewport(width, height);
 			return 0;
 		}
