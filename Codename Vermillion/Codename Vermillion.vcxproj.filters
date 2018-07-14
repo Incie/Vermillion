@@ -63,6 +63,9 @@
     <ClCompile Include="Source\Framework\windowstate.cpp">
       <Filter>Source Files\Framework\shared</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\text.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\window.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\windowstate.h">
       <Filter>Source Files\Framework\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\text.h">
+      <Filter>Source Files\Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

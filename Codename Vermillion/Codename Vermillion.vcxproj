@@ -25,6 +25,7 @@
     <ClCompile Include="Source\Framework\log.cpp" />
     <ClCompile Include="Source\Framework\opengl2.cpp" />
     <ClCompile Include="Source\Framework\point.h" />
+    <ClCompile Include="Source\Framework\text.cpp" />
     <ClCompile Include="Source\Framework\timer.cpp" />
     <ClCompile Include="Source\Framework\window.cpp" />
     <ClCompile Include="Source\Framework\windowclass.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="Source\Framework\inputstate.h" />
     <ClInclude Include="Source\Framework\log.h" />
     <ClInclude Include="Source\Framework\opengl2.h" />
+    <ClInclude Include="Source\Framework\text.h" />
     <ClInclude Include="Source\Framework\timer.h" />
     <ClInclude Include="Source\Framework\window.h" />
     <ClInclude Include="Source\Framework\windowstate.h" />
