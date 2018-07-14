@@ -74,10 +74,7 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 			renderer.StartFrame();
 			testing.Update(renderTimer.GetDelta());
 			testing.Render();
-			Text::Render(0, 0, fmt::format("FPS: {0}", fps) );
-
-			Text::Render(0, 50, "abcdefghijklmnopqrstuvwxyzæøå");
-			Text::Render(0, 100, "ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ");
+			Text::Render(0, 0, fmt::format("FPS: {0}", fps), 18);
 			renderer.EndFrame();
 
 			fpsCounter++;

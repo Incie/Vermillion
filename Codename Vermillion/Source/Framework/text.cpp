@@ -22,6 +22,8 @@ struct Character {
 //std::pair<char, Character> *characters = nullptr;
 std::map<GLchar, Character> characters;
 
+unsigned int font_face_rendered_height = 48;
+
 void Text::Init()
 {
 	Log::Info("Freetype", "Initing Freetype");
@@ -33,12 +35,12 @@ void Text::Init()
 	}
 
 	FT_Face face;
-	if (FT_New_Face(ft, "fonts/Roboto-Black.ttf", 0, &face)) {
+	if (FT_New_Face(ft, "fonts/Roboto-Light.ttf", 0, &face)) {
 		Log::Error("Freetype", "Failed to load font");
 		return;
 	}
 
-	FT_Set_Pixel_Sizes(face, 0, 48);
+	FT_Set_Pixel_Sizes(face, 0, font_face_rendered_height);
 
 	Log::Info("Freetype", "Rendering Font");
 	RenderGLTextures(face);
@@ -62,7 +64,7 @@ void Text::Deinit()
 	characters.clear();
 }
 
-void Text::Render(double x, double y, const std::string & text)
+void Text::Render(double x, double y, const std::string & text, unsigned int fontHeight)
 {
 	glColor3f(1,1,1);
 	glEnable(GL_BLEND);
@@ -74,12 +76,12 @@ void Text::Render(double x, double y, const std::string & text)
 	glScaled(1, 1, 1);
 
 	x = 0;
-	y = 48;
+	y = fontHeight;
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	double scale = 1.0;
+	double scale = (double)fontHeight / (double)font_face_rendered_height;
 
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)

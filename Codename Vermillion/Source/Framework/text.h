@@ -11,7 +11,7 @@ public:
 	static void Deinit();
 	
 	//static void Render(const std::string& text);
-	static void Render(double x, double y, const std::string & text);
+	static void Render(double x, double y, const std::string & text, unsigned int fontHeight);
 
 
 private:
