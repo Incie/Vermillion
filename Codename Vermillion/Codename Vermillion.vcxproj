@@ -20,10 +20,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Framework\file.cpp" />
     <ClCompile Include="Source\Framework\input.cpp" />
     <ClCompile Include="Source\Framework\inputstate.cpp" />
     <ClCompile Include="Source\Framework\log.cpp" />
     <ClCompile Include="Source\Framework\opengl2.cpp" />
+    <ClCompile Include="Source\Framework\opengl2_shader.cpp" />
     <ClCompile Include="Source\Framework\point.h" />
     <ClCompile Include="Source\Framework\text.cpp" />
     <ClCompile Include="Source\Framework\timer.cpp" />
@@ -36,10 +38,12 @@
     <ClCompile Include="Source\Test\Testing.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Framework\file.h" />
     <ClInclude Include="Source\Framework\input.h" />
     <ClInclude Include="Source\Framework\inputstate.h" />
     <ClInclude Include="Source\Framework\log.h" />
     <ClInclude Include="Source\Framework\opengl2.h" />
+    <ClInclude Include="Source\Framework\opengl2_shader.h" />
     <ClInclude Include="Source\Framework\text.h" />
     <ClInclude Include="Source\Framework\timer.h" />
     <ClInclude Include="Source\Framework\window.h" />
@@ -50,6 +54,8 @@
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="packages.config" />
+    <None Include="Source\Shaders\helloworld.frag" />
+    <None Include="Source\Shaders\helloworld.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

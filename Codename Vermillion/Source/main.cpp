@@ -34,7 +34,7 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	Text::Init();
 
 	Timer renderTimer;
-	renderTimer.LimitByFPS(60);
+	renderTimer.LimitByFPS(59);
 
 	Timer fpsTimer;
 	fpsTimer.LimitByMilliseconds(1000);
@@ -65,8 +65,6 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 			fpsCounter = 0;
 		}
 
-
-
 		if( renderTimer.Tick() )
 		{
 			inputManager.Update();
@@ -74,12 +72,11 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 			renderer.StartFrame();
 			testing.Update(renderTimer.GetDelta());
 			testing.Render();
-			Text::Render(0, 0, fmt::format("FPS: {0}", fps), 18);
+			Text::Render(0, 0, fmt::format("FPS: {0}", fps), 24);
 			renderer.EndFrame();
 
 			fpsCounter++;
 		}
-
 
 		Sleep(0);
 	}

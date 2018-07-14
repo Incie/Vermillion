@@ -4,6 +4,7 @@
 #include"log.h"
 
 #include"opengl2.h"
+#include"opengl2_shader.h"
 #include"GL\glew.h"
 #include"glm\glm.hpp"
 
@@ -21,6 +22,8 @@ struct Character {
 
 //std::pair<char, Character> *characters = nullptr;
 std::map<GLchar, Character> characters;
+
+GLSLProgram fontProgram;
 
 unsigned int font_face_rendered_height = 48;
 
@@ -48,6 +51,9 @@ void Text::Init()
 
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
+
+
+	fontProgram.LoadProgram("shaders/helloworld");
 }
 
 void Text::Deinit()
@@ -62,10 +68,15 @@ void Text::Deinit()
 	}
 
 	characters.clear();
+
+	fontProgram.UnloadProgram();
 }
 
 void Text::Render(double x, double y, const std::string & text, unsigned int fontHeight)
 {
+	fontProgram.Use();
+	fontProgram.SetUniform("tex", 0);
+
 	glColor3f(1,1,1);
 	glEnable(GL_BLEND);
 	glEnable(GL_TEXTURE_2D);
@@ -76,12 +87,12 @@ void Text::Render(double x, double y, const std::string & text, unsigned int fon
 	glScaled(1, 1, 1);
 
 	x = 0;
+	double scale = (double)fontHeight / (double)font_face_rendered_height;
 	y = fontHeight;
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	double scale = (double)fontHeight / (double)font_face_rendered_height;
 
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
@@ -126,6 +137,7 @@ void Text::Render(double x, double y, const std::string & text, unsigned int fon
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 
+	fontProgram.NoProgram();
 }
 
 void RenderGLTextures(FT_Face &face)

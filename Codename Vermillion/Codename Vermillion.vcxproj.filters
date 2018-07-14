@@ -22,6 +22,9 @@
     <Filter Include="Source Files\Framework\shared">
       <UniqueIdentifier>{11cf4c06-8c21-4ca0-bb0a-63a0bb291977}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader Files">
+      <UniqueIdentifier>{9dc57403-aedb-49df-ad7f-6567e0015537}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -66,6 +69,12 @@
     <ClCompile Include="Source\Framework\text.cpp">
       <Filter>Source Files\Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\opengl2_shader.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\file.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\window.h">
@@ -98,9 +107,21 @@
     <ClInclude Include="Source\Framework\text.h">
       <Filter>Source Files\Framework</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Framework\opengl2_shader.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\file.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="packages.config" />
+    <None Include="Source\Shaders\helloworld.frag">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Source\Shaders\helloworld.vert">
+      <Filter>Shader Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
