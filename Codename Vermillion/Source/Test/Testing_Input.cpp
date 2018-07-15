@@ -7,7 +7,7 @@
 
 glm::vec2 PlayerInputKeys::GetMovement()
 {
-	glm::vec2 move;
+	glm::vec2 move = glm::vec2();
 	if (FrameworkPointers::inputManager->KeyDown('A'))
 		move.x -= 1.0f;
 	if (FrameworkPointers::inputManager->KeyDown('D'))
@@ -17,6 +17,9 @@ glm::vec2 PlayerInputKeys::GetMovement()
 		move.y -= 1.0f;
 	if (FrameworkPointers::inputManager->KeyDown('W'))
 		move.y += 1.0f;
+
+	if (glm::length(move) < 0.001f)
+		return glm::vec2();
 
 	return glm::normalize(move);
 }

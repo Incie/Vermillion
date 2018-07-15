@@ -18,7 +18,7 @@ Testing::~Testing()
 
 void Testing::Update(double deltaTime)
 {
-	PlayerInput *gp = new PlayerInputGamepad();
+	PlayerInput *gp = new PlayerInputKeys();
 	PlayerInput& input = *gp;
 	aimposition = position + input.GetAim(position) * (float)input.GetAimMultiplier();
 	auto movement = input.GetMovement();
@@ -28,6 +28,8 @@ void Testing::Update(double deltaTime)
 	if (input.Shoot())
 		color = glm::vec3(1, 0, 1);
 	else color = glm::vec3(1, 1, 1);
+
+	delete gp;
 }
 
 void Testing::Render()
@@ -50,9 +52,4 @@ void Testing::Render()
 		glVertex2f(aimposition.x + 10, aimposition.y - 10);
 		glVertex2f(aimposition.x - 10, aimposition.y + 10);
 	glEnd();
-}
-
-double PlayerInputKeys::GetAimMultiplier()
-{
-	return 0.0;
 }

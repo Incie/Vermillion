@@ -67,8 +67,6 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 
 		if( renderTimer.Tick() )
 		{
-
-
 			inputManager.Update();
 
 			renderer.StartFrame();
