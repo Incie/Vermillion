@@ -49,6 +49,12 @@ bool InputManager::KeyUp(char keyCode)
 	return keyStates[keyCode] <= 0;
 }
 
+glm::vec2 InputManager::GetMousePosition()
+{
+	const auto& mpos = InputStates::mouseState.mousePositionCurrent;
+	return glm::vec2(mpos.x, mpos.y);
+}
+
 bool InputManager::GamePadButtonDown(GamePadButton button)
 {
 	return InputStates::gamepadState.pushButtons[button];

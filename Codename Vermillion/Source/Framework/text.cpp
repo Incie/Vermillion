@@ -20,7 +20,6 @@ struct Character {
 	GLuint     Advance;    // Offset to advance to next glyph
 };
 
-//std::pair<char, Character> *characters = nullptr;
 std::map<GLchar, Character> characters;
 
 GLSLProgram fontProgram;
@@ -38,7 +37,7 @@ void Text::Init()
 	}
 
 	FT_Face face;
-	if (FT_New_Face(ft, "fonts/Roboto-Light.ttf", 0, &face)) {
+	if (FT_New_Face(ft, "fonts/Roboto-Black.ttf", 0, &face)) {
 		Log::Error("Freetype", "Failed to load font");
 		return;
 	}
@@ -72,10 +71,11 @@ void Text::Deinit()
 	fontProgram.UnloadProgram();
 }
 
-void Text::Render(double x, double y, const std::string & text, unsigned int fontHeight)
+void Text::Render(double x, double y, const std::string & text, unsigned int fontHeight, const glm::vec4& color)
 {
 	fontProgram.Use();
 	fontProgram.SetUniform("tex", 0);
+	fontProgram.SetUniform("color", color);
 
 	glColor3f(1,1,1);
 	glEnable(GL_BLEND);

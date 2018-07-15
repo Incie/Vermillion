@@ -16,6 +16,8 @@ public:
 	bool KeyOnce(char keyCode);
 	bool KeyUp(char keyCode);
 
+	glm::vec2 GetMousePosition();
+
 	bool GamePadButtonDown(GamePadButton button);
 	bool GamePadButtonOnce(GamePadButton button);
 	bool GamePadButtonUp(GamePadButton button);

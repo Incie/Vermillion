@@ -36,6 +36,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Test\GamepadTest.cpp" />
     <ClCompile Include="Source\Test\Testing.cpp" />
+    <ClCompile Include="Source\Test\Testing_Input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\file.h" />

@@ -1,6 +1,7 @@
 #pragma once
 
 #include<string>
+#include"glm\glm.hpp"
 
 
 enum ShaderType {
@@ -30,6 +31,7 @@ public:
 	void UnloadProgram();
 
 	void SetUniform(const std::string& uniformname, int value);
+	void SetUniform(const std::string& uniformname, const glm::vec4& color);
 
 	void Use();
 	void NoProgram();
@@ -39,7 +41,3 @@ private:
 	GLSLShader fragment;
 	GLSLShader vertex;
 };
-
-
-
-

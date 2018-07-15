@@ -4,16 +4,12 @@
 #include<gl/GL.h>
 #include"glm\glm.hpp"
 
-#include"../Framework/window.h"
-
-glm::vec2 position;
-glm::vec2 mousePos;
 
 Testing::Testing()
 {
 	rotation = 0.0;
-	x = 75;
-	y = 75;
+	position = glm::vec2(250, 250);
+	color = glm::vec3(1, 1, 1);
 }
 
 Testing::~Testing()
@@ -22,27 +18,16 @@ Testing::~Testing()
 
 void Testing::Update(double deltaTime)
 {
-	rotation += 90 * deltaTime;
+	PlayerInput *gp = new PlayerInputGamepad();
+	PlayerInput& input = *gp;
+	aimposition = position + input.GetAim(position) * (float)input.GetAimMultiplier();
+	auto movement = input.GetMovement();
 
-	if (FrameworkPointers::inputManager->KeyDown(VK_LBUTTON)) {
-		//auto p = FrameworkPointers::inputManager->mousePosition;
-		//mousePos.x = p.x;
-		//mousePos.y = p.y;
-		//auto moveVec = glm::vec2(p.x - position.x, p.y - position.y);
-		//moveVec = glm::normalize(moveVec);
-
-		//position += moveVec * 50.0f * (float)deltaTime;
-	}
-
-	if (FrameworkPointers::inputManager->KeyDown('A'))
-		position.x -= 50 * deltaTime;
-	if (FrameworkPointers::inputManager->KeyDown('D'))
-		position.x += 50 * deltaTime;
-
-	if (FrameworkPointers::inputManager->KeyDown('S'))
-		position.y -= 50 * deltaTime;
-	if (FrameworkPointers::inputManager->KeyDown('W'))
-		position.y += 50 * deltaTime;
+	position += movement * 100.0f * (float)deltaTime;
+	
+	if (input.Shoot())
+		color = glm::vec3(1, 0, 1);
+	else color = glm::vec3(1, 1, 1);
 }
 
 void Testing::Render()
@@ -50,18 +35,24 @@ void Testing::Render()
 	glPushMatrix();
 	glTranslated(position.x, position.y, 0);
 		glRotated(rotation, 0, 0, 1);
+		glColor3f(color.x, color.y, color.z);
 		glBegin(GL_TRIANGLES);
-		glVertex2d(-25, -25);
-		glVertex2d(25, -25);
-		glVertex2d(0, 25);
+			glVertex2d(-25, -25);
+			glVertex2d(25, -25);
+			glVertex2d(0, 25);
 		glEnd();
 	glPopMatrix();
 
 	glBegin(GL_LINES);
-		glVertex2f(mousePos.x+20, mousePos.y+20);
-		glVertex2f(mousePos.x-20, mousePos.y-20);
+		glVertex2f(aimposition.x+10, aimposition.y+ 10);
+		glVertex2f(aimposition.x- 10, aimposition.y-10);
 
-		glVertex2f(mousePos.x + 20, mousePos.y - 20);
-		glVertex2f(mousePos.x - 20, mousePos.y + 20);
+		glVertex2f(aimposition.x + 10, aimposition.y - 10);
+		glVertex2f(aimposition.x - 10, aimposition.y + 10);
 	glEnd();
+}
+
+double PlayerInputKeys::GetAimMultiplier()
+{
+	return 0.0;
 }

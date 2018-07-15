@@ -34,13 +34,13 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	Text::Init();
 
 	Timer renderTimer;
-	renderTimer.LimitByFPS(59);
+	renderTimer.LimitByMilliseconds(17);
 
 	Timer fpsTimer;
 	fpsTimer.LimitByMilliseconds(1000);
 
-	//Testing testing;
-	GamepadTest testing;
+	Testing testing;
+	//GamepadTest testing;
 
 	unsigned int fps = 0;
 	unsigned int fpsCounter = 0;
@@ -67,12 +67,14 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 
 		if( renderTimer.Tick() )
 		{
+
+
 			inputManager.Update();
 
 			renderer.StartFrame();
 			testing.Update(renderTimer.GetDelta());
 			testing.Render();
-			Text::Render(0, 0, fmt::format("FPS: {0}", fps), 24);
+			Text::Render(0, 0, fmt::format("FPS: {0}", fps), 24, glm::vec4(1,1,1,1) );
 			renderer.EndFrame();
 
 			fpsCounter++;
