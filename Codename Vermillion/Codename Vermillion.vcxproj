@@ -28,6 +28,8 @@
     <ClCompile Include="Source\Framework\opengl2_shader.cpp" />
     <ClCompile Include="Source\Framework\point.h" />
     <ClCompile Include="Source\Framework\text.cpp" />
+    <ClCompile Include="Source\Framework\textures.cpp" />
+    <ClCompile Include="Source\Framework\textures_pngloader.cpp" />
     <ClCompile Include="Source\Framework\timer.cpp" />
     <ClCompile Include="Source\Framework\window.cpp" />
     <ClCompile Include="Source\Framework\windowclass.cpp" />
@@ -46,6 +48,8 @@
     <ClInclude Include="Source\Framework\opengl2.h" />
     <ClInclude Include="Source\Framework\opengl2_shader.h" />
     <ClInclude Include="Source\Framework\text.h" />
+    <ClInclude Include="Source\Framework\textures.h" />
+    <ClInclude Include="Source\Framework\textures_pngloader.h" />
     <ClInclude Include="Source\Framework\timer.h" />
     <ClInclude Include="Source\Framework\window.h" />
     <ClInclude Include="Source\Framework\windowstate.h" />
