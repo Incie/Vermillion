@@ -47,13 +47,11 @@ Texture TextureManager::LoadTexture(const std::string & relativePath)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	loader->Free();
+	delete loader;
+
 	return Texture{texture, imageData.width, imageData.height, imageData.channels};
-}/*
- 	int textureId;
-	int width;
-	int height;
-	int channels;
- */
+}
 
 void TextureManager::UnloadAll()
 {
