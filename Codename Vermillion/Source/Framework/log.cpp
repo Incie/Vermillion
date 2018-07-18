@@ -16,9 +16,10 @@ LogTime logTime;
 
 void WriteLog(const char* tag, const char* type, const std::string& text) 
 {
-	std::ofstream out;
-	out.open("log.txt", std::ios::app);
-	out << logTime.TimeSinceInit() << "ms " << "[" << tag << "] [" << type << "]" << text << '\n';
+	std::ofstream logstream;
+	logstream.open("log.txt", std::ios::app);
+	logstream << logTime.TimeSinceInit() << "ms " << "[" << tag << "] [" << type << "]" << text << '\n';
+	logstream.close();
 }
 
 void Log::Debug(const char* tag, const std::string& text)
