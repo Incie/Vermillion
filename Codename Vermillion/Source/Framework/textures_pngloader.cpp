@@ -33,6 +33,7 @@ bool ReadPNGInfo(FILE* fp, png_structp& png_ptr, png_infop& info_ptr, ImageData&
 
 	int number_of_passes = png_set_interlace_handling(png_ptr);
 	png_read_update_info(png_ptr, info_ptr);
+	return true;
 }
 
 bool ReadImage(png_structp& png_ptr, png_infop& info_ptr, ImageData& imageData) {
@@ -43,9 +44,9 @@ bool ReadImage(png_structp& png_ptr, png_infop& info_ptr, ImageData& imageData) 
 	auto size = sizeof(png_bytep) * imageData.height;
 	auto stride = png_get_rowbytes(png_ptr, info_ptr);
 
-	imageData.data = DBG_NEW unsigned char[size*stride];
+	imageData.data = new unsigned char[size*stride];
 
-	png_bytep* row_pointers = DBG_NEW png_bytep[imageData.height];
+	png_bytep* row_pointers = new png_bytep[imageData.height];
 	for (int y = 0; y < imageData.height; y++)
 		row_pointers[y] = &imageData.data[y * stride];
 

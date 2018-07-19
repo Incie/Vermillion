@@ -7,7 +7,6 @@
 #include"../Framework/textures.h"
 
 
-
 Testing::Testing()
 {
 	rotation = 0.0;
@@ -19,18 +18,9 @@ Testing::~Testing()
 {
 }
 
-bool isInitialized = false;
-Texture t;
 
 void Testing::Update(double deltaTime)
 {
-	
-	if (!isInitialized) {
-		TextureManager texMan;
-		t = texMan.LoadTexture("textures/Firelink Shrine sketch.png");
-		isInitialized = true;
-	}
-
 	PlayerInput *gp = new PlayerInputKeys();
 	PlayerInput& input = *gp;
 	aimposition = position + input.GetAim(position) * (float)input.GetAimMultiplier();
@@ -59,14 +49,16 @@ void Testing::Render()
 	glPopMatrix();
 
 	glBegin(GL_LINES);
-		glVertex2f(aimposition.x+10, aimposition.y+ 10);
-		glVertex2f(aimposition.x- 10, aimposition.y-10);
+		glVertex2f(aimposition.x + 10, aimposition.y + 10);
+		glVertex2f(aimposition.x - 10, aimposition.y - 10);
 
 		glVertex2f(aimposition.x + 10, aimposition.y - 10);
 		glVertex2f(aimposition.x - 10, aimposition.y + 10);
 	glEnd();
 
 
+	/* Move to DrawQuad() thing
+	
 	glPushMatrix();
 	glTranslated(250, 250, 0);
 	glColor3f(1, 1, 1);
@@ -85,5 +77,5 @@ void Testing::Render()
 	glEnd();
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
-	glPopMatrix();
+	glPopMatrix();*/
 }
