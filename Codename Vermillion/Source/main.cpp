@@ -80,16 +80,13 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 
 		Sleep(0);
 	}
-
-
-
+	
 	Log::Info("Application", "Shutting down");
 
 	Text::Deinit();
 
 	renderer.DestroyRenderContext();
 	window.Destroy();
-
 
 	return 0;
 }

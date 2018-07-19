@@ -4,6 +4,8 @@
 #include<gl/GL.h>
 #include"glm\glm.hpp"
 
+#include"../Framework/textures.h"
+
 
 Testing::Testing()
 {
@@ -15,6 +17,7 @@ Testing::Testing()
 Testing::~Testing()
 {
 }
+
 
 void Testing::Update(double deltaTime)
 {
@@ -46,10 +49,33 @@ void Testing::Render()
 	glPopMatrix();
 
 	glBegin(GL_LINES);
-		glVertex2f(aimposition.x+10, aimposition.y+ 10);
-		glVertex2f(aimposition.x- 10, aimposition.y-10);
+		glVertex2f(aimposition.x + 10, aimposition.y + 10);
+		glVertex2f(aimposition.x - 10, aimposition.y - 10);
 
 		glVertex2f(aimposition.x + 10, aimposition.y - 10);
 		glVertex2f(aimposition.x - 10, aimposition.y + 10);
 	glEnd();
+
+
+	/* Move to DrawQuad() thing
+	
+	glPushMatrix();
+	glTranslated(250, 250, 0);
+	glColor3f(1, 1, 1);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, t.textureId);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glBegin(GL_QUADS);
+		double s = 250;
+		glTexCoord2d(0, 0); glVertex2d(-s, -s);
+		glTexCoord2d(1, 0); glVertex2d( s, -s);
+		glTexCoord2d(1, 1); glVertex2d( s,  s);
+		glTexCoord2d(0, 1); glVertex2d(-s,  s);
+	glEnd();
+	glDisable(GL_BLEND);
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();*/
 }

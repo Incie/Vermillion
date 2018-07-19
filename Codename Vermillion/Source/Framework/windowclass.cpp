@@ -1,6 +1,7 @@
 #include"window.h"
 #include"log.h"
 #include<string>
+#include"fmt\format.h"
 
 Window::WindowClass::WindowClass()
 {
@@ -25,9 +26,7 @@ void Window::WindowClass::Create(HINSTANCE hInstance, WNDPROC wndProc)
 
 	Log::Info("WindowClass", "Creating WNDCLASSEX");
 	if (RegisterClassEx(&wndclass) == 0) {
-		Log::Error("WindowClass", "Error Creating WNDCLASSEX");
-		std::string error = "GetLastError code " + GetLastError();
-		Log::Error("WindowClass", error.c_str());
+		Log::Error("WindowClass", fmt::format("Error Creating WNDCLASSEX. GetLastErrorCode: {0}", GetLastError()));
 	}
 
 	this->hInstance = hInstance;
@@ -42,7 +41,7 @@ void Window::WindowClass::Destroy()
 	className.clear();
 }
 
-const std::string & Window::WindowClass::classname()
+const std::string& Window::WindowClass::classname()
 {
 	return className;
 }

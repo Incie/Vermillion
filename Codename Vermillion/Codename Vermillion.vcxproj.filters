@@ -78,6 +78,12 @@
     <ClCompile Include="Source\Test\Testing_Input.cpp">
       <Filter>Source Files\Test</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\textures.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\textures_pngloader.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\window.h">
@@ -114,6 +120,12 @@
       <Filter>Source Files\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\file.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\textures.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\textures_pngloader.h">
       <Filter>Source Files\Framework</Filter>
     </ClInclude>
   </ItemGroup>

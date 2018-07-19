@@ -90,11 +90,11 @@ void InputState::UpdateGamepadState()
 	gpState.pushButtons[GP_Start] = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_START) != 0);
 	gpState.pushButtons[GP_Select] = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_BACK) != 0);
 
-	gpState.stickRight.x = fmaxf(-1, (double)state.Gamepad.sThumbRX / 32767);
-	gpState.stickRight.y = -fmaxf(-1, (double)state.Gamepad.sThumbRY / 32767);
+	gpState.stickRight.x = fmax(-1, (double)state.Gamepad.sThumbRX / 32767);
+	gpState.stickRight.y = -fmax(-1, (double)state.Gamepad.sThumbRY / 32767);
 
-	gpState.stickLeft.x = fmaxf(-1.0, (double)state.Gamepad.sThumbLX / 32767);
-	gpState.stickLeft.y = -fmaxf(-1.0, (double)state.Gamepad.sThumbLY / 32767);
+	gpState.stickLeft.x = fmax(-1.0, (double)state.Gamepad.sThumbLX / 32767);
+	gpState.stickLeft.y = -fmax(-1.0, (double)state.Gamepad.sThumbLY / 32767);
 
 	gpState.triggerLeft = state.Gamepad.bLeftTrigger / 255.0;
 	gpState.triggerRight = state.Gamepad.bRightTrigger / 255.0;

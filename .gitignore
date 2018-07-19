@@ -1,4 +1,6 @@
 .vs/
 Build/
+Build_Release/
 Debug/
 Release/
+*.dgml
