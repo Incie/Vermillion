@@ -22,13 +22,38 @@ Texture TextureManager::LoadTexture(const std::string & relativePath)
 
 	auto imageData = loader->Get();
 
+	auto texture = UploadToGPU(imageData);
+
+	loader->Free();
+	delete loader;
+
+	return Texture{texture, imageData.width, imageData.height, imageData.channels};
+}
+
+void TextureManager::UnloadAll()
+{
+	for (auto texture : textures) {
+		UnloadTexture(*texture);
+	}
+
+	textures.clear();
+}
+
+void TextureManager::UnloadTexture(Texture & texture)
+{
+	glDeleteTextures(1, &texture.textureId);
+	texture.textureId = 0;
+}
+
+unsigned int TextureManager::UploadToGPU(const ImageData& imageData)
+{
 	GLint format = GL_RGB;
 	if (imageData.channels == 4)
 		format = GL_RGBA;
 
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	GLuint textureId;
+	glGenTextures(1, &textureId);
+	glBindTexture(GL_TEXTURE_2D, textureId);
 	glTexImage2D(
 		GL_TEXTURE_2D,
 		0,
@@ -47,12 +72,5 @@ Texture TextureManager::LoadTexture(const std::string & relativePath)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	loader->Free();
-	delete loader;
-
-	return Texture{texture, imageData.width, imageData.height, imageData.channels};
-}
-
-void TextureManager::UnloadAll()
-{
+	return textureId;
 }

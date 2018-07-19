@@ -1,6 +1,9 @@
 #pragma once
 
 #include<string>
+#include<vector>
+
+class ImageData;
 
 class Texture {
 public:
@@ -21,5 +24,8 @@ public:
 	void UnloadAll();
 
 private:
+	void UnloadTexture(Texture& texture);
+	unsigned int UploadToGPU(const ImageData& imageData);
 
+	std::vector<Texture*> textures;
 };
