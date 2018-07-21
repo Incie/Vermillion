@@ -25,34 +25,37 @@
     <Filter Include="Shader Files">
       <UniqueIdentifier>{9dc57403-aedb-49df-ad7f-6567e0015537}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Framework\Textures">
+      <UniqueIdentifier>{2121c6ac-0247-4ac2-9d13-cfabf453adc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Text">
+      <UniqueIdentifier>{1b1b68bd-c346-4294-a159-331d46f8f0f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Log">
+      <UniqueIdentifier>{daf75b46-b3e5-49aa-ac28-d4426aeedcbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Window">
+      <UniqueIdentifier>{a55f7188-3bbd-4c1c-9da1-66b1105a2e10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\OpenGL2">
+      <UniqueIdentifier>{b9a6bb5c-b2dd-4c41-8716-5e699eb5a779}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\File">
+      <UniqueIdentifier>{0b713aa1-4d53-45e8-b252-a3685c658e6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Input">
+      <UniqueIdentifier>{7d24c585-b87c-4d06-98f2-2a4abbc9e044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Timer">
+      <UniqueIdentifier>{ee3445e6-cbc2-4104-840c-4b92d6c8d561}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Framework\window.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\windowclass.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\log.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\opengl2.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Test\Testing.cpp">
       <Filter>Source Files\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\timer.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\windowprocedure.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\input.cpp">
-      <Filter>Source Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Test\GamepadTest.cpp">
       <Filter>Source Files\Test</Filter>
@@ -66,43 +69,49 @@
     <ClCompile Include="Source\Framework\windowstate.cpp">
       <Filter>Source Files\Framework\shared</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Framework\text.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\opengl2_shader.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\file.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Test\Testing_Input.cpp">
       <Filter>Source Files\Test</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\textures.cpp">
-      <Filter>Source Files\Framework</Filter>
+      <Filter>Source Files\Framework\Textures</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\textures_pngloader.cpp">
-      <Filter>Source Files\Framework</Filter>
+      <Filter>Source Files\Framework\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\text.cpp">
+      <Filter>Source Files\Framework\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\log.cpp">
+      <Filter>Source Files\Framework\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\windowprocedure.cpp">
+      <Filter>Source Files\Framework\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\window.cpp">
+      <Filter>Source Files\Framework\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\windowclass.cpp">
+      <Filter>Source Files\Framework\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\opengl2.cpp">
+      <Filter>Source Files\Framework\OpenGL2</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\opengl2_shader.cpp">
+      <Filter>Source Files\Framework\OpenGL2</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\file.cpp">
+      <Filter>Source Files\Framework\File</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\input.cpp">
+      <Filter>Source Files\Framework\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\timer.cpp">
+      <Filter>Source Files\Framework\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Framework\window.h">
-      <Filter>Source Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\log.h">
-      <Filter>Source Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\opengl2.h">
-      <Filter>Source Files\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Test\Testing.h">
       <Filter>Source Files\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\timer.h">
-      <Filter>Source Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\input.h">
-      <Filter>Source Files\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Test\GamepadTest.h">
       <Filter>Source Files\Test</Filter>
@@ -113,20 +122,35 @@
     <ClInclude Include="Source\Framework\windowstate.h">
       <Filter>Source Files\Framework\shared</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Framework\text.h">
-      <Filter>Source Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\opengl2_shader.h">
-      <Filter>Source Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\file.h">
-      <Filter>Source Files\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Framework\textures.h">
-      <Filter>Source Files\Framework</Filter>
+      <Filter>Source Files\Framework\Textures</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\textures_pngloader.h">
-      <Filter>Source Files\Framework</Filter>
+      <Filter>Source Files\Framework\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\text.h">
+      <Filter>Source Files\Framework\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\log.h">
+      <Filter>Source Files\Framework\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\window.h">
+      <Filter>Source Files\Framework\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\opengl2_shader.h">
+      <Filter>Source Files\Framework\OpenGL2</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\opengl2.h">
+      <Filter>Source Files\Framework\OpenGL2</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\file.h">
+      <Filter>Source Files\Framework\File</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\input.h">
+      <Filter>Source Files\Framework\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\timer.h">
+      <Filter>Source Files\Framework\Timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
