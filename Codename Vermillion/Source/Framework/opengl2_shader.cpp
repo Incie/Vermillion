@@ -27,8 +27,8 @@ bool GLSLShader::Load(const std::string & shader)
 
 	const auto shaderContent = FileReader::ReadFileContent(shader);
 	const char* charContent = shaderContent.c_str();
-	int len = shaderContent.length();
-	glShaderSource(shaderId, 1, &charContent, &len);
+	int shaderContentLength = (int)shaderContent.length();
+	glShaderSource(shaderId, 1, &charContent, &shaderContentLength);
 	glCompileShader(shaderId);
 
 	return false;

@@ -17,7 +17,7 @@ struct Character {
 	GLuint     TextureID;  // ID handle of the glyph texture
 	glm::ivec2 Size;       // Size of glyph
 	glm::ivec2 Bearing;    // Offset from baseline to left/top of glyph
-	GLuint     Advance;    // Offset to advance to next glyph
+	int        Advance;    // Offset to advance to next glyph
 };
 
 std::map<GLchar, Character> characters;
@@ -99,13 +99,13 @@ void Text::Render(double x, double y, const std::string & text, unsigned int fon
 	{
 		Character ch = characters[*c];
 
-		GLfloat xpos = x + ch.Bearing.x * scale;
-		GLfloat ypos = y - (-ch.Size.y + ch.Bearing.y) * scale;
+		double xpos = x + ch.Bearing.x * scale;
+		double ypos = y - (-ch.Size.y + ch.Bearing.y) * scale;
 
-		GLfloat w = ch.Size.x * scale;
-		GLfloat h = ch.Size.y * scale;
+		double w = ch.Size.x * scale;
+		double h = ch.Size.y * scale;
 
-		GLfloat vertices[6][2] = {
+		double vertices[6][2] = {
 			{ xpos,     ypos - h},
 			{ xpos,     ypos},
 			{ xpos + w, ypos},
@@ -115,14 +115,14 @@ void Text::Render(double x, double y, const std::string & text, unsigned int fon
 			{ xpos + w, ypos - h}
 		};
 
-		GLfloat texcoords[6][2] = {
+		double texcoords[6][2] = {
 			{0, 0}, {0,1}, {1,1}, 
 			{0, 0}, {1,1}, {1,0}
 		};
 
 		glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-		glVertexPointer(2, GL_FLOAT, 0, vertices);
-		glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
+		glVertexPointer(2, GL_DOUBLE, 0, vertices);
+		glTexCoordPointer(2, GL_DOUBLE, 0, texcoords);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
@@ -174,12 +174,14 @@ void RenderGLTextures(FT_Face &face)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
 		// Now store character for later use
 		Character character = {
 			texture,
 			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
 			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-			face->glyph->advance.x
+			(int)face->glyph->advance.x
 		};
 
 		characters.insert(std::pair<GLchar, Character>(c, character));

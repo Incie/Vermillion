@@ -163,11 +163,11 @@ void GamepadTest::DrawCircle(double radius)
 void GamepadTest::DrawCross(const glm::vec2 & pos, double length)
 {
 	glBegin(GL_LINES);
-		glVertex2f(pos.x + length, pos.y + length);
-		glVertex2f(pos.x - length, pos.y - length);
+		glVertex2d(pos.x + length, pos.y + length);
+		glVertex2d(pos.x - length, pos.y - length);
 
-		glVertex2f(pos.x + length, pos.y - length);
-		glVertex2f(pos.x - length, pos.y + length);
+		glVertex2d(pos.x + length, pos.y - length);
+		glVertex2d(pos.x - length, pos.y + length);
 	glEnd();
 }
 
@@ -177,15 +177,15 @@ void GamepadTest::DrawSlider(const glm::vec2 & center, double length, double val
 	double halfLength = length / 2.0;
 	double quarterLength = length / 4.0;
 	glBegin(GL_LINE_LOOP);
-		glVertex2f(-quarterLength, -halfLength);
-		glVertex2f(+quarterLength, -halfLength);
-		glVertex2f(+quarterLength, +halfLength);
-		glVertex2f(-quarterLength, +halfLength);
+		glVertex2d(-quarterLength, -halfLength);
+		glVertex2d(+quarterLength, -halfLength);
+		glVertex2d(+quarterLength, +halfLength);
+		glVertex2d(-quarterLength, +halfLength);
 	glEnd();
 
 	glBegin(GL_LINES);
-		glVertex2f(0, -halfLength);
-		glVertex2f(0, -halfLength + value * length);
+		glVertex2d(0, -halfLength);
+		glVertex2d(0, -halfLength + value * length);
 	glEnd();
 
 }

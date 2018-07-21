@@ -2,8 +2,9 @@
 
 #include<string>
 
-struct ImageData
+class ImageData
 {
+public:
 	ImageData() : width(0), height(0), colordepth(0), channels(0), data(nullptr) {}
 
 	int width;
