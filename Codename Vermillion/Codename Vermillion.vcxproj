@@ -27,6 +27,7 @@
     <ClCompile Include="Source\Framework\opengl2.cpp" />
     <ClCompile Include="Source\Framework\opengl2_shader.cpp" />
     <ClCompile Include="Source\Framework\point.h" />
+    <ClCompile Include="Source\Framework\servicelocator.cpp" />
     <ClCompile Include="Source\Framework\text.cpp" />
     <ClCompile Include="Source\Framework\textures.cpp" />
     <ClCompile Include="Source\Framework\textures_pngloader.cpp" />
@@ -47,6 +48,8 @@
     <ClInclude Include="Source\Framework\log.h" />
     <ClInclude Include="Source\Framework\opengl2.h" />
     <ClInclude Include="Source\Framework\opengl2_shader.h" />
+    <ClInclude Include="Source\Framework\servicelocator.h" />
+    <ClInclude Include="Source\Framework\services.h" />
     <ClInclude Include="Source\Framework\text.h" />
     <ClInclude Include="Source\Framework\textures.h" />
     <ClInclude Include="Source\Framework\textures_pngloader.h" />

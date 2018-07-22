@@ -48,17 +48,8 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	MSG msg;
 	bool quitProgram = false;
 	while (!quitProgram) {
-		while(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
-		{
-			if (msg.message == WM_QUIT) {
-				Log::Info("Application", "WM_QUIT Posted");
-				quitProgram = true;
-				break;
-			}
 
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
+		quitProgram = window.ProcessMessages();
 
 		if (fpsTimer.Tick()) {
 			fps = fpsCounter;

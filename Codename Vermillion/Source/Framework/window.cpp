@@ -9,6 +9,21 @@ Window::Window()
 {
 }
 
+bool Window::ProcessMessages()
+{
+	static MSG msg;
+	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	{
+		if (msg.message == WM_QUIT) {
+			Log::Info("Application", "WM_QUIT Posted");
+			return true;
+		}
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+}
+
 void Window::Create(HINSTANCE hInstance)
 {
 	windowClass.Create(hInstance, WindowProc);

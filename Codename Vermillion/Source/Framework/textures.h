@@ -3,24 +3,17 @@
 #include<string>
 #include<vector>
 
+#include"services.h"
+
 class ImageData;
 
-class Texture {
-public:
-	unsigned int textureId;
-	int width;
-	int height;
-	unsigned int channels;
-};
-
-class TextureManager
+class TextureManager : TextureService
 {
 public:
 	TextureManager();
 	~TextureManager();
 
 	Texture LoadTexture(const std::string& relativePath);
-
 	void UnloadAll();
 
 private:

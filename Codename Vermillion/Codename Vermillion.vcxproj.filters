@@ -108,6 +108,9 @@
     <ClCompile Include="Source\Framework\timer.cpp">
       <Filter>Source Files\Framework\Timer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\servicelocator.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -151,6 +154,12 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\timer.h">
       <Filter>Source Files\Framework\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\servicelocator.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\services.h">
+      <Filter>Source Files\Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
