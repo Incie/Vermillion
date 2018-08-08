@@ -7,7 +7,7 @@
 
 class ImageData;
 
-class TextureManager : TextureService
+class TextureManager : public TextureService
 {
 public:
 	TextureManager();

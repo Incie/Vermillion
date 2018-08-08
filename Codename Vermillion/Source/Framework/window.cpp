@@ -22,6 +22,8 @@ bool Window::ProcessMessages()
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+
+	return false;
 }
 
 void Window::Create(HINSTANCE hInstance)

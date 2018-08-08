@@ -1,16 +1,17 @@
 #pragma once
 
+#include"services.h"
 #include<string>
-#include"glm/glm.hpp"
+#include"point.h"
 
-class Text
+class Text : public TextService
 {
 public:
 
 	void Init();
 	void Deinit();
 	
-	void Render(double x, double y, const std::string& text, unsigned int fontHeight, const glm::vec4& color);
+	void Print(double x, double y, const std::string &text, unsigned int fontHeight, const Colorf& color);
 
 
 private:

@@ -2,6 +2,7 @@
 #include"ft2build.h"
 #include"freetype\freetype.h"
 #include"log.h"
+#include"fmt\format.h"
 
 #include"opengl2.h"
 #include"opengl2_shader.h"
@@ -11,7 +12,7 @@
 #include<algorithm>
 #include<map>
 
-void RenderGLTextures(FT_Face &face);
+void RenderFaceToTextures(FT_Face &face);
 
 struct Character {
 	GLuint     TextureID;  // ID handle of the glyph texture
@@ -45,7 +46,7 @@ void Text::Init()
 	FT_Set_Pixel_Sizes(face, 0, font_face_rendered_height);
 
 	Log::Info("Freetype", "Rendering Font");
-	RenderGLTextures(face);
+	RenderFaceToTextures(face);
 	Log::Info("Freetype", "Rendered Font");
 
 	FT_Done_Face(face);
@@ -71,13 +72,13 @@ void Text::Deinit()
 	fontProgram.UnloadProgram();
 }
 
-void Text::Render(double x, double y, const std::string & text, unsigned int fontHeight, const glm::vec4& color)
+void Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color)
 {
 	fontProgram.Use();
 	fontProgram.SetUniform("tex", 0);
 	fontProgram.SetUniform("color", color);
 
-	glColor3f(1,1,1);
+	glColor4f(1,1,1,1);
 	glEnable(GL_BLEND);
 	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -93,6 +94,10 @@ void Text::Render(double x, double y, const std::string & text, unsigned int fon
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+	const double texcoords[6][2] = {
+		{ 0,0 },{ 0,1 },{ 1,1 },
+		{ 0,0 },{ 1,1 },{ 1,0 }
+	};
 
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
@@ -115,11 +120,6 @@ void Text::Render(double x, double y, const std::string & text, unsigned int fon
 			{ xpos + w, ypos - h}
 		};
 
-		double texcoords[6][2] = {
-			{0, 0}, {0,1}, {1,1}, 
-			{0, 0}, {1,1}, {1,0}
-		};
-
 		glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 		glVertexPointer(2, GL_DOUBLE, 0, vertices);
 		glTexCoordPointer(2, GL_DOUBLE, 0, texcoords);
@@ -140,8 +140,12 @@ void Text::Render(double x, double y, const std::string & text, unsigned int fon
 	fontProgram.NoProgram();
 }
 
-void RenderGLTextures(FT_Face &face)
+void RenderFaceToTextures(FT_Face &face)
 {
+	int previousUnpackAlignment = -1;
+	glGetIntegerv(GL_UNPACK_ALIGNMENT, &previousUnpackAlignment);
+	Log::Debug("RenderFaceToTextures", fmt::format("Unpack Alignment = {0}", previousUnpackAlignment));
+
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glEnable(GL_TEXTURE_2D);
 
@@ -188,5 +192,5 @@ void RenderGLTextures(FT_Face &face)
 	}
 
 	glDisable(GL_TEXTURE_2D);
-	//TODO: Reset glPixelStorei
+	glPixelStorei(GL_UNPACK_ALIGNMENT, previousUnpackAlignment);
 }

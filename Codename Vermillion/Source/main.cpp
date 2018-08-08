@@ -6,6 +6,8 @@
 #include"Framework\timer.h"
 #include"Framework\input.h"
 #include"Framework\text.h"
+#include"Framework\servicelocator.h"
+#include"Framework\textures.h"
 
 #include"Test\GamepadTest.h"
 #include"Test\Testing.h"
@@ -31,7 +33,10 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 
 	window.Show();
 
-	Text::Init();
+	Text text;
+	text.Init();
+
+	TextureManager textureManager;
 
 	Timer renderTimer;
 	renderTimer.LimitByMilliseconds(17);
@@ -44,6 +49,11 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 
 	unsigned int fps = 0;
 	unsigned int fpsCounter = 0;
+
+	ServiceLocator serviceLocator;
+	ServiceAssigner serviceAssigner(serviceLocator);
+	serviceAssigner.SetTextService(text);
+	serviceAssigner.SetTextureService(textureManager);
 
 	MSG msg;
 	bool quitProgram = false;
@@ -63,7 +73,7 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 			renderer.StartFrame();
 			testing.Update(renderTimer.GetDelta());
 			testing.Render();
-			Text::Render(0, 0, fmt::format("FPS: {0}", fps), 24, glm::vec4(1,1,1,1) );
+			text.Print(0, 0, fmt::format("FPS: {0}", fps), 24, Colorf(1.0f) );
 			renderer.EndFrame();
 
 			fpsCounter++;
@@ -74,7 +84,8 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	
 	Log::Info("Application", "Shutting down");
 
-	Text::Deinit();
+	text.Deinit();
+	textureManager.UnloadAll();
 
 	renderer.DestroyRenderContext();
 	window.Destroy();

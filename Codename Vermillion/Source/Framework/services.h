@@ -1,5 +1,8 @@
 #pragma once
 
+#include<string>
+#include"point.h"
+
 class Texture {
 public:
 	unsigned int textureId;
@@ -16,5 +19,5 @@ public:
 
 
 class TextService {
-	virtual void Print(double x, double y, std::string &text) = 0;
+	virtual void Print(double x, double y, const std::string &text, unsigned int fontHeight, const Colorf& color) = 0;
 };
