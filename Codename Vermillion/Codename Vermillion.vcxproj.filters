@@ -155,7 +155,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
-    <None Include="packages.config" />
     <None Include="Source\Shaders\helloworld.frag">
       <Filter>Shader Files</Filter>
     </None>
