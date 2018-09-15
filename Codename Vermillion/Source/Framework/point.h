@@ -10,7 +10,7 @@ public:
 	void Set(Point<T> &p) { x = p.x; y = p.y; }
 	
 	Point<T> operator- (const Point<T>& subtrahed) {
-		return Point(p.x - subtrahed.x, p.y - subtrahed.y);
+		return Point(x - subtrahed.x, y - subtrahed.y);
 	}
 
 	T x, y;

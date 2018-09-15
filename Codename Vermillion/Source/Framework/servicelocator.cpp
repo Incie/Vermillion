@@ -17,7 +17,7 @@ const TextService& ServiceLocator::Text()
 
 const TextureService& ServiceLocator::Textures()
 {
-	*textureService;
+	return *textureService;
 }
 
 
