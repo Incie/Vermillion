@@ -49,6 +49,9 @@
     <Filter Include="Source Files\Framework\Timer">
       <UniqueIdentifier>{ee3445e6-cbc2-4104-840c-4b92d6c8d561}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Precompiled">
+      <UniqueIdentifier>{1b08c3e9-dfd7-4ad7-9e90-378b0cbcfcee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -111,6 +114,9 @@
     <ClCompile Include="Source\Framework\servicelocator.cpp">
       <Filter>Source Files\Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\pch\pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -161,10 +167,12 @@
     <ClInclude Include="Source\Framework\services.h">
       <Filter>Source Files\Framework</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Framework\pch\pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
-    <None Include="packages.config" />
     <None Include="Source\Shaders\helloworld.frag">
       <Filter>Shader Files</Filter>
     </None>

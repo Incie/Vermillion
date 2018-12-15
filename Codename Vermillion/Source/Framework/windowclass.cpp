@@ -1,7 +1,7 @@
+#include"pch.h"
 #include"window.h"
 #include"log.h"
-#include<string>
-#include"fmt\format.h"
+
 
 Window::WindowClass::WindowClass()
 {

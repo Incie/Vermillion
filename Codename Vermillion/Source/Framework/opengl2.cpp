@@ -1,8 +1,9 @@
+#include"pch.h"
+
 #include "opengl2.h"
 #include"GL/glew.h"
 #include<gl/glu.h>
 #include"log.h"
-#include"fmt\format.h"
 
 GL2Renderer::GL2Renderer()
 {

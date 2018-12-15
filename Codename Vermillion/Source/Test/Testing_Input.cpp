@@ -1,6 +1,6 @@
+#include"pch.h"
 #include"Testing.h"
 #include"../Framework/window.h"
-#include"glm\glm.hpp"
 #include"../Framework/input.h"
 
 /** Keyboard **/

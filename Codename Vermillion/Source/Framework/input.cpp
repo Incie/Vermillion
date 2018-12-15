@@ -1,8 +1,7 @@
+#include"pch.h"
 #include"input.h"
 #include"log.h"
-#include"fmt/format.h"
 #include"inputstate.h"
-#include<algorithm>
 
 InputManager::InputManager()
 {

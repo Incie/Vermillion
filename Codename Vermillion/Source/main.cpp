@@ -1,3 +1,4 @@
+#include"pch.h"
 #include<Windows.h>
 
 #include"Framework\window.h"
@@ -12,7 +13,6 @@
 #include"Test\GamepadTest.h"
 #include"Test\Testing.h"
 
-#include"fmt\format.h"
 
 int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int nShow) 
 {
@@ -58,7 +58,6 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	MSG msg;
 	bool quitProgram = false;
 	while (!quitProgram) {
-
 		quitProgram = window.ProcessMessages();
 
 		if (fpsTimer.Tick()) {

@@ -1,7 +1,7 @@
 #pragma once
 
+#include"pch.h"
 #include"services.h"
-#include<string>
 #include"point.h"
 
 class Text : public TextService
