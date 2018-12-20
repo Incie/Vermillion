@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Framework\Timer">
       <UniqueIdentifier>{ee3445e6-cbc2-4104-840c-4b92d6c8d561}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Test\Gloom">
+      <UniqueIdentifier>{37a5f5a6-9dad-4bd3-a501-6a128cdbc9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Camera">
+      <UniqueIdentifier>{1444139c-3086-4c06-889a-610f4ac65fc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -111,6 +117,18 @@
     <ClCompile Include="Source\Framework\servicelocator.cpp">
       <Filter>Source Files\Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Test\Gloom.cpp">
+      <Filter>Source Files\Test\Gloom</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Hexagon.cpp">
+      <Filter>Source Files\Test\Gloom</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\input_getters.cpp">
+      <Filter>Source Files\Framework\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\camera2d.cpp">
+      <Filter>Source Files\Framework\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -160,6 +178,18 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\services.h">
       <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Test\Gloom.h">
+      <Filter>Source Files\Test\Gloom</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Hexagon.h">
+      <Filter>Source Files\Test\Gloom</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\activity.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\camera2d.h">
+      <Filter>Source Files\Framework\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@
 
 #include"Test\GamepadTest.h"
 #include"Test\Testing.h"
+#include"Test\Gloom.h"
 
 #include"fmt\format.h"
 
@@ -44,8 +45,11 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	Timer fpsTimer;
 	fpsTimer.LimitByMilliseconds(1000);
 
-	Testing testing;
+	Gloom testing;
+	//Testing testing;
 	//GamepadTest testing;
+	
+	testing.Initialize();
 
 	unsigned int fps = 0;
 	unsigned int fpsCounter = 0;
@@ -54,8 +58,10 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	ServiceAssigner serviceAssigner(serviceLocator);
 	serviceAssigner.SetTextService(text);
 	serviceAssigner.SetTextureService(textureManager);
+	serviceAssigner.SetInputService(inputManager);
 
-	MSG msg;
+	testing.SetServiceLocator(serviceLocator);
+
 	bool quitProgram = false;
 	while (!quitProgram) {
 
@@ -83,6 +89,8 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	}
 	
 	Log::Info("Application", "Shutting down");
+	
+	testing.Deinitialize();
 
 	text.Deinit();
 	textureManager.UnloadAll();
