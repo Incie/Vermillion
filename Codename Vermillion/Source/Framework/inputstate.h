@@ -33,6 +33,7 @@ public:
 struct MouseState 
 {
 	Pointi mousePositionCurrent;
+	Pointf mousePositionCurrentNormalized;
 	Pointi mousePositionLast;
 	Pointi mousePositionDelta;
 };

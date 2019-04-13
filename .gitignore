@@ -3,6 +3,7 @@ Build/
 Build_Release/
 Debug/
 Release/
+x64/
 *.dgml
 
 

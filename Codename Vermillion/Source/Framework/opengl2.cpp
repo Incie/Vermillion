@@ -88,7 +88,7 @@ void GL2Renderer::SetViewport(int width, int height)
 	glLoadIdentity();
 
 	glViewport(0, 0, width, height);
-	glOrtho(0, width, height, 0, -1, 1);
+	glOrtho(0, width, height, 0, -100, 100);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

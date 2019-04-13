@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Framework\camera2d.cpp" />
     <ClCompile Include="Source\Framework\file.cpp" />
     <ClCompile Include="Source\Framework\input.cpp" />
     <ClCompile Include="Source\Framework\inputstate.cpp" />
+    <ClCompile Include="Source\Framework\input_getters.cpp" />
     <ClCompile Include="Source\Framework\log.cpp" />
     <ClCompile Include="Source\Framework\opengl2.cpp" />
     <ClCompile Include="Source\Framework\opengl2_shader.cpp" />
@@ -40,11 +42,20 @@
     <ClCompile Include="Source\Framework\windowprocedure.cpp" />
     <ClCompile Include="Source\Framework\windowstate.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Test\ActionMove.cpp" />
+    <ClCompile Include="Source\Test\Entity.cpp" />
     <ClCompile Include="Source\Test\GamepadTest.cpp" />
+    <ClCompile Include="Source\Test\Gloom.cpp" />
+    <ClCompile Include="Source\Test\Level.cpp" />
+    <ClCompile Include="Source\Test\Spawner.cpp" />
     <ClCompile Include="Source\Test\Testing.cpp" />
     <ClCompile Include="Source\Test\Testing_Input.cpp" />
+    <ClCompile Include="Source\Test\Tile.cpp" />
+    <ClCompile Include="Source\Utils\Hexagon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Framework\activity.h" />
+    <ClInclude Include="Source\Framework\camera2d.h" />
     <ClInclude Include="Source\Framework\file.h" />
     <ClInclude Include="Source\Framework\input.h" />
     <ClInclude Include="Source\Framework\inputstate.h" />
@@ -60,8 +71,15 @@
     <ClInclude Include="Source\Framework\timer.h" />
     <ClInclude Include="Source\Framework\window.h" />
     <ClInclude Include="Source\Framework\windowstate.h" />
+    <ClInclude Include="Source\Test\ActionMove.h" />
+    <ClInclude Include="Source\Test\Entity.h" />
     <ClInclude Include="Source\Test\GamepadTest.h" />
+    <ClInclude Include="Source\Test\Gloom.h" />
+    <ClInclude Include="Source\Test\Level.h" />
+    <ClInclude Include="Source\Test\Spawner.h" />
     <ClInclude Include="Source\Test\Testing.h" />
+    <ClInclude Include="Source\Test\Tile.h" />
+    <ClInclude Include="Source\Utils\Hexagon.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

@@ -8,13 +8,15 @@ public:
 	ServiceLocator();
 	~ServiceLocator();
 
-	const TextService& Text();
-	const TextureService& Textures();
+	InputService& Input();
+	TextService& Text();
+	TextureService& Textures();
 private:
 	friend class ServiceAssigner;
 
-	const TextureService* textureService;
-	const TextService* textService;
+	InputService* inputService;
+	TextureService* textureService;
+	TextService* textService;
 };
 
 class ServiceAssigner
@@ -24,6 +26,7 @@ public:
 
 	void SetTextService(TextService& textService);
 	void SetTextureService(TextureService& textureService);
+	void SetInputService(InputService& inputService);
 
 private:
 	ServiceLocator* locator;

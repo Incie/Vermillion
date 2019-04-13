@@ -11,12 +11,17 @@ ServiceLocator::~ServiceLocator()
 {
 }
 
-const TextService& ServiceLocator::Text()
+InputService& ServiceLocator::Input()
+{
+	return *inputService;
+}
+
+TextService& ServiceLocator::Text()
 {
 	return *textService;
 }
 
-const TextureService& ServiceLocator::Textures()
+TextureService& ServiceLocator::Textures()
 {
 	return *textureService;
 }
@@ -24,13 +29,20 @@ const TextureService& ServiceLocator::Textures()
 
 ServiceAssigner::ServiceAssigner(ServiceLocator& locator)
 {
-
+	this->locator = &locator;
 }
 
-void ServiceAssigner::SetTextService(TextService & textService)
+void ServiceAssigner::SetTextService(TextService& textService)
 {
+	locator->textService = &textService;
 }
 
-void ServiceAssigner::SetTextureService(TextureService & textureService)
+void ServiceAssigner::SetTextureService(TextureService& textureService)
 {
+	locator->textureService = &textureService;
+}
+
+void ServiceAssigner::SetInputService(InputService& inputService)
+{
+	locator->inputService = &inputService;
 }

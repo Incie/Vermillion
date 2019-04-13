@@ -71,7 +71,7 @@ void Text::Deinit()
 	fontProgram.UnloadProgram();
 }
 
-void Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color)
+void Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const
 {
 	fontProgram.Use();
 	fontProgram.SetUniform("tex", 0);

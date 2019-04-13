@@ -48,7 +48,6 @@ void InputState::UpdateMouseState()
 	GetCursorPos(&cursorPos);
 
 	InputStates::mouseState.mousePositionLast.Set(InputStates::mouseState.mousePositionCurrent);
-
 	InputStates::mouseState.mousePositionCurrent.Set(cursorPos.x, cursorPos.y);
 
 	auto& mousePosition = InputStates::mouseState.mousePositionCurrent;
@@ -61,9 +60,16 @@ void InputState::UpdateMouseState()
 	mousePosition.y = min(mousePosition.y, windowSize.y);
 	mousePosition.x = max(mousePosition.x, 0);
 	mousePosition.y = max(mousePosition.y, 0);
+
+	auto& mousePositionNormalized = InputStates::mouseState.mousePositionCurrentNormalized;
+	mousePositionNormalized.x = mousePosition.x / (float)windowSize.x;
+	mousePositionNormalized.y = mousePosition.y / (float)windowSize.y;
 	
 	InputStates::keyboardStates[VK_LBUTTON] = GetAsyncKeyState(VK_LBUTTON) ? 1 : 0;
 	InputStates::keyboardStates[VK_RBUTTON] = GetAsyncKeyState(VK_RBUTTON) ? 1 : 0;
+
+	auto deltaMouse = InputStates::mouseState.mousePositionCurrent - InputStates::mouseState.mousePositionLast;
+	InputStates::mouseState.mousePositionDelta.Set(deltaMouse.x, deltaMouse.y);
 }
 
 void InputState::UpdateGamepadState()
