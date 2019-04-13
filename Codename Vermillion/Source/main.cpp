@@ -15,7 +15,7 @@
 
 #include"fmt\format.h"
 
-int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int nShow) 
+int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ LPSTR cmdLine, _In_ int nShow)
 {
 	Log::Info("", "");
 	Log::Info("Application", "Starting...");

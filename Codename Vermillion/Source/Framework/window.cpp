@@ -5,7 +5,7 @@ LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT   uMsg, _In_ WPARAM wParam
 
 #define LOGTAG "Window"
 
-Window::Window()
+Window::Window() : hDC(nullptr), hWnd(nullptr), hInstance(nullptr)
 {
 }
 
@@ -31,7 +31,7 @@ void Window::Create(HINSTANCE hInstance)
 	windowClass.Create(hInstance, WindowProc);
 
 	Log::Info(LOGTAG, "Creating Window");
-	hWnd = CreateWindow(windowClass.classname().c_str(), "Project Vermillion", WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_OVERLAPPEDWINDOW, 250, 250, 512, 512, nullptr, nullptr, hInstance, nullptr);
+	hWnd = CreateWindow(windowClass.classname().c_str(), "Project Vermillion", WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_OVERLAPPEDWINDOW, 250, 25, 1024, 1024, nullptr, nullptr, hInstance, nullptr);
 
 	if (hWnd == NULL) {
 		Log::Error(LOGTAG, "Error Creating Window");

@@ -11,7 +11,7 @@ public:
 	void Init();
 	void Deinit();
 	
-	void Print(double x, double y, const std::string &text, unsigned int fontHeight, const Colorf& color);
+	void Print(double x, double y, const std::string &text, unsigned int fontHeight, const Colorf& color) const;
 
 
 private:

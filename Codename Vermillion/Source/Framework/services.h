@@ -23,7 +23,7 @@ public:
 
 class TextService {
 public:
-	virtual void Print(double x, double y, const std::string &text, unsigned int fontHeight, const Colorf& color) = 0;
+	virtual void Print(double x, double y, const std::string &text, unsigned int fontHeight, const Colorf& color) const = 0;
 };
 
 

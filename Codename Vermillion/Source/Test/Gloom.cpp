@@ -5,76 +5,43 @@
 #include<Windows.h>
 #include"../Utils/Hexagon.h"
 #include"fmt/format.h"
+#include "Level.h"
 
+#include"ActionMove.h"
 
-Gloom::Gloom()
+Gloom::Gloom() : action(nullptr)
 {
 }
 
 Gloom::~Gloom()
 {
+	if (action)
+		delete action;
 }
 
-Hexagon playerHex = Hexagon(glm::vec2(), 25, 15);
-
-std::vector<Hexagon> hexGrid;
 void Gloom::Initialize()
 {
-	double size = 50.0;
-	double width = 2.0 * size;
-	double height = sqrt(3.0) * size;
-
-	auto nY = 10;
-	auto nX = 10;
-
-	auto start = 0;
-
-	glm::ivec3 coord = glm::ivec3(0, 0, 0);
-	for (int y = start; y < nY; ++y) {
-		auto h = height * (double)y;
-
-		coord.x = 0;
-		coord.y = -y;
-		coord.z = y;
-
-		for (int x = start; x < nX; ++x) {
-			auto w = (3.0 / 4.0) * width * (double)x;
-
-			double add = 0.0;
-			if (x % 2 == 1)
-				add = 0.5 * height;
-
-			auto hex = Hexagon(glm::vec2(w, h + add), 40, 50);
-			hex.cubeCoordinate = coord;
-			hexGrid.push_back(hex);
-
-
-			coord.x++;
-			if (x % 2 == 0) coord.y--;
-			coord.z = -(coord.x + coord.y);
-		}
-	}
-
-
-	playerHex.center = hexGrid[0].center;
-	playerHex.center.z = 15.0f;
-	playerHex.SetColor(glm::vec3(0.2f, 0.15f, 0.88f));
+	level.Generate();
+	level.Spawn();
 }
 
 void Gloom::Deinitialize()
 {
 }
 
-
-Hexagon *selectedHex = nullptr;
-glm::ivec3 selectedCoord;
-
-bool hasDistance = false;
-glm::ivec3 distance;
-
 void Gloom::Update(double deltaTime)
 {
 	const auto& input = Services().Input();
+
+	if (action == nullptr && input.KeyOnce(VK_F1)) {
+		//action = new ActionMove(level, level.playerHex.cubeCoordinate, 3);
+	}
+
+	if (input.KeyOnce(VK_F3))
+		level.ShowCoords(true);
+
+	if (input.KeyOnce('B'))
+		camera.SetPositionTopLeft(glm::vec2());
 
 	if (input.KeyDown(VK_RBUTTON)) {
 		const auto& deltaMouse = input.GetMouseDelta();
@@ -84,43 +51,31 @@ void Gloom::Update(double deltaTime)
 	if (input.KeyDown(VK_ADD)) camera.ZoomByFactor(0.9);
 	if (input.KeyDown(VK_SUBTRACT)) camera.ZoomByFactor(1.1);
 
+
 	glm::vec2 cameraMouse;
 	cameraMouse = camera.ScreenToViewCoords(input.GetMousePositionNormalized());
 
+	level.Update(cameraMouse);
 
-	Hexagon* closestHex = nullptr;
-	float closestDistance = 10e10;
-	for (auto& hex : hexGrid) {
-		hex.SetColor(glm::vec3(1, 1, 1));
-		auto distFromCenter = hex.DistanceFromCenterTo(cameraMouse);
-		if (distFromCenter < 50.0) {
-			if (distFromCenter < closestDistance) {
-				closestHex = &hex;
-				closestDistance = distFromCenter;
-			}
-		}
+	if (action != nullptr && input.KeyOnce(VK_LBUTTON)) {
+		if (level.HasHoverTarget())
+			action->Click(level.GetHoverTarget().Location() );
 	}
 
-	if( closestHex != nullptr )
-		closestHex->SetColor(glm::vec3(0.5, 0, 0));
-
-	if (input.KeyOnce(VK_LBUTTON) && closestHex != nullptr )
-		selectedHex = closestHex;
-
-	if( selectedHex != nullptr )
-		selectedHex->SetColor(glm::vec3(0, 1, 0));
-
-	hasDistance = false;
-	if (selectedHex != nullptr && closestHex != nullptr) {
-		distance = closestHex->cubeCoordinate - selectedHex->cubeCoordinate;
-		hasDistance = true;
+	if (action != nullptr && input.KeyOnce(VK_BACK)) {
+		action->Undo();
 	}
 
-	if (input.KeyOnce(VK_SPACE)) {
-		if (closestHex != nullptr) {
-			playerHex.center = closestHex->center;
-			playerHex.center.z = 5.0f;
-		}
+	if( action != nullptr && input.KeyOnce(VK_ESCAPE) ){
+		action->Reset();
+		delete action;
+		action = nullptr;
+	}
+
+	if (action != nullptr && input.KeyOnce(VK_RETURN)) {
+		//action->Perform(level.playerHex);
+		delete action;
+		action = nullptr;
 	}
 }
 
@@ -140,33 +95,21 @@ void Gloom::Render()
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 
-
 	camera.Push();
-		for (auto h : hexGrid)
-			h.Render();
-
 		glPushMatrix();
-			glTranslatef(playerHex.center.x, playerHex.center.y, playerHex.center.z);
-			playerHex.Render();
+			glBegin(GL_LINES);
+				glVertex2f(0, -500); glVertex2f(0, 500);
+				glVertex2f(-500, 0); glVertex2f(500, 0);
+			glEnd();
 		glPopMatrix();
 
-	glDisable(GL_LIGHTING);
-	glDisable(GL_LIGHT0);
+		level.Render( Services().Text() );
 
-	auto& text = Services().Text();
-	/*for (auto h : hexGrid) {
-		glPushMatrix();
-			glTranslatef(h.center.x - 20.0f, h.center.y, h.center.z);
-			text.Print(0, 0, fmt::format("{0},{1},{2}", h.cubeCoordinate.x, h.cubeCoordinate.y, h.cubeCoordinate.z), 16, Colorf(0,0,0));
-		glPopMatrix();
-	}*/
-
+		if (action)
+			action->Render();
 	camera.Pop();
 
-	if (hasDistance) {
-		int hexDistance = abs(distance.x) + abs(distance.y) + abs(distance.z);
-		text.Print(0, 50, fmt::format("{0},{1},{2} = {3}", distance.x, distance.y, distance.z, hexDistance / 2), 16, Colorf(1));
+	if (action != nullptr) {
+		Services().Text().Print(200, 25, "MOVING", 20, Colorf(1, 1, 1));
 	}
-
-
 }

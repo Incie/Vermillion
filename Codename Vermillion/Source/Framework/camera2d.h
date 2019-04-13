@@ -27,7 +27,7 @@ public:
 	float GetZoomValue() { return zoomValue; }
 
 private:
-	void UpdateViewport();
+	void UpdateViewportSize();
 	void UpdateCameraPosition();
 
 	float zoomValue;

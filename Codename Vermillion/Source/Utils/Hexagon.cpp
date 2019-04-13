@@ -1,11 +1,17 @@
 #include "Hexagon.h"
 #include"gl/glew.h"
 
-Hexagon::Hexagon(const glm::vec2& v, double innerRadius, double outerRadius)
+Hexagon::Hexagon()
+	: highlight(glm::vec3()), color(glm::vec3())
 {
-	color = glm::vec3(1, 1, 1);
-	center = glm::vec3(v.x, v.y, 0.0);
+	memset(points, 0, sizeof(points));
+	memset(points, 0, sizeof(normals));
 
+	SetColor(glm::vec3(1, 1, 1));
+}
+
+void Hexagon::Generate(const glm::vec2& v, double innerRadius, double outerRadius)
+{
 	const double TAU = 3.14159265 * 2.0;
 
 	glm::vec3 vertices[12];
@@ -38,9 +44,9 @@ Hexagon::Hexagon(const glm::vec2& v, double innerRadius, double outerRadius)
 	}
 
 	for (int i = 0; i < 4; ++i) {
-		points[36 + i*3] = vertices[0];
-		points[37 + i*3] = vertices[2 + i*2];
-		points[38 + i*3] = vertices[4 + i*2];
+		points[36 + i * 3] = vertices[0];
+		points[37 + i * 3] = vertices[2 + i * 2];
+		points[38 + i * 3] = vertices[4 + i * 2];
 	}
 
 	for (int i = 0; i < num_points; i += 3) {
@@ -49,15 +55,15 @@ Hexagon::Hexagon(const glm::vec2& v, double innerRadius, double outerRadius)
 
 		auto normal = glm::normalize(glm::cross(v2, v1));
 		normals[i] = normal;
-		normals[i+1] = normal;
-		normals[i+2] = normal;		
+		normals[i + 1] = normal;
+		normals[i + 2] = normal;
 	}
 }
 
-void Hexagon::Render()
+void Hexagon::Render() const
 {
 	glBegin(GL_TRIANGLES);
-		glColor3fv(&color.x);
+		glColor3fv(&highlight.x);
 		for (auto i = 0; i < num_points; ++i) {
 			glNormal3fv(&normals[i].x);
 			glVertex3fv(&points[i].x);
@@ -72,10 +78,4 @@ void Hexagon::Render()
 	//		glVertex3fv(&normalPoint.x);
 	//	}
 	//glEnd();
-}
-
-double Hexagon::DistanceFromCenterTo(const glm::vec2 & point) const
-{
-	glm::vec3 v = center - glm::vec3(point.x, point.y, 0.0f);
-	return glm::distance(glm::vec3(point.x, point.y, 0.0f), center);
 }

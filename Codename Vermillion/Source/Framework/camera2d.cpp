@@ -4,8 +4,14 @@
 
 Camera2D::Camera2D() 
 	: zoomValue(1.0f),
-	  depth(50.0f)
+	  depth(50.0f),
+	  center(glm::vec2()),
+	  positionBottomRight(glm::vec2()),
+	  positionTopLeft(glm::vec2()),
+	  scaledViewport(glm::vec2()),
+	  viewportSize(glm::vec2())
 {
+	SetPositionTopLeft(glm::vec2(25, -50));
 }
 
 Camera2D::~Camera2D()
@@ -14,7 +20,7 @@ Camera2D::~Camera2D()
 
 glm::vec2 Camera2D::ScreenToViewCoords(const glm::vec2& screenCoordNormalized)
 {
-	UpdateViewport();
+	UpdateViewportSize();
 	UpdateCameraPosition();
 
 	return positionTopLeft + scaledViewport * screenCoordNormalized;
@@ -32,7 +38,9 @@ void Camera2D::SetPositionCenter(const glm::vec2& position)
 
 void Camera2D::SetPositionTopLeft(const glm::vec2& position)
 {
+	UpdateViewportSize();
 	this->positionTopLeft = position;
+	center = positionTopLeft + scaledViewport * 0.5f;
 }
 
 void Camera2D::SetSize(float width, float height)
@@ -43,7 +51,7 @@ void Camera2D::SetSize(float width, float height)
 
 void Camera2D::Move(const glm::vec2& move)
 {
-	UpdateViewport();
+	UpdateViewportSize();
 	auto cameraMove = (move / viewportSize);
 	cameraMove *= scaledViewport;
 
@@ -66,7 +74,7 @@ void Camera2D::Push()
 	glPushMatrix();
 	glLoadIdentity();
 
-	UpdateViewport();
+	UpdateViewportSize();
 	UpdateCameraPosition();
 
 	glOrtho(positionTopLeft.x, 
@@ -90,7 +98,7 @@ void Camera2D::Pop()
 	glPopMatrix();
 }
 
-void Camera2D::UpdateViewport()
+void Camera2D::UpdateViewportSize()
 {
 	int viewport[4] = { 0 };
 	glGetIntegerv(GL_VIEWPORT, viewport);
