@@ -4,7 +4,6 @@
 #include"../Framework/input.h"
 
 /** Keyboard **/
-
 glm::vec2 PlayerInputKeys::GetMovement()
 {
 	glm::vec2 move = glm::vec2();
@@ -13,9 +12,9 @@ glm::vec2 PlayerInputKeys::GetMovement()
 	if (FrameworkPointers::inputManager->KeyDown('D'))
 		move.x += 1.0f;
 
-	if (FrameworkPointers::inputManager->KeyDown('S'))
-		move.y -= 1.0f;
 	if (FrameworkPointers::inputManager->KeyDown('W'))
+		move.y -= 1.0f;
+	if (FrameworkPointers::inputManager->KeyDown('S'))
 		move.y += 1.0f;
 
 	if (glm::length(move) < 0.001f)
@@ -31,7 +30,8 @@ bool PlayerInputKeys::Shoot()
 
 glm::vec2 PlayerInputKeys::GetAim(const glm::vec2& from)
 {
-	return FrameworkPointers::inputManager->GetMousePosition()- from;
+	const auto& mousePos = FrameworkPointers::inputManager->GetMousePosition();
+	return mousePos - from;
 }
 
 double PlayerInputKeys::GetAimMultiplier()
@@ -41,7 +41,6 @@ double PlayerInputKeys::GetAimMultiplier()
 
 
 /** Gampad **/
-
 glm::vec2 PlayerInputGamepad::GetMovement()
 {
 	return FrameworkPointers::inputManager->GamePadLeftStick();

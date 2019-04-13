@@ -6,6 +6,7 @@
 class InputManager;
 class Window;
 class GL2Renderer;
+
 class FrameworkPointers {
 public:
 	static GL2Renderer* renderer;
@@ -17,6 +18,8 @@ class Window
 {
 public:
 	Window();
+
+	bool ProcessMessages();
 
 	void Create(HINSTANCE hInstance);
 	void Destroy();

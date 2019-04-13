@@ -19,7 +19,7 @@ void Window::WindowClass::Create(HINSTANCE hInstance, WNDPROC wndProc)
 	wndclass.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
 	wndclass.hIconSm = nullptr;
 	wndclass.hIcon = nullptr;
-	wndclass.hCursor = nullptr;
+	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wndclass.style = CS_VREDRAW | CS_HREDRAW | CS_OWNDC;
 	wndclass.hInstance = hInstance;
 	wndclass.lpfnWndProc = wndProc;
