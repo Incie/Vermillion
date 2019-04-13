@@ -6,7 +6,7 @@ class Hexagon
 {
 public:
 	Hexagon();
-	void Generate(const glm::vec2& v, double innerRadius, double outerRadius);
+	void Generate(const glm::vec2& v, float innerRadius, float outerRadius);
 	void Render() const;
 	
 	void SetColor(const glm::vec3& color) { this->color = color; this->highlight = color; }

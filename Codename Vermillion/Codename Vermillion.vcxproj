@@ -145,6 +145,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Build\</OutDir>
+    <ReferencePath>$(VC_ReferencesPath_x64); D:\devapps\vcpkg\installed\x64-windows\bin</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -178,13 +179,14 @@
       <BrowseInformation>true</BrowseInformation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>Source\Framework\pch</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source\Framework\pch;D:\devapps\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>/VERBOSE:UNUSEDLIBS %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib;fmt.lib;libpng16.lib;jpeg.lib;zlib.lib;freetype.lib;glew32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\devapps\vcpkg\installed\x64-windows\lib</AdditionalLibraryDirectories>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

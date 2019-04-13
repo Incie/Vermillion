@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "Gloom.h"
 #include"GL/glew.h"
 #include"glm/glm.hpp"
@@ -48,8 +49,8 @@ void Gloom::Update(double deltaTime)
 		camera.Move(deltaMouse);
 	}
 
-	if (input.KeyDown(VK_ADD)) camera.ZoomByFactor(0.9);
-	if (input.KeyDown(VK_SUBTRACT)) camera.ZoomByFactor(1.1);
+	if (input.KeyDown(VK_ADD)) camera.ZoomByFactor(0.9f);
+	if (input.KeyDown(VK_SUBTRACT)) camera.ZoomByFactor(1.1f);
 
 
 	glm::vec2 cameraMouse;
@@ -86,7 +87,7 @@ void Gloom::Render()
 	glEnable(GL_COLOR_MATERIAL);
 
 	float ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	float diffuseLight[] = { 0.8f, 0.8f, 0.8, 1.0f };
+	float diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f };
 	float specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glm::vec4 lightDirection = glm::vec4(0.355336f, 0.906561, -0.227779, 0.0);
 

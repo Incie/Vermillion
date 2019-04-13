@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "Tile.h"
 
 Tile::Tile(glm::ivec3 location, glm::vec3 worldpos)
