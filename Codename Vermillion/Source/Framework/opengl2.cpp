@@ -1,8 +1,9 @@
+#include"pch.h"
+
 #include "opengl2.h"
 #include"GL/glew.h"
 #include<gl/glu.h>
 #include"log.h"
-#include"fmt\format.h"
 
 GL2Renderer::GL2Renderer()
 {
@@ -87,7 +88,7 @@ void GL2Renderer::SetViewport(int width, int height)
 	glLoadIdentity();
 
 	glViewport(0, 0, width, height);
-	glOrtho(0, width, height, 0, -1, 1);
+	glOrtho(0, width, height, 0, -100, 100);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

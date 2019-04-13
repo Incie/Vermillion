@@ -1,8 +1,8 @@
+#include"pch.h"
 #include "Testing.h"
 #include"../Framework/input.h"
 #include<Windows.h>
 #include<gl/GL.h>
-#include"glm\glm.hpp"
 
 #include"../Framework/textures.h"
 

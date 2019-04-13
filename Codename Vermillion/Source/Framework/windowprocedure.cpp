@@ -1,7 +1,7 @@
+#include"pch.h"
 #include"window.h"
 #include"opengl2.h"
 #include"log.h"
-#include"fmt\format.h"
 
 #include"inputstate.h"
 #include"windowstate.h"

@@ -1,3 +1,4 @@
+#include"pch.h"
 #include<Windows.h>
 
 #include"Framework\window.h"
@@ -6,13 +7,15 @@
 #include"Framework\timer.h"
 #include"Framework\input.h"
 #include"Framework\text.h"
+#include"Framework\servicelocator.h"
+#include"Framework\textures.h"
 
 #include"Test\GamepadTest.h"
 #include"Test\Testing.h"
+#include"Test\Gloom.h"
 
-#include"fmt\format.h"
 
-int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int nShow) 
+int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ LPSTR cmdLine, _In_ int nShow)
 {
 	Log::Info("", "");
 	Log::Info("Application", "Starting...");
@@ -31,7 +34,10 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 
 	window.Show();
 
-	Text::Init();
+	Text text;
+	text.Init();
+
+	TextureManager textureManager;
 
 	Timer renderTimer;
 	renderTimer.LimitByMilliseconds(17);
@@ -39,26 +45,26 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	Timer fpsTimer;
 	fpsTimer.LimitByMilliseconds(1000);
 
-	Testing testing;
+	Gloom testing;
+	//Testing testing;
 	//GamepadTest testing;
+	
+	testing.Initialize();
 
 	unsigned int fps = 0;
 	unsigned int fpsCounter = 0;
 
-	MSG msg;
+	ServiceLocator serviceLocator;
+	ServiceAssigner serviceAssigner(serviceLocator);
+	serviceAssigner.SetTextService(text);
+	serviceAssigner.SetTextureService(textureManager);
+	serviceAssigner.SetInputService(inputManager);
+
+	testing.SetServiceLocator(serviceLocator);
+
 	bool quitProgram = false;
 	while (!quitProgram) {
-		while(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
-		{
-			if (msg.message == WM_QUIT) {
-				Log::Info("Application", "WM_QUIT Posted");
-				quitProgram = true;
-				break;
-			}
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
+		quitProgram = window.ProcessMessages();
 
 		if (fpsTimer.Tick()) {
 			fps = fpsCounter;
@@ -72,7 +78,7 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 			renderer.StartFrame();
 			testing.Update(renderTimer.GetDelta());
 			testing.Render();
-			Text::Render(0, 0, fmt::format("FPS: {0}", fps), 24, glm::vec4(1,1,1,1) );
+			text.Print(0, 0, fmt::format("FPS: {0}", fps), 24, Colorf(1.0f) );
 			renderer.EndFrame();
 
 			fpsCounter++;
@@ -82,8 +88,11 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR cmdLine, int n
 	}
 	
 	Log::Info("Application", "Shutting down");
+	
+	testing.Deinitialize();
 
-	Text::Deinit();
+	text.Deinit();
+	textureManager.UnloadAll();
 
 	renderer.DestroyRenderContext();
 	window.Destroy();

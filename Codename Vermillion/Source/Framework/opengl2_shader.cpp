@@ -1,8 +1,9 @@
+#include"pch.h"
 #include "opengl2_shader.h"
 #include"GL\glew.h"
 #include"log.h"
 #include"file.h"
-#include"fmt\format.h"
+
 
 GLSLShader::GLSLShader()
 {
@@ -12,20 +13,20 @@ GLSLShader::~GLSLShader()
 {
 }
 
-bool GLSLShader::Load(const std::string & shader)
+bool GLSLShader::Load(const std::string & shaderFilePath)
 {
-	if (shader.find(".vert") != std::string::npos ) {
+	if (shaderFilePath.find(".vert") != std::string::npos ) {
 		shaderId = glCreateShader(GL_VERTEX_SHADER);
 	}
-	else if (shader.find(".frag") != std::string::npos) {
+	else if (shaderFilePath.find(".frag") != std::string::npos) {
 		shaderId = glCreateShader(GL_FRAGMENT_SHADER);
 	}
 	else {
-		Log::Error("GLSLShader", "Shadertype not suppoerted");
-		Log::Error("GLSLShader", shader);
+		Log::Error("GLSLShader", "Shadertype not supported");
+		Log::Error("GLSLShader", shaderFilePath);
 	}
 
-	const auto shaderContent = FileReader::ReadFileContent(shader);
+	const auto shaderContent = FileReader::ReadFileContent(shaderFilePath);
 	const char* charContent = shaderContent.c_str();
 	int shaderContentLength = (int)shaderContent.length();
 	glShaderSource(shaderId, 1, &charContent, &shaderContentLength);
@@ -75,6 +76,12 @@ void GLSLProgram::SetUniform(const std::string & uniformname, int value)
 }
 
 void GLSLProgram::SetUniform(const std::string & uniformname, const glm::vec4 & color)
+{
+	auto uniformlocation = glGetUniformLocation(programId, uniformname.c_str());
+	glUniform4f(uniformlocation, color.r, color.g, color.b, color.a);
+}
+
+void GLSLProgram::SetUniform(const std::string & uniformname, const Colorf& color)
 {
 	auto uniformlocation = glGetUniformLocation(programId, uniformname.c_str());
 	glUniform4f(uniformlocation, color.r, color.g, color.b, color.a);
