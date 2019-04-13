@@ -1,7 +1,7 @@
 #pragma once
 
 #include<Windows.h>
-#include<string>
+#include"pch.h"
 
 class InputManager;
 class Window;

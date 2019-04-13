@@ -1,3 +1,4 @@
+#include"pch.h"
 #include"input.h"
 
 bool InputManager::KeyDown(char keyCode) const

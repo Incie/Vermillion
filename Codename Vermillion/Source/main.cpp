@@ -1,3 +1,4 @@
+#include"pch.h"
 #include<Windows.h>
 
 #include"Framework\window.h"
@@ -13,7 +14,6 @@
 #include"Test\Testing.h"
 #include"Test\Gloom.h"
 
-#include"fmt\format.h"
 
 int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ LPSTR cmdLine, _In_ int nShow)
 {
@@ -64,7 +64,6 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 
 	bool quitProgram = false;
 	while (!quitProgram) {
-
 		quitProgram = window.ProcessMessages();
 
 		if (fpsTimer.Tick()) {

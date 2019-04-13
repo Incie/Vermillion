@@ -1,5 +1,6 @@
 #pragma once
 
+#include"pch.h"
 
 template<class T>
 class Point {

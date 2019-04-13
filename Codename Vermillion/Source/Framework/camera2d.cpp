@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "camera2d.h"
 #include"GL/glew.h"
 

@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "Level.h"
 #include"GL/glew.h"
 #include"fmt/format.h"
@@ -85,7 +86,7 @@ void Level::Spawn()
 void Level::Update(const glm::vec2& cameraMouse)
 {
 	Tile* closestTile = nullptr;
-	float closestDistance = 10e10;
+	float closestDistance = 10e10f;
 	for (auto tile : activeLevel) {
 		//hex.SetColor(glm::vec3(1, 1, 1));
 
@@ -93,7 +94,7 @@ void Level::Update(const glm::vec2& cameraMouse)
 		if (distFromCenter < 50.0) {
 			if (distFromCenter < closestDistance) {
 				closestTile = tile;
-				closestDistance = distFromCenter;
+				closestDistance = (float)distFromCenter;
 			}
 		}
 	}

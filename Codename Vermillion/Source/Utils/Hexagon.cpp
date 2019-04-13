@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "Hexagon.h"
 #include"gl/glew.h"
 
@@ -10,7 +11,7 @@ Hexagon::Hexagon()
 	SetColor(glm::vec3(1, 1, 1));
 }
 
-void Hexagon::Generate(const glm::vec2& v, double innerRadius, double outerRadius)
+void Hexagon::Generate(const glm::vec2& v, float innerRadius, float outerRadius)
 {
 	const double TAU = 3.14159265 * 2.0;
 

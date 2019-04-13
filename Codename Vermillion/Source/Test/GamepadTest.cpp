@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "GamepadTest.h"
 #include"GL\glew.h"
 

@@ -1,10 +1,13 @@
+#include"pch.h"
+
 #include"textures_pngloader.h"
 #include"png.h"
 #include"pnglibconf.h"
 #include"log.h"
-#include"fmt\format.h"
 
-#define LOGTAG "PNGLoader"
+//todo: logtag macro?
+//automaticly use logtag in a LOG macro?
+static const char* const LOGTAG = "PNGLoader";
 
 PNGLoader::PNGLoader()
 {

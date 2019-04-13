@@ -1,16 +1,15 @@
+#include"pch.h"
+
 #include "text.h"
 #include"ft2build.h"
 #include"freetype\freetype.h"
 #include"log.h"
-#include"fmt\format.h"
 
 #include"opengl2.h"
 #include"opengl2_shader.h"
 #include"GL\glew.h"
 #include"glm\glm.hpp"
 
-#include<algorithm>
-#include<map>
 
 void RenderFaceToTextures(FT_Face &face);
 
