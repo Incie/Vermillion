@@ -29,7 +29,7 @@ void Entity::SetRenderModel(Hexagon& hex)
 void Entity::Render(const TextService& text)
 {
 	glPushMatrix();
-		glTranslatef(positionWorld.x, positionWorld.y, positionWorld.z);
+		glTranslatef((float)positionWorld.x, (float)positionWorld.y, (float)positionWorld.z);
 		renderModel.Render();
 	glPopMatrix();
 }

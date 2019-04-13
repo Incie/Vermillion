@@ -13,13 +13,13 @@ Hexagon::Hexagon()
 
 void Hexagon::Generate(const glm::vec2& v, float innerRadius, float outerRadius)
 {
-	const double TAU = 3.14159265 * 2.0;
+	const float TAU = 3.14159265f * 2.0f;
 
 	glm::vec3 vertices[12];
 	for (int i = 0; i < 6; ++i) {
-		double angle = TAU * ((double)i / 6.0);
-		double x = cos(angle);
-		double y = sin(angle);
+		float angle = TAU * ((float)i / 6.0f);
+		float x = cos(angle);
+		float y = sin(angle);
 
 		auto index = i * 2;
 		vertices[index].x = x * innerRadius + v.x;
