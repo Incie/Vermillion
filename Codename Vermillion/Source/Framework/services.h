@@ -24,6 +24,8 @@ public:
 class TextService {
 public:
 	virtual void Print(double x, double y, const std::string &text, unsigned int fontHeight, const Colorf& color) const = 0;
+	virtual void PrintCenter(const double x, const double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const = 0;
+	virtual void PrintLine(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const = 0;
 };
 
 

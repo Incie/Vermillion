@@ -2,10 +2,10 @@
 
 #include"../Framework/activity.h"
 #include"../Framework/camera2d.h"
-#include"Level.h"
 
-class Level;
-class ActionMove;
+#include"level/Level.h"
+
+class Action;
 
 class Gloom : public Activity
 {
@@ -22,5 +22,5 @@ public:
 private:
 	Camera2D camera;
 	Level level;
-	ActionMove* action;
+	Action* action;
 };

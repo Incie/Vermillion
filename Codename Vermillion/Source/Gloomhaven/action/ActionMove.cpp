@@ -1,10 +1,14 @@
 #include"pch.h"
 #include "ActionMove.h"
+#include"../entity/Entity.h"
+#include"../level/Level.h"
 
 
-ActionMove::ActionMove(Level&level, glm::ivec3 center, int moveMax) 
-	: level(level), start(center), moveMax(moveMax), movesLeft(moveMax), currentPosition(center)
+ActionMove::ActionMove(Level&level, Actor& actor, int moveMax) 
+	: Action(level, actor), moveMax(moveMax), movesLeft(moveMax)
 {
+	actionDescription = fmt::format("Move {0} Flying/Jumping [no]", moveMax);
+	currentPosition = actor.Position();
 	Highlight();
 }
 
@@ -17,12 +21,15 @@ void ActionMove::Click(const glm::ivec3& target)
 	if (movesLeft == 0)
 		return;
 
-	auto clickedHex = level.TileAt(target);
+	auto clickedTile = level.TileAt(target);
 
-	if (clickedHex.DistanceTo(currentPosition) != 1)
+	if (clickedTile.DistanceTo(currentPosition) != 1)
 		return;
 
-	currentPosition = clickedHex.Location();
+	if (clickedTile.IsOccupied() && clickedTile.DistanceTo(actor.Position()) != 0 )
+		return;
+
+	currentPosition = clickedTile.Location();
 	movesLeft--;
 
 	plannedRoute.push_back(currentPosition);
@@ -43,7 +50,7 @@ void ActionMove::Undo()
 		return;
 	}
 
-	currentPosition = start;
+	currentPosition = actor.Position();
 	movesLeft = moveMax;
 	Highlight();
 }
@@ -54,12 +61,22 @@ void ActionMove::Reset()
 	level.ClearHighlights();
 }
 
-void ActionMove::Perform(Actor& actor)
+bool ActionMove::Perform(Actor& actor)
 {
 	auto& tile = level.TileAt(currentPosition);
+
+	if (tile.IsOccupied() && tile.DistanceTo(actor.Position()) != 0 )
+		return false;
+
+	
+	auto& startTile = level.TileAt(actor.Position());
+	startTile.SetOccupied(-1);
+	tile.SetOccupied(actor.EntityId());
+
 	actor.SetPosition(tile.Location(), tile.WorldPosition());
 
 	level.ClearHighlights();
+	return true;
 }
 
 #include"GL/glew.h"
@@ -70,7 +87,7 @@ void ActionMove::Render()
 
 	glBegin(GL_LINES);
 	
-		auto& h0 = level.TileAt(start);
+		auto& h0 = level.TileAt(actor.Position());
 		auto& h1 = level.TileAt(plannedRoute[0]);
 		glVertex2fv(&h0.WorldPosition().x); glVertex2fv(&h1.WorldPosition().x);
 

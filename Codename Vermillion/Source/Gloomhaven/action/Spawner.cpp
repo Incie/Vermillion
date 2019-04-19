@@ -1,6 +1,7 @@
 #include"pch.h"
 #include "Spawner.h"
-#include"Level.h"
+#include"../level/Level.h"
+#include"../entity/Entity.h"
 
 Spawner::Spawner(Level& level)
 	: level(level), spawnerIdGenerator(0)
@@ -36,7 +37,7 @@ void Spawner::SpawnPlayer(glm::ivec3 location)
 	newPlayer->SetPosition(tile.Location(), tile.WorldPosition());
 
 	auto hex = Hexagon();
-	newPlayer->RenderModel().Generate(glm::vec2(0, 0), 40, 45);
+	newPlayer->RenderModel().Generate(glm::vec2(0, 0), 30, 35);
 	newPlayer->RenderModel().SetColor(glm::vec3(0.24f, 0.1f, 0.95f));
 	tile.SetOccupied(newPlayer->EntityId());
 	level.AddEntity(newPlayer);
@@ -59,7 +60,7 @@ void Spawner::SpawnMonster(glm::ivec3 location, bool elite)
 
 	enemyattributes enemyattr;
 	enemyattr.enemyId = 0;
-	enemyattr.enemyType = elite ? EnemyType::Elite : EnemyType::Elite;
+	enemyattr.enemyType = elite ? EnemyType::Elite : EnemyType::Normal;
 
 	auto* newEnemy = new Enemy();
 	newEnemy->Setup(enemyattr, aa, ea);
@@ -67,7 +68,7 @@ void Spawner::SpawnMonster(glm::ivec3 location, bool elite)
 	newEnemy->SetPosition(tile.Location(), tile.WorldPosition());
 
 	auto& hex = newEnemy->RenderModel();
-	hex.Generate(glm::vec2(0, 0), 40, 45);
+	hex.Generate(glm::vec2(0, 0), 30, 35);
 	if (elite) 
 		hex.SetColor(glm::vec3(0.8f, 0.8f, 0.1f));
 	else hex.SetColor(glm::vec3(0.8f, 0.8f, 0.8f));

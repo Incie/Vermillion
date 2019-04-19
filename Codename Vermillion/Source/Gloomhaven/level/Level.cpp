@@ -2,8 +2,9 @@
 #include "Level.h"
 #include"GL/glew.h"
 #include"fmt/format.h"
-#include"../Framework/services.h"
-#include"Spawner.h"
+#include"../../Framework/services.h"
+#include"../action/Spawner.h"
+#include"../entity/Entity.h"
 
 Level::Level() 
 	: distance(), selectedCoord(), hoverTarget(nullptr), spawner(*this)
@@ -15,9 +16,9 @@ Level::Level()
 
 Level::~Level()
 {
-	for (auto tile : activeLevel)
+	for (auto tile : tiles)
 		delete tile;
-	activeLevel.clear();
+	tiles.clear();
 
 	for (auto entity : entities)
 		delete entity;
@@ -52,8 +53,8 @@ void Level::Generate()
 			if (x % 2 == 1)
 				add = 0.5 * height;
 
-			activeLevel.push_back( new Tile(coord, glm::vec3(w, h+add, 0.0f)) );
-			auto &tile = *activeLevel.back();
+			tiles.push_back( new Tile(coord, glm::vec3(w, h+add, 0.0f)) );
+			auto &tile = *tiles.back();
 			tile.GetHexagon().Generate(glm::vec2(w, h + add), 40, 50);
 
 			coord.x++;
@@ -62,16 +63,6 @@ void Level::Generate()
 			coord.z = -(coord.x + coord.y);
 		}
 	}
-
-	//enemyHex.center = GetCenterCoord(4, -1, -3);
-	//enemyHex.center.z = 15.0f;
-	//enemyHex.SetColor(glm::vec3(0.5, 0.15, 0.2));
-
-
-	//playerHex.cubeCoordinate = glm::ivec3(4, -5, 1);
-	//playerHex.center = GetCenterCoord(4, -5, 1);
-	//playerHex.center.z = 15.0f;
-	//playerHex.SetColor(glm::vec3(0.2f, 0.15f, 0.88f));
 }
 
 void Level::Spawn()
@@ -87,9 +78,8 @@ void Level::Update(const glm::vec2& cameraMouse)
 {
 	Tile* closestTile = nullptr;
 	float closestDistance = 10e10f;
-	for (auto tile : activeLevel) {
-		//hex.SetColor(glm::vec3(1, 1, 1));
-
+	for (auto tile : tiles) {
+		
 		auto distFromCenter = tile->DistanceFromCenterTo(cameraMouse);
 		if (distFromCenter < 50.0) {
 			if (distFromCenter < closestDistance) {
@@ -103,22 +93,17 @@ void Level::Update(const glm::vec2& cameraMouse)
 	if (closestTile != nullptr) {
 		hoverTarget = closestTile;
 	}
-	//	closestHex->SetColor(glm::vec3(0.5, 0, 0));
-
 }
 
 void Level::Render(const TextService& text)
 {
-	for (auto tile : activeLevel)
+	for (auto tile : tiles)
 		tile->GetHexagon().Render();
-
-	//RenderHex(playerHex);
-	//RenderHex(enemyHex);
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
 
-	for(auto tile : activeLevel) {
+	for(auto tile : tiles) {
 		auto& hex = tile->GetHexagon();
 
 		glPushMatrix();
@@ -136,11 +121,28 @@ void Level::Render(const TextService& text)
 	}
 }
 
-void Level::Highlight(const glm::ivec3& center, int range, const glm::vec3& highlightColor)
+void Level::Highlight(const glm::ivec3& center, int range, const glm::vec3& highlightColor, std::function<bool(const Tile&)> highlightPredicate)
 {
-	for (auto& tile : activeLevel) {
+	for (auto& tile : tiles) {
 		auto& hex = tile->GetHexagon();
 		auto distance = tile->DistanceTo(center);
+
+		if (distance > range)
+			continue;
+
+		if(highlightPredicate(*tile) )
+			hex.SetHighlight(highlightColor);
+	}
+}
+
+void Level::Highlight(const glm::ivec3& center, int range, const glm::vec3& highlightColor)
+{
+	for (auto& tile : tiles) {
+		auto& hex = tile->GetHexagon();
+		auto distance = tile->DistanceTo(center);
+
+		if (tile->IsOccupied() && tile->DistanceTo(center) != 0)
+			continue;
 
 		if (distance <= range)
 			hex.SetHighlight(highlightColor);
@@ -149,20 +151,58 @@ void Level::Highlight(const glm::ivec3& center, int range, const glm::vec3& high
 
 void Level::ClearHighlights()
 {
-	for (auto& tile : activeLevel)
+	for (auto& tile : tiles)
 		tile->GetHexagon().NoHighlight();
+}
+
+std::vector<Tile*> Level::TilesWithin(const glm::ivec3& center, int range)
+{
+	auto tilesWithin = std::vector<Tile*>();
+	for (auto tile : tiles ) {
+		auto distance = tile->DistanceTo(center);
+		if (distance == 0)
+			continue;
+
+		if (distance <= range)
+			tilesWithin.push_back(tile);
+	}
+
+	return tilesWithin;
 }
 
 Tile& Level::TileAt(const glm::ivec3& location)
 {
-	for (auto& tile : activeLevel) {
+	for (auto& tile : tiles) {
 		auto& hex = tile->GetHexagon();
 		if (tile->Location().x == location.x && tile->Location().y == location.y && tile->Location().z == location.z) {
 			return *tile;
 		}
 	}
 
-	return *activeLevel[0];
+	return *tiles[0];
+}
+
+Actor* Level::ActorById(int actorId)
+{
+	for (auto entity : entities)
+	{
+		if (entity->EntityId() == actorId)
+			return dynamic_cast<Actor*>(entity);
+	}
+
+	return nullptr;
+}
+
+Actor* Level::GetPlayer()
+{
+	for (auto entity : entities) {
+		auto player = dynamic_cast<Player*>(entity);
+
+		if (player != nullptr)
+			return player;
+	}
+
+	return nullptr;
 }
 
 void Level::AddEntity(Entity* entity)
@@ -177,7 +217,7 @@ void Level::ShowCoords(bool value)
 
 glm::ivec3 Level::GetCenterCoord(int x, int y, int z)
 {
-	for (auto tile : activeLevel) {
+	for (auto tile : tiles) {
 		auto& hex = tile->GetHexagon();
 		if (tile->Location().x == x && tile->Location().y == y && tile->Location().z == z) {
 			return tile->WorldPosition();

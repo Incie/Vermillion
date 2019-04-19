@@ -1,7 +1,5 @@
 #pragma once
 
-#include"Entity.h"
-
 class Level;
 
 class Spawner 

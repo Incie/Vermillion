@@ -1,6 +1,10 @@
 #include"pch.h"
 #include<Windows.h>
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #include"Framework\window.h"
 #include"Framework\opengl2.h"
 #include"Framework\log.h"
@@ -12,11 +16,14 @@
 
 #include"Test\GamepadTest.h"
 #include"Test\Testing.h"
-#include"Test\Gloom.h"
+#include"Gloomhaven/Gloom.h"
 
 
 int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ LPSTR cmdLine, _In_ int nShow)
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
+
 	Log::Info("", "");
 	Log::Info("Application", "Starting...");
 
@@ -84,7 +91,7 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 			fpsCounter++;
 		}
 
-		Sleep(0);
+		Sleep(1);
 	}
 	
 	Log::Info("Application", "Shutting down");

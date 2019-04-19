@@ -4,11 +4,20 @@
 #include"glm/glm.hpp"
 #include<vector>
 #include<Windows.h>
-#include"../Utils/Hexagon.h"
+#include"level/Hexagon.h"
+#include"level/Level.h"
 #include"fmt/format.h"
-#include "Level.h"
 
-#include"ActionMove.h"
+#include"entity/Entity.h"
+
+#include"action/ActionAttack.h"
+#include"action/ActionMove.h"
+
+#include"enemyai/EnemyAI.h"
+#include"enemyai/EnemyAction.h"
+#include"enemyai/EnemyRound.h"
+
+EnemyRound *enemyRound = nullptr;
 
 Gloom::Gloom() : action(nullptr)
 {
@@ -24,10 +33,17 @@ void Gloom::Initialize()
 {
 	level.Generate();
 	level.Spawn();
+
+	enemyRound = new EnemyRound();
+	enemyRound->AddAction(new EnemyMove(level, 1));
+	enemyRound->AddAction(new EnemyAttack(level, 1, 1));
+	enemyRound->AddAction(new EnemyAttack(level, 1, 2));
+	enemyRound->AddAction(new EnemyMove(level, 1));
 }
 
 void Gloom::Deinitialize()
 {
+	delete enemyRound;
 }
 
 void Gloom::Update(double deltaTime)
@@ -35,11 +51,41 @@ void Gloom::Update(double deltaTime)
 	const auto& input = Services().Input();
 
 	if (action == nullptr && input.KeyOnce(VK_F1)) {
-		//action = new ActionMove(level, level.playerHex.cubeCoordinate, 3);
+		action = new ActionMove(level, *level.GetPlayer(), 6);
+	}
+
+	if (action == nullptr && input.KeyOnce(VK_F2)) {
+		action = new ActionAttack(level, *level.GetPlayer(), 1, 2, 1);
 	}
 
 	if (input.KeyOnce(VK_F3))
 		level.ShowCoords(true);
+
+	if (input.KeyOnce('N')) {
+		if (enemyRound->state == EnemyRound::State::Stopped) {
+			if (enemyRound->HasNextAction()) {
+				enemyRound->NextAction();
+
+				auto action = enemyRound->GetAction();
+				action->Calculate(*level.ActorById(2));
+				enemyRound->state = EnemyRound::State::Calculated;
+			}
+		} else if (enemyRound->state == EnemyRound::State::Calculated) {
+			auto action = enemyRound->GetAction();
+			auto& actor = *level.ActorById(2);
+			action->Perform(actor);
+
+			
+			if (enemyRound->HasNextAction())
+				enemyRound->state = EnemyRound::State::Stopped;
+			else enemyRound->state = EnemyRound::State::Finished;
+		}
+		else if (enemyRound->state == EnemyRound::State::Finished) {
+			//next actor
+			enemyRound->Reset();
+			enemyRound->state = EnemyRound::State::Stopped;
+		}
+	}
 
 	if (input.KeyOnce('B'))
 		camera.SetPositionTopLeft(glm::vec2());
@@ -71,12 +117,14 @@ void Gloom::Update(double deltaTime)
 		action->Reset();
 		delete action;
 		action = nullptr;
+		level.ClearHighlights();
 	}
 
 	if (action != nullptr && input.KeyOnce(VK_RETURN)) {
-		//action->Perform(level.playerHex);
-		delete action;
-		action = nullptr;
+		if( action->Perform(*level.GetPlayer()) ) {
+			delete action;
+			action = nullptr;
+		}
 	}
 }
 
@@ -108,9 +156,28 @@ void Gloom::Render()
 
 		if (action)
 			action->Render();
+
+		enemyRound->Render();
 	camera.Pop();
 
+	glPushMatrix();
+		glTranslatef(5.0f, 300.0f, 0.0f);
+		enemyRound->RenderRoundCard(Services().Text());
+	glPopMatrix();
+
+	if (level.HasHoverTarget()) {
+		const auto& hoverTile = level.GetHoverTarget();
+		
+		if (hoverTile.IsOccupied()) {
+			const auto hoverActor = level.ActorById(hoverTile.OccupiedId());
+			glPushMatrix();
+			glTranslatef(5, 50, 0);
+			hoverActor->PrintStats(Services().Text() );
+			glPopMatrix();
+		}
+	}
+
 	if (action != nullptr) {
-		Services().Text().Print(200, 25, "MOVING", 20, Colorf(1, 1, 1));
+		Services().Text().Print(200, 25, action->Description(), 20, Colorf(1, 1, 1));
 	}
 }

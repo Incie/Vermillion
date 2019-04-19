@@ -3,8 +3,8 @@
 #include<glm/glm.hpp>
 #include<vector>
 #include<string>
-#include"../Framework/services.h"
-#include"../Utils/Hexagon.h"
+#include"../../Framework/services.h"
+#include"../Level/Hexagon.h"
 
 enum class EnemyType {
 	Normal,
@@ -58,11 +58,14 @@ public:
 	int EntityId() { return entityId; }
 
 	void Setup(const entityattributes& entityattr);
-	void SetPosition(glm::ivec3& tilePosition, glm::vec3& worldPosition);
+	void SetPosition(const glm::ivec3& tilePosition, const glm::vec3& worldPosition);
 
 	Hexagon& RenderModel() { return renderModel; }
 	void SetRenderModel(Hexagon& hex);
 	virtual void Render(const TextService& text);
+	virtual void PrintStats(const TextService& text) {};
+
+	const glm::ivec3& Position() const { return positionTile; }
 
 protected:
 	std::string name;
@@ -80,6 +83,10 @@ public:
 
 	void Setup(const actorattributes& actorattr, const entityattributes& entityattr);
 
+	void Damage(int attackDamage);
+
+	int Team() const { return team; }
+	virtual void PrintStats(const TextService& text);
 	virtual void Render(const TextService& text) override;
 protected:
 	int team;
@@ -104,6 +111,7 @@ public:
 	virtual ~Player();
 
 	void Setup(const playerattributes& playerattr, const actorattributes& actorattr, const entityattributes& entityattr);
+	virtual void PrintStats(const TextService& text);
 
 protected:
 	int playerId;
@@ -116,6 +124,7 @@ public:
 	virtual ~Enemy();
 
 	void Setup(const enemyattributes& enemyattr, const actorattributes& actorattr, const entityattributes& entityattr);
+	virtual void PrintStats(const TextService& text);
 
 protected:
 	int enemyId;

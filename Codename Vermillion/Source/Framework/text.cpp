@@ -71,6 +71,12 @@ void Text::Deinit()
 	fontProgram.UnloadProgram();
 }
 
+void Text::PrintLine(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const
+{
+	Print(x, y, text, fontHeight, color);
+	glTranslatef(0, fontHeight + 2.0f, 0);
+}
+
 void Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const
 {
 	fontProgram.Use();
@@ -104,19 +110,19 @@ void Text::Print(double x, double y, const std::string& text, unsigned int fontH
 		Character ch = characters[*c];
 
 		double xpos = x + ch.Bearing.x * scale;
-		double ypos = y - (-ch.Size.y + ch.Bearing.y) * scale;
+		double ypos = y - ((double)-ch.Size.y + (double)ch.Bearing.y) * scale;
 
-		double w = ch.Size.x * scale;
-		double h = ch.Size.y * scale;
+		double width = ch.Size.x * scale;
+		double height = ch.Size.y * scale;
 
 		double vertices[6][2] = {
-			{ xpos,     ypos - h},
+			{ xpos,     ypos - height},
 			{ xpos,     ypos},
-			{ xpos + w, ypos},
+			{ xpos + width, ypos},
 
-			{ xpos,     ypos - h},
-			{ xpos + w, ypos},
-			{ xpos + w, ypos - h}
+			{ xpos,     ypos - height},
+			{ xpos + width, ypos},
+			{ xpos + width, ypos - height}
 		};
 
 		glBindTexture(GL_TEXTURE_2D, ch.TextureID);
@@ -137,6 +143,25 @@ void Text::Print(double x, double y, const std::string& text, unsigned int fontH
 	glDisable(GL_BLEND);
 
 	fontProgram.NoProgram();
+}
+
+void Text::PrintCenter(const double x, const double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const
+{
+	double centerY = y - fontHeight * 0.5;
+
+	double w = 0;
+	double scale = (double)fontHeight / (double)font_face_rendered_height;
+
+	std::string::const_iterator c;
+	for (c = text.begin(); c != text.end(); c++)
+	{
+		const Character &ch = characters[*c];
+
+		// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+		w += (ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
+	}
+
+	Print(x - w * 0.5, centerY, text, fontHeight, color);
 }
 
 void RenderFaceToTextures(FT_Face &face)
