@@ -136,7 +136,7 @@ void EnemyAttack::Calculate(const Actor& actor)
 	}
 }
 
-void EnemyAttack::Perform(Actor& actor)
+void EnemyAttack::Perform(Actor& attacker)
 {
 	level.ClearHighlights();
 
@@ -144,7 +144,18 @@ void EnemyAttack::Perform(Actor& actor)
 		auto tile = level.TileAt(target);
 		auto actor = level.ActorById(tile.OccupiedId());
 
-		actor->Damage(attack);
+		int modifier = level.monsterModifiers.Draw();
+		int calculatedDamage = attack;
+	
+		if (modifier == 10)
+			calculatedDamage *= 2;
+		else if (modifier == -10)
+			calculatedDamage = 0;
+		else calculatedDamage += modifier;
+
+
+		int actualDamage = actor->DoDamage(calculatedDamage);
+		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", "[Enemy]", actualDamage, "[Player]", modifier, attack));
 	}
 }
 

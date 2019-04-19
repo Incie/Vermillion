@@ -4,6 +4,7 @@
 #include<functional>
 #include"Tile.h"
 #include"../action/Spawner.h"
+#include"../cards/Modifiers.h"
 
 class TextService;
 class Actor;
@@ -30,14 +31,21 @@ public:
 	bool HasHoverTarget() const { return (hoverTarget != nullptr); }
 	Tile& GetHoverTarget() { return *hoverTarget;  }
 
+	Tile& TileOccupiedBy(int entityId);
 	Tile& TileAt(const glm::ivec3& location);
 
+	void RemoveActorById(int actorId);
 	Actor* ActorById(int actorId);
 	Actor* GetPlayer();
 
 	void AddEntity(Entity* entity);
 
 	void ShowCoords(bool);
+
+	Modifiers monsterModifiers;
+	Modifiers playerModifiers;
+
+	std::vector<std::string> combatLog;
 
 private:
 	Spawner spawner;

@@ -3,8 +3,8 @@
 #include"../level/Level.h"
 #include"../entity/Entity.h"
 
-ActionAttack::ActionAttack(Level& level, Actor& actor, int attackDamage, int range, int attacks)
-	: Action(level, actor), range(range), attacks(attacks), damage(attackDamage)
+ActionAttack::ActionAttack(Level& level, Actor& actor, int range, int attackDamage, int attacks)
+	: Action(level, actor), range(range), attacks(attacks), baseDamage(attackDamage)
 {
 	actionDescription = fmt::format("Attack {0} Range {1} Target {0}", attackDamage, range, attacks);
 	Highlight();
@@ -35,7 +35,6 @@ void ActionAttack::Click(const glm::ivec3& target)
 		if (level.TileAt(actor.Position()).DistanceTo(target) == 0)
 			return;
 
-
 		marks.push_back(target);
 		Highlight();
 	}
@@ -61,11 +60,27 @@ bool ActionAttack::Perform(Actor& actor)
 		auto tile = level.TileAt(mark);
 		auto targetActor = level.ActorById(tile.OccupiedId());
 
-		targetActor->Damage(damage);
+
+		int calculatedDamage = baseDamage;
+		int modifier = level.playerModifiers.Draw();
+		if (modifier == 10)
+			calculatedDamage *= 2;
+		else if (modifier == -10)
+			calculatedDamage = 0;
+		else
+			calculatedDamage += modifier;
+
+
+		int actualDamage = targetActor->DoDamage(calculatedDamage);
+		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", "[Player]", actualDamage, "[Enemy]", modifier, baseDamage));
+
+
+		if (targetActor->Health() <= 0) {
+			level.combatLog.push_back("[Enemy] died");
+			level.RemoveActorById(targetActor->EntityId());
+		}
 	}
-	
-	//Queue up attacks in another controller?
-	//- perform attacks here to test it out
+
 	return true;
 }
 

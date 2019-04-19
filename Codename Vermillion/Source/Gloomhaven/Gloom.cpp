@@ -19,7 +19,8 @@
 
 EnemyRound *enemyRound = nullptr;
 
-Gloom::Gloom() : action(nullptr)
+Gloom::Gloom() 
+	: action(nullptr), enemyAi(level)
 {
 }
 
@@ -35,10 +36,11 @@ void Gloom::Initialize()
 	level.Spawn();
 
 	enemyRound = new EnemyRound();
-	enemyRound->AddAction(new EnemyMove(level, 1));
-	enemyRound->AddAction(new EnemyAttack(level, 1, 1));
-	enemyRound->AddAction(new EnemyAttack(level, 1, 2));
-	enemyRound->AddAction(new EnemyMove(level, 1));
+	enemyRound->AddAction(new EnemyMove(level, 2));
+	enemyRound->AddAction(new EnemyAttack(level, 2, 1));
+
+	enemyAi.SetActor(level.ActorById(2));
+	enemyAi.SetRoundActions(enemyRound);
 }
 
 void Gloom::Deinitialize()
@@ -55,36 +57,14 @@ void Gloom::Update(double deltaTime)
 	}
 
 	if (action == nullptr && input.KeyOnce(VK_F2)) {
-		action = new ActionAttack(level, *level.GetPlayer(), 1, 2, 1);
+		action = new ActionAttack(level, *level.GetPlayer(), 1, 4, 1);
 	}
 
 	if (input.KeyOnce(VK_F3))
 		level.ShowCoords(true);
 
 	if (input.KeyOnce('N')) {
-		if (enemyRound->state == EnemyRound::State::Stopped) {
-			if (enemyRound->HasNextAction()) {
-				enemyRound->NextAction();
-
-				auto action = enemyRound->GetAction();
-				action->Calculate(*level.ActorById(2));
-				enemyRound->state = EnemyRound::State::Calculated;
-			}
-		} else if (enemyRound->state == EnemyRound::State::Calculated) {
-			auto action = enemyRound->GetAction();
-			auto& actor = *level.ActorById(2);
-			action->Perform(actor);
-
-			
-			if (enemyRound->HasNextAction())
-				enemyRound->state = EnemyRound::State::Stopped;
-			else enemyRound->state = EnemyRound::State::Finished;
-		}
-		else if (enemyRound->state == EnemyRound::State::Finished) {
-			//next actor
-			enemyRound->Reset();
-			enemyRound->state = EnemyRound::State::Stopped;
-		}
+		enemyAi.Step();
 	}
 
 	if (input.KeyOnce('B'))
@@ -164,6 +144,15 @@ void Gloom::Render()
 		glTranslatef(5.0f, 300.0f, 0.0f);
 		enemyRound->RenderRoundCard(Services().Text());
 	glPopMatrix();
+
+	if (level.combatLog.size() > 0) {
+		glPushMatrix();
+		glTranslatef(0, 500.0f, 0);
+		for (const auto& line : level.combatLog) {
+			Services().Text().PrintLine(0, 0, line, 20, Colorf(1));
+		}
+		glPopMatrix();
+	}
 
 	if (level.HasHoverTarget()) {
 		const auto& hoverTile = level.GetHoverTarget();

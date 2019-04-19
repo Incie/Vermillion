@@ -26,5 +26,5 @@ private:
 	std::vector<glm::ivec3> marks;
 	int range;
 	int attacks;
-	int damage;
+	int baseDamage;
 };

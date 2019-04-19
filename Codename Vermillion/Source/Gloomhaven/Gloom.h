@@ -3,6 +3,7 @@
 #include"../Framework/activity.h"
 #include"../Framework/camera2d.h"
 
+#include"enemyai/EnemyAI.h"
 #include"level/Level.h"
 
 class Action;
@@ -20,6 +21,7 @@ public:
 	void Render();
 
 private:
+	EnemyAI enemyAi;
 	Camera2D camera;
 	Level level;
 	Action* action;

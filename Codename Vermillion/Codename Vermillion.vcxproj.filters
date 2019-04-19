@@ -172,6 +172,15 @@
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyRound.cpp">
       <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\Director.cpp">
+      <Filter>Source Files\Gloomhaven</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerDeck.cpp">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\action\CardAction.cpp">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -269,6 +278,15 @@
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyRound.h">
       <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\Director.h">
+      <Filter>Source Files\Gloomhaven</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerDeck.h">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\action\CardAction.h">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

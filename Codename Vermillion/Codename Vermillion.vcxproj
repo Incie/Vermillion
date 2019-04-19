@@ -43,8 +43,11 @@
     <ClCompile Include="Source\Framework\windowstate.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionAttack.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionMove.cpp" />
+    <ClCompile Include="Source\Gloomhaven\action\CardAction.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\Spawner.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\Modifiers.cpp" />
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerDeck.cpp" />
+    <ClCompile Include="Source\Gloomhaven\Director.cpp" />
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyAction.cpp" />
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyAI.cpp" />
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyRound.cpp" />
@@ -79,8 +82,11 @@
     <ClInclude Include="Source\Gloomhaven\action\Action.h" />
     <ClInclude Include="Source\Gloomhaven\action\ActionAttack.h" />
     <ClInclude Include="Source\Gloomhaven\action\ActionMove.h" />
+    <ClInclude Include="Source\Gloomhaven\action\CardAction.h" />
     <ClInclude Include="Source\Gloomhaven\action\Spawner.h" />
     <ClInclude Include="Source\Gloomhaven\cards\Modifiers.h" />
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerDeck.h" />
+    <ClInclude Include="Source\Gloomhaven\Director.h" />
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyAction.h" />
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyAI.h" />
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyRound.h" />

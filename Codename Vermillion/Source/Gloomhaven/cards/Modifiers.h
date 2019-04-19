@@ -12,13 +12,14 @@ public:
 	int GetLastDraw();
 
 	void Shuffle();
-	void MarkedForShuffle();
+	bool MarkedForShuffle();
 
 	void Add(int n, int card);
 	void Remove(int n, int card);
 
 private:
 	bool needShuffle;
+	int lastDraw;
 
 	std::vector<int> discarded;
 	std::vector<int> deck;

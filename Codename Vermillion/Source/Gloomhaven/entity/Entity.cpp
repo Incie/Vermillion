@@ -59,7 +59,7 @@ void Actor::Setup(const actorattributes& actorattr, const entityattributes& enti
 	move = actorattr.move;
 }
 
-void Actor::Damage(int attackDamage)
+int Actor::DoDamage(int attackDamage)
 {
 	auto actualDamage = attackDamage - shield;
 
@@ -68,6 +68,8 @@ void Actor::Damage(int attackDamage)
 		actualDamage = 0;
 
 	health -= actualDamage;
+
+	return actualDamage;
 }
 
 

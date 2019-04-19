@@ -17,11 +17,14 @@ public:
 	void SetRoundActions(EnemyRound* enemyRound);
 	void SetActor(Actor* actor);
 	
-	void CalculateStep();
-	void PerformStep();
+	void Step();
+
 	void Render();
 
 private:
+	void CalculateStep();
+	void PerformStep();
+
 	EnemyRound* enemyRound;
 	Actor* actor;
 	Level& level;

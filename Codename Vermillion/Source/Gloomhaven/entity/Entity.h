@@ -65,6 +65,8 @@ public:
 	virtual void Render(const TextService& text);
 	virtual void PrintStats(const TextService& text) {};
 
+
+	const std::string& Name() const { return name; }
 	const glm::ivec3& Position() const { return positionTile; }
 
 protected:
@@ -83,9 +85,11 @@ public:
 
 	void Setup(const actorattributes& actorattr, const entityattributes& entityattr);
 
-	void Damage(int attackDamage);
+	int DoDamage(int attackDamage);
 
 	int Team() const { return team; }
+	int Health() { return health; }
+
 	virtual void PrintStats(const TextService& text);
 	virtual void Render(const TextService& text) override;
 protected:
@@ -97,6 +101,7 @@ protected:
 	int shield;
 	int retaliate;
 	int move;
+	int initiative;
 
 	std::vector<StatusEffect> statusEffects;
 
@@ -116,6 +121,13 @@ public:
 protected:
 	int playerId;
 	std::string playerName;
+
+
+	//OnHitEffects [xp on hit] [end of turn, or limited]
+	//OnPreHit / OnPostHit
+	//PlayerDeck
+	//ActiveCards
+	//Items
 };
 
 class Enemy : public Actor {

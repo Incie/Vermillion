@@ -170,6 +170,18 @@ std::vector<Tile*> Level::TilesWithin(const glm::ivec3& center, int range)
 	return tilesWithin;
 }
 
+Tile& Level::TileOccupiedBy(int entityId)
+{
+	for (auto& tile : tiles) {
+		if (!tile->IsOccupied())
+			continue;
+		if (tile->OccupiedId() == entityId)
+			return *tile;
+	}
+
+	throw "TileOccupiedBy() -> Tile Not Found";
+}
+
 Tile& Level::TileAt(const glm::ivec3& location)
 {
 	for (auto& tile : tiles) {
@@ -180,6 +192,17 @@ Tile& Level::TileAt(const glm::ivec3& location)
 	}
 
 	return *tiles[0];
+}
+
+void Level::RemoveActorById(int actorId)
+{
+	auto actor = ActorById(actorId);
+	auto& tile = TileOccupiedBy(actorId);
+
+	tile.SetOccupied(-1);
+
+	auto it = std::remove_if(entities.begin(), entities.end(), [actorId](auto entity) { return entity->EntityId() == actorId;  });
+	entities.erase(it);
 }
 
 Actor* Level::ActorById(int actorId)
