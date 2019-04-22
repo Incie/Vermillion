@@ -44,10 +44,10 @@
     <ClCompile Include="Source\Gloomhaven\action\ActionAttack.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionMove.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\CardAction.cpp" />
-    <ClCompile Include="Source\Gloomhaven\action\Spawner.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\Modifiers.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\PlayerDeck.cpp" />
     <ClCompile Include="Source\Gloomhaven\Director.cpp" />
+    <ClCompile Include="Source\Gloomhaven\director\Initiative.cpp" />
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyAction.cpp" />
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyAI.cpp" />
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyRound.cpp" />
@@ -55,6 +55,7 @@
     <ClCompile Include="Source\Gloomhaven\Gloom.cpp" />
     <ClCompile Include="Source\Gloomhaven\level\Hexagon.cpp" />
     <ClCompile Include="Source\Gloomhaven\level\Level.cpp" />
+    <ClCompile Include="Source\Gloomhaven\level\Spawner.cpp" />
     <ClCompile Include="Source\Gloomhaven\level\Tile.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Test\GamepadTest.cpp" />
@@ -83,10 +84,10 @@
     <ClInclude Include="Source\Gloomhaven\action\ActionAttack.h" />
     <ClInclude Include="Source\Gloomhaven\action\ActionMove.h" />
     <ClInclude Include="Source\Gloomhaven\action\CardAction.h" />
-    <ClInclude Include="Source\Gloomhaven\action\Spawner.h" />
     <ClInclude Include="Source\Gloomhaven\cards\Modifiers.h" />
     <ClInclude Include="Source\Gloomhaven\cards\PlayerDeck.h" />
     <ClInclude Include="Source\Gloomhaven\Director.h" />
+    <ClInclude Include="Source\Gloomhaven\director\Initiative.h" />
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyAction.h" />
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyAI.h" />
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyRound.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="Source\Gloomhaven\Gloom.h" />
     <ClInclude Include="Source\Gloomhaven\level\Hexagon.h" />
     <ClInclude Include="Source\Gloomhaven\level\Level.h" />
+    <ClInclude Include="Source\Gloomhaven\level\Spawner.h" />
     <ClInclude Include="Source\Gloomhaven\level\Tile.h" />
     <ClInclude Include="Source\Test\GamepadTest.h" />
     <ClInclude Include="Source\Test\Testing.h" />
@@ -235,6 +237,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64)\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

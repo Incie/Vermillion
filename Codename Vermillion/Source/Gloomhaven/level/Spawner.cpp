@@ -3,6 +3,11 @@
 #include"../level/Level.h"
 #include"../entity/Entity.h"
 
+#include <random>
+#include <algorithm>
+#include <iterator>
+#include <numeric>
+
 Spawner::Spawner(Level& level)
 	: level(level), spawnerIdGenerator(0)
 {
@@ -25,6 +30,8 @@ void Spawner::SpawnPlayer(glm::ivec3 location)
 	aa.shield = 0;
 	aa.team = 0;
 	aa.attack = 0;
+	aa.move = 0;
+	aa.initiative = 35;
 
 	playerattributes pa;
 	pa.playerId = 0;
@@ -57,9 +64,10 @@ void Spawner::SpawnMonster(glm::ivec3 location, bool elite)
 	aa.attack = elite ? 4 : 3;
 	aa.move = elite ? 2 : 3;
 	aa.team = 1;
+	aa.initiative = 50;
 
 	enemyattributes enemyattr;
-	enemyattr.enemyId = 0;
+	enemyattr.enemyId = GetMonsterId(ea.name);
 	enemyattr.enemyType = elite ? EnemyType::Elite : EnemyType::Normal;
 
 	auto* newEnemy = new Enemy();
@@ -76,4 +84,19 @@ void Spawner::SpawnMonster(glm::ivec3 location, bool elite)
 
 	tile.SetOccupied(newEnemy->EntityId());
 	level.AddEntity(newEnemy);
+}
+
+int Spawner::GetMonsterId(const std::string& monsterName)
+{
+	if (monsterIdPool.find(monsterName) == monsterIdPool.end()) {
+		monsterIdPool[monsterName] = MonsterIdPool();
+		
+		std::random_device rnd;
+		std::mt19937_64 randomGenerator(rnd());
+
+		auto& monsterIds = monsterIdPool[monsterName];
+		std::shuffle(monsterIds.idPool.begin(), monsterIds.idPool.end(), randomGenerator);
+	}
+	
+	return monsterIdPool[monsterName].Get();
 }

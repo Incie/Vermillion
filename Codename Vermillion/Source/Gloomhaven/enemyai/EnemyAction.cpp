@@ -90,7 +90,6 @@ std::vector<glm::ivec3> EnemyAction::Targets()
 
 void EnemyMove::Render()
 {
-
 	for (auto target : targets) {
 		glBegin(GL_LINES);
 		glVertex2fv(&startPoint.x);

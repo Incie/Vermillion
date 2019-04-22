@@ -5,6 +5,7 @@
 
 #include"enemyai/EnemyAI.h"
 #include"level/Level.h"
+#include"Director.h"
 
 class Action;
 
@@ -21,8 +22,7 @@ public:
 	void Render();
 
 private:
-	EnemyAI enemyAi;
+	Director director;
 	Camera2D camera;
 	Level level;
-	Action* action;
 };

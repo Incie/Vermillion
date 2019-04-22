@@ -55,7 +55,7 @@ void EnemyRound::Render()
 	}
 }
 
-void EnemyRound::RenderRoundCard(TextService & text)
+void EnemyRound::RenderRoundCard(const TextService & text)
 {
 	auto white = Colorf(1.0f);
 	auto active = Colorf(0.9f, 0.5f, 0.6f);

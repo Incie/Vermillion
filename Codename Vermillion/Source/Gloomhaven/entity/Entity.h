@@ -37,6 +37,7 @@ struct actorattributes {
 	int team;
 	int attack;
 	int move;
+	int initiative;
 };
 
 struct playerattributes {
@@ -89,6 +90,7 @@ public:
 
 	int Team() const { return team; }
 	int Health() { return health; }
+	int Initiative() { return initiative; }
 
 	virtual void PrintStats(const TextService& text);
 	virtual void Render(const TextService& text) override;
@@ -138,6 +140,12 @@ public:
 	void Setup(const enemyattributes& enemyattr, const actorattributes& actorattr, const entityattributes& entityattr);
 	virtual void PrintStats(const TextService& text);
 
+	int EnemyId() { return enemyId; }
+	bool Elite() { 
+		if(enemyType == EnemyType::Elite)
+			return true;
+		return false; 
+	}
 protected:
 	int enemyId;
 	EnemyType enemyType;

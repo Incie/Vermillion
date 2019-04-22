@@ -57,6 +57,7 @@ void Actor::Setup(const actorattributes& actorattr, const entityattributes& enti
 	shield = actorattr.shield;
 	retaliate = actorattr.retaliate;
 	move = actorattr.move;
+	initiative = actorattr.initiative;
 }
 
 int Actor::DoDamage(int attackDamage)

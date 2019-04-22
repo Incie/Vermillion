@@ -3,7 +3,7 @@
 #include"GL/glew.h"
 #include"fmt/format.h"
 #include"../../Framework/services.h"
-#include"../action/Spawner.h"
+#include"../level/Spawner.h"
 #include"../entity/Entity.h"
 
 Level::Level() 
@@ -226,6 +226,21 @@ Actor* Level::GetPlayer()
 	}
 
 	return nullptr;
+}
+
+std::vector<Actor*> Level::Monsters()
+{
+	auto monsters = std::vector<Actor*>();
+
+	for (auto entity : entities) {
+		auto monster = dynamic_cast<Enemy*>(entity);
+
+		if (monster != nullptr)
+			monsters.push_back(monster);
+
+	}
+
+	return monsters;
 }
 
 void Level::AddEntity(Entity* entity)

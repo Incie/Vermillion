@@ -17,7 +17,7 @@ public:
 	EnemyAction* GetAction();
 
 	void Render();
-	void RenderRoundCard(TextService& text);
+	void RenderRoundCard(const TextService& text);
 
 	enum class State {
 		Stopped, Inprogress, Calculated, Finished

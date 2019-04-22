@@ -3,7 +3,7 @@
 #include<vector>
 #include<functional>
 #include"Tile.h"
-#include"../action/Spawner.h"
+#include"../level/Spawner.h"
 #include"../cards/Modifiers.h"
 
 class TextService;
@@ -37,6 +37,7 @@ public:
 	void RemoveActorById(int actorId);
 	Actor* ActorById(int actorId);
 	Actor* GetPlayer();
+	std::vector<Actor*> Monsters();
 
 	void AddEntity(Entity* entity);
 

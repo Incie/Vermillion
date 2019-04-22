@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "CardAction.h"
 
 CardAction::CardAction(const std::string& parseText)

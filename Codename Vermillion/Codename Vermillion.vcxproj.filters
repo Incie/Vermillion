@@ -65,6 +65,9 @@
     <Filter Include="Source Files\Gloomhaven\Actions">
       <UniqueIdentifier>{dd8be4da-caa1-47db-a525-22537bee0f4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Gloomhaven\Director">
+      <UniqueIdentifier>{bee1f7af-359a-4df7-a828-f94a12ff2cfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -145,9 +148,6 @@
     <ClCompile Include="Source\Gloomhaven\action\ActionMove.cpp">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Gloomhaven\action\Spawner.cpp">
-      <Filter>Source Files\Gloomhaven\Actions</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Gloomhaven\cards\Modifiers.cpp">
       <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClCompile>
@@ -172,14 +172,20 @@
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyRound.cpp">
       <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Gloomhaven\Director.cpp">
-      <Filter>Source Files\Gloomhaven</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Gloomhaven\cards\PlayerDeck.cpp">
       <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\action\CardAction.cpp">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\level\Spawner.cpp">
+      <Filter>Source Files\Gloomhaven\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\Director.cpp">
+      <Filter>Source Files\Gloomhaven\Director</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\director\Initiative.cpp">
+      <Filter>Source Files\Gloomhaven\Director</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -249,9 +255,6 @@
     <ClInclude Include="Source\Gloomhaven\action\ActionMove.h">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Gloomhaven\action\Spawner.h">
-      <Filter>Source Files\Gloomhaven\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Gloomhaven\action\Action.h">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
     </ClInclude>
@@ -279,14 +282,20 @@
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyRound.h">
       <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Gloomhaven\Director.h">
-      <Filter>Source Files\Gloomhaven</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Gloomhaven\cards\PlayerDeck.h">
       <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\action\CardAction.h">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\level\Spawner.h">
+      <Filter>Source Files\Gloomhaven\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\Director.h">
+      <Filter>Source Files\Gloomhaven\Director</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\director\Initiative.h">
+      <Filter>Source Files\Gloomhaven\Director</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

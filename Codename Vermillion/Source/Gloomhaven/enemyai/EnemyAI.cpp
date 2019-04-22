@@ -1,4 +1,5 @@
 #include"pch.h"
+#include"../entity/Entity.h"
 #include"EnemyAI.h"
 #include"EnemyRound.h"
 #include"EnemyAction.h"
@@ -7,7 +8,7 @@
 #include"../../Framework/services.h"
 
 EnemyAI::EnemyAI(Level& level)
-	: level(level)
+	: level(level), actor(nullptr), enemyRound(nullptr)
 {
 }
 
@@ -18,11 +19,26 @@ EnemyAI::~EnemyAI()
 void EnemyAI::SetRoundActions(EnemyRound* enemyRound)
 {
 	this->enemyRound = enemyRound;
+
+	if (enemyRound != nullptr) {
+		enemyRound->Reset();
+		enemyRound->state = EnemyRound::State::Stopped;
+	}
 }
 
 void EnemyAI::SetActor(Actor* actor)
 {
 	this->actor = actor;
+
+	if( enemyRound != nullptr ){
+		enemyRound->Reset();
+		enemyRound->state = EnemyRound::State::Stopped;
+	}
+}
+
+bool EnemyAI::Finished()
+{
+	return enemyRound->state == EnemyRound::State::Finished;
 }
 
 void EnemyAI::Step()
@@ -34,9 +50,6 @@ void EnemyAI::Step()
 		PerformStep();
 	}
 	else if (enemyRound->state == EnemyRound::State::Finished) {
-		//next actor
-		enemyRound->Reset();
-		enemyRound->state = EnemyRound::State::Stopped;
 	}
 }
 
@@ -46,7 +59,7 @@ void EnemyAI::CalculateStep()
 		enemyRound->NextAction();
 
 		auto action = enemyRound->GetAction();
-		action->Calculate(*level.ActorById(2));
+		action->Calculate(*actor);
 		enemyRound->state = EnemyRound::State::Calculated;
 	}
 }
@@ -54,8 +67,7 @@ void EnemyAI::CalculateStep()
 void EnemyAI::PerformStep()
 {
 	auto action = enemyRound->GetAction();
-	auto& actor = *level.ActorById(2);
-	action->Perform(actor);
+	action->Perform(*actor);
 
 	if (enemyRound->HasNextAction()) {
 		enemyRound->state = EnemyRound::State::Stopped;
