@@ -58,6 +58,7 @@
     <ClCompile Include="Source\Gloomhaven\level\Spawner.cpp" />
     <ClCompile Include="Source\Gloomhaven\level\Tile.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Test\CardRendering.cpp" />
     <ClCompile Include="Source\Test\GamepadTest.cpp" />
     <ClCompile Include="Source\Test\Testing.cpp" />
     <ClCompile Include="Source\Test\Testing_Input.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="Source\Gloomhaven\level\Level.h" />
     <ClInclude Include="Source\Gloomhaven\level\Spawner.h" />
     <ClInclude Include="Source\Gloomhaven\level\Tile.h" />
+    <ClInclude Include="Source\Test\CardRendering.h" />
     <ClInclude Include="Source\Test\GamepadTest.h" />
     <ClInclude Include="Source\Test\Testing.h" />
   </ItemGroup>
@@ -204,8 +206,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>/VERBOSE:UNUSEDLIBS %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib;fmt.lib;libpng16.lib;zlib.lib;freetype.lib;glew32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(VCPKG_64)\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib;fmtd.lib;libpng16d.lib;zlibd.lib;freetyped.lib;glew32d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VCPKG_64)\debug\lib</AdditionalLibraryDirectories>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

@@ -187,6 +187,9 @@
     <ClCompile Include="Source\Gloomhaven\director\Initiative.cpp">
       <Filter>Source Files\Gloomhaven\Director</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Test\CardRendering.cpp">
+      <Filter>Source Files\Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -296,6 +299,9 @@
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\director\Initiative.h">
       <Filter>Source Files\Gloomhaven\Director</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Test\CardRendering.h">
+      <Filter>Source Files\Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

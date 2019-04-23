@@ -17,6 +17,7 @@
 #include"Test\GamepadTest.h"
 #include"Test\Testing.h"
 #include"Gloomhaven/Gloom.h"
+#include"Test/CardRendering.h"
 
 
 int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ LPSTR cmdLine, _In_ int nShow)
@@ -52,12 +53,6 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	Timer fpsTimer;
 	fpsTimer.LimitByMilliseconds(1000);
 
-	Gloom testing;
-	//Testing testing;
-	//GamepadTest testing;
-	
-	testing.Initialize();
-
 	unsigned int fps = 0;
 	unsigned int fpsCounter = 0;
 
@@ -67,7 +62,14 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	serviceAssigner.SetTextureService(textureManager);
 	serviceAssigner.SetInputService(inputManager);
 
+
+	CardRendering testing;
+	//Gloom testing;
+	//Testing testing;
+	//GamepadTest testing;
+
 	testing.SetServiceLocator(serviceLocator);
+	testing.Initialize();
 
 	bool quitProgram = false;
 	while (!quitProgram) {

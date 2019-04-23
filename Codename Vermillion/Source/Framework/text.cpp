@@ -36,8 +36,11 @@ void Text::Init()
 		return;
 	}
 
+	//std::string fontName{ "fonts/PirataOne-Gloomhaven.ttf" };
+	std::string fontName{ "fonts/Roboto-Black.ttf" };
+
 	FT_Face face;
-	if (FT_New_Face(ft, "fonts/Roboto-Black.ttf", 0, &face)) {
+	if (FT_New_Face(ft, fontName.c_str(), 0, &face)) {
 		Log::Error("Freetype", "Failed to load font");
 		return;
 	}
@@ -57,7 +60,6 @@ void Text::Init()
 
 void Text::Deinit()
 {
-	//auto iter = ;
 	Log::Info("Freetype", "Deleting");
 	std::map<GLchar, Character>::const_iterator iter;
 	
