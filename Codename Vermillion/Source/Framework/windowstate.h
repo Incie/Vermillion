@@ -10,6 +10,10 @@ public:
 		windowSize.Set(width, height);
 	}
 
+	static Pointi Size() { return windowSize; }
+	static int Width() { return windowSize.x; }
+	static int Height() { return windowSize.y; }
+
 private:
 	friend class InputState;
 

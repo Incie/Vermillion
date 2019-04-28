@@ -32,6 +32,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Source\Framework\point.h" />
+    <ClCompile Include="Source\Framework\render.cpp" />
     <ClCompile Include="Source\Framework\servicelocator.cpp" />
     <ClCompile Include="Source\Framework\text.cpp" />
     <ClCompile Include="Source\Framework\textures.cpp" />
@@ -53,6 +54,7 @@
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyRound.cpp" />
     <ClCompile Include="Source\Gloomhaven\entity\Entity.cpp" />
     <ClCompile Include="Source\Gloomhaven\Gloom.cpp" />
+    <ClCompile Include="Source\Gloomhaven\icons\icons.cpp" />
     <ClCompile Include="Source\Gloomhaven\level\Hexagon.cpp" />
     <ClCompile Include="Source\Gloomhaven\level\Level.cpp" />
     <ClCompile Include="Source\Gloomhaven\level\Spawner.cpp" />
@@ -73,6 +75,7 @@
     <ClInclude Include="Source\Framework\opengl2.h" />
     <ClInclude Include="Source\Framework\opengl2_shader.h" />
     <ClInclude Include="Source\Framework\pch\pch.h" />
+    <ClInclude Include="Source\Framework\render.h" />
     <ClInclude Include="Source\Framework\servicelocator.h" />
     <ClInclude Include="Source\Framework\services.h" />
     <ClInclude Include="Source\Framework\text.h" />
@@ -94,6 +97,7 @@
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyRound.h" />
     <ClInclude Include="Source\Gloomhaven\entity\Entity.h" />
     <ClInclude Include="Source\Gloomhaven\Gloom.h" />
+    <ClInclude Include="Source\Gloomhaven\icons\icons.h" />
     <ClInclude Include="Source\Gloomhaven\level\Hexagon.h" />
     <ClInclude Include="Source\Gloomhaven\level\Level.h" />
     <ClInclude Include="Source\Gloomhaven\level\Spawner.h" />

@@ -2,17 +2,42 @@
 
 #include<string>
 #include<vector>
+#include"glm/glm.hpp"
 
+class Texture;
+class TextService;
 
-class PlayerCard {
+class CardAbility
+{
 public:
+	CardAbility(const std::string& name, int value = 0, bool subtitle = false) : name(name), value(value), subtitle(subtitle) {}
+
+	std::string name;
+	int value;
+	bool subtitle;
+};
+
+class PlayerCard
+{
+public:
+	PlayerCard(const std::string& name, std::vector<CardAbility> top, std::vector<CardAbility> bottom, int initiative, int level);
+	~PlayerCard();
+
+	void Render(const TextService& text, const Texture& texture);
+	void Scale(float scale) { this->scale.x = scale; this->scale.y = scale; }
 
 private:
-	bool isLost;
+	void RenderAbility(const TextService& text, const std::vector<CardAbility>& ability, const glm::vec2& position);
 
-	//list of top actions
-	//list of bottom actions
 
+	glm::vec2 position;
+	glm::vec2 scale;
+
+	std::string name;
+	std::vector<CardAbility> topAction;
+	std::vector<CardAbility> bottomAction;
+	int initiative;
+	int level;
 };
 
 

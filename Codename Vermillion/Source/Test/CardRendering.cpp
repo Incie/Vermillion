@@ -1,6 +1,11 @@
 #include"pch.h"
 #include "CardRendering.h"
 #include<Windows.h>
+#include"GL/glew.h"
+#include"../windowstate.h"
+
+#include"../Gloomhaven/cards/PlayerDeck.h"
+#include"../render.h"
 
 CardRendering::CardRendering()
 {
@@ -10,17 +15,53 @@ CardRendering::~CardRendering()
 {
 }
 
+std::vector<PlayerCard> cards{
+	PlayerCard{
+		"Immovable Phalanx",
+		{CardAbility{"Attack", 4}, CardAbility{"Shield", 1}, CardAbility{"self", 0, true}},
+		{}, 17,	6
+	},
+	PlayerCard{
+		"Skirmishing Manouver",
+		{CardAbility{"Attack", 2}, CardAbility{"Move", 2},CardAbility{"Attack", 2}},
+		{CardAbility{"Attack", 3}, CardAbility{"Range", 3, true}, CardAbility{"XP", 1, true}}, 29,	5},
+	PlayerCard{
+		"Unstoppable Charge",
+		{CardAbility{"Attack", 5}, CardAbility{"XP", 1}},
+		{CardAbility{"Move", 4}, CardAbility{"STUN"}, CardAbility{"All adjacent enemies"}, CardAbility{"LOSS"}},
+		86, 4
+	},
+	PlayerCard{
+		"Juggernaut",
+		{CardAbility{"Move", 2}, CardAbility{"Attack", 2}},
+		{},
+		34, 2
+	},
+	PlayerCard{
+		"Hook and Chain",
+		{CardAbility{"Attack", 3}, CardAbility{"Range", 3, true}, CardAbility{"PULL", 2, true}},
+		{CardAbility{"Move", 4}},
+		42, 3
+	}
+};
+
+#include"../Gloomhaven/icons/icons.h"
+
 Texture card0;
 Texture card1;
 glm::vec2 p;
 void CardRendering::Initialize()
 {
-	card0 = Services().Textures().LoadTexture("textures/monster_ability_card_back.png");
-	card1 = Services().Textures().LoadTexture("textures/player_ability_back.png");
+	auto& textures = Services().Textures();
+	card0 = textures.LoadTexture("textures/monster_ability_card_back.png");
+	card1 = textures.LoadTexture("textures/player_ability_back.png");
+
+	Icons::Load(textures);
 }
 
 void CardRendering::Deinitialize()
 {
+	Icons::Unload();
 }
 
 void CardRendering::Update(double delta)
@@ -31,7 +72,6 @@ void CardRendering::Update(double delta)
 	}
 }
 
-#include"GL/glew.h"
 void CardRendering::Render()
 {
 	auto m = Services().Input().GetMousePosition();
@@ -75,69 +115,18 @@ void CardRendering::Render()
 	glPopMatrix();
 
 
-	float vertices2[] = {
-		0,0, 
-		card1.width, 0,
-		card1.width,card1.height,
-		0,card1.height
-	};
+
 	glPushMatrix();
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, card1.textureId);
-		glTranslatef(0,0, 0);
-		glScalef(0.75f, 0.75f, 1.0f);
-		glColor3f(126.0f/255.0f, 162.0f/255.0f, 245.0f/255.0f);
-		glBegin(GL_QUADS);
-			for (int i = 0; i < 4; ++i) {
-				glTexCoord2fv(&textureCoords[i * 2]);
-				glVertex2fv(&vertices2[i * 2]);
-			}
-		glEnd();
 
-		text.PrintCenter(180, 20, fmt::format("Juggernaut"), 25, Colorf(1));
-		text.PrintCenter(180, 54, fmt::format("1"), 16, Colorf(1));
+		float scale = (float)WindowState::Width() / (float)cards.size();
+		scale /= card1.width;
 
-		text.PrintCenter(180, 120, fmt::format("Move 2"), 25, Colorf(1));
-		text.PrintCenter(180, 120+27, fmt::format("Attack 2"), 25, Colorf(1));
-
-		text.PrintCenter(180, 275, fmt::format("34"), 40, Colorf(1));
-
-		text.PrintCenter(180, 330, "on the next three sources of damage", 14, Colorf(1));
-		text.PrintCenter(180, 345, "suffer no damage", 14, Colorf(1));
-
+		for( auto& card : cards ){
+			card.Scale(scale);
+			card.Render(text, card1);
+			glTranslatef((card1.width * scale), 0, 0);
+		}
 	glPopMatrix();
 
-}
-
-
-
-class PlayerCard
-{
-public:
-	PlayerCard();
-	~PlayerCard();
-
-	void Render();
-
-private:
-	glm::vec2 position;
-	glm::vec2 scale;
-
-	std::string name;
-	std::vector<std::string> topAction;
-	std::vector<std::string> bottomAction;
-	int initiative;
-	int level;
-};
-
-PlayerCard::PlayerCard()
-{
-}
-
-PlayerCard::~PlayerCard()
-{
-}
-
-void PlayerCard::Render()
-{
 }

@@ -73,13 +73,42 @@ void Text::Deinit()
 	fontProgram.UnloadProgram();
 }
 
-void Text::PrintLine(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const
+double Text::CalculateWidth(const std::string& text, unsigned int fontHeight) const
 {
-	Print(x, y, text, fontHeight, color);
+	double w = 0;
+	double scale = (double)fontHeight / (double)font_face_rendered_height;
+
+	for (std::string::const_iterator c = text.begin(); c != text.end(); c++)
+	{
+		const Character& ch = characters[*c];
+
+		// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+		w += (ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
+	}
+
+	return w;
+}
+
+void Text::NewLine(unsigned int fontHeight) const 
+{
 	glTranslatef(0, fontHeight + 2.0f, 0);
 }
 
-void Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const
+float Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color, bool center, bool newline) const
+{
+	int textWidth = 0;
+	if (center)
+		textWidth = (int)CalculateWidth(text, fontHeight);
+
+	PrintText(x - textWidth*0.5 , y, text, fontHeight, color);
+	
+	if (newline)
+		NewLine(fontHeight);
+
+	return (float)textWidth;
+}
+
+void Text::PrintText(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const
 {
 	fontProgram.Use();
 	fontProgram.SetUniform("tex", 0);
@@ -87,7 +116,6 @@ void Text::Print(double x, double y, const std::string& text, unsigned int fontH
 
 	glColor4f(1,1,1,1);
 	glEnable(GL_BLEND);
-	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glPushMatrix();
@@ -141,7 +169,6 @@ void Text::Print(double x, double y, const std::string& text, unsigned int fontH
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 
 	fontProgram.NoProgram();

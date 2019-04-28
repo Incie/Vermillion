@@ -99,18 +99,18 @@ void InitiativeTracker::Render(const TextService& text)
 		if (enemy != nullptr) {
 			if( enemy->Elite() )
 				color = Colorf(1, 1, 0);
-			text.PrintLine(0, 0, fmt::format("({0}) {1}({2})", enemy->Initiative(), enemy->Name(), enemy->EnemyId()), 18, color);
+			text.Print(0, 0, fmt::format("({0}) {1}({2})", enemy->Initiative(), enemy->Name(), enemy->EnemyId()), 18, color);
 			continue;
 		}
 
 		auto player = dynamic_cast<Player*>(a);
 		if (player != nullptr) {
 			color = Colorf(0.42f, 0.35f, 1);
-			text.PrintLine(0, 0, fmt::format("({0}) {1}", player->Initiative(), player->Name()), 18, color);
+			text.Print(0, 0, fmt::format("({0}) {1}", player->Initiative(), player->Name()), 18, color);
 			continue;
 		}
 
-		text.PrintLine(0, 0, fmt::format("({0}) {1}", a->Initiative(), a->Name()), 18, color);
+		text.Print(0, 0, fmt::format("({0}) {1}", a->Initiative(), a->Name()), 18, color);
 	}
 }
 

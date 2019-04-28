@@ -68,6 +68,12 @@
     <Filter Include="Source Files\Gloomhaven\Director">
       <UniqueIdentifier>{bee1f7af-359a-4df7-a828-f94a12ff2cfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Framework\Render">
+      <UniqueIdentifier>{927e2919-e719-456b-a089-f79ed0c8b450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\Icons">
+      <UniqueIdentifier>{657e9374-7a10-4fce-bbfb-665cb3b243c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -190,6 +196,12 @@
     <ClCompile Include="Source\Test\CardRendering.cpp">
       <Filter>Source Files\Test</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\render.cpp">
+      <Filter>Source Files\Framework\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\icons\icons.cpp">
+      <Filter>Source Files\Gloomhaven\Icons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -302,6 +314,12 @@
     </ClInclude>
     <ClInclude Include="Source\Test\CardRendering.h">
       <Filter>Source Files\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\render.h">
+      <Filter>Source Files\Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\icons\icons.h">
+      <Filter>Source Files\Gloomhaven\Icons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

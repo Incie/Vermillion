@@ -101,7 +101,7 @@ void Gloom::Render()
 		glPushMatrix();
 		glTranslatef(0, 500.0f, 0);
 		for (const auto& line : level.combatLog) {
-			text.PrintLine(0, 0, line, 20, Colorf(1));
+			text.Print(0, 0, line, 20, Colorf(1));
 		}
 		glPopMatrix();
 	}

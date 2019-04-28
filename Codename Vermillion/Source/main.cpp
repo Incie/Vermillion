@@ -48,7 +48,7 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	TextureManager textureManager;
 
 	Timer renderTimer;
-	renderTimer.LimitByMilliseconds(17);
+	renderTimer.LimitByMilliseconds(18);
 
 	Timer fpsTimer;
 	fpsTimer.LimitByMilliseconds(1000);
@@ -71,6 +71,7 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	testing.SetServiceLocator(serviceLocator);
 	testing.Initialize();
 
+	double lastFrameTime = 0.0;
 	bool quitProgram = false;
 	while (!quitProgram) {
 		quitProgram = window.ProcessMessages();
@@ -87,13 +88,15 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 			renderer.StartFrame();
 			testing.Update(renderTimer.GetDelta());
 			testing.Render();
-			text.Print(0, 0, fmt::format("FPS: {0}", fps), 24, Colorf(1.0f) );
+			text.Print(0, 0, fmt::format("FPS: {0} ({1})", fps, lastFrameTime), 12, Colorf(1.0f) );
 			renderer.EndFrame();
 
 			fpsCounter++;
+
+			lastFrameTime = renderTimer.TimeSinceTick();
 		}
 
-		Sleep(1);
+		Sleep(0);
 	}
 	
 	Log::Info("Application", "Shutting down");
