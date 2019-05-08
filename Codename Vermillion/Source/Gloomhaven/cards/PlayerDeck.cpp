@@ -14,7 +14,7 @@ PlayerCard::~PlayerCard()
 {
 }
 
-void PlayerCard::Render(const TextService& text, const Texture& texture)
+void PlayerCard::Render(const TextService& text, const Texture& texture) const
 {
 	float vertices2[] = {
 		0,0,
@@ -53,7 +53,18 @@ void PlayerCard::Render(const TextService& text, const Texture& texture)
 	glPopMatrix();
 }
 
-void PlayerCard::RenderAbility(const TextService& text, const std::vector<CardAbility>& ability, const glm::vec2& position)
+bool PlayerCard::PointInside(const glm::vec2& point, double scalar, const Texture& texture) const
+{
+	if (point.x < 0 || point.y < 0)
+		return false;
+
+	if (point.x < texture.width * scalar && point.y < texture.height * scalar )
+		return true;
+
+	return false;
+}
+
+void PlayerCard::RenderAbility(const TextService& text, const std::vector<CardAbility>& ability, const glm::vec2& position) const
 {
 	glPushMatrix();
 	glTranslatef(position.x, position.y, 0.0f);

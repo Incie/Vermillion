@@ -13,6 +13,7 @@
 #include"Framework\text.h"
 #include"Framework\servicelocator.h"
 #include"Framework\textures.h"
+#include"Framework\windowstate.h"
 
 #include"Test\GamepadTest.h"
 #include"Test\Testing.h"
@@ -48,7 +49,7 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	TextureManager textureManager;
 
 	Timer renderTimer;
-	renderTimer.LimitByMilliseconds(18);
+	renderTimer.LimitByMilliseconds(0);
 
 	Timer fpsTimer;
 	fpsTimer.LimitByMilliseconds(1000);
@@ -86,6 +87,12 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 			inputManager.Update();
 
 			renderer.StartFrame();
+
+			if (WindowState::Changed()) {
+				testing.Resize();
+				WindowState::ResetChanged();
+			}
+
 			testing.Update(renderTimer.GetDelta());
 			testing.Render();
 			text.Print(0, 0, fmt::format("FPS: {0} ({1})", fps, lastFrameTime), 12, Colorf(1.0f) );
@@ -96,7 +103,7 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 			lastFrameTime = renderTimer.TimeSinceTick();
 		}
 
-		Sleep(0);
+		//Sleep(0);
 	}
 	
 	Log::Info("Application", "Shutting down");

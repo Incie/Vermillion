@@ -29,3 +29,22 @@ float Render::Quad(const Texture& texture, float height)
 
 	return texture.width* scale;
 }
+
+void Render::Quad(float x, float y, float w, float h, const glm::vec3& color)
+{
+	glPushMatrix();
+		glTranslatef(x,y, 0);
+		glDisable(GL_TEXTURE_2D);
+
+		glColor3fv(&color.x);
+		glBegin(GL_QUADS);
+			glVertex2f(0, 0);
+			glVertex2f(w, 0);
+			glVertex2f(w, h);
+			glVertex2f(0, h);
+		glEnd();
+
+		glColor3f(1, 1, 1);
+		glEnable(GL_TEXTURE_2D);
+	glPopMatrix();
+}

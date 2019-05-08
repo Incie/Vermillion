@@ -23,15 +23,19 @@ public:
 	PlayerCard(const std::string& name, std::vector<CardAbility> top, std::vector<CardAbility> bottom, int initiative, int level);
 	~PlayerCard();
 
-	void Render(const TextService& text, const Texture& texture);
-	void Scale(float scale) { this->scale.x = scale; this->scale.y = scale; }
+	void Render(const TextService& text, const Texture& texture) const;
+	void Scale(float scale) const { this->scale.x = scale; this->scale.y = scale; }
 
+	const std::string& Name() { return name; }
+	int Initiative() { return initiative; }
+
+	bool PointInside(const glm::vec2& point, double scalar, const Texture& texture) const;
 private:
-	void RenderAbility(const TextService& text, const std::vector<CardAbility>& ability, const glm::vec2& position);
+	void RenderAbility(const TextService& text, const std::vector<CardAbility>& ability, const glm::vec2& position) const;
 
 
 	glm::vec2 position;
-	glm::vec2 scale;
+	mutable glm::vec2 scale;
 
 	std::string name;
 	std::vector<CardAbility> topAction;
