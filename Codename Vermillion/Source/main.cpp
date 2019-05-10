@@ -13,6 +13,7 @@
 #include"Test\GamepadTest.h"
 #include"Test\Testing.h"
 #include"Test\Gloom.h"
+#include"Rasterizer\RasterizeMain.h"
 
 
 int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ LPSTR cmdLine, _In_ int nShow)
@@ -45,7 +46,8 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	Timer fpsTimer;
 	fpsTimer.LimitByMilliseconds(1000);
 
-	Gloom testing;
+	RasterizeMain testing;
+	//Gloom testing;
 	//Testing testing;
 	//GamepadTest testing;
 	

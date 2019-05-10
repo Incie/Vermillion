@@ -56,6 +56,12 @@
     <Filter Include="Source Files\Precompiled">
       <UniqueIdentifier>{1b08c3e9-dfd7-4ad7-9e90-378b0cbcfcee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Rasterizer">
+      <UniqueIdentifier>{c870c96b-a2f7-4496-9de6-e8ca2c6274c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rasterizer\Renderer">
+      <UniqueIdentifier>{0f81db4c-fb5d-42a2-b85a-e9223fefef6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -148,6 +154,15 @@
     <ClCompile Include="Source\Framework\pch\pch.cpp">
       <Filter>Source Files\Precompiled</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Rasterizer\RasterizeMain.cpp">
+      <Filter>Source Files\Rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Rasterizer\Renderer\Buffer.cpp">
+      <Filter>Source Files\Rasterizer\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Rasterizer\Renderer\Render.cpp">
+      <Filter>Source Files\Rasterizer\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -227,6 +242,15 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\pch\pch.h">
       <Filter>Source Files\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Rasterizer\RasterizeMain.h">
+      <Filter>Source Files\Rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Rasterizer\Renderer\Buffer.h">
+      <Filter>Source Files\Rasterizer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Rasterizer\Renderer\Render.h">
+      <Filter>Source Files\Rasterizer\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

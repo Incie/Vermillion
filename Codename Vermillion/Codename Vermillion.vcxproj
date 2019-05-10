@@ -42,6 +42,9 @@
     <ClCompile Include="Source\Framework\windowprocedure.cpp" />
     <ClCompile Include="Source\Framework\windowstate.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Rasterizer\RasterizeMain.cpp" />
+    <ClCompile Include="Source\Rasterizer\Renderer\Buffer.cpp" />
+    <ClCompile Include="Source\Rasterizer\Renderer\Render.cpp" />
     <ClCompile Include="Source\Test\ActionMove.cpp" />
     <ClCompile Include="Source\Test\Entity.cpp" />
     <ClCompile Include="Source\Test\GamepadTest.cpp" />
@@ -71,6 +74,9 @@
     <ClInclude Include="Source\Framework\timer.h" />
     <ClInclude Include="Source\Framework\window.h" />
     <ClInclude Include="Source\Framework\windowstate.h" />
+    <ClInclude Include="Source\Rasterizer\RasterizeMain.h" />
+    <ClInclude Include="Source\Rasterizer\Renderer\Buffer.h" />
+    <ClInclude Include="Source\Rasterizer\Renderer\Render.h" />
     <ClInclude Include="Source\Test\ActionMove.h" />
     <ClInclude Include="Source\Test\Entity.h" />
     <ClInclude Include="Source\Test\GamepadTest.h" />
