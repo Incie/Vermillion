@@ -74,6 +74,12 @@
     <Filter Include="Source Files\Gloomhaven\Icons">
       <UniqueIdentifier>{657e9374-7a10-4fce-bbfb-665cb3b243c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Framework\UI">
+      <UniqueIdentifier>{7a977a87-2603-4779-8987-52d9d44ea0fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\UILayers">
+      <UniqueIdentifier>{50977cc3-9f0a-4380-bc35-86bc2dd95608}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -202,6 +208,33 @@
     <ClCompile Include="Source\Gloomhaven\icons\icons.cpp">
       <Filter>Source Files\Gloomhaven\Icons</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\uilayer.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\CardSelection.cpp">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\CardSelector.cpp">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\uielement.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\uibutton.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\AbilitySelector.cpp">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\PortraitPanel.cpp">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\StatusBar.cpp">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\InitiativeTracker.cpp">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -320,6 +353,30 @@
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\icons\icons.h">
       <Filter>Source Files\Gloomhaven\Icons</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\uilayer.h">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\CardSelection.h">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\CardSelector.h">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\UILayerId.h">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\AbilitySelector.h">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\PortraitPanel.h">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\StatusBar.h">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\InitiativeTracker.h">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

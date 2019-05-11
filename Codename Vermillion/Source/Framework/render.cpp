@@ -4,6 +4,10 @@
 #include"textures.h"
 #include"GL/glew.h"
 
+const glm::vec3 Render::BLACK = glm::vec3(0);
+const glm::vec3 Render::WHITE = glm::vec3(1);
+
+
 float Render::Quad(const Texture& texture, float height)
 {
 	float scale = height / texture.height;
@@ -28,6 +32,12 @@ float Render::Quad(const Texture& texture, float height)
 	glPopMatrix();
 
 	return texture.width* scale;
+}
+
+
+void Render::Quad(const glm::vec2& position, const glm::vec2& size, const glm::vec3& color) 
+{
+	Quad(position.x, position.y, size.x, size.y, color);
 }
 
 void Render::Quad(float x, float y, float w, float h, const glm::vec3& color)

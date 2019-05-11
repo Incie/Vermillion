@@ -10,108 +10,12 @@
 
 #include<functional>
 
-class UILayer {
-public:
-	UILayer() { active = false; }
-	virtual ~UILayer() {}
+#include"../Framework/uilayer.h"
 
-	void Activate() { active = true; }
-	void Deactivate() { active = false; }
+#include"../Gloomhaven/uilayer/CardSelection.h"
+#include"../Gloomhaven/uilayer/CardSelector.h"
+#include"../Gloomhaven/uilayer/AbilitySelector.h"
 
-	virtual bool HandleInput(const InputService& inputService) {
-		const auto& mpos = inputService.GetMousePosition();
-
-		if (!IsPointInSide(mpos)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	bool IsPointInSide(const glm::vec2& point) {
-		if (point.x > position.x && point.x < (position.x + size.x)) {
-			if (point.y > position.y && point.y < (position.y + size.y))
-				return true;
-		}
-
-		return false;
-	}
-
-	virtual void Resize(const glm::vec2& windowSize) {
-		if (anchor & WindowAnchor::LEFT && anchor & WindowAnchor::RIGHT)
-			size.x = windowSize.x;
-		if (anchor & WindowAnchor::TOP && anchor & WindowAnchor::BOTTOM)
-			size.y = windowSize.y;
-
-		if(anchor & WindowAnchor::LEFT)
-			position.x = 0.0f;
-		if (anchor & WindowAnchor::RIGHT) 
-			position.x = windowSize.x - size.x;
-
-		if (anchor & WindowAnchor::TOP)
-			position.y = 0.0f;
-		if (anchor & WindowAnchor::BOTTOM)
-			position.y = windowSize.y - size.y;
-	}
-
-	virtual void Update() {
-		if (active == false)
-			return;
-	}
-
-	virtual void StartRender() {
-		if (active == false)
-			return;
-
-		glPushMatrix();
-		glTranslatef(position.x, position.y, 0.0f);
-	}
-
-	virtual void Render(ServiceLocator& Services){
-		glDisable(GL_TEXTURE_2D);
-		glColor3f(1, 1, 1);
-		glBegin(GL_QUADS);
-			glVertex2f(0, 0);
-			glVertex2f(size.x, 0);
-			glVertex2f(size.x, size.y);
-			glVertex2f(0, size.y);
-		glEnd();
-		glEnable(GL_TEXTURE_2D);
-	}
-
-	virtual void EndRender() {
-		if (active == false)
-			return;
-
-		glPopMatrix();
-	}
-
-
-	enum WindowAnchor {
-		NONE = 0,
-		LEFT = 1,
-		RIGHT = 2,
-		TOP = 4,
-		BOTTOM = 8
-	};
-
-	void SetSize(float width, float height) {
-		size.x = width;
-		size.y = height;
-	}
-
-	void SetAnchor(int newAnchor) {
-		anchor = newAnchor;
-	}
-
-protected:
-	int anchor;
-
-	glm::vec2 position;
-	glm::vec2 size;
-
-	bool active;
-};
 
 
 Texture card0;
@@ -120,184 +24,41 @@ glm::vec2 p;
 
 
 
-class CardSelection : public UILayer {
+class ButtonTest : public UILayer {
 public:
-	CardSelection()
+	ButtonTest() {
+		auto button = new Button();
+		button->SetText("Next Turn");
+		button->SetId(1);
+		button->SetPosition(8, 8);
+		button->SetSize(100, 30);
+		children.push_back(button);
+	}
+	virtual ~ButtonTest() {}
+
+	void Resize(const glm::vec2& windowSize)
 	{
-		scalar = 0.66f;
-		playerCards[0] = nullptr;
-		playerCards[1] = nullptr;
-	}
-
-	void Resize(const glm::vec2& windowSize) {
 		UILayer::Resize(windowSize);
-
-		float width = scalar * card1.width * 2 + 3 * 8.0f;
-		float height = scalar * card1.height + 3 * 8.0f + 22.0f;
-		
-		size.x = width;
-		size.y = height;
-
-		position.y = (windowSize.y - size.y) / 2.0f;
 	}
-
-	bool HandleInput(const InputService& input) {
-		if (!UILayer::HandleInput(input)) {
-			return false;
-		}
-
-		glm::vec2 mousePosition = input.GetMousePosition() - position;
-
-
-		if( input.KeyOnce(VK_LBUTTON) )
-		{
-			if (playerCards[0] != nullptr) {
-				if (playerCards[0]->PointInside(mousePosition - glm::vec2(8, 16 + 22), scalar, card1))
-					playerCards[0] = nullptr;
-			}
-
-			if (playerCards[1] != nullptr) {
-				if (playerCards[1]->PointInside(mousePosition - glm::vec2(8 + 8 + card1.width * scalar, 16 + 22), scalar, card1))
-					playerCards[1] = nullptr;
-			}
-		}
-
-		return true;
-	}
-
+	
 	void Render(ServiceLocator& Services) {
 		UILayer::Render(Services);
-
-		Services.Text().PrintCenter(8 + 0.5f * scalar * card1.width, 8 + 11.0f, "Initiative", 22.0f, Colorf(0));
-
-		float w = card1.width;
-		float h = card1.height;
-
-		glPushMatrix();
-			glTranslatef(8, 8+8 + 22.0f, 0);
-				Render::Quad(0, 0, scalar * card1.width, scalar * card1.height, glm::vec3(0.88));
-				if (playerCards[0] != nullptr) {
-					playerCards[0]->Scale(scalar);
-					playerCards[0]->Render(Services.Text(), card1);
-				}
-			
-				glTranslatef(8 + card1.width * scalar, 0, 0);
-			Render::Quad(0,0, scalar * card1.width, scalar * card1.height, glm::vec3(0.88));
-			if (playerCards[1] != nullptr){
-				playerCards[1]->Scale(scalar);
-				playerCards[1]->Render(Services.Text(), card1);
-			}
-		glPopMatrix();
+	}
+	
+	void OnEvent(WindowEvent type, int id) {
+		if (id == 1) {
+			auto button = dynamic_cast<Button*>(children[0]);
+			if (button != nullptr)
+				button->SetColor(glm::vec3(1, 1, 0));
+		}
 	}
 
-	void AddCard(const PlayerCard& playerCard) {
-		if (playerCards[0] == nullptr)
-			playerCards[0] = &playerCard;
-		else if (playerCards[1] == nullptr)
-			playerCards[1] = &playerCard;
-	}
-
-	bool IsFull() const {
-
-	}
-
-protected:
-	PlayerCard const *playerCards[2];
-	float scalar;
-
-};
-
-
-class CardSelect : public UILayer {
-public:
-	CardSelect(std::vector<PlayerCard>& cards, std::function<void(const std::string&)> onclick) 
+	virtual UILayerId LayerId() override
 	{
-		onClick = onclick;
-
-		cardHighlight = -1;
-		for (auto& playerCard : cards)
-			cardList.push_back(&playerCard);
+		return UILayerId();
 	}
-
-	virtual ~CardSelect() {
-		cardList.clear();
-	}
-
-	void Resize(const glm::vec2& windowSize) {
-		UILayer::Resize(windowSize);
-
-		scale = size.x / (float)cardList.size();
-		scale /= card1.width;
-
-		float maxScale = size.y / card1.height;
-		scale = std::min<float>(maxScale, scale);
-
-		totalWidth = cardList.size() * (card1.width * scale);
-		centerTranslate = (size.x - totalWidth) / 2.0f;
-
-		position.x = centerTranslate;
-		size.x = totalWidth;
-	}
-
-	bool HandleInput(const InputService& input) {
-		if (!UILayer::HandleInput(input)) {
-			cardHighlight = -1;
-			return false;
-		}
-
-		cardHighlight = -1;
-		glm::vec2 mousePosition = input.GetMousePosition() - position;
-
-		float x = mousePosition.x / size.x;
-		x *= cardList.size();
-		cardHighlight = (int)std::floorf(x);
-
-		if (cardHighlight < 0 || cardHighlight > cardList.size())
-			cardHighlight = -1;
-
-		if (input.KeyOnce(VK_LBUTTON)) {
-			onClick(cardList[cardHighlight]->Name());
-		}
-
-		return true;
-	}
-
-
-	void Render(ServiceLocator& Services) {
-		UILayer::Render(Services);
-
-		glPushMatrix();
-		glTranslatef(0, 0, 0.1f);
-		glEnable(GL_TEXTURE_2D);
-
-		if (cardHighlight != -1) {
-			glPushMatrix();
-			glTranslatef(0, -0.75f * card1.height, 0);
-			cardList[cardHighlight]->Scale(0.75f);
-			cardList[cardHighlight]->Render(Services.Text(), card1);
-			glPopMatrix();
-		}
-
-		for (auto card : cardList) {
-			card->Scale(scale);
-			card->Render(Services.Text(), card1);
-			glTranslatef((card1.width * scale), 0, 0);
-		}
-		glPopMatrix();
-	}
-
-protected:
-
-	std::function<void(const std::string&)> onClick;
-
-	int cardHighlight;
-
-	float centerTranslate;
-	float scale;
-	float totalWidth;
-
-	std::vector<PlayerCard*> cardList;
 };
+
 
 
 CardRendering::CardRendering()
@@ -382,7 +143,7 @@ void CardRendering::Initialize()
 
 	Icons::Load(textures);
 
-	auto cardSelector = new CardSelect(cards, [this](const std::string & cardName) {
+	auto cardSelector = new CardSelect(cards, card1, [this](const std::string & cardName) {
 		auto cardFound = std::find_if(cards.begin(), cards.end(), [&cardName](auto playerCard) { if (playerCard.Name().compare(cardName) == 0) return true; return false; });
 		if (cardFound == cards.end())
 			throw "card not found";
@@ -398,12 +159,38 @@ void CardRendering::Initialize()
 	cardSelector->Activate();
 	layers.push_back(cardSelector);
 
+	auto cardSelection = new CardSelection(card1, [this](CardSelection & cs, int eventId) {
+		auto cardName0 = cs.Card(0);
+		auto cardName1 = cs.Card(1);
 
-	auto cardSelection = new CardSelection();
+		cs.Deactivate();
+
+		auto cardSelector = dynamic_cast<CardSelect*>(layers[0]);
+		cardSelector->Deactivate();
+
+		auto abilitySelector = dynamic_cast<AbilitySelector*>(layers[2]);
+
+		auto playerCard0 = std::find_if(cards.begin(), cards.end(), [&cardName0](auto playerCard) { if (playerCard.Name().compare(cardName0) == 0) return true; return false; });
+		auto playerCard1 = std::find_if(cards.begin(), cards.end(), [&cardName1](auto playerCard) { if (playerCard.Name().compare(cardName1) == 0) return true; return false; });
+
+		abilitySelector->SetCards(&(*playerCard0), &(*playerCard1));
+		abilitySelector->Activate();
+	});
 	cardSelection->SetSize(0, 0);
 	cardSelection->SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::BOTTOM);
 	cardSelection->Activate();
 	layers.push_back(cardSelection);
+
+	//auto buttonTest = new ButtonTest();
+	//buttonTest->SetSize(0, 100);
+	//buttonTest->SetAnchor(UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::LEFT | UILayer::WindowAnchor::RIGHT);
+	//layers.push_back(buttonTest);
+
+	auto abilitySelector = new AbilitySelector(card1);
+	abilitySelector->SetCards(&cards[0], &cards[1]);
+	abilitySelector->Deactivate();
+	layers.push_back(abilitySelector);
+
 }
 
 void CardRendering::Deinitialize()
@@ -431,6 +218,9 @@ void CardRendering::Update(double delta)
 
 	bool inputHandled = false;
 	for (auto layer : layers) {
+		if (!layer->Active())
+			continue;
+
 		if( !inputHandled )
 			inputHandled = layer->HandleInput(input);
 		layer->Update();
@@ -484,8 +274,14 @@ void CardRendering::Render()
 		glPopMatrix();
 	glPopMatrix();
 
+	cards[0].Scale(1.0f);
+	cards[0].Render(text, card1);
+
 
 	for (auto layer : layers){
+		if (!layer->Active())
+			continue;
+
 		layer->StartRender();
 		layer->Render(Services());
 		layer->EndRender();

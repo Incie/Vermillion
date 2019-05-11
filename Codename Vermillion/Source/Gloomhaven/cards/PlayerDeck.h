@@ -26,7 +26,7 @@ public:
 	void Render(const TextService& text, const Texture& texture) const;
 	void Scale(float scale) const { this->scale.x = scale; this->scale.y = scale; }
 
-	const std::string& Name() { return name; }
+	const std::string& Name() const  { return name; }
 	int Initiative() { return initiative; }
 
 	bool PointInside(const glm::vec2& point, double scalar, const Texture& texture) const;

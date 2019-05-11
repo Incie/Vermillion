@@ -20,6 +20,8 @@ public:
 	void Render();
 	void RenderUI(const TextService& text);
 private:
+	void PlayerTurn(const InputService& input);
+	void EnemyTurn(const InputService& input);
 
 	InitiativeTracker initiativeTracker;
 	EnemyAI enemyAi;

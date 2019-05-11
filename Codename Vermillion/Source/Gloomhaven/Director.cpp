@@ -38,63 +38,10 @@ Director::~Director()
 
 void Director::Update(const InputService& input)
 {
-	if (initiativeTracker.EnemyTurn()) {
-		if (input.KeyOnce('N')) {
-			enemyAi.Step();
-
-			if (enemyAi.Finished()) {
-				auto a = initiativeTracker.NextActor();
-
-				if (initiativeTracker.EnemyTurn()) {
-					enemyAi.SetActor(a);
-					enemyAi.SetRoundActions(enemyRound);
-				}
-			}
-		}
-	}
-	else {//playerTurn
-		if (action == nullptr && input.KeyOnce(VK_F1)) {
-			action = new ActionMove(level, *level.GetPlayer(), 6);
-		}
-
-		if (action == nullptr && input.KeyOnce(VK_F2)) {
-			action = new ActionAttack(level, *level.GetPlayer(), 1, 4, 1);
-		}
-
-		if (input.KeyOnce(VK_SPACE)) {
-			if( action == nullptr ){
-				auto a = initiativeTracker.NextActor();
-
-				if (initiativeTracker.EnemyTurn()) {
-					enemyAi.SetActor(a);
-					enemyAi.SetRoundActions(enemyRound);
-				}
-			}
-		}
-
-		if (action != nullptr && input.KeyOnce(VK_RETURN)) {
-			if (action->Perform(*level.GetPlayer())) {
-				delete action;
-				action = nullptr;
-			}
-		}
-
-		if (action != nullptr && input.KeyOnce(VK_LBUTTON)) {
-			if (level.HasHoverTarget())
-				action->Click(level.GetHoverTarget().Location());
-		}
-
-		if (action != nullptr && input.KeyOnce(VK_BACK)) {
-			action->Undo();
-		}
-
-		if (action != nullptr && input.KeyOnce(VK_ESCAPE)) {
-			action->Reset();
-			delete action;
-			action = nullptr;
-			level.ClearHighlights();
-		}
-	}
+	if (initiativeTracker.EnemyTurn())
+		EnemyTurn(input);
+	else 
+		PlayerTurn(input);
 
 	if (input.KeyOnce('K') && initiativeTracker.RoundFinished()) {
 		initiativeTracker.CalculateRoundOrder(level);
@@ -117,7 +64,6 @@ void Director::RenderUI(const TextService& text)
 		text.Print(500, 25, "ROUND FINISHED", 25, Colorf(1));
 	}
 
-
 	glPushMatrix();
 		glTranslatef(5.0f, 300.0f, 0.0f);
 		enemyRound->RenderRoundCard(text);
@@ -130,5 +76,66 @@ void Director::RenderUI(const TextService& text)
 
 	if (action != nullptr) {
 		text.Print(200, 25, action->Description(), 20, Colorf(1, 1, 1));
+	}
+}
+
+void Director::PlayerTurn(const InputService& input)
+{
+	if (action == nullptr && input.KeyOnce(VK_F1)) {
+		action = new ActionMove(level, *level.GetPlayer(), 6);
+	}
+
+	if (action == nullptr && input.KeyOnce(VK_F2)) {
+		action = new ActionAttack(level, *level.GetPlayer(), 1, 4, 1);
+	}
+
+	if (input.KeyOnce(VK_SPACE)) {
+		if (action == nullptr) {
+			auto a = initiativeTracker.NextActor();
+
+			if (initiativeTracker.EnemyTurn()) {
+				enemyAi.SetActor(a);
+				enemyAi.SetRoundActions(enemyRound);
+			}
+		}
+	}
+
+	if (action != nullptr && input.KeyOnce(VK_RETURN)) {
+		if (action->Perform(*level.GetPlayer())) {
+			delete action;
+			action = nullptr;
+		}
+	}
+
+	if (action != nullptr && input.KeyOnce(VK_LBUTTON)) {
+		if (level.HasHoverTarget())
+			action->Click(level.GetHoverTarget().Location());
+	}
+
+	if (action != nullptr && input.KeyOnce(VK_BACK)) {
+		action->Undo();
+	}
+
+	if (action != nullptr && input.KeyOnce(VK_ESCAPE)) {
+		action->Reset();
+		delete action;
+		action = nullptr;
+		level.ClearHighlights();
+	}
+}
+
+void Director::EnemyTurn(const InputService& input)
+{
+	if (input.KeyOnce('N')) {
+		enemyAi.Step();
+
+		if (enemyAi.Finished()) {
+			auto a = initiativeTracker.NextActor();
+
+			if (initiativeTracker.EnemyTurn()) {
+				enemyAi.SetActor(a);
+				enemyAi.SetRoundActions(enemyRound);
+			}
+		}
 	}
 }
