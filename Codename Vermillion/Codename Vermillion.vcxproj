@@ -48,8 +48,10 @@
     <ClCompile Include="Source\Gloomhaven\action\ActionAttack.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionMove.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\CardAction.cpp" />
+    <ClCompile Include="Source\Gloomhaven\cards\CardGenerator.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\Modifiers.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\PlayerDeck.cpp" />
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerRound.cpp" />
     <ClCompile Include="Source\Gloomhaven\Director.cpp" />
     <ClCompile Include="Source\Gloomhaven\director\Initiative.cpp" />
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyAction.cpp" />
@@ -65,7 +67,8 @@
     <ClCompile Include="Source\Gloomhaven\uilayer\AbilitySelector.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\CardSelection.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\CardSelector.cpp" />
-    <ClCompile Include="Source\Gloomhaven\uilayer\InitiativeTracker.cpp" />
+    <ClCompile Include="Source\Gloomhaven\uilayer\EnemyAdvancer.cpp" />
+    <ClCompile Include="Source\Gloomhaven\uilayer\InitiativeUI.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\PortraitPanel.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\StatusBar.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -98,8 +101,10 @@
     <ClInclude Include="Source\Gloomhaven\action\ActionAttack.h" />
     <ClInclude Include="Source\Gloomhaven\action\ActionMove.h" />
     <ClInclude Include="Source\Gloomhaven\action\CardAction.h" />
+    <ClInclude Include="Source\Gloomhaven\cards\CardGenerator.h" />
     <ClInclude Include="Source\Gloomhaven\cards\Modifiers.h" />
     <ClInclude Include="Source\Gloomhaven\cards\PlayerDeck.h" />
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerRound.h" />
     <ClInclude Include="Source\Gloomhaven\Director.h" />
     <ClInclude Include="Source\Gloomhaven\director\Initiative.h" />
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyAction.h" />
@@ -115,7 +120,8 @@
     <ClInclude Include="Source\Gloomhaven\uilayer\AbilitySelector.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\CardSelection.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\CardSelector.h" />
-    <ClInclude Include="Source\Gloomhaven\uilayer\InitiativeTracker.h" />
+    <ClInclude Include="Source\Gloomhaven\uilayer\EnemyAdvancer.h" />
+    <ClInclude Include="Source\Gloomhaven\uilayer\InitiativeUI.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\PortraitPanel.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\StatusBar.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\UILayerId.h" />

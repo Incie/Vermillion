@@ -64,8 +64,8 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	serviceAssigner.SetInputService(inputManager);
 
 
-	CardRendering testing;
-	//Gloom testing;
+	//CardRendering testing;
+	Gloom testing;
 	//Testing testing;
 	//GamepadTest testing;
 

@@ -232,7 +232,16 @@
     <ClCompile Include="Source\Gloomhaven\uilayer\StatusBar.cpp">
       <Filter>Source Files\Gloomhaven\UILayers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Gloomhaven\uilayer\InitiativeTracker.cpp">
+    <ClCompile Include="Source\Gloomhaven\uilayer\InitiativeUI.cpp">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\CardGenerator.cpp">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerRound.cpp">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\EnemyAdvancer.cpp">
       <Filter>Source Files\Gloomhaven\UILayers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -375,7 +384,16 @@
     <ClInclude Include="Source\Gloomhaven\uilayer\StatusBar.h">
       <Filter>Source Files\Gloomhaven\UILayers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Gloomhaven\uilayer\InitiativeTracker.h">
+    <ClInclude Include="Source\Gloomhaven\uilayer\InitiativeUI.h">
+      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\CardGenerator.h">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerRound.h">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\EnemyAdvancer.h">
       <Filter>Source Files\Gloomhaven\UILayers</Filter>
     </ClInclude>
   </ItemGroup>

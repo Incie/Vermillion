@@ -1,6 +1,7 @@
 #pragma once
 
 #include"../uilayer.h"
+#include<functional>
 
 class PlayerCard;
 class Texture;
@@ -15,7 +16,7 @@ class Texture;
 
 class AbilitySelector : public UILayer {
 public:
-	AbilitySelector(Texture& texture);
+	AbilitySelector(Texture& texture, std::function<void(int, int)> callback);
 	~AbilitySelector();
 
 	virtual bool HandleInput(const InputService& inputService);
@@ -34,6 +35,7 @@ public:
 	void DisableBottom();
 
 protected:
+	std::function<void(int, int)> callback;
 	float cardScalar;
 
 	Texture* texture;

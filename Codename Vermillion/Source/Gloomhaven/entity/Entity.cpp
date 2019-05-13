@@ -3,7 +3,7 @@
 #include"fmt/format.h"
 
 Entity::Entity()
-	: renderModel()
+	: renderModel(), active(true)
 {
 }
 
@@ -76,22 +76,22 @@ int Actor::DoDamage(int attackDamage)
 
 void Actor::PrintStats(const TextService& text)
 {
-	text.Print(0, 0, fmt::format("Health: {0} / {1}", health, maxhealth), 16, Colorf(1, 1, 1));
+	text.Print(0, 0, fmt::format("Health: {0} / {1}", health, maxhealth), 16, Colorf(1, 1, 1), false, true);
 
 	if (move != 0)
-		text.Print(0, 0, fmt::format("Move: {0}", move), 16, Colorf(1, 1, 1));
+		text.Print(0, 0, fmt::format("Move: {0}", move), 16, Colorf(1, 1, 1), false, true);
 
 	if (attack != 0)
-		text.Print(0, 0, fmt::format("Attack: {0}", attack), 16, Colorf(1, 1, 1));
+		text.Print(0, 0, fmt::format("Attack: {0}", attack), 16, Colorf(1, 1, 1), false, true);
 
 	if (range != 0)
-		text.Print(0, 0, fmt::format("Range: {0}", range), 16, Colorf(1, 1, 1));
+		text.Print(0, 0, fmt::format("Range: {0}", range), 16, Colorf(1, 1, 1), false, true);
 
 	if (shield != 0) 
-		text.Print(0, 0, fmt::format("Shield: {0}", shield), 16, Colorf(1, 1, 1));
+		text.Print(0, 0, fmt::format("Shield: {0}", shield), 16, Colorf(1, 1, 1), false, true);
 
 	if( retaliate != 0 )
-		text.Print(0, 0, fmt::format("Retaliate: {0}", retaliate), 16, Colorf(1, 1, 1));
+		text.Print(0, 0, fmt::format("Retaliate: {0}", retaliate), 16, Colorf(1, 1, 1), false, true);
 }
 
 void Actor::Render(const TextService& text)
@@ -121,7 +121,7 @@ void Player::Setup(const playerattributes& playerattr, const actorattributes& ac
 
 void Player::PrintStats(const TextService& text)
 {
-	text.Print(0, 0, playerName, 18, Colorf(1));
+	text.Print(0, 0, playerName, 18, Colorf(1), false, true);
 	Actor::PrintStats(text);
 }
 
@@ -142,6 +142,6 @@ void Enemy::Setup(const enemyattributes& enemyattr, const actorattributes& actor
 
 void Enemy::PrintStats(const TextService& text)
 {
-	text.Print(0, 0, fmt::format("[{2}]{0} ({1})", name, enemyType == EnemyType::Elite ? "Elite" : "Normal", enemyId), 16, Colorf(1, 1, 1));
+	text.Print(0, 0, fmt::format("[{2}]{0} ({1})", name, enemyType == EnemyType::Elite ? "Elite" : "Normal", enemyId), 16, Colorf(1, 1, 1), false, true);
 	Actor::PrintStats(text);
 }

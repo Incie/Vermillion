@@ -78,6 +78,7 @@ bool ActionAttack::Perform(Actor& actor)
 		if (targetActor->Health() <= 0) {
 			level.combatLog.push_back("[Enemy] died");
 			level.RemoveActorById(targetActor->EntityId());
+			targetActor->Deactivate();
 		}
 	}
 

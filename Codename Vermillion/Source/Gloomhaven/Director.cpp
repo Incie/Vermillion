@@ -14,11 +14,12 @@
 #include<Windows.h>
 #include"GL/glew.h"
 
+#include"cards/PlayerRound.h"
 
-Director::Director(Level& level)
-	: level(level), action(nullptr), enemyAi(level)
+
+Director::Director(Level& level, std::function<void(int)> onEvent)
+	: level(level), action(nullptr), enemyAi(level), onEvent(onEvent)
 {
-
 	enemyRound = new EnemyRound();
 	enemyRound->AddAction(new EnemyMove(level, 2));
 	enemyRound->AddAction(new EnemyAttack(level, 2, 1));
@@ -34,19 +35,15 @@ Director::~Director()
 
 	if (action)
 		delete action;
+
+	if (playerRound)
+		delete playerRound;
 }
 
 void Director::Update(const InputService& input)
 {
-	if (initiativeTracker.EnemyTurn())
-		EnemyTurn(input);
-	else 
+	if( !initiativeTracker.EnemyTurn() )
 		PlayerTurn(input);
-
-	if (input.KeyOnce('K') && initiativeTracker.RoundFinished()) {
-		initiativeTracker.CalculateRoundOrder(level);
-		initiativeTracker.NextActor();
-	}
 }
 
 void Director::Render()
@@ -61,12 +58,20 @@ void Director::Render()
 void Director::RenderUI(const TextService& text)
 {
 	if (initiativeTracker.RoundFinished()) {
-		text.Print(500, 25, "ROUND FINISHED", 25, Colorf(1));
+		text.Print(500, 25, "ROUND FINISHED", 25, Colorf(1), false, true);
 	}
 
 	glPushMatrix();
 		glTranslatef(5.0f, 300.0f, 0.0f);
+	if(initiativeTracker.EnemyTurn())
 		enemyRound->RenderRoundCard(text);
+	else {
+		if (playerRound == nullptr || playerRound->Finished())
+			text.Print(0, 0, "Waiting for Player", 20, Colorf(1), false, true);
+		else {
+			playerRound->Render(text);
+		}
+	}
 	glPopMatrix();
 
 	glPushMatrix();
@@ -75,67 +80,101 @@ void Director::RenderUI(const TextService& text)
 	glPopMatrix();
 
 	if (action != nullptr) {
-		text.Print(200, 25, action->Description(), 20, Colorf(1, 1, 1));
+		text.Print(200, 25, action->Description(), 20, Colorf(1, 1, 1), false, true);
 	}
+}
+
+void Director::StartRound()
+{
+	initiativeTracker.CalculateRoundOrder(level);
+	NextActor();
 }
 
 void Director::PlayerTurn(const InputService& input)
 {
-	if (action == nullptr && input.KeyOnce(VK_F1)) {
-		action = new ActionMove(level, *level.GetPlayer(), 6);
-	}
+	if (action == nullptr || playerRound->Finished() )
+		return;
 
-	if (action == nullptr && input.KeyOnce(VK_F2)) {
-		action = new ActionAttack(level, *level.GetPlayer(), 1, 4, 1);
-	}
+	if ( input.KeyOnce(VK_RETURN)) {
+		if (action->Perform(*level.GetPlayer())) {
+			
+			action->Reset();
 
-	if (input.KeyOnce(VK_SPACE)) {
-		if (action == nullptr) {
-			auto a = initiativeTracker.NextActor();
+			playerRound->Next();
+			action = playerRound->GetAction();
 
-			if (initiativeTracker.EnemyTurn()) {
-				enemyAi.SetActor(a);
-				enemyAi.SetRoundActions(enemyRound);
+			if( action != nullptr )
+				action->Highlight();
+
+			if (playerRound->Finished()) {
+				delete playerRound;
+				playerRound = nullptr;
+				level.ClearHighlights();
 			}
 		}
 	}
-
-	if (action != nullptr && input.KeyOnce(VK_RETURN)) {
-		if (action->Perform(*level.GetPlayer())) {
-			delete action;
-			action = nullptr;
-		}
-	}
-
-	if (action != nullptr && input.KeyOnce(VK_LBUTTON)) {
+	else if (input.KeyOnce(VK_LBUTTON)) {
 		if (level.HasHoverTarget())
 			action->Click(level.GetHoverTarget().Location());
 	}
-
-	if (action != nullptr && input.KeyOnce(VK_BACK)) {
+	else if (input.KeyOnce(VK_BACK)) {
 		action->Undo();
 	}
 
-	if (action != nullptr && input.KeyOnce(VK_ESCAPE)) {
-		action->Reset();
-		delete action;
-		action = nullptr;
-		level.ClearHighlights();
+	/* Flag if player CAN move back, ie attack has happened */
+	//if (action != nullptr && input.KeyOnce(VK_ESCAPE)) {
+	//	action->Reset();
+	//	delete action;
+	//	action = nullptr;
+	//	level.ClearHighlights();
+	//}
+}
+
+void Director::EndPlayerTurn() 
+{
+	if (initiativeTracker.EnemyTurn())
+		return;
+
+	if (action == nullptr) {
+		NextActor();
 	}
 }
 
-void Director::EnemyTurn(const InputService& input)
+void Director::SetPlayerRound()
 {
-	if (input.KeyOnce('N')) {
+	std::vector<Action*> playerActions;
+	playerActions.push_back(new ActionMove(level, *level.GetPlayer(), 2));
+	playerActions.push_back(new ActionAttack(level, *level.GetPlayer(), 1, 4, 1));
+	playerRound = new PlayerRound(playerActions);
+
+	action = playerRound->GetAction();
+	action->Highlight();
+}
+
+void Director::AdvanceEnemy()
+{
+	if (initiativeTracker.EnemyTurn()) {
 		enemyAi.Step();
 
 		if (enemyAi.Finished()) {
-			auto a = initiativeTracker.NextActor();
-
-			if (initiativeTracker.EnemyTurn()) {
-				enemyAi.SetActor(a);
-				enemyAi.SetRoundActions(enemyRound);
-			}
+			NextActor();
 		}
+	}
+}
+
+void Director::NextActor()
+{
+	auto a = initiativeTracker.NextActor();
+
+	if (a == nullptr) {
+		onEvent(1);
+	}
+	else if (initiativeTracker.EnemyTurn()) {
+		onEvent(2);
+		enemyAi.SetActor(a);
+		enemyAi.SetRoundActions(enemyRound);
+	}
+	else {
+		onEvent(3);
 	}
 }

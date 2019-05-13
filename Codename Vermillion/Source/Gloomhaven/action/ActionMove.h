@@ -17,8 +17,8 @@ public:
 
 	void Render() override;
 
-private:
 	void Highlight();
+private:
 
 	std::vector<glm::ivec3> plannedRoute;
 

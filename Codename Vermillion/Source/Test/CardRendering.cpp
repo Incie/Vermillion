@@ -17,13 +17,6 @@
 #include"../Gloomhaven/uilayer/AbilitySelector.h"
 
 
-
-Texture card0;
-Texture card1;
-glm::vec2 p;
-
-
-
 class ButtonTest : public UILayer {
 public:
 	ButtonTest() {
@@ -59,79 +52,16 @@ public:
 	}
 };
 
-
+#include"../Gloomhaven/cards/CardGenerator.h"
 
 CardRendering::CardRendering()
 {
+	cards = cardGenerator.PlayerCards();
 }
 
 CardRendering::~CardRendering()
 {
 }
-
-std::vector<PlayerCard> cards{
-	PlayerCard{
-		"Immovable Phalanx",
-		{CardAbility{"Attack", 4}, CardAbility{"Shield", 1}, CardAbility{"self", 0, true}},
-		{}, 17,	6
-	},
-	PlayerCard{
-		"Skirmishing Manouver",
-		{CardAbility{"Attack", 2}, CardAbility{"Move", 2},CardAbility{"Attack", 2}},
-		{CardAbility{"Attack", 3}, CardAbility{"Range", 3, true}, CardAbility{"XP", 1, true}}, 29,	5
-	},
-	PlayerCard{
-		"Unstoppable Charge",
-		{CardAbility{"Attack", 5}, CardAbility{"XP", 1}},
-		{CardAbility{"Move", 4}, CardAbility{"STUN"}, CardAbility{"All adjacent enemies"}, CardAbility{"LOSS"}},
-		86, 4
-	},
-	PlayerCard{
-		"Juggernaut",
-		{CardAbility{"Move", 2}, CardAbility{"Attack", 2}},
-		{},
-		34, 2
-	},
-	PlayerCard{
-		"Hook and Chain",
-		{CardAbility{"Attack", 3}, CardAbility{"Range", 3, true}, CardAbility{"PULL", 2, true}},
-		{CardAbility{"Move", 4}},
-		42, 3
-	},
-
-	PlayerCard{
-		"Leaping Cleave",
-		{CardAbility{"Attack", 3}, CardAbility{"Target", 2, true}, CardAbility{"XP", 1}},
-		{CardAbility{"Move", 3}, CardAbility{"Jump"}},
-		54, 1
-	},
-	PlayerCard{
-		"Trample",
-		{CardAbility{"Attack", 3}, CardAbility{"Pierce", 2, true}},
-		{CardAbility{"Move", 4}, CardAbility{"Jump", 0, true}, CardAbility{"Attack", 2}, CardAbility{"Target all enemies moved through",0, true}, CardAbility{"XP", 2}, CardAbility{"LOSS"}},
-		72, 1
-	},
-	PlayerCard{
-		"Skewer",
-		{CardAbility{"Attack", 3}, CardAbility{"Range", 3, true}, CardAbility{"PULL", 2, true}},
-		{CardAbility{"Move", 4}},
-		35, 1
-	},
-	PlayerCard{
-		"Spare Dagger",
-		{CardAbility{"Attack", 3}, CardAbility{"Range", 3, true}, CardAbility{"XP", 1}},
-		{CardAbility{"Attack", 2}},
-		27, 1
-	},
-	PlayerCard{
-		"Provoking Roar",
-		{CardAbility{"Attack", 2}, CardAbility{"DISARM", 0, true}},
-		{CardAbility{"Move", 2}},
-		10, 1
-	},
-};
-
-
 
 void CardRendering::Initialize()
 {
@@ -181,16 +111,11 @@ void CardRendering::Initialize()
 	cardSelection->Activate();
 	layers.push_back(cardSelection);
 
-	//auto buttonTest = new ButtonTest();
-	//buttonTest->SetSize(0, 100);
-	//buttonTest->SetAnchor(UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::LEFT | UILayer::WindowAnchor::RIGHT);
-	//layers.push_back(buttonTest);
 
-	auto abilitySelector = new AbilitySelector(card1);
+	auto abilitySelector = new AbilitySelector(card1, [](auto e, auto i) {});
 	abilitySelector->SetCards(&cards[0], &cards[1]);
 	abilitySelector->Deactivate();
 	layers.push_back(abilitySelector);
-
 }
 
 void CardRendering::Deinitialize()

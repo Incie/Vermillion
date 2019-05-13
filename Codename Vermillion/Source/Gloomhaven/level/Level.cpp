@@ -97,6 +97,8 @@ void Level::Update(const glm::vec2& cameraMouse)
 
 void Level::Render(const TextService& text)
 {
+	glDisable(GL_TEXTURE_2D);
+
 	for (auto tile : tiles)
 		tile->GetHexagon().Render();
 
@@ -117,6 +119,9 @@ void Level::Render(const TextService& text)
 	}
 
 	for (auto entity : entities) {
+		if (!entity->Active())
+			continue;
+
 		entity->Render(text);
 	}
 }
@@ -200,9 +205,6 @@ void Level::RemoveActorById(int actorId)
 	auto& tile = TileOccupiedBy(actorId);
 
 	tile.SetOccupied(-1);
-
-	auto it = std::remove_if(entities.begin(), entities.end(), [actorId](auto entity) { return entity->EntityId() == actorId;  });
-	entities.erase(it);
 }
 
 Actor* Level::ActorById(int actorId)

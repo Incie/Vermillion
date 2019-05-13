@@ -15,6 +15,8 @@ public:
 	virtual bool Perform(Actor& actor) = 0;
 	virtual void Render() = 0;
 
+	virtual void Highlight() {}
+
 	const std::string& Description() { return actionDescription; }
 protected:
 	Actor& actor;

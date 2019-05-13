@@ -62,7 +62,7 @@ void EnemyRound::RenderRoundCard(const TextService & text)
 	int index = 0;
 	for (auto action : actions) {
 		auto& color = index == currentAction ? active : white;
-		text.Print(0, 0, action->ActionDescription(), 18, color);
+		text.Print(0, 0, action->ActionDescription(), 18, color, false, true);
 		index++;
 	}
 }

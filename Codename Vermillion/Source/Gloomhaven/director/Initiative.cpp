@@ -64,6 +64,10 @@ Actor* InitiativeTracker::NextActor()
 	if (currentTurnIndex >= 0 && currentTurnIndex < initiativeOrder.size()) {
 		auto nextActor = initiativeOrder[currentTurnIndex];
 
+		if (nextActor->Health() <= 0)
+			return NextActor();
+
+
 		enemyTurn = false;
 		if (dynamic_cast<Enemy*>(nextActor) != nullptr)
 			enemyTurn = true;
@@ -84,7 +88,7 @@ void InitiativeTracker::Render(const TextService& text)
 		auto a = initiativeOrder[i];
 
 		if (a == nullptr)
-			throw fmt::format("InitiativeOrder {0} is null", i);
+			throw fmt::format("InitiativeOrder index:{0} is null", i);
 
 
 		if (i == currentTurnIndex) {
@@ -99,18 +103,22 @@ void InitiativeTracker::Render(const TextService& text)
 		if (enemy != nullptr) {
 			if( enemy->Elite() )
 				color = Colorf(1, 1, 0);
-			text.Print(0, 0, fmt::format("({0}) {1}({2})", enemy->Initiative(), enemy->Name(), enemy->EnemyId()), 18, color);
+
+			if (enemy->Health() <= 0)
+				color = Colorf(1, 0, 0);
+
+			text.Print(0, 0, fmt::format("({0}) {1}({2})", enemy->Initiative(), enemy->Name(), enemy->EnemyId()), 18, color, false, true);
 			continue;
 		}
 
 		auto player = dynamic_cast<Player*>(a);
 		if (player != nullptr) {
 			color = Colorf(0.42f, 0.35f, 1);
-			text.Print(0, 0, fmt::format("({0}) {1}", player->Initiative(), player->Name()), 18, color);
+			text.Print(0, 0, fmt::format("({0}) {1}", player->Initiative(), player->Name()), 18, color, false, true);
 			continue;
 		}
 
-		text.Print(0, 0, fmt::format("({0}) {1}", a->Initiative(), a->Name()), 18, color);
+		text.Print(0, 0, fmt::format("({0}) {1}", a->Initiative(), a->Name()), 18, color, false, true);
 	}
 }
 

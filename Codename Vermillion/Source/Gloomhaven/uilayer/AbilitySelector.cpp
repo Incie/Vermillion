@@ -3,7 +3,8 @@
 #include"../servicelocator.h"
 #include"../cards/PlayerDeck.h"
 
-AbilitySelector::AbilitySelector(Texture& texture)
+AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)> callback)
+	: callback(callback)
 {
 	Deactivate();
 	SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::BOTTOM);
@@ -58,7 +59,7 @@ AbilitySelector::AbilitySelector(Texture& texture)
 		float tX = 8 + cardScalar * texture.width + 8;
 		auto defaultTopButton = new Button();
 		defaultTopButton->SetText("DT2");
-		defaultTopButton->SetTextSize(16);
+		defaultTopButton->SetTextSize(16 * cardScalar);
 		defaultTopButton->SetId(6);
 		defaultTopButton->SetPosition(tX, 250);
 		defaultTopButton->SetSize(30, 20);
@@ -66,26 +67,26 @@ AbilitySelector::AbilitySelector(Texture& texture)
 
 		auto defaultBottomButton = new Button();
 		defaultBottomButton->SetText("DB2");
-		defaultBottomButton->SetTextSize(16);
+		defaultBottomButton->SetTextSize(16 * cardScalar);
 		defaultBottomButton->SetId(7);
 		defaultBottomButton->SetPosition(tX, 280);
-		defaultBottomButton->SetSize(30, 20);
+		defaultBottomButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(defaultBottomButton);
 
 		auto topButton = new Button();
 		topButton->SetText("T2");
-		topButton->SetTextSize(16);
+		topButton->SetTextSize(16 * cardScalar);
 		topButton->SetId(8);
-		topButton->SetPosition(tX + 150, 70);
+		topButton->SetPosition(tX + 150 * cardScalar, 70);
 		topButton->SetSize(30, 20);
 		children.push_back(topButton);
 
 		auto bottomButton = new Button();
 		bottomButton->SetText("B2");
-		bottomButton->SetTextSize(16);
+		bottomButton->SetTextSize(16 * cardScalar);
 		bottomButton->SetId(9);
-		bottomButton->SetPosition(tX + 150, 300);
-		bottomButton->SetSize(30, 20);
+		bottomButton->SetPosition(tX + 150 * cardScalar, 300);
+		bottomButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(bottomButton);
 	}
 
@@ -108,14 +109,16 @@ void AbilitySelector::Resize(const glm::vec2& windowSize)
 {
 	if (texture == nullptr)
 		throw "No texture";
-
-	UILayer::Resize(windowSize);
-
-	auto center = Center();
+	
 	float width = cardScalar * texture->width * 2 + 3 * 8.0f;
 	float height = cardScalar * texture->height + 2 * 8.0f;
 
 	size.x = width;
+	size.y = height + 20 + 8.0f;
+
+	UILayer::Resize(windowSize);
+
+	auto center = Center();
 	size.y = height + 20 + 8.0f;
 
 	position.y = windowSize.y * 0.5f - size.y * 0.5f;
@@ -154,22 +157,31 @@ void AbilitySelector::OnEvent(WindowEvent event, int id)
 {
 	switch (id) {
 	case 1: // end turn
+		callback(0, 0);
 		break;
 	case 2: 
+		callback(1, 1);
 		break;
 	case 3:
+		callback(1, 2);
 		break;
 	case 4:
+		callback(1, 3);
 		break;
 	case 5:
+		callback(1, 4);
 		break;
 	case 6:
+		callback(2, 1);
 		break;
 	case 7:
+		callback(2, 2);
 		break;
 	case 8:
+		callback(2, 3);
 		break;
 	case 9:
+		callback(2, 4);
 		break;
 	default: break;
 	}

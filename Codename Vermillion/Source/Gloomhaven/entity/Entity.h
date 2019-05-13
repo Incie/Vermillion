@@ -67,10 +67,14 @@ public:
 	virtual void PrintStats(const TextService& text) {};
 
 
+	bool Active() { return active; }
+	void Deactivate() { active = false; }
 	const std::string& Name() const { return name; }
 	const glm::ivec3& Position() const { return positionTile; }
 
 protected:
+	bool active;
+
 	std::string name;
 	int entityId;
 	glm::ivec3 positionTile;
@@ -90,6 +94,7 @@ public:
 
 	int Team() const { return team; }
 	int Health() { return health; }
+	void Initiative(int initiative) { this->initiative = initiative; }
 	int Initiative() { return initiative; }
 
 	virtual void PrintStats(const TextService& text);

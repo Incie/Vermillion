@@ -23,6 +23,7 @@ public:
 	void OnEvent(WindowEvent type, int id);
 
 	const std::string& Card(int i);
+	void ClearCards() { playerCards[0] = nullptr; playerCards[1] = nullptr; }
 
 protected:
 	std::function<void(CardSelection&, int)> callback;

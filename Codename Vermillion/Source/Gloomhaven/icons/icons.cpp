@@ -3,6 +3,7 @@
 #include"../textures.h"
 
 std::map<std::string, Texture> Icons::icons;
+Texture Icons::texturePlayerCard;
 
 void Icons::Load(TextureService& textures)
 {
@@ -14,6 +15,8 @@ void Icons::Load(TextureService& textures)
 	icons["Range"] = textures.LoadTexture("textures/icons/range.png");
 	icons["POISON"] = textures.LoadTexture("textures/icons/poison.png");
 	icons["Shield"] = textures.LoadTexture("textures/icons/shield.png");
+
+	texturePlayerCard = textures.LoadTexture("textures/player_ability_back.png");
 }
 
 void Icons::Unload()
@@ -28,4 +31,9 @@ Texture* Icons::Get(const std::string& name)
 		return &(it->second);
 
 	return nullptr;
+}
+
+Texture* Icons::GetPlayerCard()
+{
+	return &texturePlayerCard;
 }
