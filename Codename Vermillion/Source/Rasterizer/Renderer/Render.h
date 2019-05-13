@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include"Buffer.h"
 
 class Render 
 {
@@ -9,5 +10,5 @@ public:
 	~Render();
 
 private:
-
+	Buffer frameBuffer;
 };
