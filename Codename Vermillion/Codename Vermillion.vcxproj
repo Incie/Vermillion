@@ -47,6 +47,7 @@
     <ClCompile Include="Source\Framework\windowstate.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionAttack.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionMove.cpp" />
+    <ClCompile Include="Source\Gloomhaven\action\ActionShieldSelf.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\CardAction.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\CardGenerator.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\Modifiers.cpp" />
@@ -100,6 +101,7 @@
     <ClInclude Include="Source\Gloomhaven\action\Action.h" />
     <ClInclude Include="Source\Gloomhaven\action\ActionAttack.h" />
     <ClInclude Include="Source\Gloomhaven\action\ActionMove.h" />
+    <ClInclude Include="Source\Gloomhaven\action\ActionShieldSelf.h" />
     <ClInclude Include="Source\Gloomhaven\action\CardAction.h" />
     <ClInclude Include="Source\Gloomhaven\cards\CardGenerator.h" />
     <ClInclude Include="Source\Gloomhaven\cards\Modifiers.h" />

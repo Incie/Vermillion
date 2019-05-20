@@ -45,6 +45,7 @@ void CardSelection::Resize(const glm::vec2& windowSize)
 	size.x = width;
 	size.y = height;
 
+	position.x = (windowSize.x - size.x);
 	position.y = (windowSize.y - size.y) / 2.0f;
 
 	auto button = dynamic_cast<Button*>(children[0]);

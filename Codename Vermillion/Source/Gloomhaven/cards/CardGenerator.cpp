@@ -1,7 +1,15 @@
 #include"pch.h"
 #include"CardGenerator.h"
 
-CardGenerator::CardGenerator()
+#include"../action/Action.h"
+#include"../action/ActionAttack.h"
+#include"../action/ActionMove.h"
+
+#include"PlayerRound.h"
+#include"../level/Level.h"
+
+CardGenerator::CardGenerator(Level& level)
+	: level(level)
 {
 	playerCards = std::vector<PlayerCard>{
 		PlayerCard{
@@ -76,4 +84,26 @@ CardGenerator::~CardGenerator()
 std::vector<PlayerCard>& CardGenerator::PlayerCards()
 {
 	return playerCards;
+}
+
+PlayerRound* CardGenerator::GetTopAction(Actor& actor, const std::string&)
+{
+	return nullptr;
+}
+
+PlayerRound* CardGenerator::GetBottomAction(Actor& actor, const std::string&)
+{
+	return nullptr;
+}
+
+PlayerRound* CardGenerator::GetDefaultTop(Actor& actor)
+{
+	auto vec = std::vector<Action*>{ new ActionAttack(level, actor, 1, 2, 1) };
+	return new PlayerRound(vec);
+}
+
+PlayerRound* CardGenerator::GetDefaultBottom(Actor& actor)
+{
+	auto vec = std::vector<Action*>{ new ActionMove(level, actor, 2) };
+	return new PlayerRound(vec);
 }

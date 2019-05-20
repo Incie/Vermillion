@@ -8,6 +8,15 @@ const glm::vec3 Render::BLACK = glm::vec3(0);
 const glm::vec3 Render::WHITE = glm::vec3(1);
 
 
+float Render::Quad(const glm::vec2& position, Texture& texture, float height)
+{
+	glPushMatrix();
+		glTranslatef(position.x + height * 0.5f, position.y + height * 0.5f, 0.0f);
+		Render::Quad(texture, height);
+	glPopMatrix();
+	return 0.0f;
+}
+
 float Render::Quad(const Texture& texture, float height)
 {
 	float scale = height / texture.height;

@@ -33,7 +33,7 @@
 
 
 Gloom::Gloom() 
-	: director(level, [this](auto eventId) {this->OnDirectorEvent(eventId); })
+	: director(level, [this](auto eventId) {this->OnDirectorEvent(eventId); }), cardGenerator(level)
 {
 }
 
@@ -213,12 +213,41 @@ void Gloom::InitializeUI()
 	layers.push_back(cardSelection);
 
 
-	auto abilitySelector = new AbilitySelector(*Icons::GetPlayerCard(), [this](auto e, auto i) {
-		if (e == 0) {
+	auto abilitySelector = new AbilitySelector(*Icons::GetPlayerCard(), [this](auto eventId, auto abilityEnum) {
+		if (eventId == 0) {
 			director.EndPlayerTurn();
 		}
 		else {
-			director.SetPlayerRound();
+			if (eventId == 1) {
+				switch (abilityEnum) {
+				case AbilitySelector::ABILITY_DEFAULT_TOP:
+					director.SetPlayerRound( cardGenerator.GetDefaultTop( *level.GetPlayer() ) );
+					break;
+				case AbilitySelector::ABILITY_DEFAULT_BOTTOM:
+					director.SetPlayerRound(cardGenerator.GetDefaultBottom(*level.GetPlayer()));
+					break;
+				case AbilitySelector::ABILITY_TOP:
+				case AbilitySelector::ABILITY_BOTTOM:
+				default: 
+					director.SetPlayerRound(); 
+					break;
+				}
+			}
+			else if (eventId == 2) {
+				switch (abilityEnum) {
+				case AbilitySelector::ABILITY_DEFAULT_TOP:
+					director.SetPlayerRound(cardGenerator.GetDefaultTop(*level.GetPlayer()));
+					break;
+				case AbilitySelector::ABILITY_DEFAULT_BOTTOM:
+					director.SetPlayerRound(cardGenerator.GetDefaultBottom(*level.GetPlayer()));
+					break;
+				case AbilitySelector::ABILITY_TOP:
+				case AbilitySelector::ABILITY_BOTTOM:
+				default: 
+					director.SetPlayerRound(); 
+					break;
+				}
+			}			
 		}
 	});
 	abilitySelector->SetCards(&cards[0], &cards[1]);
@@ -231,10 +260,10 @@ void Gloom::InitializeUI()
 	layers.push_back(enemyAdvancer);
 }
 
-void Gloom::OnDirectorEvent(int eventId)
+void Gloom::OnDirectorEvent(DirectorEvent eventId)
 {
 	switch (eventId) {
-	case 1: {
+	case DirectorEvent::EndOfRound: {
 		layers[0]->Activate();
 		layers[1]->Activate();
 		
@@ -243,13 +272,15 @@ void Gloom::OnDirectorEvent(int eventId)
 
 		layers[2]->Deactivate();
 		layers[3]->Deactivate();
+
+		level.GetPlayer()->EndOfRound();
 		break;
 	}
-	case 2: // enemy turn
+	case DirectorEvent::EnemyTurn: // enemy turn
 		layers[2]->Deactivate();
 		layers[3]->Activate();
 		break;
-	case 3: //player turn
+	case DirectorEvent::PlayerTurn: //player turn
 		layers[2]->Activate();
 		layers[3]->Deactivate();
 		break;

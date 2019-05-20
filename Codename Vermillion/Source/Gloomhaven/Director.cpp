@@ -5,6 +5,7 @@
 #include"action/Action.h"
 #include"action/ActionAttack.h"
 #include"action/ActionMove.h"
+#include"action/ActionShieldSelf.h"
 #include"level/Level.h"
 
 #include"enemyai/EnemyAI.h"
@@ -17,7 +18,7 @@
 #include"cards/PlayerRound.h"
 
 
-Director::Director(Level& level, std::function<void(int)> onEvent)
+Director::Director(Level& level, std::function<void(DirectorEvent)> onEvent)
 	: level(level), action(nullptr), enemyAi(level), onEvent(onEvent)
 {
 	enemyRound = new EnemyRound();
@@ -57,12 +58,13 @@ void Director::Render()
 
 void Director::RenderUI(const TextService& text)
 {
+	glPushMatrix();
+
 	if (initiativeTracker.RoundFinished()) {
 		text.Print(500, 25, "ROUND FINISHED", 25, Colorf(1), false, true);
 	}
 
-	glPushMatrix();
-		glTranslatef(5.0f, 300.0f, 0.0f);
+	glTranslatef(5.0f, 300.0f, 0.0f);
 	if(initiativeTracker.EnemyTurn())
 		enemyRound->RenderRoundCard(text);
 	else {
@@ -140,9 +142,22 @@ void Director::EndPlayerTurn()
 	}
 }
 
+void Director::SetPlayerRound(PlayerRound* playerRound)
+{
+	if (this->playerRound) {
+		delete this->playerRound;
+		this->playerRound = nullptr;
+	}
+
+	this->playerRound = playerRound;
+	action = playerRound->GetAction();
+	action->Highlight();
+}
+
 void Director::SetPlayerRound()
 {
 	std::vector<Action*> playerActions;
+	playerActions.push_back(new ActionShieldSelf(level, *level.GetPlayer(), 1));
 	playerActions.push_back(new ActionMove(level, *level.GetPlayer(), 2));
 	playerActions.push_back(new ActionAttack(level, *level.GetPlayer(), 1, 4, 1));
 	playerRound = new PlayerRound(playerActions);
@@ -167,14 +182,14 @@ void Director::NextActor()
 	auto a = initiativeTracker.NextActor();
 
 	if (a == nullptr) {
-		onEvent(1);
+		onEvent(DirectorEvent::EndOfRound);
 	}
 	else if (initiativeTracker.EnemyTurn()) {
-		onEvent(2);
+		onEvent(DirectorEvent::EnemyTurn);
 		enemyAi.SetActor(a);
 		enemyAi.SetRoundActions(enemyRound);
 	}
 	else {
-		onEvent(3);
+		onEvent(DirectorEvent::PlayerTurn);
 	}
 }

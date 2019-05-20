@@ -12,9 +12,15 @@ class Action;
 class EnemyRound;
 class PlayerRound;
 
+enum class DirectorEvent {
+	EndOfRound = 1,
+	EnemyTurn = 2,
+	PlayerTurn = 3
+};
+
 class Director {
 public:
-	Director(Level& level, std::function<void(int)> onEvent);
+	Director(Level& level, std::function<void(DirectorEvent)> onEvent);
 	~Director();
 
 	void Update(const InputService& input);
@@ -24,6 +30,7 @@ public:
 	void StartRound();
 	void EndPlayerTurn();
 
+	void SetPlayerRound(PlayerRound* playerRound);
 	void SetPlayerRound();
 	void AdvanceEnemy();
 private:
@@ -40,5 +47,5 @@ private:
 	std::vector<int> turnOrder;
 	std::vector<std::string> turnOrderNames;
 
-	std::function<void(int)> onEvent;
+	std::function<void(DirectorEvent)> onEvent;
 };

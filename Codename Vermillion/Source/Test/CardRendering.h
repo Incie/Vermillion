@@ -3,6 +3,7 @@
 #include"../Framework/activity.h"
 #include"../Gloomhaven/cards/CardGenerator.h"
 #include"../textures.h"
+#include"../Gloomhaven/level/Level.h"
 #include"glm/glm.hpp"
 #include<vector>
 
@@ -23,6 +24,7 @@ public:
 	void Render();
 
 private:
+	Level level;
 	CardGenerator cardGenerator;
 	std::vector<UILayer*> layers;
 	std::vector<PlayerCard> cards;

@@ -17,6 +17,8 @@ CardSelect::CardSelect(std::vector<PlayerCard>& cards, Texture& texture, std::fu
 	cardHighlight = -1;
 	for (auto& playerCard : cards)
 		cardList.push_back(&playerCard);
+
+	std::sort(cardList.begin(), cardList.end(), [](PlayerCard * a, PlayerCard * b) { return a->Initiative() < b->Initiative(); });
 }
 
 CardSelect::~CardSelect()
@@ -26,19 +28,24 @@ CardSelect::~CardSelect()
 
 void CardSelect::Resize(const glm::vec2& windowSize)
 {
+	if (texture.width == 0 || texture.height == 0)
+		return;
+
 	UILayer::Resize(windowSize);
 
 	scale = size.x / (float)cardList.size();
 	scale /= texture.width;
 
-	float maxScale = size.y / texture.height;
+	float maxScale = 200.0f / texture.height;
 	scale = std::min<float>(maxScale, scale);
 
 	totalWidth = cardList.size() * (texture.width * scale);
 	centerTranslate = (size.x - totalWidth) / 2.0f;
 
-	position.x = centerTranslate;
 	size.x = totalWidth;
+	size.y = scale * texture.height;
+	position.x = centerTranslate;
+	position.y = windowSize.y - size.y;
 }
 
 bool CardSelect::HandleInput(const InputService& input)

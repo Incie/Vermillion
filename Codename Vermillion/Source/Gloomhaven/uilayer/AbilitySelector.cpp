@@ -9,7 +9,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 	Deactivate();
 	SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::BOTTOM);
 
-	cardScalar = 0.75f;
+	cardScalar = 0.66f;
 	this->texture = &texture;
 	cards[0] = nullptr;
 	cards[1] = nullptr;
@@ -62,7 +62,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		defaultTopButton->SetTextSize(16 * cardScalar);
 		defaultTopButton->SetId(6);
 		defaultTopButton->SetPosition(tX, 250);
-		defaultTopButton->SetSize(30, 20);
+		defaultTopButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(defaultTopButton);
 
 		auto defaultBottomButton = new Button();
@@ -78,7 +78,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		topButton->SetTextSize(16 * cardScalar);
 		topButton->SetId(8);
 		topButton->SetPosition(tX + 150 * cardScalar, 70);
-		topButton->SetSize(30, 20);
+		topButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(topButton);
 
 		auto bottomButton = new Button();
@@ -127,6 +127,19 @@ void AbilitySelector::Resize(const glm::vec2& windowSize)
 	button->SetSize(150.0f, 20.0f);
 	button->SetTextSize(16.0f);
 	button->SetPosition(size.x * 0.5f - 75.0f, height);
+	float tX = 8 + cardScalar * texture->width + 8;
+	auto button5 = dynamic_cast<Button*>(children[5]);
+	button5->SetPosition(tX, 250 * cardScalar);
+
+	auto button6 = dynamic_cast<Button*>(children[6]);
+	button6->SetPosition(tX, 280 * cardScalar);
+
+	auto button7 = dynamic_cast<Button*>(children[7]);
+	button7->SetPosition(tX + 150 * cardScalar, 70 * cardScalar);
+
+	auto button8 = dynamic_cast<Button*>(children[8]);
+	button8->SetPosition(tX + 150 * cardScalar, 300 * cardScalar);
+
 }
 
 #include"GL/glew.h"
@@ -159,29 +172,29 @@ void AbilitySelector::OnEvent(WindowEvent event, int id)
 	case 1: // end turn
 		callback(0, 0);
 		break;
-	case 2: 
-		callback(1, 1);
+	case 2:  //default top 1
+		callback(1, ABILITY_DEFAULT_TOP);
 		break;
-	case 3:
-		callback(1, 2);
+	case 3://default bottom 1
+		callback(1, ABILITY_DEFAULT_BOTTOM);
 		break;
-	case 4:
-		callback(1, 3);
+	case 4://top 1
+		callback(1, ABILITY_TOP);
 		break;
-	case 5:
-		callback(1, 4);
+	case 5://bottom 1
+		callback(1, ABILITY_BOTTOM);
 		break;
-	case 6:
-		callback(2, 1);
+	case 6://default top 2
+		callback(2, ABILITY_DEFAULT_TOP);
 		break;
-	case 7:
-		callback(2, 2);
+	case 7://default bottom 2
+		callback(2, ABILITY_DEFAULT_BOTTOM);
 		break;
-	case 8:
-		callback(2, 3);
+	case 8://top 2
+		callback(2, ABILITY_TOP);
 		break;
-	case 9:
-		callback(2, 4);
+	case 9://bottom 2
+		callback(2, ABILITY_BOTTOM);
 		break;
 	default: break;
 	}

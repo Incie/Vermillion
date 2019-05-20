@@ -244,6 +244,9 @@
     <ClCompile Include="Source\Gloomhaven\uilayer\EnemyAdvancer.cpp">
       <Filter>Source Files\Gloomhaven\UILayers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\action\ActionShieldSelf.cpp">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -395,6 +398,9 @@
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\EnemyAdvancer.h">
       <Filter>Source Files\Gloomhaven\UILayers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\action\ActionShieldSelf.h">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -65,12 +65,12 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 
 
 	//CardRendering testing;
-	Gloom testing;
+	Gloom activity;
 	//Testing testing;
 	//GamepadTest testing;
 
-	testing.SetServiceLocator(serviceLocator);
-	testing.Initialize();
+	activity.SetServiceLocator(serviceLocator);
+	activity.Initialize();
 
 	double lastFrameTime = 0.0;
 	bool quitProgram = false;
@@ -89,12 +89,12 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 			renderer.StartFrame();
 
 			if (WindowState::Changed()) {
-				testing.Resize();
+				activity.Resize();
 				WindowState::ResetChanged();
 			}
 
-			testing.Update(renderTimer.GetDelta());
-			testing.Render();
+			activity.Update(renderTimer.GetDelta());
+			activity.Render();
 			text.Print(0, 0, fmt::format("FPS: {0} ({1})", fps, lastFrameTime), 12, Colorf(1.0f) );
 			renderer.EndFrame();
 
@@ -108,7 +108,7 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	
 	Log::Info("Application", "Shutting down");
 	
-	testing.Deinitialize();
+	activity.Deinitialize();
 
 	text.Deinit();
 	textureManager.UnloadAll();

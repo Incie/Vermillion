@@ -27,7 +27,7 @@ public:
 
 private:
 	void InitializeUI();
-	void OnDirectorEvent(int event);
+	void OnDirectorEvent(DirectorEvent event);
 	std::vector<UILayer*> layers;
 	std::vector<PlayerCard> cards;
 

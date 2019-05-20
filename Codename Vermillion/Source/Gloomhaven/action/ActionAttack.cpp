@@ -6,7 +6,7 @@
 ActionAttack::ActionAttack(Level& level, Actor& actor, int range, int attackDamage, int attacks)
 	: Action(level, actor), range(range), attacks(attacks), baseDamage(attackDamage)
 {
-	actionDescription = fmt::format("Attack {0} Range {1} Target {0}", attackDamage, range, attacks);
+	actionDescription = fmt::format("Attack {0} Range {1} Target {2}", attackDamage, range, attacks);
 	Highlight();
 }
 

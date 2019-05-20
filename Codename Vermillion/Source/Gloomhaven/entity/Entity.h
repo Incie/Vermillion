@@ -71,6 +71,7 @@ public:
 	void Deactivate() { active = false; }
 	const std::string& Name() const { return name; }
 	const glm::ivec3& Position() const { return positionTile; }
+	const glm::vec3& WorldPosition() const { return positionWorld; }
 
 protected:
 	bool active;
@@ -94,6 +95,20 @@ public:
 
 	int Team() const { return team; }
 	int Health() { return health; }
+	int Shield() { return shield; }
+
+	void ModifyShield(int mod) { shield += mod; }
+
+	void AddEndOfRoundAction(std::function<void(Actor*)> func) {
+		endOfRoundAction.push_back(func);
+	}
+
+	void EndOfRound() {
+		for (auto eor : endOfRoundAction)
+			eor(this);
+		endOfRoundAction.clear();
+	}
+
 	void Initiative(int initiative) { this->initiative = initiative; }
 	int Initiative() { return initiative; }
 
@@ -112,8 +127,8 @@ protected:
 
 	std::vector<StatusEffect> statusEffects;
 
-	std::vector<int> endOfTurnAction;
-	std::vector<int> endOfRoundAction;
+	std::vector<std::function<void(Actor*)>> endOfTurnAction;
+	std::vector<std::function<void(Actor*)>> endOfRoundAction;
 };
 
 

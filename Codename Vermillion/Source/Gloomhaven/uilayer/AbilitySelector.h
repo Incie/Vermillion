@@ -19,6 +19,13 @@ public:
 	AbilitySelector(Texture& texture, std::function<void(int, int)> callback);
 	~AbilitySelector();
 
+	enum {
+		ABILITY_TOP,
+		ABILITY_BOTTOM,
+		ABILITY_DEFAULT_TOP,
+		ABILITY_DEFAULT_BOTTOM
+	};
+
 	virtual bool HandleInput(const InputService& inputService);
 	virtual void Resize(const glm::vec2& windowSize);
 	virtual void Render(ServiceLocator& Services);

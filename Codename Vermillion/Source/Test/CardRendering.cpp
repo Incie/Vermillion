@@ -55,6 +55,7 @@ public:
 #include"../Gloomhaven/cards/CardGenerator.h"
 
 CardRendering::CardRendering()
+	: cardGenerator(level)
 {
 	cards = cardGenerator.PlayerCards();
 }
