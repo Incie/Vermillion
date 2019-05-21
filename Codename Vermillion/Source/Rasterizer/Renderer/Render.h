@@ -1,14 +1,16 @@
 #pragma once
 
-
 #include"Buffer.h"
 
-class Render 
+class RolfGL 
 {
 public:
-	Render();
-	~Render();
+	RolfGL();
+	~RolfGL();
+
+	void Draw();
 
 private:
 	Buffer frameBuffer;
+	char c;
 };

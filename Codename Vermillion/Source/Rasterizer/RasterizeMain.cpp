@@ -23,4 +23,5 @@ void RasterizeMain::Update(double delta)
 
 void RasterizeMain::Render()
 {
+	render.Draw();
 }

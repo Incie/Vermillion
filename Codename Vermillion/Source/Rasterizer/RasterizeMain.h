@@ -1,8 +1,9 @@
 #pragma once
 
 #include"../activity.h"
+#include"Renderer/Render.h"
 
-class RasterizeMain : Activity 
+class RasterizeMain : public Activity 
 {
 public:
 	RasterizeMain();
@@ -15,5 +16,5 @@ public:
 	void Render();
 
 private:
-
+	RolfGL render;
 };
