@@ -26,6 +26,8 @@ public:
 	void ClearCards() { playerCards[0] = nullptr; playerCards[1] = nullptr; }
 
 protected:
+	bool CardExists(const PlayerCard& card) const;
+
 	std::function<void(CardSelection&, int)> callback;
 	Texture& texture;
 	PlayerCard const* playerCards[2];

@@ -11,7 +11,7 @@ EnemyAdvancer::EnemyAdvancer(std::function<void()> callback)
 	button->SetText("Advance Enemy");
 	button->SetPosition(8, 8);
 	button->SetSize(150, 25);
-	button->SetTextSize(22);
+	button->SetTextSize(18);
 	children.push_back(button);
 	
 	Deactivate();
@@ -36,7 +36,7 @@ void EnemyAdvancer::Resize(const glm::vec2& windowSize)
 
 void EnemyAdvancer::Measure(const glm::vec2& windowSize)
 {
-	size.x = 150.0f;
+	size.x = 150.0f + 8 + 8;
 	size.y = 8 + 25 + 8;
 }
 

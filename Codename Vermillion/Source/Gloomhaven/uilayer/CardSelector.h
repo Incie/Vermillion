@@ -24,7 +24,6 @@ public:
 	UILayerId LayerId();
 
 protected:
-
 	Texture& texture;
 	std::function<void(const std::string&)> onClick;
 

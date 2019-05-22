@@ -113,9 +113,12 @@ void CardSelection::Render(ServiceLocator& Services)
 
 void CardSelection::AddCard(const PlayerCard& playerCard)
 {
-	if (playerCards[0] == nullptr)
+	if (CardExists(playerCard))
+		return;
+
+	if (playerCards[0] == nullptr )
 		playerCards[0] = &playerCard;
-	else if (playerCards[1] == nullptr)
+	else if (playerCards[1] == nullptr) 
 		playerCards[1] = &playerCard;
 
 	children[0]->SetState(UIElement::UIState::DISABLED);
@@ -142,4 +145,13 @@ void CardSelection::OnEvent(WindowEvent type, int id)
 const std::string& CardSelection::Card(int i)
 {
 	return playerCards[i]->Name();
+}
+
+bool CardSelection::CardExists(const PlayerCard& card) const
+{
+	for( int i = 0; i < 2; ++i ){
+		if (playerCards[i] != nullptr && playerCards[i]->Name().compare(card.Name()) != 0)
+			return true;
+	}
+	return false;
 }
