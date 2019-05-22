@@ -50,19 +50,20 @@ bool UILayer::HandleInput(const InputService & inputService)
 
 void UILayer::Resize(const glm::vec2 & windowSize)
 {
-	if (anchor & WindowAnchor::LEFT && anchor & WindowAnchor::RIGHT)
-		size.x = windowSize.x;
-	if (anchor & WindowAnchor::TOP && anchor & WindowAnchor::BOTTOM)
-		size.y = windowSize.y;
+	Measure(windowSize);
 
-	if (anchor & WindowAnchor::LEFT)
+	if (anchor & WindowAnchor::LEFT && anchor & WindowAnchor::RIGHT)
+		position.x = windowSize.x * 0.5f - size.x * 0.5f;
+	else if (anchor & WindowAnchor::LEFT)
 		position.x = 0.0f;
-	if (anchor & WindowAnchor::RIGHT)
+	else if (anchor & WindowAnchor::RIGHT)
 		position.x = windowSize.x - size.x;
 
-	if (anchor & WindowAnchor::TOP)
+	if (anchor & WindowAnchor::TOP && anchor & WindowAnchor::BOTTOM)
+		position.y = windowSize.y * 0.5f - size.y * 0.5f;
+	else if (anchor & WindowAnchor::TOP)
 		position.y = 0.0f;
-	if (anchor & WindowAnchor::BOTTOM)
+	else if (anchor & WindowAnchor::BOTTOM)
 		position.y = windowSize.y - size.y;
 }
 
@@ -81,20 +82,13 @@ void UILayer::StartRender()
 	glTranslatef(position.x, position.y, 0.0f);
 }
 
+#include"render.h"
 void UILayer::Render(ServiceLocator & Services)
 {
 	if (!active)
 		return;
 
-	glDisable(GL_TEXTURE_2D);
-	glColor3f(1, 1, 1);
-	glBegin(GL_QUADS);
-		glVertex2f(0, 0);
-		glVertex2f(size.x, 0);
-		glVertex2f(size.x, size.y);
-		glVertex2f(0, size.y);
-	glEnd();
-	glEnable(GL_TEXTURE_2D);
+	Render::Quad(0, 0, size.x, size.y, glm::vec3(1));
 
 	for (auto child : children)
 		child->Render(Services);

@@ -32,20 +32,20 @@ void CardSelect::Resize(const glm::vec2& windowSize)
 		return;
 
 	UILayer::Resize(windowSize);
+}
 
-	scale = size.x / (float)cardList.size();
+void CardSelect::Measure(const glm::vec2& windowSize)
+{
+	scale = windowSize.x / (float)cardList.size();
 	scale /= texture.width;
 
-	float maxScale = 200.0f / texture.height;
+	float maxScale = 250.0f / texture.height;
 	scale = std::min<float>(maxScale, scale);
 
 	totalWidth = cardList.size() * (texture.width * scale);
-	centerTranslate = (size.x - totalWidth) / 2.0f;
 
 	size.x = totalWidth;
 	size.y = scale * texture.height;
-	position.x = centerTranslate;
-	position.y = windowSize.y - size.y;
 }
 
 bool CardSelect::HandleInput(const InputService& input)

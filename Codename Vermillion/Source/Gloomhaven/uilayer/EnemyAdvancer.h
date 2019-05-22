@@ -12,6 +12,7 @@ public:
 	virtual bool HandleInput(const InputService& inputService);
 	virtual void Resize(const glm::vec2& windowSize);
 	virtual void OnEvent(WindowEvent type, int id);
+	virtual void Measure(const glm::vec2& windowSize);
 
 	UILayerId LayerId() { return UILayerId(); }
 

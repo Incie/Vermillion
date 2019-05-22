@@ -94,6 +94,7 @@ public:
 	virtual void StartRender();
 	virtual void Render(ServiceLocator& Services);
 	virtual void EndRender();
+	virtual void Measure(const glm::vec2& windowSize) {}
 	virtual void SetSize(float width, float height) {
 		UIElement::SetSize(width, height);
 		Resize();

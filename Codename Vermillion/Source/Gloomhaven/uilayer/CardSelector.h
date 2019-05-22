@@ -15,7 +15,7 @@ public:
 	virtual ~CardSelect();
 
 	void Resize(const glm::vec2& windowSize);
-
+	void Measure(const glm::vec2& windowSize);
 	bool HandleInput(const InputService& input);
 
 

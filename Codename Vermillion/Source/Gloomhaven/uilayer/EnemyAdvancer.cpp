@@ -31,13 +31,15 @@ bool EnemyAdvancer::HandleInput(const InputService& inputService)
 
 void EnemyAdvancer::Resize(const glm::vec2& windowSize)
 {
+	UILayer::Resize(windowSize);
+}
+
+void EnemyAdvancer::Measure(const glm::vec2& windowSize)
+{
 	size.x = 150.0f;
 	size.y = 8 + 25 + 8;
-
-	UILayer::Resize(windowSize);
-
-	size.y = 8 + 25 + 8;
 }
+
 
 void EnemyAdvancer::OnEvent(WindowEvent type, int id)
 {
