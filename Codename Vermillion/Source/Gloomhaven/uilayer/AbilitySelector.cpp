@@ -7,7 +7,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 	: callback(callback)
 {
 	Deactivate();
-	SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::BOTTOM);
+	SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::BOTTOM);
 
 	cardScalar = 0.66f;
 	this->texture = &texture;
@@ -110,23 +110,12 @@ void AbilitySelector::Resize(const glm::vec2& windowSize)
 	if (texture == nullptr)
 		throw "No texture";
 	
-	float width = cardScalar * texture->width * 2 + 3 * 8.0f;
-	float height = cardScalar * texture->height + 2 * 8.0f;
-
-	size.x = width;
-	size.y = height + 20 + 8.0f;
-
 	UILayer::Resize(windowSize);
-
-	auto center = Center();
-	size.y = height + 20 + 8.0f;
-
-	position.y = windowSize.y * 0.5f - size.y * 0.5f;
 
 	auto button = dynamic_cast<Button*>(children[0]);
 	button->SetSize(150.0f, 20.0f);
 	button->SetTextSize(16.0f);
-	button->SetPosition(size.x * 0.5f - 75.0f, height);
+	button->SetPosition(size.x * 0.5f - 75.0f, size.y - 28);
 	float tX = 8 + cardScalar * texture->width + 8;
 	auto button5 = dynamic_cast<Button*>(children[5]);
 	button5->SetPosition(tX, 250 * cardScalar);
@@ -140,6 +129,15 @@ void AbilitySelector::Resize(const glm::vec2& windowSize)
 	auto button8 = dynamic_cast<Button*>(children[8]);
 	button8->SetPosition(tX + 150 * cardScalar, 300 * cardScalar);
 
+}
+
+void AbilitySelector::Measure(const glm::vec2& dimensions)
+{
+	float width = cardScalar * texture->width * 2 + 3 * 8.0f;
+	float height = cardScalar * texture->height + 2 * 8.0f;
+
+	size.x = width;
+	size.y = height + 20 + 8.0f;
 }
 
 #include"GL/glew.h"

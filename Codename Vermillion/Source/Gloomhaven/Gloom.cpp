@@ -30,6 +30,7 @@
 #include"uilayer/PortraitPanel.h"
 #include"uilayer/StatusBar.h"
 #include"uilayer/EnemyAdvancer.h"
+#include"uilayer/StatusBar.h"
 
 
 Gloom::Gloom() 
@@ -258,31 +259,49 @@ void Gloom::InitializeUI()
 		director.AdvanceEnemy();
 	});
 	layers.push_back(enemyAdvancer);
+
+	auto statusBar = new StatusBar();
+	layers.push_back(statusBar);
+
+	auto initiativeTrackerUI = new InitiativeTrackerUI(director.GetInitiativeTracker());
+	layers.push_back(initiativeTrackerUI);
 }
 
 void Gloom::OnDirectorEvent(DirectorEvent eventId)
 {
 	switch (eventId) {
-	case DirectorEvent::EndOfRound: {
-		layers[0]->Activate();
-		layers[1]->Activate();
+		case DirectorEvent::EndOfRound: {
+			layers[0]->Activate();
+			layers[1]->Activate();
 		
-		auto cardSelection = dynamic_cast<CardSelection*>(layers[1]);
-		cardSelection->ClearCards();
+			auto cardSelection = dynamic_cast<CardSelection*>(layers[1]);
+			cardSelection->ClearCards();
 
-		layers[2]->Deactivate();
-		layers[3]->Deactivate();
+			layers[2]->Deactivate();
+			layers[3]->Deactivate();
 
-		level.GetPlayer()->EndOfRound();
-		break;
-	}
-	case DirectorEvent::EnemyTurn: // enemy turn
-		layers[2]->Deactivate();
-		layers[3]->Activate();
-		break;
-	case DirectorEvent::PlayerTurn: //player turn
-		layers[2]->Activate();
-		layers[3]->Deactivate();
-		break;
+			auto statusbar = dynamic_cast<StatusBar*>(layers[4]);
+			statusbar->SetStatusText("End of Round");
+			statusbar->NextRound();
+
+			level.GetPlayer()->EndOfRoundActions();
+			break;
+		}
+		case DirectorEvent::EnemyTurn: {
+			layers[2]->Deactivate();
+			layers[3]->Activate();
+
+			auto statusbar = dynamic_cast<StatusBar*>(layers[4]);
+			statusbar->SetStatusText("AI Turn");
+			break;
+		}
+		case DirectorEvent::PlayerTurn:{
+			layers[2]->Activate();
+			layers[3]->Deactivate();
+
+			auto statusbar = dynamic_cast<StatusBar*>(layers[4]);
+			statusbar->SetStatusText("Player Turn");
+			break;
+		}
 	}
 }

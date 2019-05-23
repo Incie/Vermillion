@@ -247,6 +247,9 @@
     <ClCompile Include="Source\Gloomhaven\action\ActionShieldSelf.cpp">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerCard.cpp">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -401,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\action\ActionShieldSelf.h">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerCard.h">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -33,6 +33,8 @@ public:
 	void SetPlayerRound(PlayerRound* playerRound);
 	void SetPlayerRound();
 	void AdvanceEnemy();
+
+	InitiativeTracker& GetInitiativeTracker() { return initiativeTracker; }
 private:
 	void PlayerTurn(const InputService& input);
 

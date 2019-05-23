@@ -103,9 +103,9 @@ public:
 		endOfRoundAction.push_back(func);
 	}
 
-	void EndOfRound() {
-		for (auto eor : endOfRoundAction)
-			eor(this);
+	void EndOfRoundActions() {
+		for (auto endofroundAction : endOfRoundAction)
+			endofroundAction(this);
 		endOfRoundAction.clear();
 	}
 

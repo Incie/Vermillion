@@ -60,16 +60,11 @@ void Director::RenderUI(const TextService& text)
 {
 	glPushMatrix();
 
-	if (initiativeTracker.RoundFinished()) {
-		text.Print(500, 25, "ROUND FINISHED", 25, Colorf(1), false, true);
-	}
-
 	glTranslatef(5.0f, 300.0f, 0.0f);
 	if(initiativeTracker.EnemyTurn())
 		enemyRound->RenderRoundCard(text);
 	else {
-		if (playerRound == nullptr || playerRound->Finished())
-			text.Print(0, 0, "Waiting for Player", 20, Colorf(1), false, true);
+		if (playerRound == nullptr || playerRound->Finished()){}
 		else {
 			playerRound->Render(text);
 		}

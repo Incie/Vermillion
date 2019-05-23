@@ -21,6 +21,8 @@ public:
 
 	void Render(const TextService& text);
 
+	int Count() { return initiativeOrder.size(); }
+
 private:
 	void ClearInitiatives();
 
