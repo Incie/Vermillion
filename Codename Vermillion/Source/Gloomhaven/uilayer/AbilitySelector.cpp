@@ -203,6 +203,11 @@ void AbilitySelector::SetTexture(Texture* texture)
 	this->texture = texture;
 }
 
+const std::string& AbilitySelector::GetCardName(int i)
+{
+	return cards[i]->Name();
+}
+
 void AbilitySelector::SetCards(PlayerCard* card0, PlayerCard* card1)
 {
 	cards[0] = card0;

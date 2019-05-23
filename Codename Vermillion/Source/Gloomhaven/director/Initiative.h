@@ -19,9 +19,9 @@ public:
 	bool RoundFinished();
 	Actor* NextActor();
 
-	void Render(const TextService& text);
-
-	int Count() { return initiativeOrder.size(); }
+	int Count() { return (int)initiativeOrder.size(); }
+	int CurrentInitiativeIndex() { return currentTurnIndex; }
+	const std::vector<Actor*>& Initiatives() { return initiativeOrder; }
 
 private:
 	void ClearInitiatives();

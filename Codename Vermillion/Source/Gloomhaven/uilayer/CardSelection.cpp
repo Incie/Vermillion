@@ -38,20 +38,23 @@ void CardSelection::Resize(const glm::vec2& windowSize)
 {
 	UILayer::Resize(windowSize);
 
+	position.x = (windowSize.x - size.x);
+	position.y = (windowSize.y - size.y) / 2.0f;
+
+	auto button = dynamic_cast<Button*>(children[0]);
+	button->SetPosition(size.x * 0.5f - 125.f * 0.5f, size.y - 8 - 22.0f);
+	button->SetSize(125.0f, 22.0f);
+	button->SetTextSize(18.f);
+}
+
+void CardSelection::Measure(const glm::vec2& dimensions)
+{
 	float width = scalar * texture.width * 2 + 3 * 8.0f;
 	float mainHeight = scalar * texture.height + 3 * 8.0f + 22.0f;
 	float height = mainHeight + 8 + 8 + 22.0f; //button height + margins
 
 	size.x = width;
 	size.y = height;
-
-	position.x = (windowSize.x - size.x);
-	position.y = (windowSize.y - size.y) / 2.0f;
-
-	auto button = dynamic_cast<Button*>(children[0]);
-	button->SetPosition(width * 0.5f - 125.f * 0.5f, mainHeight + 8);
-	button->SetSize(125.0f, 22.0f);
-	button->SetTextSize(18.f);
 }
 
 bool CardSelection::HandleInput(const InputService& input)
@@ -96,7 +99,7 @@ void CardSelection::Render(ServiceLocator& Services)
 
 	glPushMatrix();
 	glTranslatef(8, 8 + 8 + 22.0f, 0);
-	Render::Quad(0, 0, scalar * texture.width, scalar * texture.height, glm::vec3(0.88));
+	Render::Quad(0, 0, scalar * texture.width, scalar * texture.height, glm::vec3(0.88f));
 	if (playerCards[0] != nullptr) {
 		playerCards[0]->Scale(scalar);
 		playerCards[0]->Render(Services.Text(), texture);
@@ -144,13 +147,16 @@ void CardSelection::OnEvent(WindowEvent type, int id)
 
 const std::string& CardSelection::Card(int i)
 {
+	if (i < 0 || i >= 2)
+		return std::string("no-card");
+
 	return playerCards[i]->Name();
 }
 
 bool CardSelection::CardExists(const PlayerCard& card) const
 {
 	for( int i = 0; i < 2; ++i ){
-		if (playerCards[i] != nullptr && playerCards[i]->Name().compare(card.Name()) != 0)
+		if (playerCards[i] != nullptr && playerCards[i]->Name().compare(card.Name()) == 0)
 			return true;
 	}
 	return false;

@@ -136,7 +136,9 @@ void Gloom::Render()
 
 	glDisable(GL_LIGHTING);
 
+	glPushMatrix();
 	director.RenderUI(text);
+	glPopMatrix();
 
 	for (auto layer : layers) {
 		if (layer->Active() == false)
@@ -227,10 +229,16 @@ void Gloom::InitializeUI()
 				case AbilitySelector::ABILITY_DEFAULT_BOTTOM:
 					director.SetPlayerRound(cardGenerator.GetDefaultBottom(*level.GetPlayer()));
 					break;
-				case AbilitySelector::ABILITY_TOP:
-				case AbilitySelector::ABILITY_BOTTOM:
+				case AbilitySelector::ABILITY_TOP: {
+					director.SetPlayerRound(cardGenerator.GetTopAction(*level.GetPlayer(), dynamic_cast<AbilitySelector*>(layers[2])->GetCardName(0)));
+					break;
+				}
+				case AbilitySelector::ABILITY_BOTTOM: {
+					director.SetPlayerRound(cardGenerator.GetBottomAction(*level.GetPlayer(), dynamic_cast<AbilitySelector*>(layers[2])->GetCardName(0)));
+					break;
+				}
 				default: 
-					director.SetPlayerRound(); 
+					throw "Default";
 					break;
 				}
 			}
@@ -242,10 +250,16 @@ void Gloom::InitializeUI()
 				case AbilitySelector::ABILITY_DEFAULT_BOTTOM:
 					director.SetPlayerRound(cardGenerator.GetDefaultBottom(*level.GetPlayer()));
 					break;
-				case AbilitySelector::ABILITY_TOP:
-				case AbilitySelector::ABILITY_BOTTOM:
+				case AbilitySelector::ABILITY_TOP: {
+					director.SetPlayerRound(cardGenerator.GetTopAction(*level.GetPlayer(), dynamic_cast<AbilitySelector*>(layers[2])->GetCardName(1)));
+					break;
+				}
+				case AbilitySelector::ABILITY_BOTTOM: {
+					director.SetPlayerRound(cardGenerator.GetBottomAction(*level.GetPlayer(), dynamic_cast<AbilitySelector*>(layers[2])->GetCardName(1)));
+					break;
+				}
 				default: 
-					director.SetPlayerRound(); 
+					throw "Default";
 					break;
 				}
 			}			

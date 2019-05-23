@@ -78,49 +78,49 @@ Actor* InitiativeTracker::NextActor()
 	return nullptr;
 }
 
-#include"GL/glew.h"
-void InitiativeTracker::Render(const TextService& text)
-{
-	if (RoundFinished())
-		return;
-
-	for (int i = 0; i < initiativeOrder.size(); ++i ) {
-		auto a = initiativeOrder[i];
-
-		if (a == nullptr)
-			throw fmt::format("InitiativeOrder index:{0} is null", i);
-
-
-		if (i == currentTurnIndex) {
-			glBegin(GL_LINES);
-				glVertex2f(0, 9); glVertex2f(-10, 3);
-				glVertex2f(0, 9); glVertex2f(-10, 15);
-			glEnd();
-		}
-
-		auto color = Colorf(1);
-		auto enemy = dynamic_cast<Enemy*>(a);
-		if (enemy != nullptr) {
-			if( enemy->Elite() )
-				color = Colorf(1, 1, 0);
-
-			if (enemy->Health() <= 0)
-				color = Colorf(1, 0, 0);
-
-			text.Print(0, 0, fmt::format("({0}) {1}({2})", enemy->Initiative(), enemy->Name(), enemy->EnemyId()), 18, color, false, true);
-			continue;
-		}
-
-		auto player = dynamic_cast<Player*>(a);
-		if (player != nullptr) {
-			color = Colorf(0.42f, 0.35f, 1);
-			text.Print(0, 0, fmt::format("({0}) {1}", player->Initiative(), player->Name()), 18, color, false, true);
-			continue;
-		}
-
-		text.Print(0, 0, fmt::format("({0}) {1}", a->Initiative(), a->Name()), 18, color, false, true);
-	}
-}
+//#include"GL/glew.h"
+//void InitiativeTracker::Render(const TextService& text)
+//{
+//	if (RoundFinished())
+//		return;
+//
+//	for (int i = 0; i < initiativeOrder.size(); ++i ) {
+//		auto a = initiativeOrder[i];
+//
+//		if (a == nullptr)
+//			throw fmt::format("InitiativeOrder index:{0} is null", i);
+//
+//
+//		if (i == currentTurnIndex) {
+//			glBegin(GL_LINES);
+//				glVertex2f(0, 9); glVertex2f(-10, 3);
+//				glVertex2f(0, 9); glVertex2f(-10, 15);
+//			glEnd();
+//		}
+//
+//		auto color = Colorf(1);
+//		auto enemy = dynamic_cast<Enemy*>(a);
+//		if (enemy != nullptr) {
+//			if( enemy->Elite() )
+//				color = Colorf(1, 1, 0);
+//
+//			if (enemy->Health() <= 0)
+//				color = Colorf(1, 0, 0);
+//
+//			text.Print(0, 0, fmt::format("({0}) {1}({2})", enemy->Initiative(), enemy->Name(), enemy->EnemyId()), 18, color, false, true);
+//			continue;
+//		}
+//
+//		auto player = dynamic_cast<Player*>(a);
+//		if (player != nullptr) {
+//			color = Colorf(0.42f, 0.35f, 1);
+//			text.Print(0, 0, fmt::format("({0}) {1}", player->Initiative(), player->Name()), 18, color, false, true);
+//			continue;
+//		}
+//
+//		text.Print(0, 0, fmt::format("({0}) {1}", a->Initiative(), a->Name()), 18, color, false, true);
+//	}
+//}
 
 void InitiativeTracker::ClearInitiatives()
 {

@@ -5,8 +5,8 @@
 #include"../render.h"
 #include"../icons/icons.h"
 
-PlayerCard::PlayerCard(const std::string& name, std::vector<CardAbility> top, std::vector<CardAbility> bottom, int initiative, int level)
-	: name(name), topAction(top), bottomAction(bottom), initiative(initiative), level(level)
+PlayerCard::PlayerCard(const std::string& name, std::vector<CardAbility> top, std::vector<CardAbility> bottom, int initiative, int level, std::function<PlayerRound* (Level& level, Actor& actor)> generatorTop, std::function<PlayerRound* (Level& level, Actor& actor)> generatorBottom)
+	: name(name), topAction(top), bottomAction(bottom), initiative(initiative), level(level), generatorTop(generatorTop), generatorBottom(generatorBottom)
 {
 }
 
@@ -62,6 +62,16 @@ bool PlayerCard::PointInside(const glm::vec2& point, double scalar, const Textur
 		return true;
 
 	return false;
+}
+
+PlayerRound* PlayerCard::GenerateTopAction(Level& level, Actor& actor)
+{
+	return generatorTop(level, actor);
+}
+
+PlayerRound* PlayerCard::GenerateBottomAction(Level& level, Actor& actor)
+{
+	return generatorBottom(level, actor);
 }
 
 void PlayerCard::RenderAbility(const TextService& text, const std::vector<CardAbility>& ability, const glm::vec2& position) const

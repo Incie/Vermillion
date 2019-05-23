@@ -49,11 +49,13 @@ void Director::Update(const InputService& input)
 
 void Director::Render()
 {
+	glPushMatrix();
 	if (action)
 		action->Render();
 
 	if( enemyRound )
 		enemyRound->Render();
+	glPopMatrix();
 }
 
 void Director::RenderUI(const TextService& text)
@@ -69,11 +71,6 @@ void Director::RenderUI(const TextService& text)
 			playerRound->Render(text);
 		}
 	}
-	glPopMatrix();
-
-	glPushMatrix();
-		glTranslatef(512.0f, 0, 0);
-		initiativeTracker.Render(text);
 	glPopMatrix();
 
 	if (action != nullptr) {

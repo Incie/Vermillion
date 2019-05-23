@@ -19,7 +19,7 @@ void Button::Render(ServiceLocator& Services)
 {
 	Render::Quad(position, size, color);
 	auto center = Center();
-	Services.Text().PrintCenter(center.x, center.y, text, textSize, Colorf(textColor.x, textColor.y, textColor.z));
+	Services.Text().PrintCenter(center.x, center.y, text, (unsigned int)textSize, Colorf(textColor.x, textColor.y, textColor.z));
 }
 
 void Button::SetColor(const glm::vec3& background)

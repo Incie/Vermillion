@@ -2,10 +2,14 @@
 
 #include<string>
 #include<vector>
+#include<functional>
 #include"glm/glm.hpp"
 
 class Texture;
 class TextService;
+class PlayerRound;
+class Actor;
+class Level;
 
 class CardAbility
 {
@@ -20,7 +24,7 @@ public:
 class PlayerCard
 {
 public:
-	PlayerCard(const std::string& name, std::vector<CardAbility> top, std::vector<CardAbility> bottom, int initiative, int level);
+	PlayerCard(const std::string& name, std::vector<CardAbility> top, std::vector<CardAbility> bottom, int initiative, int level, std::function<PlayerRound*(Level&, Actor&)> generatorTop, std::function<PlayerRound* (Level&, Actor&)> generatorBottom);
 	~PlayerCard();
 
 	void Render(const TextService& text, const Texture& texture) const;
@@ -30,9 +34,14 @@ public:
 	int Initiative() { return initiative; }
 
 	bool PointInside(const glm::vec2& point, double scalar, const Texture& texture) const;
+
+	PlayerRound* GenerateTopAction(Level& level, Actor& actor);
+	PlayerRound* GenerateBottomAction(Level& level, Actor& actor);
 private:
 	void RenderAbility(const TextService& text, const std::vector<CardAbility>& ability, const glm::vec2& position) const;
 
+	std::function<PlayerRound* (Level&, Actor&)> generatorTop;
+	std::function<PlayerRound* (Level&, Actor&)> generatorBottom;
 
 	glm::vec2 position;
 	mutable glm::vec2 scale;

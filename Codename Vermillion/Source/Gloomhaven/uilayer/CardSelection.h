@@ -17,6 +17,7 @@ public:
 	bool HandleInput(const InputService& input);
 	void Render(ServiceLocator& Services);
 	void AddCard(const PlayerCard& playerCard);
+	void Measure(const glm::vec2& dimensions);
 	bool IsFull() const;
 	UILayerId LayerId();
 

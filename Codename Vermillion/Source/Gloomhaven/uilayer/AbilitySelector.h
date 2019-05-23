@@ -34,6 +34,8 @@ public:
 	virtual void OnEvent(WindowEvent event, int id);
 
 	void SetTexture(Texture* texture);
+
+	const std::string& GetCardName(int i);
 	void SetCards(PlayerCard* card0, PlayerCard* card1);
 
 	virtual UILayerId LayerId() { return UILayerId(); }
