@@ -1,7 +1,7 @@
 #pragma once
 
 #include"../activity.h"
-#include"Renderer/Render.h"
+#include"Renderer/RolfGL.h"
 
 class RasterizeMain : public Activity 
 {

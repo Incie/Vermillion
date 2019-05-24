@@ -32,15 +32,15 @@ float Render::Quad(const Texture& texture, float height)
 	glBindTexture(GL_TEXTURE_2D, texture.textureId);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0); glVertex2f(0, 0);
-	glTexCoord2f(1, 0); glVertex2f(texture.width, 0);
-	glTexCoord2f(1, 1); glVertex2f(texture.width, texture.height);
-	glTexCoord2f(0, 1); glVertex2f(0, texture.height);
+	glTexCoord2f(1, 0); glVertex2f((float)texture.width, 0);
+	glTexCoord2f(1, 1); glVertex2f((float)texture.width, (float)texture.height);
+	glTexCoord2f(0, 1); glVertex2f(0, (float)texture.height);
 	glEnd();
 
 	glDisable(GL_BLEND);
 	glPopMatrix();
 
-	return texture.width* scale;
+	return (float)texture.width* scale;
 }
 
 

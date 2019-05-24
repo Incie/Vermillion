@@ -76,9 +76,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Rasterizer\RasterizeMain.cpp" />
     <ClCompile Include="Source\Rasterizer\Renderer\Buffer.cpp" />
-    <ClCompile Include="Source\Rasterizer\Renderer\Render.cpp" />
-    <ClCompile Include="Source\Test\ActionMove.cpp" />
-    <ClCompile Include="Source\Test\Entity.cpp" />
+    <ClCompile Include="Source\Rasterizer\Renderer\RolfGL.cpp" />
     <ClCompile Include="Source\Test\CardRendering.cpp" />
     <ClCompile Include="Source\Test\GamepadTest.cpp" />
     <ClCompile Include="Source\Test\Testing.cpp" />
@@ -106,7 +104,7 @@
     <ClInclude Include="Source\Framework\windowstate.h" />
     <ClInclude Include="Source\Rasterizer\RasterizeMain.h" />
     <ClInclude Include="Source\Rasterizer\Renderer\Buffer.h" />
-    <ClInclude Include="Source\Rasterizer\Renderer\Render.h" />
+    <ClInclude Include="Source\Rasterizer\Renderer\RolfGL.h" />
     <ClInclude Include="Source\Test\Entity.h" />
     <ClInclude Include="Source\Gloomhaven\action\Action.h" />
     <ClInclude Include="Source\Gloomhaven\action\ActionAttack.h" />

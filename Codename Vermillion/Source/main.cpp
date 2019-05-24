@@ -61,7 +61,7 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	//Testing testing;
 	//GamepadTest testing;
 	
-	testing.Initialize();
+	activity.Initialize();
 
 	unsigned int fps = 0;
 	unsigned int fpsCounter = 0;

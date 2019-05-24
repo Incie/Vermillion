@@ -262,14 +262,8 @@
     <ClCompile Include="Source\Rasterizer\Renderer\Buffer.cpp">
       <Filter>Source Files\Rasterizer\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Rasterizer\Renderer\Render.cpp">
+    <ClCompile Include="Source\Rasterizer\Renderer\RolfGL.cpp">
       <Filter>Source Files\Rasterizer\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Test\ActionMove.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Test\Entity.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -435,10 +429,10 @@
     <ClInclude Include="Source\Rasterizer\Renderer\Buffer.h">
       <Filter>Source Files\Rasterizer\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Rasterizer\Renderer\Render.h">
+    <ClInclude Include="Source\Test\Entity.h" />
+    <ClInclude Include="Source\Rasterizer\Renderer\RolfGL.h">
       <Filter>Source Files\Rasterizer\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Test\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

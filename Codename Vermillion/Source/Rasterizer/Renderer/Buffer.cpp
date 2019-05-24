@@ -6,7 +6,7 @@ Buffer::Buffer(int width, int height)
 	: bufferWidth(width), bufferHeight(height), bufferIdGL(0)
 {
 	bufferSize = width * height * 4;
-	buffer = new char[bufferSize];
+	buffer = new unsigned char[bufferSize];
 
 	Clear(0, 0, 0, 1);
 	CreateGLTexture();
@@ -19,12 +19,12 @@ Buffer::~Buffer()
 	buffer = nullptr;
 }
 
-void Buffer::Clear(char value)
+void Buffer::Clear(unsigned char value)
 {
 	Clear(value, value, value, value);
 }
 
-void Buffer::Clear(char r, char g, char b, char a)
+void Buffer::Clear(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
 	for (int i = 0; i < bufferSize; i += 4) {
 		buffer[i + 0] = r;
@@ -34,28 +34,37 @@ void Buffer::Clear(char r, char g, char b, char a)
 	}
 }
 
-void Buffer::PutPixel(int x, int y, char r, char g, char b)
+void Buffer::PutPixel(int x, int y, unsigned char r, unsigned char g, unsigned char b)
 {
 	if (x < bufferWidth && x >= 0 && y >= 0 && y < bufferHeight) {
 		int pixelIndex = (x + y * bufferWidth) * 4;
 		buffer[pixelIndex + 0] = r;
 		buffer[pixelIndex + 1] = g;
 		buffer[pixelIndex + 2] = b;
-		buffer[pixelIndex + 3] = 255;
+		buffer[pixelIndex + 3] = (unsigned char)255;
 	}
 }
 
+#include"../windowstate.h"
 void Buffer::RenderBufferToScreen()
 {
 	glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, bufferIdGL);
 		UploadToGPU();
+
+		auto windowSize = WindowState::Size();
+		glBegin(GL_QUADS);
+			glTexCoord2f(0,0); glVertex2f(0,0);
+			glTexCoord2f(1,0); glVertex2f((float)windowSize.x,0);
+			glTexCoord2f(1,1); glVertex2f((float)windowSize.x,(float)windowSize.y);
+			glTexCoord2f(0,1); glVertex2f(0,(float)windowSize.y);
+		glEnd();
+
 	glDisable(GL_TEXTURE_2D);
 }
 
 void Buffer::CreateGLTexture()
 {
-	GLint format = GL_RGBA;
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, (GLuint*) &bufferIdGL);
 
@@ -63,11 +72,11 @@ void Buffer::CreateGLTexture()
 	glTexImage2D(
 		GL_TEXTURE_2D,
 		0,
-		format,
+		GL_RGBA,
 		bufferWidth,
 		bufferHeight,
 		0,
-		format,
+		GL_RGBA,
 		GL_UNSIGNED_BYTE,
 		buffer
 	);

@@ -88,11 +88,11 @@ void PlayerCard::RenderAbility(const TextService& text, const std::vector<CardAb
 		auto icon = Icons::Get(cardAbility.name);
 
 		if (icon != nullptr) {
-			int fh = fontHeight;
+			int fontheight = fontHeight;
 			if (cardAbility.subtitle)
-				fh = (fh / 2) * 3;
+				fontheight = (fontheight / 2) * 3;
 
-			auto width = Render::Quad(*icon, fh);
+			auto width = Render::Quad(*icon, fontheight);
 			glTranslatef(width * 0.5f, 0, 0);
 		}
 
