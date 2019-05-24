@@ -2,7 +2,7 @@
 #include "Tile.h"
 
 Tile::Tile(glm::ivec3 location, glm::vec3 worldpos)
-	: occupyingActor(-1), cubeLocation(location), worldPosition(worldpos)
+	: occupyingActorId(-1), cubeLocation(location), worldPosition(worldpos)
 {
 }
 
@@ -11,14 +11,14 @@ Tile::~Tile()
 	containingEntities.clear();
 }
 
-bool Tile::IsOccupied()
+bool Tile::IsOccupied() const
 {
-	return occupyingActor < 0;
+	return occupyingActorId >= 0;
 }
 
 void Tile::SetOccupied(int actorId)
 {
-	occupyingActor = actorId;
+	occupyingActorId = actorId;
 }
 
 #include<algorithm>

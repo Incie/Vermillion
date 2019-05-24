@@ -40,6 +40,14 @@ double Timer::GetDelta()
 	return delta;
 }
 
+double Timer::TimeSinceTick()
+{
+	long long time = NowAsMicroseconds() - timelast;
+	
+
+	return (double) (time / 1000);
+}
+
 void Timer::LimitByFPS(int fps)
 {
 	if(fps == 0)

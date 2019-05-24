@@ -11,9 +11,13 @@ public:
 	void Init();
 	void Deinit();
 	
-	void Print(double x, double y, const std::string &text, unsigned int fontHeight, const Colorf& color) const;
+	void PrintText(double x, double y, const std::string &text, unsigned int fontHeight, const Colorf& color) const;
 
+	void NewLine(unsigned int fontHeight) const;
+	float Print(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color, bool center = false, bool newline = false) const;
+	void PrintCenter(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const;
 
 private:
+	double CalculateWidth(const std::string& text, unsigned int fontHeight) const;
 
 };

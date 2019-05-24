@@ -1,6 +1,12 @@
 #include"pch.h"
 #include "Spawner.h"
-#include"Level.h"
+#include"../level/Level.h"
+#include"../entity/Entity.h"
+
+#include <random>
+#include <algorithm>
+#include <iterator>
+#include <numeric>
 
 Spawner::Spawner(Level& level)
 	: level(level), spawnerIdGenerator(0)
@@ -24,6 +30,8 @@ void Spawner::SpawnPlayer(glm::ivec3 location)
 	aa.shield = 0;
 	aa.team = 0;
 	aa.attack = 0;
+	aa.move = 0;
+	aa.initiative = 35;
 
 	playerattributes pa;
 	pa.playerId = 0;
@@ -36,7 +44,7 @@ void Spawner::SpawnPlayer(glm::ivec3 location)
 	newPlayer->SetPosition(tile.Location(), tile.WorldPosition());
 
 	auto hex = Hexagon();
-	newPlayer->RenderModel().Generate(glm::vec2(0, 0), 40, 45);
+	newPlayer->RenderModel().Generate(glm::vec2(0, 0), 30, 35);
 	newPlayer->RenderModel().SetColor(glm::vec3(0.24f, 0.1f, 0.95f));
 	tile.SetOccupied(newPlayer->EntityId());
 	level.AddEntity(newPlayer);
@@ -56,10 +64,11 @@ void Spawner::SpawnMonster(glm::ivec3 location, bool elite)
 	aa.attack = elite ? 4 : 3;
 	aa.move = elite ? 2 : 3;
 	aa.team = 1;
+	aa.initiative = 50;
 
 	enemyattributes enemyattr;
-	enemyattr.enemyId = 0;
-	enemyattr.enemyType = elite ? EnemyType::Elite : EnemyType::Elite;
+	enemyattr.enemyId = GetMonsterId(ea.name);
+	enemyattr.enemyType = elite ? EnemyType::Elite : EnemyType::Normal;
 
 	auto* newEnemy = new Enemy();
 	newEnemy->Setup(enemyattr, aa, ea);
@@ -67,7 +76,7 @@ void Spawner::SpawnMonster(glm::ivec3 location, bool elite)
 	newEnemy->SetPosition(tile.Location(), tile.WorldPosition());
 
 	auto& hex = newEnemy->RenderModel();
-	hex.Generate(glm::vec2(0, 0), 40, 45);
+	hex.Generate(glm::vec2(0, 0), 30, 35);
 	if (elite) 
 		hex.SetColor(glm::vec3(0.8f, 0.8f, 0.1f));
 	else hex.SetColor(glm::vec3(0.8f, 0.8f, 0.8f));
@@ -75,4 +84,19 @@ void Spawner::SpawnMonster(glm::ivec3 location, bool elite)
 
 	tile.SetOccupied(newEnemy->EntityId());
 	level.AddEntity(newEnemy);
+}
+
+int Spawner::GetMonsterId(const std::string& monsterName)
+{
+	if (monsterIdPool.find(monsterName) == monsterIdPool.end()) {
+		monsterIdPool[monsterName] = MonsterIdPool();
+		
+		std::random_device rnd;
+		std::mt19937_64 randomGenerator(rnd());
+
+		auto& monsterIds = monsterIdPool[monsterName];
+		std::shuffle(monsterIds.idPool.begin(), monsterIds.idPool.end(), randomGenerator);
+	}
+	
+	return monsterIdPool[monsterName].Get();
 }
