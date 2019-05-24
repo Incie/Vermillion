@@ -277,7 +277,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib;fmt.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib;fmtd.lib;libpng16d.lib;zlibd.lib;freetyped.lib;glew32d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VCPKG_64)\debug\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
