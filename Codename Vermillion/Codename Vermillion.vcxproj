@@ -74,6 +74,7 @@
     <ClCompile Include="Source\Gloomhaven\uilayer\PortraitPanel.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\StatusBar.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Rasterizer\Primitives\Primitives.cpp" />
     <ClCompile Include="Source\Rasterizer\RasterizeMain.cpp" />
     <ClCompile Include="Source\Rasterizer\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\Rasterizer\Renderer\RolfGL.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="Source\Framework\uilayer.h" />
     <ClInclude Include="Source\Framework\window.h" />
     <ClInclude Include="Source\Framework\windowstate.h" />
+    <ClInclude Include="Source\Rasterizer\Primitives\Primitives.h" />
     <ClInclude Include="Source\Rasterizer\RasterizeMain.h" />
     <ClInclude Include="Source\Rasterizer\Renderer\Buffer.h" />
     <ClInclude Include="Source\Rasterizer\Renderer\RolfGL.h" />

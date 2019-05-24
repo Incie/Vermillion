@@ -1,8 +1,13 @@
 #include"pch.h"
 #include "RolfGL.h"
 
+#include"glm/gtc/matrix_transform.hpp"
+
 RolfGL::RolfGL()
-	: frameBuffer(640,480), c(0)
+	: 
+	projectionMatrix(glm::perspectiveFov(90.0f, 640.0f, 480.0f, 1.0f, 1000.0f)),
+	frameBuffer(640,480), 
+	c(0)
 {
 }
 
@@ -10,15 +15,32 @@ RolfGL::~RolfGL()
 {
 }
 
+void RolfGL::StartFrame()
+{
+	frameBuffer.Clear(25, 25, 100, 255);
+}
+
+void RolfGL::EndFrame()
+{
+	frameBuffer.RenderBufferToScreen();
+}
+
+void RolfGL::DrawTriangle(const Triangle& triangle)
+{
+	Triangle t{triangle};
+	t.Transform(projectionMatrix);
+
+	DrawLine(t.vertices[0].x, t.vertices[0].x, t.vertices[1].x, t.vertices[1].y);
+	DrawLine(t.vertices[1].x, t.vertices[1].x, t.vertices[2].x, t.vertices[2].y);
+	DrawLine(t.vertices[0].x, t.vertices[0].x, t.vertices[2].x, t.vertices[2].y);
+}
+
 void RolfGL::Draw()
 {
-	c = 0;
-	frameBuffer.Clear(c, c, c, 1);
-
 	DrawLine(0,0, 639, 479);
 	DrawQuad(150,150, 200,200);
 	DrawCircle(100, 300, 50);
-	frameBuffer.RenderBufferToScreen();
+	
 }
 
 void RolfGL::DrawCircle(float x, float y, float r)

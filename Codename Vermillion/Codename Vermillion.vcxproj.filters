@@ -86,6 +86,9 @@
     <Filter Include="Source Files\Gloomhaven\UILayers">
       <UniqueIdentifier>{50977cc3-9f0a-4380-bc35-86bc2dd95608}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Rasterizer\Primitives">
+      <UniqueIdentifier>{51e8334c-5efd-4e37-9338-01d6c9a90934}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -265,6 +268,9 @@
     <ClCompile Include="Source\Rasterizer\Renderer\RolfGL.cpp">
       <Filter>Source Files\Rasterizer\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Rasterizer\Primitives\Primitives.cpp">
+      <Filter>Source Files\Rasterizer\Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -432,6 +438,9 @@
     <ClInclude Include="Source\Test\Entity.h" />
     <ClInclude Include="Source\Rasterizer\Renderer\RolfGL.h">
       <Filter>Source Files\Rasterizer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Rasterizer\Primitives\Primitives.h">
+      <Filter>Source Files\Rasterizer\Primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
