@@ -71,7 +71,14 @@ Triangle::~Triangle()
 
 void Triangle::Transform(const glm::mat4& transform)
 {
-	vertices[0] = transform * vertices[0];
-	vertices[1] = transform * vertices[1];
-	vertices[2] = transform * vertices[2];
+	for (auto& v : vertices) {
+		v = transform * v;
+
+		if (v.w != 0.0f)
+		{
+			v.x /= v.w;
+			v.y /= v.w;
+			v.z /= v.w;
+		}
+	}
 }
