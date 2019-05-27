@@ -30,9 +30,14 @@ void RolfGL::DrawTriangle(const Triangle& triangle)
 	Triangle t{triangle};
 	t.Transform(projectionMatrix);
 
-	DrawLine(t.vertices[0].x, t.vertices[0].x, t.vertices[1].x, t.vertices[1].y);
-	DrawLine(t.vertices[1].x, t.vertices[1].x, t.vertices[2].x, t.vertices[2].y);
-	DrawLine(t.vertices[0].x, t.vertices[0].x, t.vertices[2].x, t.vertices[2].y);
+	for( auto& v : t.vertices ){
+		v.x = (v.x + 1.0f) * 0.5f * 640.0f;
+		v.y = (v.y + 1.0f) * 0.5f * 480.0f;
+	}
+
+	DrawLine(t.vertices[0].x, t.vertices[0].y, t.vertices[1].x, t.vertices[1].y);
+	DrawLine(t.vertices[1].x, t.vertices[1].y, t.vertices[2].x, t.vertices[2].y);
+	DrawLine(t.vertices[0].x, t.vertices[0].y, t.vertices[2].x, t.vertices[2].y);
 }
 
 void RolfGL::Draw()
