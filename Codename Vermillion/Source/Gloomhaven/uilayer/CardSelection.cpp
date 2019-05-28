@@ -92,10 +92,10 @@ void CardSelection::Render(ServiceLocator& Services)
 {
 	UILayer::Render(Services);
 
-	Services.Text().PrintCenter(8 + 0.5 * (double)scalar * (double)texture.width, 8.0 + 11.0, "Initiative", 22.0f, Colorf(0));
+	Services.Text().PrintCenter(8 + 0.5 * (double)scalar * (double)texture.width, 8.0 + 11.0, "Initiative", 22, Colorf(0));
 
-	float w = texture.width;
-	float h = texture.height;
+	//auto w = static_cast<float>(texture.width);
+	//auto h = static_cast<float>(texture.height);
 
 	glPushMatrix();
 	glTranslatef(8, 8 + 8 + 22.0f, 0);
@@ -106,7 +106,7 @@ void CardSelection::Render(ServiceLocator& Services)
 	}
 
 	glTranslatef(8 + texture.width * scalar, 0, 0);
-	Render::Quad(0, 0, (double)scalar * (double)texture.width, (double)scalar * (double)texture.height, glm::vec3(0.88f));
+	Render::Quad(0, 0, static_cast<float>(scalar) * static_cast<float>(texture.width), (float)scalar * (float)texture.height, glm::vec3(0.88f));
 	if (playerCards[1] != nullptr) {
 		playerCards[1]->Scale(scalar);
 		playerCards[1]->Render(Services.Text(), texture);
@@ -145,10 +145,11 @@ void CardSelection::OnEvent(WindowEvent type, int id)
 	callback(*this, 0);
 }
 
+std::string nocard = "no-card";
 const std::string& CardSelection::Card(int i)
 {
 	if (i < 0 || i >= 2)
-		return std::string("no-card");
+		return nocard;
 
 	return playerCards[i]->Name();
 }
@@ -156,7 +157,7 @@ const std::string& CardSelection::Card(int i)
 bool CardSelection::CardExists(const PlayerCard& card) const
 {
 	for( int i = 0; i < 2; ++i ){
-		if (playerCards[i] != nullptr && playerCards[i]->Name().compare(card.Name()) == 0)
+		if (playerCards[i] != nullptr && playerCards[i]->Name() == card.Name())
 			return true;
 	}
 	return false;

@@ -41,6 +41,7 @@
     <ClCompile Include="Source\Framework\uibutton.cpp" />
     <ClCompile Include="Source\Framework\uielement.cpp" />
     <ClCompile Include="Source\Framework\uilayer.cpp" />
+    <ClCompile Include="Source\Framework\vermillion.cpp" />
     <ClCompile Include="Source\Framework\window.cpp" />
     <ClCompile Include="Source\Framework\windowclass.cpp" />
     <ClCompile Include="Source\Framework\windowprocedure.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="Source\Framework\textures_pngloader.h" />
     <ClInclude Include="Source\Framework\timer.h" />
     <ClInclude Include="Source\Framework\uilayer.h" />
+    <ClInclude Include="Source\Framework\vermillion.h" />
     <ClInclude Include="Source\Framework\window.h" />
     <ClInclude Include="Source\Framework\windowstate.h" />
     <ClInclude Include="Source\Gloomhaven\action\Action.h" />

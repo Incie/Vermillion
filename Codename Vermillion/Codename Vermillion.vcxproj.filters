@@ -250,6 +250,9 @@
     <ClCompile Include="Source\Gloomhaven\cards\PlayerCard.cpp">
       <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\vermillion.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -407,6 +410,9 @@
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\cards\PlayerCard.h">
       <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\vermillion.h">
+      <Filter>Source Files\Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

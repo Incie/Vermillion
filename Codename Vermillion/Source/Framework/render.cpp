@@ -19,11 +19,11 @@ float Render::Quad(const glm::vec2& position, Texture& texture, float height)
 
 float Render::Quad(const Texture& texture, float height)
 {
-	float scale = height / texture.height;
+	const float scale = height / static_cast<float>(texture.height);
 
 	glPushMatrix();
 	glScalef(scale, scale, 1);
-	glTranslatef(-texture.width, 0, 0);
+	glTranslatef(static_cast<float>(-texture.width), 0, 0);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -31,10 +31,12 @@ float Render::Quad(const Texture& texture, float height)
 
 	glBindTexture(GL_TEXTURE_2D, texture.textureId);
 	glBegin(GL_QUADS);
+	float w = static_cast<float>(texture.width);
+	float h = static_cast<float>(texture.height);
 	glTexCoord2f(0, 0); glVertex2f(0, 0);
-	glTexCoord2f(1, 0); glVertex2f(texture.width, 0);
-	glTexCoord2f(1, 1); glVertex2f(texture.width, texture.height);
-	glTexCoord2f(0, 1); glVertex2f(0, texture.height);
+	glTexCoord2f(1, 0); glVertex2f(w, 0);
+	glTexCoord2f(1, 1); glVertex2f(w, h);
+	glTexCoord2f(0, 1); glVertex2f(0, h);
 	glEnd();
 
 	glDisable(GL_BLEND);

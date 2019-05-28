@@ -18,9 +18,9 @@ void PlayerCard::Render(const TextService& text, const Texture& texture) const
 {
 	float vertices2[] = {
 		0,0,
-		texture.width, 0,
-		texture.width,texture.height,
-		0,texture.height
+		static_cast<float>(texture.width), 0,
+		static_cast<float>(texture.width), static_cast<float>(texture.height),
+		0, static_cast<float>(texture.height)
 	};
 
 	float textureCoords[] = {
@@ -92,7 +92,7 @@ void PlayerCard::RenderAbility(const TextService& text, const std::vector<CardAb
 			if (cardAbility.subtitle)
 				fh = (fh / 2) * 3;
 
-			auto width = Render::Quad(*icon, fh);
+			auto width = Render::Quad(*icon, static_cast<float>(fh));
 			glTranslatef(width * 0.5f, 0, 0);
 		}
 
