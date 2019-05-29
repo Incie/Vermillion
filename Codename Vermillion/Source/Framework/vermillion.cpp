@@ -45,16 +45,16 @@ void Vermillion::Run()
 		{
 			inputManager.Update();
 
-			renderer.StartFrame();
-
 			if (WindowState::Changed()) {
 				runningActivity->Resize();
 				WindowState::ResetChanged();
 			}
 
 			runningActivity->Update(renderTimer.GetDelta());
-			runningActivity->Render();
-			text.Print(0, 0, fmt::format("FPS: {0} ({1})", fps, lastFrameTime), 12, Colorf(1.0f) );
+			
+			renderer.StartFrame();
+				runningActivity->Render();
+				text.Print(0, 0, fmt::format("FPS: {0} ({1})", fps, lastFrameTime), 12, Colorf(1.0f) );
 			renderer.EndFrame();
 
 			fpsCounter++;

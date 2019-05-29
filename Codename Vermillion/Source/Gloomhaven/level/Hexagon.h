@@ -13,6 +13,12 @@ public:
 	void NoHighlight() { this->highlight = this->color; }
 	void SetHighlight(const glm::vec3& color) { this->highlight = color; }
 
+	glm::vec3 Center() {
+		glm::vec3 acc;
+		for( auto p : points )
+			acc+=p;
+		return acc / (float)num_points;
+	}
 private:
 	static constexpr unsigned int num_points = (6 * 3 * 2) + 4 * 3;
 	glm::vec3 points[num_points];

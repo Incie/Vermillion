@@ -80,6 +80,12 @@
     <Filter Include="Source Files\Gloomhaven\UILayers">
       <UniqueIdentifier>{50977cc3-9f0a-4380-bc35-86bc2dd95608}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Framework\Services">
+      <UniqueIdentifier>{afd4461e-12d1-46e5-b39f-bfdc3b2865bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven_LevelEditor">
+      <UniqueIdentifier>{b280b695-e43b-46d6-8941-fada906c2b6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -138,9 +144,6 @@
     </ClCompile>
     <ClCompile Include="Source\Framework\timer.cpp">
       <Filter>Source Files\Framework\Timer</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\servicelocator.cpp">
-      <Filter>Source Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\input_getters.cpp">
       <Filter>Source Files\Framework\Input</Filter>
@@ -253,6 +256,12 @@
     <ClCompile Include="Source\Framework\vermillion.cpp">
       <Filter>Source Files\Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\servicelocator.cpp">
+      <Filter>Source Files\Framework\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -296,12 +305,6 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\timer.h">
       <Filter>Source Files\Framework\Timer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\servicelocator.h">
-      <Filter>Source Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\services.h">
-      <Filter>Source Files\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\activity.h">
       <Filter>Source Files\Framework</Filter>
@@ -413,6 +416,15 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\vermillion.h">
       <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\servicelocator.h">
+      <Filter>Source Files\Framework\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\services.h">
+      <Filter>Source Files\Framework\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

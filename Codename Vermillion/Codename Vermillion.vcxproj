@@ -74,6 +74,7 @@
     <ClCompile Include="Source\Gloomhaven\uilayer\InitiativeUI.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\PortraitPanel.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\StatusBar.cpp" />
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Test\CardRendering.cpp" />
     <ClCompile Include="Source\Test\GamepadTest.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="Source\Gloomhaven\uilayer\PortraitPanel.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\StatusBar.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\UILayerId.h" />
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.h" />
     <ClInclude Include="Source\Test\CardRendering.h" />
     <ClInclude Include="Source\Test\GamepadTest.h" />
     <ClInclude Include="Source\Test\Testing.h" />
