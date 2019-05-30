@@ -86,6 +86,9 @@
     <Filter Include="Source Files\Gloomhaven_LevelEditor">
       <UniqueIdentifier>{b280b695-e43b-46d6-8941-fada906c2b6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Gloomhaven_LevelEditor\UI">
+      <UniqueIdentifier>{ce1aeb5a-b537-462e-86e5-729b34f3051c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -262,6 +265,18 @@
     <ClCompile Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.cpp">
       <Filter>Source Files\Gloomhaven_LevelEditor</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\Gloom_EditorBoard.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\ActionSelector.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\TileModifier.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\SaveLoadUI.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -425,6 +440,18 @@
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.h">
       <Filter>Source Files\Gloomhaven_LevelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_EditorBoard.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\ActionSelector.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\TileModifier.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\SaveLoadUI.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

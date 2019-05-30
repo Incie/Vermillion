@@ -59,8 +59,36 @@ void Hexagon::Generate(const glm::vec2& v, float innerRadius, float outerRadius)
 		normals[i + 1] = normal;
 		normals[i + 2] = normal;
 	}
+
+	std::vector<glm::vec2> tc = { 
+		glm::vec2(474,249),
+		glm::vec2(361,444),
+		glm::vec2(137,444),
+		glm::vec2(22,249),
+		glm::vec2(135,54),
+		glm::vec2(361, 54) 
+	};
+
+	texcoords[0] = tc[0];
+	texcoords[1] = tc[1];
+	texcoords[2] = tc[2];
+	texcoords[3] = tc[0];
+	texcoords[4] = tc[2];
+	texcoords[5] = tc[3];
+	texcoords[6] = tc[0];
+	texcoords[7] = tc[3];
+	texcoords[8] = tc[4];
+	texcoords[9] = tc[0];
+	texcoords[10] = tc[4];
+	texcoords[11] = tc[5];
+
+	for (auto& tc : texcoords) {
+		tc.x /= 500.0f;
+		tc.y /= 500.0f;
+	}
 }
 
+#include"..//textures.h"
 void Hexagon::Render() const
 {
 	glBegin(GL_TRIANGLES);
@@ -70,6 +98,22 @@ void Hexagon::Render() const
 			glVertex3fv(&points[i].x);
 		}
 	glEnd();
+
+	if (texture != nullptr) {
+		glDisable(GL_LIGHTING);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture->textureId);
+
+		glBegin(GL_TRIANGLES);
+		for (int i = 0; i < 12; ++i) {
+				glTexCoord2fv(&texcoords[i].x);
+				glVertex2fv(&points[i + 36].x);
+			}
+		glEnd();
+
+		glDisable(GL_TEXTURE_2D);
+		glEnable(GL_LIGHTING);
+	}
 
 
 	//glBegin(GL_LINES);

@@ -2,6 +2,7 @@
 
 #include"glm/glm.hpp"
 #include<vector>
+#include<string>
 
 class InputService;
 class ServiceLocator;

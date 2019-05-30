@@ -34,3 +34,15 @@ double Tile::DistanceFromCenterTo(const glm::vec2 & point) const
 	glm::vec3 v = worldPosition - glm::vec3(point.x, point.y, 0.0f);
 	return glm::distance(glm::vec3(point.x, point.y, 0.0f), worldPosition);
 }
+
+
+// === === === === === ===
+ 
+EditorTile::EditorTile(glm::ivec3 location, glm::vec3 worldpos)
+	: Tile(location, worldpos), enabled(true)
+{
+}
+
+EditorTile::~EditorTile()
+{
+}

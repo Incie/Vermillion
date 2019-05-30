@@ -45,10 +45,14 @@ public:
 	static void SetKeyDown(char keyCode);
 	static void SetKeyUp(char keyCode);
 	static void Reset();
+	static void Active(bool isActive);
+	static bool Active() { return active; }
 
 private:
 	static void UpdateMouseState();
 	static void UpdateGamepadState();
+
+	static bool active;
 };
 
 class InputStates 

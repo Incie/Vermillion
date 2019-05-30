@@ -15,6 +15,11 @@ LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT   uMsg, _In_ WPARAM wParam
 {
 	switch (uMsg) {
 		case WM_ACTIVATE:
+			if(wParam == WA_INACTIVE)
+				InputState::Active(false);
+			else
+				InputState::Active(true);
+
 			break;
 
 		case WM_KEYDOWN:

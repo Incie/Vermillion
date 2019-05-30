@@ -37,6 +37,13 @@ void InputState::Reset()
 	memset(InputStates::keyboardStates, 0, 256);
 }
 
+bool InputState::active = true;
+
+void InputState::Active(bool isActive)
+{
+	active = isActive;
+}
+
 
 #include"Windows.h"
 #include<Xinput.h>

@@ -15,6 +15,12 @@ InputManager::~InputManager()
 
 void InputManager::Update()
 {
+	if(InputState::Active() == false) {
+		InputState::Reset();
+		memset(keyStates, 0, 256);
+		return;
+	}
+
 	InputState::UpdateStates();
 	UpdateKeyboard();
 }

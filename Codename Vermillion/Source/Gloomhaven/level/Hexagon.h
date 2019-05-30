@@ -1,6 +1,7 @@
 #pragma once
 
 #include"glm/glm.hpp"
+class Texture;
 
 class Hexagon
 {
@@ -19,10 +20,16 @@ public:
 			acc+=p;
 		return acc / (float)num_points;
 	}
+
+	void SetTexture(Texture* texture) { this->texture = texture; }
 private:
 	static constexpr unsigned int num_points = (6 * 3 * 2) + 4 * 3;
 	glm::vec3 points[num_points];
 	glm::vec3 normals[num_points];
+
+	glm::vec2 texcoords[12];
+	
+	Texture* texture;
 
 	glm::vec3 color;
 	glm::vec3 highlight;

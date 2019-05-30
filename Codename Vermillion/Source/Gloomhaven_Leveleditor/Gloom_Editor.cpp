@@ -1,4 +1,5 @@
 #include"pch.h"
+#include<Windows.h>
 #include "Gloom_Editor.h"
 #include"..//Gloomhaven/level/Hexagon.h"
 #include"..//camera2d.h"
@@ -12,35 +13,62 @@ GloomEditor::~GloomEditor()
 {
 }
 
-std::vector<Tile*> hexes;
-Camera2D camera;
+#include"..//Gloomhaven/icons/icons.h"
+#include"ui/TileModifier.h"
+#include"ui/SaveLoadUI.h"
 
 void GloomEditor::Initialize()
 {
-	double size = 10.0;
-	double width = 2.0 * size;
-	double height = sqrt(3.0) * size;
+	Icons::Load(Services().Textures());
 
-	for( int y = 0; y < 100; ++y ){
-		float fy = static_cast<float>(y);
-		for( int x = 0; x < 100; ++x ){
-			float fx = static_cast<float>(x);	
-
-			float hx = (3.0f / 4.0f) * width * fx;
-			float hy = -fy * height - (1.0f / 2.0f) * height * fx;
-
-			hexes.push_back(new Tile(glm::ivec3(x, y, -(x+y)), glm::vec3(hx, hy, 0.0f)));
-			auto& hex = hexes.back()->GetHexagon();
-			hex.Generate(glm::vec2(hx, hy), size * 0.75f, size);
+	layers.push_back(new ActionSelector([&](auto i) {
+		if (i == 1) { //paint mode
+			editorBoard.SetMode(0);
 		}
-	}
+		else if (i == 2) { //select mode
+			editorBoard.SetMode(1);
+		}
+	}));
+
+	layers.push_back(new TileModifier([&](auto i) {
+	
+	}));
+
+
+	layers.push_back(new EditorMainMenu([&](auto i) {
+		if(i == 0)
+			editorBoard.LoadFromDisk(); //load
+
+		if(i == 1) //save
+			editorBoard.SaveToDisk();
+	}));
+
+	editorBoard.SetCallback([&](EditorTile* tile) {
+		dynamic_cast<TileModifier*>(layers[1])->SetTile(tile);
+	});
+	editorBoard.Generate(30, 30);
 }
 
 void GloomEditor::Deinitialize()
 {
+	Icons::Unload();
+
+	for (auto layer : layers)
+		delete layer;
+	layers.clear();
+
 }
 
-#include<Windows.h>
+#include"..//windowstate.h"
+void GloomEditor::Resize()
+{
+	auto size = WindowState::Size();
+	auto windowSize = glm::vec2(static_cast<float>(size.x), static_cast<float>(size.y));
+	for (auto layer : layers) {
+		layer->Resize(windowSize);
+	}
+}
+
 void GloomEditor::Update(double delta)
 {
 	auto& input = Services().Input();
@@ -49,42 +77,36 @@ void GloomEditor::Update(double delta)
 		const auto& deltaMouse = input.GetMouseDelta();
 		camera.Move(deltaMouse);
 	}
+
+	bool inputHandled = false;
+	auto mouseCoords = input.GetMousePosition();
+	for (auto layer : layers) {
+		if (layer->HandleInput(input)) {
+			inputHandled = true;
+		}
+	}
+
+	auto normalizedMouseCoords = input.GetMousePositionNormalized();
+	auto viewCoords = camera.ScreenToViewCoords(normalizedMouseCoords);
+	
+	if (inputHandled)
+		editorBoard.Clear();
+	else editorBoard.Update(input, viewCoords);
 }
 
 #include"GL/glew.h"
 void GloomEditor::Render()
 {
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_COLOR_MATERIAL);
-
-	float ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	float diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-	float specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	glm::vec4 lightDirection = glm::vec4(0.355336f, 0.906561, -0.227779, 0.0);
-
-	glLightfv(GL_LIGHT0, GL_POSITION, &lightDirection.x);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
-
+	auto& text = Services().Text();
 	camera.Push();
-		auto& text = Services().Text();
-		for( auto& h : hexes ){
-			h->GetHexagon().Render();
-		}
-
-		glDisable(GL_LIGHTING);
-		glDisable(GL_LIGHT0);
-
-		for(auto tile : hexes ) {
-			auto& hex = tile->GetHexagon();
-
-			//glPushMatrix();
-			//	glTranslatef(tile->WorldPosition().x - 20.0f, tile->WorldPosition().y, tile->WorldPosition().z);
-			//	const auto& coord = tile->Location();
-			//	text.Print(0, 0, fmt::format("{0},{1},{2}", coord.x, coord.y, coord.z), 16, Colorf(0, 0, 0));
-			//glPopMatrix();
-		}
+		editorBoard.Render(text);
 	camera.Pop();
+	
+	for (auto layer : layers) {
+		layer->StartRender();
+		layer->Render( Services() );
+		layer->EndRender();
+	}
+
+	glDisable(GL_TEXTURE_2D);
 }

@@ -75,6 +75,10 @@
     <ClCompile Include="Source\Gloomhaven\uilayer\PortraitPanel.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\StatusBar.cpp" />
     <ClCompile Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.cpp" />
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\Gloom_EditorBoard.cpp" />
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\ActionSelector.cpp" />
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\SaveLoadUI.cpp" />
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\TileModifier.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Test\CardRendering.cpp" />
     <ClCompile Include="Source\Test\GamepadTest.cpp" />
@@ -133,6 +137,10 @@
     <ClInclude Include="Source\Gloomhaven\uilayer\StatusBar.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\UILayerId.h" />
     <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.h" />
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_EditorBoard.h" />
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\ActionSelector.h" />
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\SaveLoadUI.h" />
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\TileModifier.h" />
     <ClInclude Include="Source\Test\CardRendering.h" />
     <ClInclude Include="Source\Test\GamepadTest.h" />
     <ClInclude Include="Source\Test\Testing.h" />
@@ -235,7 +243,7 @@
       <BrowseInformation>true</BrowseInformation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64)\include;Source\External</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
