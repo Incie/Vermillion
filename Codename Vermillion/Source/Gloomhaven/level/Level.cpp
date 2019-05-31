@@ -53,7 +53,7 @@ void Level::Generate()
 			if (x % 2 == 1)
 				add = 0.5 * height;
 
-			tiles.push_back( new Tile(coord, glm::vec3(w, h+add, 0.0f)) );
+			tiles.push_back( vnew Tile(coord, glm::vec3(w, h+add, 0.0f)) );
 			auto &tile = *tiles.back();
 			tile.GetHexagon().Generate(glm::vec2(w, h + add), 40, 50);
 

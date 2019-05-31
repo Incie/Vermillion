@@ -39,7 +39,7 @@ double Tile::DistanceFromCenterTo(const glm::vec2 & point) const
 // === === === === === ===
  
 EditorTile::EditorTile(glm::ivec3 location, glm::vec3 worldpos)
-	: Tile(location, worldpos), enabled(true)
+	: Tile(location, worldpos), enabled(true), entity(nullptr)
 {
 }
 

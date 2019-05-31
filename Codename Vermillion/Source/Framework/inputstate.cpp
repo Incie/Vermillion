@@ -15,7 +15,7 @@ void InputState::UpdateStates()
 	UpdateGamepadState();
 }
 
-void InputState::SetKeyDown(char keyCode)
+void InputState::SetKeyDown(unsigned char keyCode)
 {
 	if (keyCode >= 255)
 		return;
@@ -23,7 +23,7 @@ void InputState::SetKeyDown(char keyCode)
 	InputStates::keyboardStates[keyCode] = 1;
 }
 
-void InputState::SetKeyUp(char keyCode)
+void InputState::SetKeyUp(unsigned char keyCode)
 {
 	if (keyCode >= 255)
 		return;

@@ -14,7 +14,7 @@ TextureManager::~TextureManager()
 
 Texture TextureManager::LoadTexture(const std::string & relativePath)
 {
-	auto loader = new PNGLoader();
+	auto loader = vnew PNGLoader();
 	auto imageLoadStatus = loader->Read(relativePath);
 
 	if (imageLoadStatus != ImageLoaderStatus::LOADER_SUCCESS) {

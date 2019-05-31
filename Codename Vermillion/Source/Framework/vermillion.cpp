@@ -16,12 +16,6 @@ Vermillion::Vermillion(Activity* activity, HINSTANCE hInstance)
 
 Vermillion::~Vermillion()
 {
-	if( runningActivity )
-	{
-		runningActivity->Deinitialize();
-		delete runningActivity;
-	}
-
 	DeinitializeEngine();
 }
 
@@ -97,6 +91,12 @@ void Vermillion::InitializeEngine()
 void Vermillion::DeinitializeEngine()
 {
 	Log::Info("Application", "Shutting down");
+
+	if(runningActivity)
+	{
+		runningActivity->Deinitialize();
+		delete runningActivity;
+	}
 	
 	text.Deinit();
 	textureManager.UnloadAll();

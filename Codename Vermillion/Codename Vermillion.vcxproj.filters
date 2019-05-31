@@ -44,9 +44,6 @@
     <Filter Include="Source Files\Framework\Camera">
       <UniqueIdentifier>{1444139c-3086-4c06-889a-610f4ac65fc0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Precompiled">
-      <UniqueIdentifier>{1b08c3e9-dfd7-4ad7-9e90-378b0cbcfcee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Gloomhaven">
       <UniqueIdentifier>{915320fb-bc9e-4925-8876-fe62d7948521}</UniqueIdentifier>
     </Filter>
@@ -88,6 +85,9 @@
     </Filter>
     <Filter Include="Source Files\Gloomhaven_LevelEditor\UI">
       <UniqueIdentifier>{ce1aeb5a-b537-462e-86e5-729b34f3051c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompiled">
+      <UniqueIdentifier>{1b08c3e9-dfd7-4ad7-9e90-378b0cbcfcee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -155,7 +155,7 @@
       <Filter>Source Files\Framework\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\pch\pch.cpp">
-      <Filter>Source Files\Precompiled</Filter>
+      <Filter>Precompiled</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\Gloom.cpp">
       <Filter>Source Files\Gloomhaven</Filter>
@@ -328,7 +328,7 @@
       <Filter>Source Files\Framework\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\pch\pch.h">
-      <Filter>Source Files\Precompiled</Filter>
+      <Filter>Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\Gloom.h">
       <Filter>Source Files\Gloomhaven</Filter>

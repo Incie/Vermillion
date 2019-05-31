@@ -14,7 +14,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 	cards[0] = nullptr;
 	cards[1] = nullptr;
 
-	auto button = new Button();
+	auto button = vnew Button();
 	button->SetColor(glm::vec3(0.6f));
 	button->SetTextColor(glm::vec3(0.3f));
 	button->SetText("End Turn");
@@ -22,7 +22,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 	children.push_back(button);
 
 	{
-		auto defaultTopButton = new Button();
+		auto defaultTopButton = vnew Button();
 		defaultTopButton->SetText("DT1");
 		defaultTopButton->SetTextSize(16 * cardScalar);
 		defaultTopButton->SetId(2);
@@ -30,7 +30,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		defaultTopButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(defaultTopButton);
 
-		auto defaultBottomButton = new Button();
+		auto defaultBottomButton = vnew Button();
 		defaultBottomButton->SetText("DB1");
 		defaultBottomButton->SetTextSize(16 * cardScalar);
 		defaultBottomButton->SetId(3);
@@ -38,7 +38,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		defaultBottomButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(defaultBottomButton);
 
-		auto topButton = new Button();
+		auto topButton = vnew Button();
 		topButton->SetText("T1");
 		topButton->SetTextSize(16 * cardScalar);
 		topButton->SetId(4);
@@ -46,7 +46,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		topButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(topButton);
 
-		auto bottomButton = new Button();
+		auto bottomButton = vnew Button();
 		bottomButton->SetText("B1");
 		bottomButton->SetTextSize(16 * cardScalar);
 		bottomButton->SetId(5);
@@ -57,7 +57,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 
 	{
 		float tX = 8 + cardScalar * texture.width + 8;
-		auto defaultTopButton = new Button();
+		auto defaultTopButton = vnew Button();
 		defaultTopButton->SetText("DT2");
 		defaultTopButton->SetTextSize(16 * cardScalar);
 		defaultTopButton->SetId(6);
@@ -65,7 +65,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		defaultTopButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(defaultTopButton);
 
-		auto defaultBottomButton = new Button();
+		auto defaultBottomButton = vnew Button();
 		defaultBottomButton->SetText("DB2");
 		defaultBottomButton->SetTextSize(16 * cardScalar);
 		defaultBottomButton->SetId(7);
@@ -73,7 +73,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		defaultBottomButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(defaultBottomButton);
 
-		auto topButton = new Button();
+		auto topButton = vnew Button();
 		topButton->SetText("T2");
 		topButton->SetTextSize(16 * cardScalar);
 		topButton->SetId(8);
@@ -81,7 +81,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		topButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(topButton);
 
-		auto bottomButton = new Button();
+		auto bottomButton = vnew Button();
 		bottomButton->SetText("B2");
 		bottomButton->SetTextSize(16 * cardScalar);
 		bottomButton->SetId(9);

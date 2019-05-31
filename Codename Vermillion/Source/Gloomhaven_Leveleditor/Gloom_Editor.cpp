@@ -46,7 +46,7 @@ void GloomEditor::Initialize()
 	editorBoard.SetCallback([&](EditorTile* tile) {
 		dynamic_cast<TileModifier*>(layers[1])->SetTile(tile);
 	});
-	editorBoard.Generate(30, 30);
+	editorBoard.Generate(2,2);
 }
 
 void GloomEditor::Deinitialize()

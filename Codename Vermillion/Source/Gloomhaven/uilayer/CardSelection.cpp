@@ -21,7 +21,7 @@ CardSelection::CardSelection(Texture& texture, std::function<void(CardSelection&
 	playerCards[0] = nullptr;
 	playerCards[1] = nullptr;
 
-	auto button = new Button();
+	auto button = vnew Button();
 	button->SetText("Ready");
 	button->SetState(UIElement::UIState::DISABLED);
 	button->SetColor(glm::vec3(0.6f));

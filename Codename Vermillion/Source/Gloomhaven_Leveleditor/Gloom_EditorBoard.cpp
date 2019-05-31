@@ -5,9 +5,6 @@
 
 #include"..//services.h"
 
-
-
-
 EditorBoard::EditorBoard()
 	: hover(nullptr), selected(nullptr), hexagonSize(50.0f)
 {
@@ -19,6 +16,7 @@ EditorBoard::~EditorBoard()
 	hover = nullptr;
 	selected = nullptr;
 
+	Delete();
 }
 
 void EditorBoard::Delete()
@@ -43,23 +41,27 @@ void EditorBoard::SetMode(int mode)
 	}
 }
 
-void EditorBoard::Generate(int x, int y)
+void EditorBoard::Generate(int boardWidth, int boardHeight)
 {
 	float size = hexagonSize;
 	float width = 2.0f * size;
 	float height = sqrtf(3.0f) * size;
 
-	for (int y = 0; y < 100; ++y)
+	int tileCount = boardWidth * boardHeight;
+	tiles.reserve(tileCount);
+
+	for (int y = 0; y < boardWidth; ++y)
 	{
 		float fy = static_cast<float>(y);
-		for (int x = 0; x < 100; ++x) 
+		for (int x = 0; x < boardHeight; ++x) 
 		{
 			float fx = static_cast<float>(x);
 
-			float hx = (3.0f / 4.0f) * width * fx;
-			float hy = -fy * height - (1.0f / 2.0f) * height * fx;
+			float hx = 0.75f * width * fx;
+			float hy = -fy * height - 0.5f * height * fx;
 
-			tiles.push_back(new EditorTile(glm::ivec3(x, y, -(x + y)), glm::vec3(hx, hy, 0.0f)));
+			auto editorTile = vnew EditorTile(glm::ivec3(x, y, -(x + y)), glm::vec3(hx, hy, 0.0f));
+			tiles.push_back(editorTile);
 			auto tile = tiles.back();
 
 			tile->Disable();
@@ -88,12 +90,12 @@ void EditorBoard::Update(const InputService& input, glm::vec2& viewCoords)
 	}
 
 	float closest = 100.0f;
-	for (auto h : tiles) {
-		float d = (float)h->DistanceFromCenterTo(viewCoords);
+	for (auto tile : tiles) {
+		float d = (float)tile->DistanceFromCenterTo(viewCoords);
 		if (d < closest)
 		{
 			closest = d;
-			hover = h;
+			hover = tile;
 		}
 	}
 
@@ -128,7 +130,6 @@ void EditorBoard::Update(const InputService& input, glm::vec2& viewCoords)
 				selected = hover;
 				selected->GetHexagon().SetColor(glm::vec3(0, 0, 1));
 			}
-
 		}
 	}
 }
@@ -150,27 +151,16 @@ void EditorBoard::Render(const TextService& textService)
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 
-	//auto& text = Services().Text();
-	for (auto& h : tiles) {
-		h->GetHexagon().Render();
+	for(auto& tile : tiles) {
+		tile->GetHexagon().Render();
 
-		if (h->entity != nullptr) {
-			h->entity->Render();
+		if(tile->entity != nullptr) {
+			tile->entity->Render();
 		}
 	}
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
-
-	for (auto tile : tiles) {
-		auto& hex = tile->GetHexagon();
-
-		//glPushMatrix();
-		//	glTranslatef(tile->WorldPosition().x - 20.0f, tile->WorldPosition().y, tile->WorldPosition().z);
-		//	const auto& coord = tile->Location();
-		//	text.Print(0, 0, fmt::format("{0},{1},{2}", coord.x, coord.y, coord.z), 16, Colorf(0, 0, 0));
-		//glPopMatrix();
-	}
 }
 
 #include"nholmann-json/json.hpp"
@@ -178,27 +168,22 @@ void EditorBoard::Render(const TextService& textService)
 
 void EditorBoard::SaveToDisk()
 {
-	using json = nlohmann::json;
-	json j;
+	using JSON = nlohmann::json;
+	JSON json;
 
 	for(auto tile : tiles) {
-		//if(tile->Enabled() == false)
-		//	continue;
-
-		json jsontile;
+		JSON jsontile;
 		jsontile["x"] = tile->Location().x;
 		jsontile["y"] = tile->Location().y;
 
-		j["tiles"].push_back(jsontile);
+		json["tiles"].push_back(jsontile);
 	}
 
-	std::string serialized = j.dump();
+	std::string serialized = json.dump();
 
 	std::ofstream out("levels/level1.json");
 	out << serialized;
 	out.close();
-
-
 }
 
 void EditorBoard::LoadFromDisk()
@@ -230,7 +215,7 @@ void EditorBoard::LoadFromDisk()
 
 		float hx = (3.0f / 4.0f) * width * static_cast<float>(x);
 		float hy = -static_cast<float>(y) * height - (1.0f / 2.0f) * height * static_cast<float>(x);
-		auto tile = new EditorTile(glm::ivec3(x, y, -(x + y)), glm::vec3(hx, hy, 0.0f));
+		auto tile = vnew EditorTile(glm::ivec3(x, y, -(x + y)), glm::vec3(hx, hy, 0.0f));
 		tiles.push_back(tile);
 
 		auto& hex = tile->GetHexagon();

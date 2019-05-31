@@ -1,9 +1,6 @@
 #include"pch.h"
 #include<Windows.h>
 
-#define _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
-
 #include"Test/GamepadTest.h"
 #include"Test/Testing.h"
 #include"Gloomhaven/Gloom.h"
@@ -11,10 +8,6 @@
 #include"Test/CardRendering.h"
 #include"Framework/vermillion.h"
 
-//CardRendering testing;
-//Gloom activity;
-//Testing testing;
-//GamepadTest testing;
 
 int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ LPSTR cmdLine, _In_ int nShow)
 {
@@ -23,9 +16,9 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 
 	Activity* activity = nullptr;
 
-	//activity = new CardRendering();
-	activity = new GloomEditor();
-	//activity = new Gloom();
+	//activity = vnew CardRendering();
+	//activity = vnew GloomEditor();
+	activity = vnew Gloom();
 
 	auto vermillion = Vermillion(activity, hInstance);
 	vermillion.Run();

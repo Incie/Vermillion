@@ -42,8 +42,8 @@ class InputState
 {
 public:
 	static void UpdateStates();
-	static void SetKeyDown(char keyCode);
-	static void SetKeyUp(char keyCode);
+	static void SetKeyDown(unsigned char keyCode);
+	static void SetKeyUp(unsigned char keyCode);
 	static void Reset();
 	static void Active(bool isActive);
 	static bool Active() { return active; }

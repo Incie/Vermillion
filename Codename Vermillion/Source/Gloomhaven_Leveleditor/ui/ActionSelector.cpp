@@ -7,14 +7,14 @@ ActionSelector::ActionSelector(std::function<void(int)> callback)
 {
 	SetAnchor(WindowAnchor::BOTTOM | WindowAnchor::LEFT | WindowAnchor::RIGHT);
 
-	auto buttonPaint = new Button();
+	auto buttonPaint = vnew Button();
 	buttonPaint->SetPosition(8, 8);
 	buttonPaint->SetSize(40, 40);
 	buttonPaint->SetText("P");
 	buttonPaint->SetId(1);
 	children.push_back(buttonPaint);
 
-	auto buttonSelect = new Button();
+	auto buttonSelect = vnew Button();
 	buttonSelect->SetPosition(8 + 40 + 8, 8);
 	buttonSelect->SetSize(40, 40);
 	buttonSelect->SetText("S");

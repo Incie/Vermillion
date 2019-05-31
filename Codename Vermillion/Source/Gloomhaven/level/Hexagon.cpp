@@ -3,7 +3,7 @@
 #include"gl/glew.h"
 
 Hexagon::Hexagon()
-	: highlight(glm::vec3()), color(glm::vec3())
+	: highlight(glm::vec3()), color(glm::vec3()), texture(nullptr)
 {
 	memset(points, 0, sizeof(points));
 	memset(points, 0, sizeof(normals));

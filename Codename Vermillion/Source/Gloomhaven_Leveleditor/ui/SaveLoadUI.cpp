@@ -6,13 +6,13 @@ EditorMainMenu::EditorMainMenu(std::function<void(int)> callback)
 {
 	SetAnchor(WindowAnchor::TOP | WindowAnchor::LEFT);
 
-	auto button = new Button();
+	auto button = vnew Button();
 	button->SetText("Load");
 	button->SetTextSize(18.0f);
 	button->SetId(0);
 	children.push_back(button);
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("Save");
 	button->SetId(1);
 	button->SetTextSize(18.0f);

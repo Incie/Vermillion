@@ -8,58 +8,58 @@ TileModifier::TileModifier(std::function<void(int)> callback)
 	SetAnchor(WindowAnchor::TOP | WindowAnchor::BOTTOM | WindowAnchor::RIGHT);
 	Deactivate();
 
-	auto button = new Button();
+	auto button = vnew Button();
 	button->SetText("None");
 	button->SetId(1);
 	children.push_back(button);
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("Bandit Guard");
 	button->SetId(2);
 	children.push_back(button);
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("Living Bones");
 	button->SetId(3);
 	children.push_back(button);
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("Bandit Archer");
 	button->SetId(4);
 	children.push_back(button);
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("2");
 	button->SetId(5);
 	children.push_back(button);
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("3");
 	button->SetId(6);
 	children.push_back(button);
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("4");
 	button->SetId(7);
 	children.push_back(button);
 
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("Obstacle");
 	button->SetId(8);
 	children.push_back(button);
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("Trap");
 	button->SetId(9);
 	children.push_back(button);
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("Coin");
 	button->SetId(10);
 	children.push_back(button);
 
-	button = new Button();
+	button = vnew Button();
 	button->SetText("Treasure");
 	button->SetId(11);
 	children.push_back(button);
@@ -154,7 +154,7 @@ void TileModifier::SetTileEntity(const std::string& entityName)
 	if (tile->entity != nullptr)
 		delete tile->entity;
 
-	tile->entity = new Hexagon();
+	tile->entity = vnew Hexagon();
 	tile->entity->Generate(tile->WorldPosition(), 40, 45);
 	tile->entity->SetTexture(Icons::Get(entityName));
 }

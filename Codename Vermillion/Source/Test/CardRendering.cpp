@@ -20,7 +20,7 @@
 class ButtonTest : public UILayer {
 public:
 	ButtonTest() {
-		auto button = new Button();
+		auto button = vnew Button();
 		button->SetText("Next Turn");
 		button->SetId(1);
 		button->SetPosition(8, 8);
@@ -74,7 +74,7 @@ void CardRendering::Initialize()
 
 	Icons::Load(textures);
 
-	auto cardSelector = new CardSelect(cards, card1, [this](const std::string & cardName) {
+	auto cardSelector = vnew CardSelect(cards, card1, [this](const std::string & cardName) {
 		auto cardFound = std::find_if(cards.begin(), cards.end(), [&cardName](auto playerCard) { if (playerCard.Name().compare(cardName) == 0) return true; return false; });
 		if (cardFound == cards.end())
 			throw "card not found";
@@ -90,7 +90,7 @@ void CardRendering::Initialize()
 	cardSelector->Activate();
 	layers.push_back(cardSelector);
 
-	auto cardSelection = new CardSelection(card1, [this](CardSelection & cs, int eventId) {
+	auto cardSelection = vnew CardSelection(card1, [this](CardSelection & cs, int eventId) {
 		auto cardName0 = cs.Card(0);
 		auto cardName1 = cs.Card(1);
 
@@ -113,7 +113,7 @@ void CardRendering::Initialize()
 	layers.push_back(cardSelection);
 
 
-	auto abilitySelector = new AbilitySelector(card1, [](auto e, auto i) {});
+	auto abilitySelector = vnew AbilitySelector(card1, [](auto e, auto i) {});
 	abilitySelector->SetCards(&cards[0], &cards[1]);
 	abilitySelector->Deactivate();
 	layers.push_back(abilitySelector);

@@ -47,9 +47,9 @@ bool ReadImage(png_structp& png_ptr, png_infop& info_ptr, ImageData& imageData) 
 	auto size = sizeof(png_bytep) * imageData.height;
 	auto stride = png_get_rowbytes(png_ptr, info_ptr);
 
-	imageData.data = new unsigned char[size*stride];
+	imageData.data = vnew unsigned char[size*stride];
 
-	png_bytep* row_pointers = new png_bytep[imageData.height];
+	png_bytep* row_pointers = vnew png_bytep[imageData.height];
 	for (int y = 0; y < imageData.height; y++)
 		row_pointers[y] = &imageData.data[y * stride];
 

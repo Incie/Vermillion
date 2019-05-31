@@ -7,7 +7,7 @@ EnemyAdvancer::EnemyAdvancer(std::function<void()> callback)
 	SetSize(100, 100);
 	SetAnchor(WindowAnchor::TOP | WindowAnchor::BOTTOM | WindowAnchor::RIGHT);
 	
-	auto button = new Button();
+	auto button = vnew Button();
 	button->SetText("Advance Enemy");
 	button->SetPosition(8, 8);
 	button->SetSize(150, 25);

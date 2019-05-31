@@ -172,7 +172,7 @@ void Gloom::Render()
 
 void Gloom::InitializeUI()
 {
-	auto cardSelector = new CardSelect(cardGenerator.PlayerCards(), *Icons::GetPlayerCard(), [this](const std::string & cardName) {
+	auto cardSelector = vnew CardSelect(cardGenerator.PlayerCards(), *Icons::GetPlayerCard(), [this](const std::string & cardName) {
 		auto cardFound = std::find_if(cards.begin(), cards.end(), [&cardName](auto playerCard) { if (playerCard.Name().compare(cardName) == 0) return true; return false; });
 		if (cardFound == cards.end())
 			throw "card not found";
@@ -188,7 +188,7 @@ void Gloom::InitializeUI()
 	cardSelector->Activate();
 	layers.push_back(cardSelector);
 
-	auto cardSelection = new CardSelection(*Icons::GetPlayerCard(), [this](CardSelection & cs, int eventId) {
+	auto cardSelection = vnew CardSelection(*Icons::GetPlayerCard(), [this](CardSelection & cs, int eventId) {
 		auto cardName0 = cs.Card(0);
 		auto cardName1 = cs.Card(1);
 
@@ -216,7 +216,7 @@ void Gloom::InitializeUI()
 	layers.push_back(cardSelection);
 
 
-	auto abilitySelector = new AbilitySelector(*Icons::GetPlayerCard(), [this](auto eventId, auto abilityEnum) {
+	auto abilitySelector = vnew AbilitySelector(*Icons::GetPlayerCard(), [this](auto eventId, auto abilityEnum) {
 		if (eventId == 0) {
 			director.EndPlayerTurn();
 		}
@@ -269,15 +269,15 @@ void Gloom::InitializeUI()
 	abilitySelector->Deactivate();
 	layers.push_back(abilitySelector);
 
-	auto enemyAdvancer = new EnemyAdvancer([this]() {
+	auto enemyAdvancer = vnew EnemyAdvancer([this]() {
 		director.AdvanceEnemy();
 	});
 	layers.push_back(enemyAdvancer);
 
-	auto statusBar = new StatusBar();
+	auto statusBar = vnew StatusBar();
 	layers.push_back(statusBar);
 
-	auto initiativeTrackerUI = new InitiativeTrackerUI(director.GetInitiativeTracker());
+	auto initiativeTrackerUI = vnew InitiativeTrackerUI(director.GetInitiativeTracker());
 	layers.push_back(initiativeTrackerUI);
 }
 

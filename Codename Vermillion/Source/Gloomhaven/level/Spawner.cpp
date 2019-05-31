@@ -37,7 +37,7 @@ void Spawner::SpawnPlayer(glm::ivec3 location)
 	pa.playerId = 0;
 	pa.playerName = "Jazor";
 	
-	Player* newPlayer = new Player();
+	Player* newPlayer = vnew Player();
 	newPlayer->Setup(pa, aa, ea);
 
 	auto& tile = level.TileAt(location);
@@ -70,7 +70,7 @@ void Spawner::SpawnMonster(glm::ivec3 location, bool elite)
 	enemyattr.enemyId = GetMonsterId(ea.name);
 	enemyattr.enemyType = elite ? EnemyType::Elite : EnemyType::Normal;
 
-	auto* newEnemy = new Enemy();
+	auto* newEnemy = vnew Enemy();
 	newEnemy->Setup(enemyattr, aa, ea);
 	auto& tile = level.TileAt(location);
 	newEnemy->SetPosition(tile.Location(), tile.WorldPosition());

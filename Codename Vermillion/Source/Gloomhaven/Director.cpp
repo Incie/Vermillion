@@ -21,12 +21,14 @@
 Director::Director(Level& level, std::function<void(DirectorEvent)> onEvent)
 	: level(level), action(nullptr), enemyAi(level), onEvent(onEvent)
 {
-	enemyRound = new EnemyRound();
-	enemyRound->AddAction(new EnemyMove(level, 2));
-	enemyRound->AddAction(new EnemyAttack(level, 2, 1));
+	enemyRound = vnew EnemyRound();
+	enemyRound->AddAction(vnew EnemyMove(level, 2));
+	enemyRound->AddAction(vnew EnemyAttack(level, 2, 1));
 
 	enemyAi.SetActor(level.ActorById(2));
 	enemyAi.SetRoundActions(enemyRound);
+
+	playerRound = nullptr;
 }
 
 Director::~Director()
@@ -63,8 +65,11 @@ void Director::RenderUI(const TextService& text)
 	glPushMatrix();
 
 	glTranslatef(5.0f, 300.0f, 0.0f);
-	if(initiativeTracker.EnemyTurn())
-		enemyRound->RenderRoundCard(text);
+	if(initiativeTracker.EnemyTurn()) {
+
+		if( enemyRound != nullptr )
+			enemyRound->RenderRoundCard(text);
+	}
 	else {
 		if (playerRound == nullptr || playerRound->Finished()){}
 		else {
@@ -152,7 +157,7 @@ void Director::SetPlayerRound()
 	playerActions.push_back(new ActionShieldSelf(level, *level.GetPlayer(), 1));
 	playerActions.push_back(new ActionMove(level, *level.GetPlayer(), 2));
 	playerActions.push_back(new ActionAttack(level, *level.GetPlayer(), 1, 4, 1));
-	playerRound = new PlayerRound(playerActions);
+	playerRound = vnew PlayerRound(playerActions);
 
 	action = playerRound->GetAction();
 	action->Highlight();
