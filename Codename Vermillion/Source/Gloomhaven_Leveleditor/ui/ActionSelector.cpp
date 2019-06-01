@@ -34,12 +34,12 @@ bool ActionSelector::HandleInput(const InputService& inputService)
 	return true;
 }
 
-void ActionSelector::Resize(const glm::vec2& windowSize)
+void ActionSelector::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize);
+	UILayer::Resize(windowSize, text);
 }
 
-void ActionSelector::Measure(const glm::vec2& windowSize)
+void ActionSelector::Measure(const glm::vec2& windowSize, const TextService& text)
 {
 	size.x = 80 + 24;
 	size.y = 16 + 40;

@@ -29,9 +29,9 @@ public:
 	}
 	virtual ~ButtonTest() {}
 
-	void Resize(const glm::vec2& windowSize)
+	void Resize(const glm::vec2& windowSize, const TextService& text)
 	{
-		UILayer::Resize(windowSize);
+		UILayer::Resize(windowSize, text);
 	}
 	
 	void Render(ServiceLocator& Services) {
@@ -135,7 +135,7 @@ void CardRendering::Resize()
 	const auto& windowSize = WindowState::Size();
 	glm::vec2 newWindowSize{ windowSize.x, windowSize.y };
 	for (auto layer : layers)
-		layer->Resize(newWindowSize);
+		layer->Resize(newWindowSize, Services().Text());
 }
 
 void CardRendering::Update(double delta)

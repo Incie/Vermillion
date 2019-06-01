@@ -88,11 +88,15 @@ void PlayerCard::RenderAbility(const TextService& text, const std::vector<CardAb
 		auto icon = Icons::Get(cardAbility.name);
 
 		if (icon != nullptr) {
-			int fh = fontHeight;
+			int height = fontHeight;
 			if (cardAbility.subtitle)
-				fh = (fh / 2) * 3;
+				height = (height / 2) * 3;
 
-			auto width = Render::Quad(*icon, static_cast<float>(fh));
+			float iconScale = height / static_cast<float>(icon->height);
+
+			glTranslatef(-icon->width * iconScale, 0, 0);
+			auto width = Render::Quad(*icon, static_cast<float>(height));
+			glTranslatef(icon->width * iconScale, 0, 0);
 			glTranslatef(width * 0.5f, 0, 0);
 		}
 

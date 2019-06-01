@@ -16,25 +16,28 @@ GloomEditor::~GloomEditor()
 #include"..//Gloomhaven/icons/icons.h"
 #include"ui/TileModifier.h"
 #include"ui/SaveLoadUI.h"
+#include"ui/PaintProperties.h"
 
 void GloomEditor::Initialize()
 {
 	Icons::Load(Services().Textures());
 
 	layers.push_back(new ActionSelector([&](auto i) {
-		if (i == 1) { //paint mode
+		if(i == 1) { //paint mode
 			editorBoard.SetMode(0);
+
+			layers[1]->Deactivate();
+			layers[3]->Activate();
 		}
 		else if (i == 2) { //select mode
 			editorBoard.SetMode(1);
+
+			layers[3]->Deactivate();
 		}
 	}));
-
 	layers.push_back(new TileModifier([&](auto i) {
 	
 	}));
-
-
 	layers.push_back(new EditorMainMenu([&](auto i) {
 		if(i == 0)
 			editorBoard.LoadFromDisk(); //load
@@ -42,11 +45,14 @@ void GloomEditor::Initialize()
 		if(i == 1) //save
 			editorBoard.SaveToDisk();
 	}));
+	layers.push_back(new PaintProperties([&](auto i) {
+		editorBoard.SetRoomNumber(i);
+	}));
 
-	editorBoard.SetCallback([&](EditorTile* tile) {
+	editorBoard.OnTileClick([&](EditorTile* tile) {
 		dynamic_cast<TileModifier*>(layers[1])->SetTile(tile);
 	});
-	editorBoard.Generate(2,2);
+	editorBoard.Generate(25,25);
 }
 
 void GloomEditor::Deinitialize()
@@ -65,7 +71,7 @@ void GloomEditor::Resize()
 	auto size = WindowState::Size();
 	auto windowSize = glm::vec2(static_cast<float>(size.x), static_cast<float>(size.y));
 	for (auto layer : layers) {
-		layer->Resize(windowSize);
+		layer->Resize(windowSize, Services().Text());
 	}
 }
 
@@ -81,6 +87,13 @@ void GloomEditor::Update(double delta)
 	bool inputHandled = false;
 	auto mouseCoords = input.GetMousePosition();
 	for (auto layer : layers) {
+		if(!layer->Active() || inputHandled )
+			continue;
+
+		if(layer->Invalidated()) {
+			Resize();
+		}
+
 		if (layer->HandleInput(input)) {
 			inputHandled = true;
 		}
@@ -103,6 +116,10 @@ void GloomEditor::Render()
 	camera.Pop();
 	
 	for (auto layer : layers) {
+
+		if(!layer->Active())
+			continue;
+
 		layer->StartRender();
 		layer->Render( Services() );
 		layer->EndRender();

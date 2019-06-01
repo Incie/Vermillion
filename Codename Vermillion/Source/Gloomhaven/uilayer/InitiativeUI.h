@@ -2,6 +2,7 @@
 
 #include"../uilayer.h"
 
+class TextService;
 class InitiativeTracker;
 
 class InitiativeTrackerUI : public UILayer {
@@ -10,8 +11,8 @@ public:
 	~InitiativeTrackerUI();
 
 	virtual bool HandleInput(const InputService& inputService);
-	virtual void Resize(const glm::vec2& windowSize);
-	virtual void Measure(const glm::vec2& dimensions);
+	virtual void Resize(const glm::vec2& windowSize, const TextService& text);
+	virtual void Measure(const glm::vec2& dimensions, const TextService& text);
 	virtual void Update();
 	virtual void Render(ServiceLocator& Services);
 

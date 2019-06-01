@@ -40,7 +40,9 @@
     <ClCompile Include="Source\Framework\timer.cpp" />
     <ClCompile Include="Source\Framework\uibutton.cpp" />
     <ClCompile Include="Source\Framework\uielement.cpp" />
+    <ClCompile Include="Source\Framework\uiimage.cpp" />
     <ClCompile Include="Source\Framework\uilayer.cpp" />
+    <ClCompile Include="Source\Framework\uitext.cpp" />
     <ClCompile Include="Source\Framework\vermillion.cpp" />
     <ClCompile Include="Source\Framework\window.cpp" />
     <ClCompile Include="Source\Framework\windowclass.cpp" />
@@ -77,6 +79,7 @@
     <ClCompile Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.cpp" />
     <ClCompile Include="Source\Gloomhaven_Leveleditor\Gloom_EditorBoard.cpp" />
     <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\ActionSelector.cpp" />
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\PaintProperties.cpp" />
     <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\SaveLoadUI.cpp" />
     <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\TileModifier.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -139,6 +142,7 @@
     <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.h" />
     <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_EditorBoard.h" />
     <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\ActionSelector.h" />
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\PaintProperties.h" />
     <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\SaveLoadUI.h" />
     <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\TileModifier.h" />
     <ClInclude Include="Source\Test\CardRendering.h" />

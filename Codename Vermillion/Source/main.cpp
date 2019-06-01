@@ -17,8 +17,8 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	Activity* activity = nullptr;
 
 	//activity = vnew CardRendering();
-	//activity = vnew GloomEditor();
-	activity = vnew Gloom();
+	activity = vnew GloomEditor();
+	//activity = vnew Gloom();
 
 	auto vermillion = Vermillion(activity, hInstance);
 	vermillion.Run();

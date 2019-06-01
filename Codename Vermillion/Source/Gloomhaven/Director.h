@@ -15,7 +15,8 @@ class PlayerRound;
 enum class DirectorEvent {
 	EndOfRound = 1,
 	EnemyTurn = 2,
-	PlayerTurn = 3
+	PlayerTurn = 3,
+	AdvanceEnemy = 4
 };
 
 class Director {
@@ -33,6 +34,9 @@ public:
 	void SetPlayerRound(PlayerRound* playerRound);
 	void SetPlayerRound();
 	void AdvanceEnemy();
+
+	std::vector<std::string> GetEnemyRound();
+
 
 	InitiativeTracker& GetInitiativeTracker() { return initiativeTracker; }
 private:

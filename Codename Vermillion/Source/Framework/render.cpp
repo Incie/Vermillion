@@ -8,6 +8,32 @@ const glm::vec3 Render::BLACK = glm::vec3(0);
 const glm::vec3 Render::WHITE = glm::vec3(1);
 
 
+void Render::Quad(const glm::vec2& position, const glm::vec2& size, const Texture& texture, const glm::vec3& color)
+{
+	glPushMatrix();
+		glTranslatef(position.x, position.y, 0);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture.textureId);
+
+		glColor3fv(&color.x);
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0); glVertex2f(0, 0);
+			glTexCoord2f(1, 0); glVertex2f(size.x, 0);
+			glTexCoord2f(1, 1); glVertex2f(size.x, size.y);
+			glTexCoord2f(0, 1); glVertex2f(0,	   size.y);
+		glEnd();
+		
+		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_BLEND);
+
+		glColor4f(1, 1, 1, 1);
+	glPopMatrix();
+}
+
 float Render::Quad(const glm::vec2& position, Texture& texture, float height)
 {
 	glPushMatrix();
@@ -23,7 +49,6 @@ float Render::Quad(const Texture& texture, float height)
 
 	glPushMatrix();
 	glScalef(scale, scale, 1);
-	glTranslatef(static_cast<float>(-texture.width), 0, 0);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include<vector>
+#include<string>
 
 class EnemyAction;
 class TextService;
@@ -22,6 +23,8 @@ public:
 	enum class State {
 		Stopped, Inprogress, Calculated, Finished
 	};
+
+	void ToString(std::vector<std::string>&);
 
 	State state;
 

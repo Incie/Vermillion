@@ -18,6 +18,8 @@ void Icons::Load(TextureService& textures)
 
 	texturePlayerCard = textures.LoadTexture("textures/player_ability_back.png");
 
+	icons["monsterabilitycardback"] = textures.LoadTexture("textures/monster_ability_card_back.png");
+
 	icons["bandit guard"] = textures.LoadTexture("textures/monsters/Horz-Bandit Guard.png");
 	icons["living bones"] = textures.LoadTexture("textures/monsters/Horz-Living Bones.png");
 	icons["bandit archer"] = textures.LoadTexture("textures/monsters/Horz-Bandit Archer.png");
@@ -25,7 +27,18 @@ void Icons::Load(TextureService& textures)
 	icons["obstacle"] = textures.LoadTexture("textures/monsters/Crate B 1h.png");
 	icons["coin"] = textures.LoadTexture("textures/monsters/Coin.png");
 	icons["treasure"] = textures.LoadTexture("textures/monsters/Treasure Tile 1h - Horiz.png");
-	icons["door"] = textures.LoadTexture("textures/monsters/Wood Door Closed 1h - Horizontal.png");
+	icons["door(h)"] = textures.LoadTexture("textures/monsters/Stone Door Closed 1h - Horizontal.png");
+	icons["door(v)"] = textures.LoadTexture("textures/monsters/Stone Door Closed 1h - Vertical.png");
+
+
+	icons["element_fire"] = textures.LoadTexture("textures/icons/icon_fire.png");
+	icons["element_ice"] = textures.LoadTexture("textures/icons/icon_ice.png");
+	icons["element_wind"] = textures.LoadTexture("textures/icons/icon_wind.png");
+	icons["element_light"] = textures.LoadTexture("textures/icons/icon_light.png");
+	icons["element_dark"] = textures.LoadTexture("textures/icons/icon_dark.png");
+	icons["element_earth"] = textures.LoadTexture("textures/icons/icon_earth.png");
+	icons["element_any"] = textures.LoadTexture("textures/icons/icon_any_element.png");
+	icons["element_spend"] = textures.LoadTexture("textures/icons/icon_spend_element.png");
 }
 
 void Icons::Unload()

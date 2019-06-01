@@ -19,12 +19,12 @@ bool InitiativeTrackerUI::HandleInput(const InputService& inputService)
 	return false;
 }
 
-void InitiativeTrackerUI::Resize(const glm::vec2& windowSize)
+void InitiativeTrackerUI::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize);
+	UILayer::Resize(windowSize, text);
 }
 
-void InitiativeTrackerUI::Measure(const glm::vec2& dimensions)
+void InitiativeTrackerUI::Measure(const glm::vec2& dimensions, const TextService& text)
 {
 	int count = initiativeTracker.Count();
 
@@ -44,7 +44,7 @@ void InitiativeTrackerUI::Update()
 #include"../entity/Entity.h"
 void InitiativeTrackerUI::Render(ServiceLocator& Services)
 {
-	Measure(glm::vec2());
+	Measure(glm::vec2(), Services.Text());
 	UILayer::Render(Services);
 
 	auto initiatives = initiativeTracker.Initiatives();

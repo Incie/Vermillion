@@ -73,20 +73,20 @@ void Text::Deinit()
 	fontProgram.UnloadProgram();
 }
 
-double Text::CalculateWidth(const std::string& text, unsigned int fontHeight) const
+float Text::CalculateWidth(const std::string& text, unsigned int fontHeight) const
 {
-	double w = 0;
-	double scale = (double)fontHeight / (double)font_face_rendered_height;
+	float textWidth = 0;
+	float scale = static_cast<float>(fontHeight) / static_cast<float>(font_face_rendered_height);
 
 	for (std::string::const_iterator c = text.begin(); c != text.end(); c++)
 	{
 		const Character& ch = characters[*c];
 
 		// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-		w += (ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
+		textWidth += static_cast<float>(ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
 	}
 
-	return w;
+	return textWidth;
 }
 
 void Text::NewLine(unsigned int fontHeight) const 

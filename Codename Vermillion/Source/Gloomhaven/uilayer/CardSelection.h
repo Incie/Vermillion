@@ -13,11 +13,12 @@ public:
 	CardSelection(Texture& texture, std::function<void(CardSelection&, int)> callback);
 	virtual ~CardSelection();
 
-	void Resize(const glm::vec2& windowSize);
+	void Resize(const glm::vec2& windowSize, const TextService& text);
+	void Measure(const glm::vec2& dimensions, const TextService& text);
+
 	bool HandleInput(const InputService& input);
 	void Render(ServiceLocator& Services);
 	void AddCard(const PlayerCard& playerCard);
-	void Measure(const glm::vec2& dimensions);
 	bool IsFull() const;
 	UILayerId LayerId();
 

@@ -23,9 +23,9 @@ EditorMainMenu::~EditorMainMenu()
 {
 }
 
-void EditorMainMenu::Resize(const glm::vec2& windowSize)
+void EditorMainMenu::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize);
+	UILayer::Resize(windowSize, text);
 
 	position.y += 26.0f;
 
@@ -37,7 +37,7 @@ void EditorMainMenu::Resize(const glm::vec2& windowSize)
 	}
 }
 
-void EditorMainMenu::Measure(const glm::vec2& windowSize)
+void EditorMainMenu::Measure(const glm::vec2& windowSize, const TextService& text)
 {
 	size.x = 75.0f;
 	size.y = 2 * 22.0f + 3 * 8.0f;

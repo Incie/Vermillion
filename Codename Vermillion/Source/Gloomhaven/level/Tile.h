@@ -51,5 +51,7 @@ public:
 	//contains entity
 	 // coin/trap/treasure/enemy
 
+	int roomNumber;
+	std::string entityName;
 	Hexagon* entity;
 };

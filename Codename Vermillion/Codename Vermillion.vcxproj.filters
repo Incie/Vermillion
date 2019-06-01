@@ -74,9 +74,6 @@
     <Filter Include="Source Files\Framework\UI">
       <UniqueIdentifier>{7a977a87-2603-4779-8987-52d9d44ea0fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Gloomhaven\UILayers">
-      <UniqueIdentifier>{50977cc3-9f0a-4380-bc35-86bc2dd95608}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Framework\Services">
       <UniqueIdentifier>{afd4461e-12d1-46e5-b39f-bfdc3b2865bb}</UniqueIdentifier>
     </Filter>
@@ -88,6 +85,9 @@
     </Filter>
     <Filter Include="Precompiled">
       <UniqueIdentifier>{1b08c3e9-dfd7-4ad7-9e90-378b0cbcfcee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\UI">
+      <UniqueIdentifier>{50977cc3-9f0a-4380-bc35-86bc2dd95608}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -218,10 +218,10 @@
       <Filter>Source Files\Framework\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\uilayer\CardSelection.cpp">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\uilayer\CardSelector.cpp">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\uielement.cpp">
       <Filter>Source Files\Framework\UI</Filter>
@@ -230,16 +230,16 @@
       <Filter>Source Files\Framework\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\uilayer\AbilitySelector.cpp">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\uilayer\PortraitPanel.cpp">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\uilayer\StatusBar.cpp">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\uilayer\InitiativeUI.cpp">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\cards\CardGenerator.cpp">
       <Filter>Source Files\Gloomhaven\Cards</Filter>
@@ -248,7 +248,7 @@
       <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\uilayer\EnemyAdvancer.cpp">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\action\ActionShieldSelf.cpp">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
@@ -275,6 +275,15 @@
       <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\SaveLoadUI.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\uiimage.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\uitext.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\PaintProperties.cpp">
       <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -394,25 +403,25 @@
       <Filter>Source Files\Framework\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\CardSelection.h">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\CardSelector.h">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\UILayerId.h">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\AbilitySelector.h">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\PortraitPanel.h">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\StatusBar.h">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\InitiativeUI.h">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\cards\CardGenerator.h">
       <Filter>Source Files\Gloomhaven\Cards</Filter>
@@ -421,7 +430,7 @@
       <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\EnemyAdvancer.h">
-      <Filter>Source Files\Gloomhaven\UILayers</Filter>
+      <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\action\ActionShieldSelf.h">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
@@ -451,6 +460,9 @@
       <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\SaveLoadUI.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\PaintProperties.h">
       <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
     </ClInclude>
   </ItemGroup>

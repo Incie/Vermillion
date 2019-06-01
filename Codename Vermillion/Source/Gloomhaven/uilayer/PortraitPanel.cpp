@@ -14,9 +14,9 @@ bool PortraitPanel::HandleInput(const InputService& inputService)
 	return false;
 }
 
-void PortraitPanel::Resize(const glm::vec2& windowSize)
+void PortraitPanel::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize);
+	UILayer::Resize(windowSize, text);
 }
 
 void PortraitPanel::Render(ServiceLocator& Services)

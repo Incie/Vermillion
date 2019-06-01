@@ -64,6 +64,15 @@ TileModifier::TileModifier(std::function<void(int)> callback)
 	button->SetId(11);
 	children.push_back(button);
 
+	button = vnew Button();
+	button->SetText("Door (V)");
+	button->SetId(12);
+	children.push_back(button);
+
+	button = vnew Button();
+	button->SetText("Door (H)");
+	button->SetId(13);
+	children.push_back(button);
 }
 
 TileModifier::~TileModifier()
@@ -75,9 +84,9 @@ bool TileModifier::HandleInput(const InputService& inputService)
 	return UILayer::HandleInput(inputService);
 }
 
-void TileModifier::Resize(const glm::vec2& windowSize)
+void TileModifier::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize);
+	UILayer::Resize(windowSize, text);
 
 	float y = 8.0f;
 
@@ -89,13 +98,8 @@ void TileModifier::Resize(const glm::vec2& windowSize)
 	}
 }
 
-void TileModifier::Measure(const glm::vec2& windowSize)
+void TileModifier::Measure(const glm::vec2& windowSize, const TextService& text)
 {
-	if (tile == nullptr) {
-		size = glm::vec2();
-		return;
-	}
-
 	size.x = 150.0f;
 	size.y = children.size() * 22.0f + (children.size()+1) * 8;
 }
@@ -129,6 +133,8 @@ void TileModifier::OnEvent(WindowEvent type, int id)
 		if(id == 9) SetTileEntity("Trap");
 		if(id ==10) SetTileEntity("Coin");
 		if(id ==11) SetTileEntity("Treasure");
+		if(id == 12) SetTileEntity("Door(V)");
+		if(id == 13) SetTileEntity("Door(H)");
 	}
 }
 
@@ -142,6 +148,16 @@ void TileModifier::SetTile(EditorTile* tile)
 	Activate();
 	ClearButtonStates();
 	//set buttonstates based on tiledata
+	auto color = glm::vec3(0.5f, 1.0f, 0.5f);
+	if(tile->entityName == "Bandit Guard") dynamic_cast<Button*>(GetChildById(2))->SetColor(color);
+	if(tile->entityName == "Living Bones") dynamic_cast<Button*>(GetChildById(3))->SetColor(color);
+	if(tile->entityName == "Bandir Archer") dynamic_cast<Button*>(GetChildById(4))->SetColor(color);
+	if(tile->entityName == "Obstacle") dynamic_cast<Button*>(GetChildById(8))->SetColor(color);
+	if(tile->entityName == "Trap") dynamic_cast<Button*>(GetChildById(9))->SetColor(color);
+	if(tile->entityName == "Coin") dynamic_cast<Button*>(GetChildById(10))->SetColor(color);
+	if(tile->entityName == "Treasure") dynamic_cast<Button*>(GetChildById(11))->SetColor(color);
+	if(tile->entityName == "Door(V)") dynamic_cast<Button*>(GetChildById(11))->SetColor(color);
+	if(tile->entityName == "Door(H)") dynamic_cast<Button*>(GetChildById(11))->SetColor(color);
 }
 
 UILayerId TileModifier::LayerId()
@@ -156,6 +172,8 @@ void TileModifier::SetTileEntity(const std::string& entityName)
 
 	tile->entity = vnew Hexagon();
 	tile->entity->Generate(tile->WorldPosition(), 40, 45);
+	
+	tile->entityName = entityName;
 	tile->entity->SetTexture(Icons::Get(entityName));
 }
 

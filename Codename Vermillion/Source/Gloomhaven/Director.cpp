@@ -171,7 +171,18 @@ void Director::AdvanceEnemy()
 		if (enemyAi.Finished()) {
 			NextActor();
 		}
+		else {
+			onEvent(DirectorEvent::AdvanceEnemy);
+		}
 	}
+}
+
+//TODO: Utilize render2texture instead?
+std::vector<std::string> Director::GetEnemyRound()
+{
+	auto enemyRoundText = std::vector<std::string>();
+	enemyRound->ToString(enemyRoundText);
+	return enemyRoundText;
 }
 
 void Director::NextActor()
@@ -182,9 +193,9 @@ void Director::NextActor()
 		onEvent(DirectorEvent::EndOfRound);
 	}
 	else if (initiativeTracker.EnemyTurn()) {
-		onEvent(DirectorEvent::EnemyTurn);
 		enemyAi.SetActor(a);
 		enemyAi.SetRoundActions(enemyRound);
+		onEvent(DirectorEvent::EnemyTurn);
 	}
 	else {
 		onEvent(DirectorEvent::PlayerTurn);

@@ -6,7 +6,7 @@
 #include"..//services.h"
 
 EditorBoard::EditorBoard()
-	: hover(nullptr), selected(nullptr), hexagonSize(50.0f)
+	: hover(nullptr), selected(nullptr), hexagonSize(50.0f), roomNumber(1)
 {
 	mode = 0;
 }
@@ -26,7 +26,7 @@ void EditorBoard::Delete()
 	tiles.clear();
 }
 
-void EditorBoard::SetCallback(std::function<void(EditorTile*)> callback)
+void EditorBoard::OnTileClick(std::function<void(EditorTile*)> callback)
 {
 	this->callback = callback;
 }
@@ -83,6 +83,14 @@ void EditorBoard::Clear()
 }
 void EditorBoard::Update(const InputService& input, glm::vec2& viewCoords)
 {
+	static glm::vec3 roomColors[]{
+		glm::vec3(0.1f, 0.1f, 0.6f),
+		glm::vec3(0.1f, 0.6f, 0.1f),
+		glm::vec3(0.6f, 0.1f, 0.1f),
+		glm::vec3(0.6f, 0.6f, 0.1f),
+		glm::vec3(0.1f, 0.6f, 0.6f)
+	};
+
 	if (hover != nullptr) {
 		if (hover->Enabled())
 			hover->GetHexagon().NoHighlight();
@@ -112,10 +120,16 @@ void EditorBoard::Update(const InputService& input, glm::vec2& viewCoords)
 		if (input.KeyDown(VK_LBUTTON)) {
 
 			if( mode == 0 ){
-				hover->Enable();
 
 				if (input.KeyDown(VK_CONTROL))
 					hover->Disable();
+				else {
+					hover->Enable();
+					hover->roomNumber = roomNumber;
+
+					auto& hoverHex = hover->GetHexagon();
+					hoverHex.SetColor(roomColors[roomNumber - 1]);
+				}
 			}
 			else if (mode == 1) {
 				if (hover->Enabled() == false)
@@ -124,11 +138,12 @@ void EditorBoard::Update(const InputService& input, glm::vec2& viewCoords)
 				callback(hover);
 
 				if (selected != nullptr) {
-					selected->GetHexagon().SetColor(glm::vec3(1, 1, 1));
+					auto& selectedHex = selected->GetHexagon();
+					selectedHex.SetColor(roomColors[selected->roomNumber-1]);
 				}
 
 				selected = hover;
-				selected->GetHexagon().SetColor(glm::vec3(0, 0, 1));
+				selected->GetHexagon().SetColor(glm::vec3(1,1, 1));
 			}
 		}
 	}
@@ -172,9 +187,16 @@ void EditorBoard::SaveToDisk()
 	JSON json;
 
 	for(auto tile : tiles) {
+
+		if(tile->Enabled() == false)
+			continue;
+
 		JSON jsontile;
 		jsontile["x"] = tile->Location().x;
 		jsontile["y"] = tile->Location().y;
+
+		jsontile["entity"] = tile->entityName;
+		jsontile["room"] = tile->roomNumber;
 
 		json["tiles"].push_back(jsontile);
 	}
@@ -212,6 +234,8 @@ void EditorBoard::LoadFromDisk()
 		auto jTile = jTiles[i];
 		auto x = jTile.value("x", -1);
 		auto y = jTile.value("y", -1);
+		auto entityName = jTile.value("entityName", "");
+		auto roomNumber = jTile.value("roomNumber", 1);
 
 		float hx = (3.0f / 4.0f) * width * static_cast<float>(x);
 		float hy = -static_cast<float>(y) * height - (1.0f / 2.0f) * height * static_cast<float>(x);

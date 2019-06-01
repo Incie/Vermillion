@@ -10,7 +10,6 @@
 #include"../log.h"
 #include"fmt/format.h"
 
-
 #include"entity/Entity.h"
 
 #include"action/ActionAttack.h"
@@ -45,12 +44,12 @@ Gloom::~Gloom()
 void Gloom::Initialize()
 {
 	cards = cardGenerator.PlayerCards();
+	Icons::Load(Services().Textures());
 	InitializeUI();
 
 	level.Generate();
 	level.Spawn();
 
-	Icons::Load(Services().Textures());
 }
 
 void Gloom::Deinitialize()
@@ -68,11 +67,13 @@ void Gloom::Resize()
 	const auto& windowSize = WindowState::Size();
 	glm::vec2 newWindowSize{ windowSize.x, windowSize.y };
 	for (auto layer : layers)
-		layer->Resize(newWindowSize);
+		layer->Resize(newWindowSize, Services().Text());
 }
 
 void Gloom::Update(double deltaTime)
 {
+	//todo: check for invalidated UI
+
 	const auto& input = Services().Input();
 
 	if (input.KeyOnce(VK_F3))
@@ -305,6 +306,9 @@ void Gloom::OnDirectorEvent(DirectorEvent eventId)
 			layers[2]->Deactivate();
 			layers[3]->Activate();
 
+			auto ea = dynamic_cast<EnemyAdvancer*>(layers[3]);
+			ea->SetEnemyActions(director.GetEnemyRound());
+
 			auto statusbar = dynamic_cast<StatusBar*>(layers[4]);
 			statusbar->SetStatusText("AI Turn");
 			break;
@@ -315,6 +319,11 @@ void Gloom::OnDirectorEvent(DirectorEvent eventId)
 
 			auto statusbar = dynamic_cast<StatusBar*>(layers[4]);
 			statusbar->SetStatusText("Player Turn");
+			break;
+		}
+		case DirectorEvent::AdvanceEnemy: {
+			auto ea = dynamic_cast<EnemyAdvancer*>(layers[3]);
+			ea->Advance();
 			break;
 		}
 	}

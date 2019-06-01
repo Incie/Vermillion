@@ -26,15 +26,15 @@ CardSelect::~CardSelect()
 	cardList.clear();
 }
 
-void CardSelect::Resize(const glm::vec2& windowSize)
+void CardSelect::Resize(const glm::vec2& windowSize, const TextService& text)
 {
 	if (texture.width == 0 || texture.height == 0)
 		return;
 
-	UILayer::Resize(windowSize);
+	UILayer::Resize(windowSize, text);
 }
 
-void CardSelect::Measure(const glm::vec2& windowSize)
+void CardSelect::Measure(const glm::vec2& windowSize, const TextService& text)
 {
 	scale = windowSize.x / (float)cardList.size();
 	scale /= texture.width;

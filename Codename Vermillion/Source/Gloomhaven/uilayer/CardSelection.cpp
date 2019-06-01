@@ -34,9 +34,9 @@ CardSelection::~CardSelection()
 {
 }
 
-void CardSelection::Resize(const glm::vec2& windowSize)
+void CardSelection::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize);
+	UILayer::Resize(windowSize, text);
 
 	position.x = (windowSize.x - size.x);
 	position.y = (windowSize.y - size.y) / 2.0f;
@@ -47,7 +47,7 @@ void CardSelection::Resize(const glm::vec2& windowSize)
 	button->SetTextSize(18.f);
 }
 
-void CardSelection::Measure(const glm::vec2& dimensions)
+void CardSelection::Measure(const glm::vec2& dimensions, const TextService& text)
 {
 	float width = scalar * texture.width * 2 + 3 * 8.0f;
 	float mainHeight = scalar * texture.height + 3 * 8.0f + 22.0f;

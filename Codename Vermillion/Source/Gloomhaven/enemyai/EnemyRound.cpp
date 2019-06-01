@@ -66,3 +66,10 @@ void EnemyRound::RenderRoundCard(const TextService & text)
 		index++;
 	}
 }
+
+void EnemyRound::ToString(std::vector<std::string>&str)
+{
+	for(auto action : actions) {
+		str.push_back(action->ActionDescription());
+	}
+}

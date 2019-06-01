@@ -17,7 +17,9 @@ public:
 
 	void Delete();
 
-	void SetCallback(std::function<void(EditorTile*)> callback);
+	void OnTileClick(std::function<void(EditorTile*)> callback);
+	
+	void SetRoomNumber(int number) { roomNumber = number; }
 	void SetMode(int mode);
 
 	void Generate(int x, int y);
@@ -32,6 +34,9 @@ public:
 private:
 	std::function<void(EditorTile*)> callback;
 	int mode;
+	
+	//paint properties
+	int roomNumber;
 
 	std::vector<EditorTile*> tiles;
 	EditorTile* hover;

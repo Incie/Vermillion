@@ -11,8 +11,26 @@ Button::Button()
 	SetState(state);
 }
 
+Button::Button(const std::string& text, unsigned int textSize, int id)
+	: text(text), textSize(textSize)
+{
+	SetId(id);
+	SetColor(glm::vec3(0.5f));
+	SetState(state);
+}
+
 Button::~Button()
 {
+}
+
+glm::vec2 Button::Measure(const TextService& text)
+{
+	float textWidth = text.CalculateWidth(this->text, static_cast<unsigned int>(textSize));
+
+	//size + padding
+	size.x = textWidth + 4.0f * 2.0f;
+	size.y = textSize + 4.0f * 2.0f;
+	return size + margin * 2.0f;
 }
 
 void Button::Render(ServiceLocator& Services)

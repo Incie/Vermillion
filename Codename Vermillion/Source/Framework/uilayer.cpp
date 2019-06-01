@@ -9,7 +9,6 @@
 UILayer::UILayer()
 	: anchor(0)
 {
-	Resize();
 }
 
 UILayer::~UILayer() {
@@ -48,9 +47,9 @@ bool UILayer::HandleInput(const InputService & inputService)
 	return true;
 }
 
-void UILayer::Resize(const glm::vec2 & windowSize)
+void UILayer::Resize(const glm::vec2 & windowSize, const TextService& text)
 {
-	Measure(windowSize);
+	Measure(windowSize, text);
 
 	if (anchor & WindowAnchor::LEFT && anchor & WindowAnchor::RIGHT)
 		position.x = windowSize.x * 0.5f - size.x * 0.5f;
@@ -65,6 +64,8 @@ void UILayer::Resize(const glm::vec2 & windowSize)
 		position.y = 0.0f;
 	else if (anchor & WindowAnchor::BOTTOM)
 		position.y = windowSize.y - size.y;
+
+	invalidated = false;
 }
 
 void UILayer::Update()
@@ -106,9 +107,14 @@ void UILayer::OnEvent(WindowEvent type, int id)
 {
 }
 
-void UILayer::Resize() {
+void UILayer::AddChild(UIElement* child)
+{
+	children.push_back(child);
+}
+
+void UILayer::Resize(const TextService& text) {
 	const auto& windowSize = WindowState::Size();
-	Resize(glm::vec2((float)windowSize.x, (float)windowSize.y));
+	Resize(glm::vec2((float)windowSize.x, (float)windowSize.y), text);
 }
 
 

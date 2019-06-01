@@ -11,11 +11,10 @@ class Texture;
 class CardSelect : public UILayer {
 public:
 	CardSelect(std::vector<PlayerCard>& cards, Texture& texture, std::function<void(const std::string&)> onclick);
-
 	virtual ~CardSelect();
 
-	void Resize(const glm::vec2& windowSize);
-	void Measure(const glm::vec2& windowSize);
+	void Resize(const glm::vec2& windowSize, const TextService& text);
+	void Measure(const glm::vec2& windowSize, const TextService& text);
 	bool HandleInput(const InputService& input);
 
 

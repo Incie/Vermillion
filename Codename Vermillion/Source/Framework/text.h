@@ -17,7 +17,6 @@ public:
 	float Print(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color, bool center = false, bool newline = false) const;
 	void PrintCenter(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const;
 
-private:
-	double CalculateWidth(const std::string& text, unsigned int fontHeight) const;
+	float CalculateWidth(const std::string& text, unsigned int fontHeight) const;
 
 };

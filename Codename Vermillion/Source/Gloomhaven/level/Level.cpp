@@ -237,7 +237,7 @@ std::vector<Actor*> Level::Monsters()
 	for (auto entity : entities) {
 		auto monster = dynamic_cast<Enemy*>(entity);
 
-		if (monster != nullptr)
+		if (monster != nullptr && monster->Health() > 0 )
 			monsters.push_back(monster);
 
 	}

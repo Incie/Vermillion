@@ -105,12 +105,12 @@ bool AbilitySelector::HandleInput(const InputService& inputService)
 	return true;
 }
 
-void AbilitySelector::Resize(const glm::vec2& windowSize)
+void AbilitySelector::Resize(const glm::vec2& windowSize, const TextService& text)
 {
 	if (texture == nullptr)
 		throw "No texture";
 	
-	UILayer::Resize(windowSize);
+	UILayer::Resize(windowSize, text);
 
 	auto button = dynamic_cast<Button*>(children[0]);
 	button->SetSize(150.0f, 20.0f);
@@ -131,7 +131,7 @@ void AbilitySelector::Resize(const glm::vec2& windowSize)
 
 }
 
-void AbilitySelector::Measure(const glm::vec2& dimensions)
+void AbilitySelector::Measure(const glm::vec2& dimensions, const TextService& text)
 {
 	float width = cardScalar * texture->width * 2 + 3 * 8.0f;
 	float height = cardScalar * texture->height + 2 * 8.0f;
