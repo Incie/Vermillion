@@ -32,8 +32,33 @@ void ActionMove::Click(const glm::ivec3& target)
 	currentPosition = clickedTile.Location();
 	movesLeft--;
 
-	plannedRoute.push_back(currentPosition);
+	for(auto containingEntity : clickedTile.ContainingEntities()) {
+		if(!containingEntity->Active())
+			continue;
 
+		if(containingEntity->Name().rfind("Door", 0) == 0) {
+			//open door
+
+			auto surroundingTiles = level.TilesWithin(clickedTile.Location(), 1);
+
+			int currentRoom = clickedTile.RoomNumber();
+			int nextRoom = -1;
+
+			for(auto st : surroundingTiles) {
+				if(st->RoomNumber() != currentRoom) {
+					nextRoom = st->RoomNumber();
+				}
+			}
+
+			level.SpawnRoom(nextRoom);
+
+			containingEntity->Deactivate();
+		}
+	}
+
+	//todo: lock in movement
+
+	plannedRoute.push_back(currentPosition);
 	Highlight();
 }
 

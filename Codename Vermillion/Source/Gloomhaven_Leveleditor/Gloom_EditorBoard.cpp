@@ -130,7 +130,7 @@ void EditorBoard::Update(const InputService& input, glm::vec2& viewCoords)
 					hover->Disable();
 				else {
 					hover->Enable();
-					hover->roomNumber = roomNumber;
+					hover->RoomNumber(roomNumber);
 
 					auto& hoverHex = hover->GetHexagon();
 					hoverHex.SetColor(roomColors[roomNumber - 1]);
@@ -144,7 +144,7 @@ void EditorBoard::Update(const InputService& input, glm::vec2& viewCoords)
 
 				if (selected != nullptr) {
 					auto& selectedHex = selected->GetHexagon();
-					selectedHex.SetColor(roomColors[selected->roomNumber-1]);
+					selectedHex.SetColor(roomColors[selected->RoomNumber()-1]);
 				}
 
 				selected = hover;
@@ -220,7 +220,7 @@ void EditorBoard::SaveToDisk()
 		jsontile["y"] = tile->Location().y;
 
 		jsontile["entity"] = tile->entityName;
-		jsontile["room"] = tile->roomNumber;
+		jsontile["room"] = tile->RoomNumber();
 
 		json["tiles"].push_back(jsontile);
 	}
@@ -237,9 +237,9 @@ void EditorBoard::LoadFromDisk()
 	Delete();
 
 	std::ifstream fileStream("levels/level1.json");
-	std::string serializedScenarioFile;
 
 	fileStream.seekg(0, std::ios::end);
+	std::string serializedScenarioFile;
 	serializedScenarioFile.reserve(fileStream.tellg());
 	fileStream.seekg(0, std::ios::beg);
 
@@ -266,7 +266,7 @@ void EditorBoard::LoadFromDisk()
 		auto tile = vnew EditorTile(glm::ivec3(x, y, -(x + y)), glm::vec3(hx, hy, 0.0f));
 		tiles.push_back(tile);
 
-		tile->roomNumber = roomNumber;
+		tile->RoomNumber(roomNumber);
 
 		auto& hex = tile->GetHexagon();
 		hex.Generate(glm::vec2(hx, hy), size * 0.75f, size);

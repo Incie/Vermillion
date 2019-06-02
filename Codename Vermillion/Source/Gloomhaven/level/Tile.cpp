@@ -2,7 +2,7 @@
 #include "Tile.h"
 
 Tile::Tile(glm::ivec3 location, glm::vec3 worldpos)
-	: occupyingActorId(-1), cubeLocation(location), worldPosition(worldpos)
+	: occupyingActorId(-1), cubeLocation(location), worldPosition(worldpos), enabled(true), roomNumber(1)
 {
 }
 
@@ -39,7 +39,7 @@ double Tile::DistanceFromCenterTo(const glm::vec2 & point) const
 // === === === === === ===
  
 EditorTile::EditorTile(glm::ivec3 location, glm::vec3 worldpos)
-	: Tile(location, worldpos), enabled(true), entity(nullptr), roomNumber(1)
+	: Tile(location, worldpos), entity(nullptr)
 {
 }
 

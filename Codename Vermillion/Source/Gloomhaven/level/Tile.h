@@ -16,17 +16,30 @@ public:
 
 	Hexagon& GetHexagon() { return hexagon; }
 
+	void AddEntity(Entity* entity) { containingEntities.push_back(entity); }
+	const std::vector<Entity*>& ContainingEntities() { return containingEntities; }
+
 	const glm::ivec3& Location() const { return cubeLocation; }
 	const glm::vec3& WorldPosition() const { return worldPosition; }
 
 	int DistanceTo(const glm::ivec3& p) const;
 	double DistanceFromCenterTo(const glm::vec2& point) const;
 
+	int RoomNumber() const { return roomNumber; }
+	void RoomNumber(int roomNumber) { this->roomNumber = roomNumber; }
+
+	bool Enabled() const { return enabled; }
+	void Enable() { enabled = true; }
+	void Disable() { enabled = false; }
+	
 protected:
+	bool enabled;
+
 	std::vector<Entity*> containingEntities;
 	int occupyingActorId;
 	Hexagon hexagon;
 
+	int roomNumber;
 	glm::ivec3 cubeLocation;
 	glm::vec3 worldPosition;
 };
@@ -38,12 +51,6 @@ public:
 	EditorTile(glm::ivec3 location, glm::vec3 worldpos);
 	~EditorTile();
 
-	bool Enabled() { return enabled; }
-	void Enable() { enabled = true; }
-	void Disable() { enabled = false; }
-//protected:
-	bool enabled;
-
 	//room #
 
 	//terraintype 
@@ -51,7 +58,6 @@ public:
 	//contains entity
 	 // coin/trap/treasure/enemy
 
-	int roomNumber;
 	std::string entityName;
 	Hexagon* entity;
 };

@@ -38,13 +38,43 @@ public:
 	Spawner(Level&level);
 	~Spawner();
 
+	void AddEntitySpawn(const std::string& entityName, const glm::ivec3& location, int roomNumber);
+	void SpawnRoom(int roomNumber);
+
 	void SpawnPlayer(glm::ivec3 location);
 	void SpawnMonster(glm::ivec3 location, bool elite);
 
+
 private:
+	struct EntitySpawnLocation {
+		std::string entityName;
+		glm::ivec3 location;
+		int roomNumber;
+	};
+
+
+	void SpawnEntity(const EntitySpawnLocation& esl);
 	int GetMonsterId(const std::string& monsterName);
+
+	
+	std::vector<EntitySpawnLocation*> entitySpawns;
 
 	std::map<std::string, MonsterIdPool> monsterIdPool;
 	Level& level;
 	int spawnerIdGenerator;
+
+	struct MonsterStats {
+		std::string name;
+		int health;
+		int range;
+		int retaliate;
+		int shield;
+		int attack;
+		int move;
+		int team;
+		bool elite;
+	};
+
+	void SpawnMonster(EntitySpawnLocation& entitySpawnLocation, const MonsterStats& monsterStats);
+	std::map<std::string, MonsterStats> monsterStats;
 };

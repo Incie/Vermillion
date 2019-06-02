@@ -47,9 +47,16 @@ void Gloom::Initialize()
 	Icons::Load(Services().Textures());
 	InitializeUI();
 
-	level.Generate();
-	level.Spawn();
 
+	level.LoadMap("levels/scenario_001.json");
+	level.SpawnRoom(1);
+	//level.SpawnRoom(2);
+	//level.SpawnRoom(3);
+
+	auto levelCenter = level.Center();
+	camera.SetPositionCenter(levelCenter);
+	/*level.Generate();
+	level.Spawn();*/
 }
 
 void Gloom::Deinitialize()

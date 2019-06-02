@@ -7,7 +7,7 @@
 #include"../entity/Entity.h"
 
 Level::Level() 
-	: distance(), selectedCoord(), hoverTarget(nullptr), spawner(*this)
+	: distance(), selectedCoord(), hoverTarget(nullptr), spawner(*this), hexagonSize(50.0f)
 {
 	showCoords = false;
 	hasDistance = false;
@@ -24,6 +24,43 @@ Level::~Level()
 		delete entity;
 	entities.clear();
 
+}
+
+#include"nholmann-json/json.hpp"
+#include"..//file.h"
+void Level::LoadMap(const std::string& fileName)
+{
+	auto fileContent = FileReader::ReadFileContent(fileName);
+
+	using json = nlohmann::json;
+	json j = json::parse(fileContent);
+
+	auto jTiles = j["tiles"];
+
+	float size = hexagonSize;
+	float width = 2.0f * size;
+	float height = sqrtf(3.0f) * size;
+
+	for(int i = 0; i < jTiles.size(); ++i) {
+		auto jTile = jTiles[i];
+		auto x = jTile.value("x", -1);
+		auto y = jTile.value("y", -1);
+		auto entityName = jTile.value("entity", "None");
+		
+
+		float hx = (3.0f / 4.0f) * width * static_cast<float>(x);
+		float hy = -static_cast<float>(y) * height - (1.0f / 2.0f) * height * static_cast<float>(x);
+		auto tile = vnew Tile(glm::ivec3(x, y, -(x + y)), glm::vec3(hx, hy, 0.0f));
+		tile->GetHexagon().Generate(glm::vec2(hx, hy), size * 0.9f, size);
+		tile->Disable();
+		tile->RoomNumber(jTile.value("room", 1));
+		tiles.push_back(tile);
+
+
+		if(!(entityName == "None" || entityName == "")) {
+			spawner.AddEntitySpawn(entityName, tile->Location(), tile->RoomNumber() );
+		}
+	}
 }
 
 void Level::Generate()
@@ -74,6 +111,16 @@ void Level::Spawn()
 	spawner.SpawnMonster(glm::ivec3(4, -1, -3), true);
 }
 
+void Level::SpawnRoom(int roomNumber)
+{
+	for(auto tile : tiles) {
+		if(tile->RoomNumber() == roomNumber)
+			tile->Enable();
+	}
+	
+	spawner.SpawnRoom(roomNumber);
+}
+
 void Level::Update(const glm::vec2& cameraMouse)
 {
 	Tile* closestTile = nullptr;
@@ -99,8 +146,24 @@ void Level::Render(const TextService& text)
 {
 	glDisable(GL_TEXTURE_2D);
 
-	for (auto tile : tiles)
-		tile->GetHexagon().Render();
+	for(auto tile : tiles) {
+		if(tile->Enabled()) {
+			tile->GetHexagon().Render();
+
+			for(auto ce : tile->ContainingEntities()) {
+
+				if( ce->Active() )
+					ce->RenderModel().Render();
+			}
+		}
+	}
+	
+	for(auto entity : entities) {
+		if(!entity->Active())
+			continue;
+
+		entity->Render(text);
+	}
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
@@ -116,13 +179,6 @@ void Level::Render(const TextService& text)
 				text.Print(0, 0, fmt::format("{0},{1},{2}", coord.x, coord.y, coord.z), 16, Colorf(0, 0, 0));
 			}
 		glPopMatrix();
-	}
-
-	for (auto entity : entities) {
-		if (!entity->Active())
-			continue;
-
-		entity->Render(text);
 	}
 }
 
@@ -237,7 +293,7 @@ std::vector<Actor*> Level::Monsters()
 	for (auto entity : entities) {
 		auto monster = dynamic_cast<Enemy*>(entity);
 
-		if (monster != nullptr && monster->Health() > 0 )
+		if (monster != nullptr && monster->Health() > 0 && monster->Active() )
 			monsters.push_back(monster);
 
 	}
@@ -253,6 +309,24 @@ void Level::AddEntity(Entity* entity)
 void Level::ShowCoords(bool value)
 {
 	showCoords = value;
+}
+
+glm::vec2 Level::Center()
+{
+	glm::vec2 min(9999), max(-9999);
+
+	for(auto tile : tiles) {
+		if(tile->Enabled()) {
+			const auto& wp = tile->WorldPosition();
+			min.x = std::min<float>(min.x, wp.x);
+			min.y = std::min<float>(min.y, wp.y);
+			
+			max.x = std::max<float>(max.x, wp.x);
+			max.y = std::max<float>(max.y, wp.y);
+		}
+	}
+
+	return min + (max - min) * 0.5f;
 }
 
 glm::ivec3 Level::GetCenterCoord(int x, int y, int z)

@@ -11,7 +11,7 @@ Hexagon::Hexagon()
 	SetColor(glm::vec3(1, 1, 1));
 }
 
-void Hexagon::Generate(const glm::vec2& v, float innerRadius, float outerRadius)
+void Hexagon::Generate(const glm::vec2& center, float innerRadius, float outerRadius)
 {
 	const float TAU = 3.14159265f * 2.0f;
 
@@ -22,12 +22,12 @@ void Hexagon::Generate(const glm::vec2& v, float innerRadius, float outerRadius)
 		float y = sin(angle);
 
 		auto index = i * 2;
-		vertices[index].x = x * innerRadius + v.x;
-		vertices[index].y = y * innerRadius + v.y;
+		vertices[index].x = x * innerRadius + center.x;
+		vertices[index].y = y * innerRadius + center.y;
 		vertices[index].z = 0.0f;
 
-		vertices[index + 1].x = x * outerRadius + v.x;
-		vertices[index + 1].y = y * outerRadius + v.y;
+		vertices[index + 1].x = x * outerRadius + center.x;
+		vertices[index + 1].y = y * outerRadius + center.y;
 		vertices[index + 1].z = -5.0f;
 	}
 

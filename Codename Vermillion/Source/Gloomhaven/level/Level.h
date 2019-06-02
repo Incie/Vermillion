@@ -16,8 +16,10 @@ public:
 	Level();
 	~Level();
 
+	void LoadMap(const std::string& fileName);
 	void Generate();
 	void Spawn();
+	void SpawnRoom(int roomNumber);
 
 	void Update(const glm::vec2&);
 	void Render(const TextService& text);
@@ -48,6 +50,8 @@ public:
 
 	std::vector<std::string> combatLog;
 
+	glm::vec2 Center();
+
 private:
 	Spawner spawner;
 	bool showCoords;
@@ -60,6 +64,8 @@ private:
 	Tile* hoverTarget;
 	Tile* selectedHex;
 	glm::ivec3 selectedCoord;
+
+	float hexagonSize;
 
 	bool hasDistance;
 	glm::ivec3 distance;
