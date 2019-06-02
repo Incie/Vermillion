@@ -107,6 +107,7 @@ public:
 	void SetTextColor(const glm::vec3& textColor);
 	void SetText(const std::string & text) { this->text = text; }
 
+	const std::string& Text() { return text; }
 protected:
 	std::string text;
 	float textSize;

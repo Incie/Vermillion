@@ -28,10 +28,13 @@ public:
 	void Update(const InputService& inputService, glm::vec2& viewCoords);
 	void Render(const TextService& textService);
 
+	void SpawnEntity(const std::string& entityName, const glm::ivec3& tile);
 
 	void SaveToDisk();
 	void LoadFromDisk();
 private:
+	EditorTile* GetTileByLocation(const glm::ivec3& location);
+
 	std::function<void(EditorTile*)> callback;
 	int mode;
 	

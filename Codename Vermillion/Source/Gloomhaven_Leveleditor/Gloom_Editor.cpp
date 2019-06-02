@@ -35,8 +35,8 @@ void GloomEditor::Initialize()
 			layers[3]->Deactivate();
 		}
 	}));
-	layers.push_back(new TileModifier([&](auto i) {
-	
+	layers.push_back(new TileModifier([&](const std::string& entityName, const glm::ivec3& location) {
+		editorBoard.SpawnEntity(entityName, location);
 	}));
 	layers.push_back(new EditorMainMenu([&](auto i) {
 		if(i == 0)

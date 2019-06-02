@@ -2,6 +2,7 @@
 #include"Gloom_EditorBoard.h"
 #include"glm/glm.hpp"
 #include"..//Gloomhaven/level/Hexagon.h"
+#include"..//Gloomhaven/icons/icons.h"
 
 #include"..//services.h"
 
@@ -81,15 +82,19 @@ void EditorBoard::Clear()
 		else hover->GetHexagon().SetHighlight(glm::vec3(0.1f));
 	}
 }
+
+
+static glm::vec3 roomColors[]{
+	glm::vec3(0.1f, 0.1f, 0.6f),
+	glm::vec3(0.1f, 0.6f, 0.1f),
+	glm::vec3(0.6f, 0.1f, 0.1f),
+	glm::vec3(0.6f, 0.6f, 0.1f),
+	glm::vec3(0.1f, 0.6f, 0.6f)
+};
+
+
 void EditorBoard::Update(const InputService& input, glm::vec2& viewCoords)
 {
-	static glm::vec3 roomColors[]{
-		glm::vec3(0.1f, 0.1f, 0.6f),
-		glm::vec3(0.1f, 0.6f, 0.1f),
-		glm::vec3(0.6f, 0.1f, 0.1f),
-		glm::vec3(0.6f, 0.6f, 0.1f),
-		glm::vec3(0.1f, 0.6f, 0.6f)
-	};
 
 	if (hover != nullptr) {
 		if (hover->Enabled())
@@ -178,6 +183,25 @@ void EditorBoard::Render(const TextService& textService)
 	glDisable(GL_LIGHT0);
 }
 
+void EditorBoard::SpawnEntity(const std::string& entityName, const glm::ivec3& tileLocation)
+{
+	auto tile = this->GetTileByLocation(tileLocation);
+
+	if(tile->entity != nullptr) {
+		delete tile->entity;
+		tile->entity = nullptr;
+	}
+
+	if(entityName == "None")
+		return;
+
+	tile->entity = vnew Hexagon();
+	tile->entity->Generate(tile->WorldPosition(), 35, 40);
+
+	tile->entityName = entityName;
+	tile->entity->SetTexture(Icons::Get(entityName));
+}
+
 #include"nholmann-json/json.hpp"
 #include<fstream>
 
@@ -213,16 +237,16 @@ void EditorBoard::LoadFromDisk()
 	Delete();
 
 	std::ifstream fileStream("levels/level1.json");
-	std::string serializedScenario;
+	std::string serializedScenarioFile;
 
 	fileStream.seekg(0, std::ios::end);
-	serializedScenario.reserve(fileStream.tellg());
+	serializedScenarioFile.reserve(fileStream.tellg());
 	fileStream.seekg(0, std::ios::beg);
 
-	serializedScenario.assign((std::istreambuf_iterator<char>(fileStream)), std::istreambuf_iterator<char>());
+	serializedScenarioFile.assign((std::istreambuf_iterator<char>(fileStream)), std::istreambuf_iterator<char>());
 
 	using json = nlohmann::json;
-	json j = json::parse(serializedScenario);
+	json j = json::parse(serializedScenarioFile);
 
 	auto jTiles = j["tiles"];
 
@@ -234,16 +258,33 @@ void EditorBoard::LoadFromDisk()
 		auto jTile = jTiles[i];
 		auto x = jTile.value("x", -1);
 		auto y = jTile.value("y", -1);
-		auto entityName = jTile.value("entityName", "");
-		auto roomNumber = jTile.value("roomNumber", 1);
+		auto entityName = jTile.value("entity", "None");
+		auto roomNumber = jTile.value("room", 1);
 
 		float hx = (3.0f / 4.0f) * width * static_cast<float>(x);
 		float hy = -static_cast<float>(y) * height - (1.0f / 2.0f) * height * static_cast<float>(x);
 		auto tile = vnew EditorTile(glm::ivec3(x, y, -(x + y)), glm::vec3(hx, hy, 0.0f));
 		tiles.push_back(tile);
 
+		tile->roomNumber = roomNumber;
+
 		auto& hex = tile->GetHexagon();
 		hex.Generate(glm::vec2(hx, hy), size * 0.75f, size);
 		hex.SetHighlight(glm::vec3(1.0f));
+		hex.SetColor(roomColors[roomNumber - 1]);
+
+		if( !(entityName == "None" || entityName == "") )
+			SpawnEntity(entityName, tile->Location());
 	}
+}
+
+EditorTile* EditorBoard::GetTileByLocation(const glm::ivec3& location)
+{
+	for(auto tile : tiles) {
+		auto& tileLocation = tile->Location();
+		if(tileLocation.x == location.x && tileLocation.y == location.y && tileLocation.z == tileLocation.z)
+			return tile;
+	}
+
+	return nullptr;
 }

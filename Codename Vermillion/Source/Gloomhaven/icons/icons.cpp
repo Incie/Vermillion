@@ -26,13 +26,18 @@ void Icons::Load(TextureService& textures)
 	icons["bandit guard"] = textures.LoadTexture("textures/monsters/Horz-Bandit Guard.png");
 	icons["living bones"] = textures.LoadTexture("textures/monsters/Horz-Living Bones.png");
 	icons["bandit archer"] = textures.LoadTexture("textures/monsters/Horz-Bandit Archer.png");
+	icons["bandit guard elite"] = textures.LoadTexture("textures/monsters/Horz-Bandit Guard_elite.png");
+	icons["living bones elite"] = textures.LoadTexture("textures/monsters/Horz-Living Bones_elite.png");
+	icons["bandit archer elite"] = textures.LoadTexture("textures/monsters/Horz-Bandit Archer_elite.png");
+
 	icons["trap"] = textures.LoadTexture("textures/monsters/Spike Trap 1h.png");
 	icons["obstacle"] = textures.LoadTexture("textures/monsters/Crate B 1h.png");
 	icons["coin"] = textures.LoadTexture("textures/monsters/Coin.png");
 	icons["treasure"] = textures.LoadTexture("textures/monsters/Treasure Tile 1h - Horiz.png");
-	icons["door(h)"] = textures.LoadTexture("textures/monsters/Stone Door Closed 1h - Horizontal.png");
-	icons["door(v)"] = textures.LoadTexture("textures/monsters/Stone Door Closed 1h - Vertical.png");
+	icons["door (h)"] = textures.LoadTexture("textures/monsters/Stone Door Closed 1h - Horizontal.png");
+	icons["door (v)"] = textures.LoadTexture("textures/monsters/Stone Door Closed 1h - Vertical.png");
 
+	icons["start"] = textures.LoadTexture("textures/icons/icon_start.png");
 
 	icons["element_fire"] = textures.LoadTexture("textures/icons/icon_fire.png");
 	icons["element_ice"] = textures.LoadTexture("textures/icons/icon_ice.png");

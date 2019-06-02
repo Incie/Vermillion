@@ -1,78 +1,28 @@
 #include"pch.h"
 #include "TileModifier.h"
 #include"..//Gloomhaven/level/Tile.h"
+#include"..//Gloomhaven/icons/icons.h"
 
-TileModifier::TileModifier(std::function<void(int)> callback)
+TileModifier::TileModifier(std::function<void(const std::string&, const glm::ivec3&)> callback)
 	: callback(callback), tile(nullptr)
 {
 	SetAnchor(WindowAnchor::TOP | WindowAnchor::BOTTOM | WindowAnchor::RIGHT);
 	Deactivate();
 
-	auto button = vnew Button();
-	button->SetText("None");
-	button->SetId(1);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("Bandit Guard");
-	button->SetId(2);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("Living Bones");
-	button->SetId(3);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("Bandit Archer");
-	button->SetId(4);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("2");
-	button->SetId(5);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("3");
-	button->SetId(6);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("4");
-	button->SetId(7);
-	children.push_back(button);
-
-
-	button = vnew Button();
-	button->SetText("Obstacle");
-	button->SetId(8);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("Trap");
-	button->SetId(9);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("Coin");
-	button->SetId(10);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("Treasure");
-	button->SetId(11);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("Door (V)");
-	button->SetId(12);
-	children.push_back(button);
-
-	button = vnew Button();
-	button->SetText("Door (H)");
-	button->SetId(13);
-	children.push_back(button);
+	AddChild(vnew Button("None", 18, 1) );
+	AddChild(vnew Button("Bandit Guard", 18, 2));
+	AddChild(vnew Button("Bandit Guard Elite", 18, 3));
+	AddChild(vnew Button("Living Bones", 18, 4));
+	AddChild(vnew Button("Living Bones Elite", 18, 5));
+	AddChild(vnew Button("Bandit Archer", 18, 6));
+	AddChild(vnew Button("Bandit Archer Elite", 18, 7));
+	AddChild(vnew Button("Obstacle", 18, 8));
+	AddChild(vnew Button("Trap", 18, 9));
+	AddChild(vnew Button("Coin", 18, 10));
+	AddChild(vnew Button("Treasure", 18, 11));
+	AddChild(vnew Button("Door (V)", 18, 12));
+	AddChild(vnew Button("Door (H)", 18, 13));
+	AddChild(vnew Button("Start", 18, 14));
 }
 
 TileModifier::~TileModifier()
@@ -109,8 +59,6 @@ void TileModifier::Render(ServiceLocator& Services)
 	UILayer::Render(Services);
 }
 
-#include"..//Gloomhaven/icons/icons.h"
-
 void TileModifier::OnEvent(WindowEvent type, int id)
 {
 	if (type == WindowEvent::CLICK) {
@@ -121,20 +69,10 @@ void TileModifier::OnEvent(WindowEvent type, int id)
 		auto button = dynamic_cast<Button*>(children[index]);
 		button->SetColor(glm::vec3(0.5f, 1.0f, 0.5f));
 
-		if (id == 1) {
-			if (tile->entity != nullptr)
-				delete tile->entity;
-			tile->entity = nullptr;
+		auto child = dynamic_cast<Button*>(GetChildById(id));
+		if(child != nullptr) {
+			callback(child->Text(), tile->Location());
 		}
-		if(id == 2) SetTileEntity("Bandit Guard");
-		if(id == 3) SetTileEntity("Living Bones");
-		if(id == 4) SetTileEntity("Bandit Archer");
-		if(id == 8) SetTileEntity("Obstacle");
-		if(id == 9) SetTileEntity("Trap");
-		if(id ==10) SetTileEntity("Coin");
-		if(id ==11) SetTileEntity("Treasure");
-		if(id == 12) SetTileEntity("Door(V)");
-		if(id == 13) SetTileEntity("Door(H)");
 	}
 }
 
@@ -147,17 +85,6 @@ void TileModifier::SetTile(EditorTile* tile)
 
 	Activate();
 	ClearButtonStates();
-	//set buttonstates based on tiledata
-	auto color = glm::vec3(0.5f, 1.0f, 0.5f);
-	if(tile->entityName == "Bandit Guard") dynamic_cast<Button*>(GetChildById(2))->SetColor(color);
-	if(tile->entityName == "Living Bones") dynamic_cast<Button*>(GetChildById(3))->SetColor(color);
-	if(tile->entityName == "Bandir Archer") dynamic_cast<Button*>(GetChildById(4))->SetColor(color);
-	if(tile->entityName == "Obstacle") dynamic_cast<Button*>(GetChildById(8))->SetColor(color);
-	if(tile->entityName == "Trap") dynamic_cast<Button*>(GetChildById(9))->SetColor(color);
-	if(tile->entityName == "Coin") dynamic_cast<Button*>(GetChildById(10))->SetColor(color);
-	if(tile->entityName == "Treasure") dynamic_cast<Button*>(GetChildById(11))->SetColor(color);
-	if(tile->entityName == "Door(V)") dynamic_cast<Button*>(GetChildById(11))->SetColor(color);
-	if(tile->entityName == "Door(H)") dynamic_cast<Button*>(GetChildById(11))->SetColor(color);
 }
 
 UILayerId TileModifier::LayerId()
@@ -187,7 +114,6 @@ void TileModifier::ClearButtonStates()
 
 UIElement* TileModifier::GetChildById(int id)
 {
-
 	for (auto child : children)
 	{
 		if (child->Id() == id)

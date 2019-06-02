@@ -9,7 +9,7 @@ class EditorTile;
 class TileModifier : public UILayer
 {
 public:
-	TileModifier(std::function<void(int)> callback);
+	TileModifier(std::function<void(const std::string&, const glm::ivec3&)> callback);
 	~TileModifier();
 
 	bool HandleInput(const InputService& inputService);
@@ -28,6 +28,6 @@ private:
 	void ClearButtonStates();
 	UIElement* GetChildById(int id);
 
-	std::function<void(int)> callback;
+	std::function<void(const std::string&, const glm::ivec3&)> callback;
 	EditorTile* tile;
 };
