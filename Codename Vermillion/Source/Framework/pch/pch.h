@@ -1,10 +1,16 @@
 #pragma once
 
-#define _CRTDBG_MAP_ALLOC
 #include<cstdlib>
-#include<crtdbg.h>
 
-#define vnew new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#ifdef _DEBUG
+	#define _CRTDBG_MAP_ALLOC
+	#include<crtdbg.h>
+
+	#define vnew new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#else
+	#define vnew new
+#endif
+
 
 #include<vector>
 #include<string>

@@ -259,6 +259,12 @@
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>powershell -executionpolicy bypass -File "$(SolutionDir)versiongenerator.ps1"</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generating Version Number..</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -286,15 +292,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64)\include;Source\External</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib;fmtd.lib;libpng16d.lib;zlibd.lib;freetyped.lib;glew32d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(VCPKG_64)\debug\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib;fmt.lib;libpng16.lib;zlib.lib;freetype.lib;glew32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VCPKG_64)\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

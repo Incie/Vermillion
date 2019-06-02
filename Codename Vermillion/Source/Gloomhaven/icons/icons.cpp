@@ -2,6 +2,9 @@
 #include "icons.h"
 #include"../textures.h"
 
+#include <cctype>
+#include <clocale>
+
 std::map<std::string, Texture> Icons::icons;
 Texture Icons::texturePlayerCard;
 

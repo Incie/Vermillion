@@ -12,7 +12,7 @@ Button::Button()
 }
 
 Button::Button(const std::string& text, unsigned int textSize, int id)
-	: text(text), textSize(textSize)
+	: text(text), textSize( static_cast<float>(textSize) )
 {
 	SetId(id);
 	SetColor(glm::vec3(0.5f));
