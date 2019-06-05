@@ -4,10 +4,10 @@
 #include"../level/Level.h"
 
 
-ActionMove::ActionMove(Level&level, Actor& actor, int moveMax) 
-	: Action(level, actor), moveMax(moveMax), movesLeft(moveMax)
+ActionMove::ActionMove(Level&level, Actor& actor, int moveMax, bool flying)
+	: Action(level, actor), moveMax(moveMax), movesLeft(moveMax), flying(flying)
 {
-	actionDescription = fmt::format("Move {0} Flying/Jumping [no]", moveMax);
+	actionDescription = fmt::format("Move {0} Flying/Jumping [{1}]", moveMax, flying);
 	currentPosition = actor.Position();
 	Highlight();
 }
@@ -26,7 +26,7 @@ void ActionMove::Click(const glm::ivec3& target)
 	if (clickedTile.DistanceTo(currentPosition) != 1)
 		return;
 
-	if (clickedTile.IsOccupied() && clickedTile.DistanceTo(actor.Position()) != 0 )
+	if (clickedTile.IsOccupied() && clickedTile.DistanceTo(actor.Position()) != 0 && !flying )
 		return;
 
 	currentPosition = clickedTile.Location();
@@ -111,7 +111,6 @@ void ActionMove::Render()
 		return;
 
 	glBegin(GL_LINES);
-	
 		auto& h0 = level.TileAt(actor.Position());
 		auto& h1 = level.TileAt(plannedRoute[0]);
 		glVertex2fv(&h0.WorldPosition().x); glVertex2fv(&h1.WorldPosition().x);
@@ -123,7 +122,6 @@ void ActionMove::Render()
 			auto& hex1 = level.TileAt(plannedRoute[j]);
 			glVertex2fv(&hex0.WorldPosition().x); glVertex2fv(&hex1.WorldPosition().x);
 		}
-
 	glEnd();
 }
 
@@ -132,10 +130,60 @@ void ActionMove::Highlight()
 	level.ClearHighlights();
 
 	if( movesLeft > 1 )
-		level.Highlight(currentPosition, movesLeft, glm::vec3(0, 0, 1));
+		level.Highlight(currentPosition, movesLeft, glm::vec3(0, 0, 1), flying);
 
 	if( movesLeft > 0 )
-		level.Highlight(currentPosition, 1, glm::vec3(0.5f, 0, 0));
+		level.Highlight(currentPosition, 1, glm::vec3(0.5f, 0, 0), flying);
 
 	level.Highlight(currentPosition, 0, glm::vec3(0, 1, 0));
+}
+
+ActionTrample::ActionTrample(Level& level, Actor& actor, int moveMax, bool flying, int attack)
+	: ActionMove(level, actor, moveMax, flying), attack(attack)
+{
+}
+
+ActionTrample::~ActionTrample()
+{
+}
+
+bool ActionTrample::Perform(Actor& actor)
+{
+	auto& tile = level.TileAt(currentPosition);
+
+	if(tile.IsOccupied() && tile.DistanceTo(actor.Position()) != 0)
+		return false;
+
+
+	for(auto tileLocation : plannedRoute) {
+		auto tile = level.TileAt(tileLocation);
+		
+		if(!tile.IsOccupied())
+			continue;
+
+		//do Attack
+		auto targetActor = level.ActorById(tile.OccupiedId());
+
+		int calculatedDamage = attack;
+		int modifier = level.playerModifiers.Draw();
+		if(modifier == 10)
+			calculatedDamage *= 2;
+		else if(modifier == -10)
+			calculatedDamage = 0;
+		else
+			calculatedDamage += modifier;
+
+
+		int actualDamage = targetActor->DoDamage(calculatedDamage);
+		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", "[Player]", actualDamage, "[Enemy]", modifier, attack));
+
+
+		if(targetActor->Health() <= 0) {
+			level.combatLog.push_back("[Enemy] died");
+			level.RemoveActorById(targetActor->EntityId());
+			targetActor->Deactivate();
+		}
+	}
+
+	return ActionMove::Perform(actor);
 }

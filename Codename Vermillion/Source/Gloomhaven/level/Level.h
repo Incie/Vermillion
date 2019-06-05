@@ -25,7 +25,7 @@ public:
 	void Render(const TextService& text);
 
 	void Highlight(const glm::ivec3& center, int range, const glm::vec3& highlightColor, std::function<bool(const Tile&)> highlightPredicate);
-	void Highlight(const glm::ivec3& center, int range, const glm::vec3& highlightColor);
+	void Highlight(const glm::ivec3& center, int range, const glm::vec3& highlightColor, bool ignoreOccupied=false);
 	void ClearHighlights();
 	
 	std::vector<Tile*> TilesWithin(const glm::ivec3& center, int range);

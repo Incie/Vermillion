@@ -72,7 +72,7 @@ CardGenerator::CardGenerator(Level& level)
 			{CardAbility{"Move", 4}, CardAbility{"Jump", 0, true}, CardAbility{"Attack", 2}, CardAbility{"Target all enemies moved through",0, true}, CardAbility{"XP", 2}, CardAbility{"LOSS"}},
 			72, 1,
 			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{ATTACK(1,3,1)};  return vnew PlayerRound(v); },
-			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{MOVE(4), ATTACK(1,2,1)};  return vnew PlayerRound(v); }
+			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{vnew ActionTrample(level,actor,4,true,2)}; return vnew PlayerRound(v); }
 		},
 		PlayerCard{
 			"Skewer",

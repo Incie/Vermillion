@@ -196,13 +196,13 @@ void Level::Highlight(const glm::ivec3& center, int range, const glm::vec3& high
 	}
 }
 
-void Level::Highlight(const glm::ivec3& center, int range, const glm::vec3& highlightColor)
+void Level::Highlight(const glm::ivec3& center, int range, const glm::vec3& highlightColor, bool ignoreOccupied)
 {
 	for (auto& tile : tiles) {
 		auto& hex = tile->GetHexagon();
 		auto distance = tile->DistanceTo(center);
 
-		if (tile->IsOccupied() && tile->DistanceTo(center) != 0)
+		if (tile->IsOccupied() && tile->DistanceTo(center) != 0 && !ignoreOccupied)
 			continue;
 
 		if (distance <= range)

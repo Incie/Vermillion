@@ -60,7 +60,6 @@ bool ActionAttack::Perform(Actor& actor)
 		auto tile = level.TileAt(mark);
 		auto targetActor = level.ActorById(tile.OccupiedId());
 
-
 		int calculatedDamage = baseDamage;
 		int modifier = level.playerModifiers.Draw();
 		if (modifier == 10)
