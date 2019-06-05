@@ -17,6 +17,8 @@
 CardSelection::CardSelection(Texture& texture, std::function<void(CardSelection&, int)> callback)
 	: texture(texture), callback(callback)
 {
+	SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::BOTTOM);
+
 	scalar = 0.66f;
 	playerCards[0] = nullptr;
 	playerCards[1] = nullptr;
@@ -93,9 +95,6 @@ void CardSelection::Render(ServiceLocator& Services)
 	UILayer::Render(Services);
 
 	Services.Text().PrintCenter(8 + 0.5 * (double)scalar * (double)texture.width, 8.0 + 11.0, "Initiative", 22, Colorf(0));
-
-	//auto w = static_cast<float>(texture.width);
-	//auto h = static_cast<float>(texture.height);
 
 	glPushMatrix();
 	glTranslatef(8, 8 + 8 + 22.0f, 0);

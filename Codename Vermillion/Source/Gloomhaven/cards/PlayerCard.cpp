@@ -64,12 +64,12 @@ bool PlayerCard::PointInside(const glm::vec2& point, double scalar, const Textur
 	return false;
 }
 
-PlayerRound* PlayerCard::GenerateTopAction(Level& level, Actor& actor)
+PlayerRound* PlayerCard::GenerateTopAction(Level& level, Actor& actor) const
 {
 	return generatorTop(level, actor);
 }
 
-PlayerRound* PlayerCard::GenerateBottomAction(Level& level, Actor& actor)
+PlayerRound* PlayerCard::GenerateBottomAction(Level& level, Actor& actor) const
 {
 	return generatorBottom(level, actor);
 }

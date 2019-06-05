@@ -9,21 +9,15 @@
 
 #include"UILayerId.h"
 
-CardSelect::CardSelect(std::vector<PlayerCard>& cards, Texture& texture, std::function<void(const std::string&)> onclick)
-	: texture(texture)
+CardSelect::CardSelect(PlayerDeck& cards, Texture& texture, std::function<void(const std::string&)> onclick)
+	: texture(texture), cardList(&cards)
 {
 	onClick = onclick;
-
 	cardHighlight = -1;
-	for (auto& playerCard : cards)
-		cardList.push_back(&playerCard);
-
-	std::sort(cardList.begin(), cardList.end(), [](PlayerCard * a, PlayerCard * b) { return a->Initiative() < b->Initiative(); });
 }
 
 CardSelect::~CardSelect()
 {
-	cardList.clear();
 }
 
 void CardSelect::Resize(const glm::vec2& windowSize, const TextService& text)
@@ -36,13 +30,15 @@ void CardSelect::Resize(const glm::vec2& windowSize, const TextService& text)
 
 void CardSelect::Measure(const glm::vec2& windowSize, const TextService& text)
 {
-	scale = windowSize.x / (float)cardList.size();
+	auto& hand = cardList->Hand();
+
+	scale = windowSize.x / (float)hand.size();
 	scale /= texture.width;
 
 	float maxScale = 250.0f / texture.height;
 	scale = std::min<float>(maxScale, scale);
 
-	totalWidth = cardList.size() * (texture.width * scale);
+	totalWidth = hand.size() * (texture.width * scale);
 
 	size.x = totalWidth;
 	size.y = scale * texture.height;
@@ -58,15 +54,18 @@ bool CardSelect::HandleInput(const InputService& input)
 	cardHighlight = -1;
 	glm::vec2 mousePosition = input.GetMousePosition() - position;
 
+
+	auto& hand = cardList->Hand();
+
 	float x = mousePosition.x / size.x;
-	x *= cardList.size();
+	x *= hand.size();
 	cardHighlight = (int)std::floorf(x);
 
-	if (cardHighlight < 0 || cardHighlight > cardList.size())
+	if (cardHighlight < 0 || cardHighlight > hand.size())
 		cardHighlight = -1;
 
 	if (input.KeyOnce(VK_LBUTTON)) {
-		onClick(cardList[cardHighlight]->Name());
+		onClick(hand[cardHighlight]->Name());
 	}
 
 	return true;
@@ -80,15 +79,17 @@ void CardSelect::Render(ServiceLocator& Services)
 	glTranslatef(0, 0, 0.1f);
 	glEnable(GL_TEXTURE_2D);
 
+	auto& hand = cardList->Hand();
+
 	if (cardHighlight != -1) {
 		glPushMatrix();
 		glTranslatef(0, -0.75f * texture.height, 0);
-		cardList[cardHighlight]->Scale(0.75f);
-		cardList[cardHighlight]->Render(Services.Text(), texture);
+		hand[cardHighlight]->Scale(0.75f);
+		hand[cardHighlight]->Render(Services.Text(), texture);
 		glPopMatrix();
 	}
 
-	for (auto card : cardList) {
+	for (auto card : hand) {
 		card->Scale(scale);
 		card->Render(Services.Text(), texture);
 		glTranslatef((texture.width * scale), 0, 0);

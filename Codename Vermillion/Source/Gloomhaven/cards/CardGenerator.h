@@ -12,7 +12,7 @@ public:
 	CardGenerator(Level& level);
 	~CardGenerator();
 
-	std::vector<PlayerCard>& PlayerCards();
+	PlayerDeck* PlayerCards();
 
 	PlayerRound* GetTopAction(Actor& actor, const std::string&);
 	PlayerRound* GetBottomAction(Actor& actor, const std::string&);
@@ -22,4 +22,6 @@ public:
 private:
 	Level& level;
 	std::vector<PlayerCard> playerCards;
+
+	PlayerDeck *playerDeck;
 };

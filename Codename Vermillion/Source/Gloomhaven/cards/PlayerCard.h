@@ -31,12 +31,12 @@ public:
 	void Scale(float scale) const { this->scale.x = scale; this->scale.y = scale; }
 
 	const std::string& Name() const  { return name; }
-	int Initiative() { return initiative; }
+	int Initiative() const { return initiative; }
 
 	bool PointInside(const glm::vec2& point, double scalar, const Texture& texture) const;
 
-	PlayerRound* GenerateTopAction(Level& level, Actor& actor);
-	PlayerRound* GenerateBottomAction(Level& level, Actor& actor);
+	PlayerRound* GenerateTopAction(Level& level, Actor& actor) const;
+	PlayerRound* GenerateBottomAction(Level& level, Actor& actor) const;
 private:
 	void RenderAbility(const TextService& text, const std::vector<CardAbility>& ability, const glm::vec2& position) const;
 
