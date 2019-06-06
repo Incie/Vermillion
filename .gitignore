@@ -6,6 +6,9 @@ Release/
 x64/
 *.dgml
 
+vendor/
+External/
+
 version.h
 
 .user

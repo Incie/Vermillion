@@ -89,6 +89,9 @@
     <Filter Include="Source Files\Gloomhaven\UI">
       <UniqueIdentifier>{50977cc3-9f0a-4380-bc35-86bc2dd95608}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{4d706eb4-45eb-4e6c-b746-c870ce9214be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -474,5 +477,13 @@
     <None Include="Source\Shaders\helloworld.vert">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="..\versiongenerator.ps1">
+      <Filter>Documentation</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="libraries.txt">
+      <Filter>Documentation</Filter>
+    </Text>
   </ItemGroup>
 </Project>

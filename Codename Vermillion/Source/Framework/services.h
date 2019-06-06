@@ -13,6 +13,14 @@ public:
 	unsigned int channels;
 };
 
+class SoundService {
+public:
+	virtual void PlaySound(const std::string& soundFile) = 0;
+	virtual void PlayMusic(const std::string& musicFile) = 0;
+	virtual void Volume(int volume) = 0;
+	virtual int Volume() = 0;
+};
+
 
 class TextureService {
 public:
