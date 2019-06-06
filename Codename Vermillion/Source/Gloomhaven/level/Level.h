@@ -18,7 +18,6 @@ public:
 
 	void LoadMap(const std::string& fileName);
 	void Generate();
-	void Spawn();
 	void SpawnRoom(int roomNumber);
 
 	void Update(const glm::vec2&);
@@ -45,8 +44,8 @@ public:
 
 	void ShowCoords(bool);
 
-	Modifiers monsterModifiers;
-	Modifiers playerModifiers;
+	ModifierDeck monsterModifiers;
+	ModifierDeck playerModifiers;
 
 	std::vector<std::string> combatLog;
 

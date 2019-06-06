@@ -102,15 +102,6 @@ void Level::Generate()
 	}
 }
 
-void Level::Spawn()
-{
-	Spawner spawner(*this);
-	spawner.SpawnPlayer( glm::ivec3(4, -5, 1) );
-	spawner.SpawnMonster(glm::ivec3(3, -1, -2), false);
-	spawner.SpawnMonster(glm::ivec3(5, -2, -3), false);
-	spawner.SpawnMonster(glm::ivec3(4, -1, -3), true);
-}
-
 void Level::SpawnRoom(int roomNumber)
 {
 	for(auto tile : tiles) {

@@ -61,17 +61,13 @@ bool ActionAttack::Perform(Actor& actor)
 		auto targetActor = level.ActorById(tile.OccupiedId());
 
 		int calculatedDamage = baseDamage;
-		int modifier = level.playerModifiers.Draw();
-		if (modifier == 10)
-			calculatedDamage *= 2;
-		else if (modifier == -10)
-			calculatedDamage = 0;
-		else
-			calculatedDamage += modifier;
+		auto modifiers = level.playerModifiers.Draw();
+		for(auto m : modifiers)
+			calculatedDamage = m.ModifyValue(calculatedDamage);
 
 
 		int actualDamage = targetActor->DoDamage(calculatedDamage);
-		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", "[Player]", actualDamage, "[Enemy]", modifier, baseDamage));
+		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", "[Player]", actualDamage, "[Enemy]", Modifier::ToString(modifiers), baseDamage));
 
 
 		if (targetActor->Health() <= 0) {
