@@ -11,12 +11,14 @@ public:
 	InputService& Input();
 	TextService& Text();
 	TextureService& Textures();
+	SoundService& Sound();
 private:
 	friend class ServiceAssigner;
 
 	InputService* inputService;
 	TextureService* textureService;
 	TextService* textService;
+	SoundService* soundService;
 };
 
 class ServiceAssigner
@@ -27,6 +29,7 @@ public:
 	void SetTextService(TextService& textService);
 	void SetTextureService(TextureService& textureService);
 	void SetInputService(InputService& inputService);
+	void SetSoundService(SoundService& soundService);
 
 private:
 	ServiceLocator* locator;

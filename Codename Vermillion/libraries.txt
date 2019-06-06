@@ -22,3 +22,6 @@ zlib:x86-windows-static                            1.2.11-5         A compressio
 
 
 nholmann:json
+
+miniaudio
+https://github.com/dr-soft/miniaudio
