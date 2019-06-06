@@ -5,12 +5,13 @@
 #include<functional>
 #include<string>
 
+class PlayerDeck;
 class PlayerCard;
 class Texture;
 
 class CardSelect : public UILayer {
 public:
-	CardSelect(std::vector<PlayerCard>& cards, Texture& texture, std::function<void(const std::string&)> onclick);
+	CardSelect(PlayerDeck& cards, Texture& texture, std::function<void(const std::string&)> onclick);
 	virtual ~CardSelect();
 
 	void Resize(const glm::vec2& windowSize, const TextService& text);
@@ -32,5 +33,5 @@ protected:
 	float scale;
 	float totalWidth;
 
-	std::vector<PlayerCard*> cardList;
+	PlayerDeck* cardList;
 };

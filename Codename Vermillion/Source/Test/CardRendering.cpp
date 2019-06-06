@@ -57,7 +57,7 @@ public:
 CardRendering::CardRendering()
 	: cardGenerator(level)
 {
-	cards = cardGenerator.PlayerCards();
+	//cards = cardGenerator.PlayerCards();
 }
 
 CardRendering::~CardRendering()
@@ -66,57 +66,57 @@ CardRendering::~CardRendering()
 
 void CardRendering::Initialize()
 {
-	auto& textures = Services().Textures();
-	card0 = textures.LoadTexture("textures/monster_ability_card_back.png");
-	card1 = textures.LoadTexture("textures/player_ability_back.png");
+	//auto& textures = Services().Textures();
+	//card0 = textures.LoadTexture("textures/monster_ability_card_back.png");
+	//card1 = textures.LoadTexture("textures/player_ability_back.png");
 
-	std::sort(cards.begin(), cards.end(), [](auto a, auto b) { return a.Initiative() < b.Initiative(); });
+	//std::sort(cards.begin(), cards.end(), [](auto a, auto b) { return a.Initiative() < b.Initiative(); });
 
-	Icons::Load(textures);
+	//Icons::Load(textures);
 
-	auto cardSelector = vnew CardSelect(cards, card1, [this](const std::string & cardName) {
-		auto cardFound = std::find_if(cards.begin(), cards.end(), [&cardName](auto playerCard) { if (playerCard.Name().compare(cardName) == 0) return true; return false; });
-		if (cardFound == cards.end())
-			throw "card not found";
+	//auto cardSelector = vnew CardSelect(cards, card1, [this](const std::string & cardName) {
+	//	auto cardFound = std::find_if(cards.begin(), cards.end(), [&cardName](auto playerCard) { if (playerCard.Name().compare(cardName) == 0) return true; return false; });
+	//	if (cardFound == cards.end())
+	//		throw "card not found";
 
-		auto cardLayer = dynamic_cast<CardSelection*>(layers[1]);
-		if (cardLayer == nullptr)
-			throw "layer not found";
+	//	auto cardLayer = dynamic_cast<CardSelection*>(layers[1]);
+	//	if (cardLayer == nullptr)
+	//		throw "layer not found";
 
-		cardLayer->AddCard(*cardFound);
-	} );
-	cardSelector->SetSize(0, 150.0f);
-	cardSelector->SetAnchor(UILayer::WindowAnchor::BOTTOM | UILayer::WindowAnchor::LEFT | UILayer::WindowAnchor::RIGHT);
-	cardSelector->Activate();
-	layers.push_back(cardSelector);
+	//	cardLayer->AddCard(*cardFound);
+	//} );
+	//cardSelector->SetSize(0, 150.0f);
+	//cardSelector->SetAnchor(UILayer::WindowAnchor::BOTTOM | UILayer::WindowAnchor::LEFT | UILayer::WindowAnchor::RIGHT);
+	//cardSelector->Activate();
+	//layers.push_back(cardSelector);
 
-	auto cardSelection = vnew CardSelection(card1, [this](CardSelection & cs, int eventId) {
-		auto cardName0 = cs.Card(0);
-		auto cardName1 = cs.Card(1);
+	//auto cardSelection = vnew CardSelection(card1, [this](CardSelection & cs, int eventId) {
+	//	auto cardName0 = cs.Card(0);
+	//	auto cardName1 = cs.Card(1);
 
-		cs.Deactivate();
+	//	cs.Deactivate();
 
-		auto cardSelector = dynamic_cast<CardSelect*>(layers[0]);
-		cardSelector->Deactivate();
+	//	auto cardSelector = dynamic_cast<CardSelect*>(layers[0]);
+	//	cardSelector->Deactivate();
 
-		auto abilitySelector = dynamic_cast<AbilitySelector*>(layers[2]);
+	//	auto abilitySelector = dynamic_cast<AbilitySelector*>(layers[2]);
 
-		auto playerCard0 = std::find_if(cards.begin(), cards.end(), [&cardName0](auto playerCard) { if (playerCard.Name().compare(cardName0) == 0) return true; return false; });
-		auto playerCard1 = std::find_if(cards.begin(), cards.end(), [&cardName1](auto playerCard) { if (playerCard.Name().compare(cardName1) == 0) return true; return false; });
+	//	auto playerCard0 = std::find_if(cards.begin(), cards.end(), [&cardName0](auto playerCard) { if (playerCard.Name().compare(cardName0) == 0) return true; return false; });
+	//	auto playerCard1 = std::find_if(cards.begin(), cards.end(), [&cardName1](auto playerCard) { if (playerCard.Name().compare(cardName1) == 0) return true; return false; });
 
-		abilitySelector->SetCards(&(*playerCard0), &(*playerCard1));
-		abilitySelector->Activate();
-	});
-	cardSelection->SetSize(0, 0);
-	cardSelection->SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::BOTTOM);
-	cardSelection->Activate();
-	layers.push_back(cardSelection);
+	//	abilitySelector->SetCards(&(*playerCard0), &(*playerCard1));
+	//	abilitySelector->Activate();
+	//});
+	//cardSelection->SetSize(0, 0);
+	//cardSelection->SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::BOTTOM);
+	//cardSelection->Activate();
+	//layers.push_back(cardSelection);
 
 
-	auto abilitySelector = vnew AbilitySelector(card1, [](auto e, auto i) {});
-	abilitySelector->SetCards(&cards[0], &cards[1]);
-	abilitySelector->Deactivate();
-	layers.push_back(abilitySelector);
+	//auto abilitySelector = vnew AbilitySelector(card1, [](auto e, auto i) {});
+	//abilitySelector->SetCards(&cards[0], &cards[1]);
+	//abilitySelector->Deactivate();
+	//layers.push_back(abilitySelector);
 }
 
 void CardRendering::Deinitialize()

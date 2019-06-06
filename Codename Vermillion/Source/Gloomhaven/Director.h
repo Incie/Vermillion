@@ -37,11 +37,9 @@ public:
 
 	std::vector<std::string> GetEnemyRound();
 
-
 	InitiativeTracker& GetInitiativeTracker() { return initiativeTracker; }
 private:
 	void PlayerTurn(const InputService& input);
-
 	void NextActor();
 
 	InitiativeTracker initiativeTracker;

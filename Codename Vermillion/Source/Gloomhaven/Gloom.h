@@ -29,7 +29,6 @@ private:
 	void InitializeUI();
 	void OnDirectorEvent(DirectorEvent event);
 	std::vector<UILayer*> layers;
-	std::vector<PlayerCard> cards;
 
 	Director director;
 	Camera2D camera;

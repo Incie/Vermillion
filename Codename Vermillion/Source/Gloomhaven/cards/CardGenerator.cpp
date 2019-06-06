@@ -99,6 +99,8 @@ CardGenerator::CardGenerator(Level& level)
 			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{MOVE(2)};  return vnew PlayerRound(v); }
 		},
 	};
+
+	playerDeck = new PlayerDeck("Player", playerCards);
 }
 
 CardGenerator::~CardGenerator()
@@ -106,9 +108,9 @@ CardGenerator::~CardGenerator()
 	playerCards.clear();
 }
 
-std::vector<PlayerCard>& CardGenerator::PlayerCards()
+PlayerDeck* CardGenerator::PlayerCards()
 {
-	return playerCards;
+	return playerDeck;
 }
 
 #include<algorithm>

@@ -43,7 +43,6 @@ Gloom::~Gloom()
 
 void Gloom::Initialize()
 {
-	cards = cardGenerator.PlayerCards();
 	Icons::Load(Services().Textures());
 	InitializeUI();
 
@@ -79,8 +78,6 @@ void Gloom::Resize()
 
 void Gloom::Update(double deltaTime)
 {
-	//todo: check for invalidated UI
-
 	const auto& input = Services().Input();
 
 	if (input.KeyOnce(VK_F3))
@@ -101,6 +98,11 @@ void Gloom::Update(double deltaTime)
 	for (auto layer : layers) {
 		if (layer->Active() == false)
 			continue;
+
+		if(layer->Invalidated()) {
+			auto p = WindowState::Size();
+			layer->Resize(glm::vec2(p.x, p.y), Services().Text());
+		}
 
 		if( !inputHandled )
 			inputHandled = layer->HandleInput(input);
@@ -180,16 +182,20 @@ void Gloom::Render()
 
 void Gloom::InitializeUI()
 {
-	auto cardSelector = vnew CardSelect(cardGenerator.PlayerCards(), *Icons::GetPlayerCard(), [this](const std::string & cardName) {
-		auto cardFound = std::find_if(cards.begin(), cards.end(), [&cardName](auto playerCard) { if (playerCard.Name().compare(cardName) == 0) return true; return false; });
-		if (cardFound == cards.end())
+	auto cardSelector = vnew CardSelect(*cardGenerator.PlayerCards(), *Icons::GetPlayerCard(), [this](const std::string & cardName) {
+		
+		auto deck = cardGenerator.PlayerCards();
+		auto& hand = deck->Hand();
+
+		auto cardFound = std::find_if(hand.begin(), hand.end(), [&cardName](auto playerCard) { if (playerCard->Name().compare(cardName) == 0) return true; return false; });
+		if (cardFound == hand.end())
 			throw "card not found";
 
 		auto cardSelection = dynamic_cast<CardSelection*>(layers[1]);
 		if (cardSelection == nullptr)
 			throw "layer not found";
 
-		cardSelection->AddCard(*cardFound);
+		cardSelection->AddCard(**cardFound);
 		});
 	cardSelector->SetSize(0, 150.0f);
 	cardSelector->SetAnchor(UILayer::WindowAnchor::BOTTOM | UILayer::WindowAnchor::LEFT | UILayer::WindowAnchor::RIGHT);
@@ -205,21 +211,22 @@ void Gloom::InitializeUI()
 		auto cardSelector = dynamic_cast<CardSelect*>(layers[0]);
 		cardSelector->Deactivate();
 
-		auto abilitySelector = dynamic_cast<AbilitySelector*>(layers[2]);
-		auto playerCard0 = std::find_if(cards.begin(), cards.end(), [&cardName0](auto playerCard) { if (playerCard.Name().compare(cardName0) == 0) return true; return false; });
-		auto playerCard1 = std::find_if(cards.begin(), cards.end(), [&cardName1](auto playerCard) { if (playerCard.Name().compare(cardName1) == 0) return true; return false; });
+		auto deck = cardGenerator.PlayerCards();
+		auto& hand = deck->Hand();
 
-		abilitySelector->SetCards(&(*playerCard0), &(*playerCard1));
+		auto abilitySelector = dynamic_cast<AbilitySelector*>(layers[2]);
+		auto playerCard0 = std::find_if(hand.begin(), hand.end(), [&cardName0](auto playerCard) { if (playerCard->Name().compare(cardName0) == 0) return true; return false; });
+		auto playerCard1 = std::find_if(hand.begin(), hand.end(), [&cardName1](auto playerCard) { if (playerCard->Name().compare(cardName1) == 0) return true; return false; });
+
+		abilitySelector->SetCards(*playerCard0, *playerCard1);
 		abilitySelector->Activate();
 
-
 		auto initiativeCard = *playerCard0;
-		level.GetPlayer()->Initiative(initiativeCard.Initiative());
+		level.GetPlayer()->Initiative(initiativeCard->Initiative());
 
 		director.StartRound();
 	});
 	cardSelection->SetSize(0, 0);
-	cardSelection->SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::BOTTOM);
 	cardSelection->Activate();
 	layers.push_back(cardSelection);
 
@@ -273,7 +280,6 @@ void Gloom::InitializeUI()
 			}			
 		}
 	});
-	abilitySelector->SetCards(&cards[0], &cards[1]);
 	abilitySelector->Deactivate();
 	layers.push_back(abilitySelector);
 
@@ -294,10 +300,16 @@ void Gloom::OnDirectorEvent(DirectorEvent eventId)
 	switch (eventId) {
 		case DirectorEvent::EndOfRound: {
 			layers[0]->Activate();
+			layers[0]->Invalidate();
 			layers[1]->Activate();
 		
 			auto cardSelection = dynamic_cast<CardSelection*>(layers[1]);
+
+			auto deck = cardGenerator.PlayerCards();
+			deck->Discard(cardSelection->Card(0));
+			deck->Discard(cardSelection->Card(1));
 			cardSelection->ClearCards();
+
 
 			layers[2]->Deactivate();
 			layers[3]->Deactivate();
