@@ -57,11 +57,10 @@ void EnemyRound::Render()
 
 void EnemyRound::RenderRoundCard(const TextService & text)
 {
-	auto white = Colorf(1.0f);
-	auto active = Colorf(0.9f, 0.5f, 0.6f);
+	auto active = glm::vec3(0.9f, 0.5f, 0.6f);
 	int index = 0;
 	for (auto action : actions) {
-		auto& color = index == currentAction ? active : white;
+		auto& color = index == currentAction ? active : Colors::White;
 		text.Print(0, 0, action->ActionDescription(), 18, color, false, true);
 		index++;
 	}

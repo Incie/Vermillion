@@ -74,8 +74,7 @@ void StatusBar::Render(ServiceLocator& Services)
 {
 	UILayer::Render(Services);
 	float centerX = size.x * 0.5f;
-	//Services.Text().PrintCenter(centerX, 8 + 15.0, fmt::format("Round {0}", roundNumber), 18, Colorf(0,0,0));
-	Services.Text().PrintCenter(centerX, 16+15+9.0, statusText, 14, Colorf(0,0,0));
+	Services.Text().PrintCenter(centerX, 16+15+9.0, statusText, 14, Colors::Black);
 }
 
 UILayerId StatusBar::LayerId()

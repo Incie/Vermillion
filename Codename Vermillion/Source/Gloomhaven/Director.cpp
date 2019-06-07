@@ -79,7 +79,7 @@ void Director::RenderUI(const TextService& text)
 	glPopMatrix();
 
 	if (action != nullptr) {
-		text.Print(200, 25, action->Description(), 20, Colorf(1, 1, 1), false, true);
+		text.Print(200, 25, action->Description(), 20, Colors::White, false, true);
 	}
 }
 

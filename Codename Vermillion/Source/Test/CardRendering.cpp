@@ -162,9 +162,9 @@ void CardRendering::Render()
 {
 	auto m = Services().Input().GetMousePosition();
 	auto& text = Services().Text();
-	text.PrintCenter(500, 20, fmt::format("{0}, {1}", m.x, m.y), 30, Colorf(1));
+	text.PrintCenter(500, 20, fmt::format("{0}, {1}", m.x, m.y), 30, Colors::White);
 
-	text.PrintCenter(500, 40, fmt::format("{0}, {1}", p.x, p.y), 30, Colorf(1));
+	text.PrintCenter(500, 40, fmt::format("{0}, {1}", p.x, p.y), 30, Colors::White);
 
 	float textureCoords[] = {
 		0.0f, 0.0f, 
@@ -192,11 +192,11 @@ void CardRendering::Render()
 		}
 		glEnd();
 
-		text.PrintCenter(37, 50, fmt::format("{0}", 8), 25, Colorf(1));
+		text.PrintCenter(37, 50, fmt::format("{0}", 8), 25, Colors::White);
 
 		glPushMatrix();
-			text.PrintCenter(210, 70, fmt::format("Move {0}", 2), 25, Colorf(1));
-			text.PrintCenter(210, 70+25, fmt::format("Attack {0}", 2), 25, Colorf(1));
+			text.PrintCenter(210, 70, fmt::format("Move {0}", 2), 25, Colors::White);
+			text.PrintCenter(210, 70+25, fmt::format("Attack {0}", 2), 25, Colors::White);
 		glPopMatrix();
 	glPopMatrix();
 

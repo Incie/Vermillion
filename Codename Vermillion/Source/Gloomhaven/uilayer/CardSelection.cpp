@@ -94,7 +94,7 @@ void CardSelection::Render(ServiceLocator& Services)
 {
 	UILayer::Render(Services);
 
-	Services.Text().PrintCenter(8 + 0.5 * (double)scalar * (double)texture.width, 8.0 + 11.0, "Initiative", 22, Colorf(0));
+	Services.Text().PrintCenter(8 + 0.5 * (double)scalar * (double)texture.width, 8.0 + 11.0, "Initiative", 22, Colors::Black);
 
 	glPushMatrix();
 	glTranslatef(8, 8 + 8 + 22.0f, 0);

@@ -167,7 +167,7 @@ void Level::Render(const TextService& text)
 
 			if (showCoords) {
 				const auto& coord = tile->Location();
-				text.Print(0, 0, fmt::format("{0},{1},{2}", coord.x, coord.y, coord.z), 16, Colorf(0, 0, 0));
+				text.Print(0, 0, fmt::format("{0},{1},{2}", coord.x, coord.y, coord.z), 16, Colors::Black);
 			}
 		glPopMatrix();
 	}

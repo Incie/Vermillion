@@ -68,9 +68,9 @@ void EnemyAdvancer::Render(ServiceLocator& Services)
 	float textSize = 18.0f;
 	for(auto i = 0; i < actions.size(); ++i ) {
 		const auto& action = actions[i];
-		auto textColor = Colorf(1);
+		auto textColor = Colors::White;
 		if(i == currentAction)
-			textColor = Colorf(1, 1, 0);
+			textColor = glm::vec3(1, 1, 0);
 
 		Services.Text().Print(textX, textY, action, static_cast<unsigned int>(textSize), textColor, true);
 		textY += textSize + 2.0f;

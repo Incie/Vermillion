@@ -1,6 +1,6 @@
 #pragma once
 
-#include"point.h"
+#include"glm/vec2.hpp"
 
 enum GamePadButton {
 	GP_A = 0,
@@ -24,18 +24,18 @@ struct GamePadState
 {
 public:
 	int pushButtons[GP_NumButtons];
-	double triggerLeft;
-	double triggerRight;
-	Pointd stickLeft;
-	Pointd stickRight;
+	float triggerLeft;
+	float triggerRight;
+	glm::vec2 stickLeft;
+	glm::vec2 stickRight;
 };
 
 struct MouseState 
 {
-	Pointi mousePositionCurrent;
-	Pointf mousePositionCurrentNormalized;
-	Pointi mousePositionLast;
-	Pointi mousePositionDelta;
+	glm::ivec2 mousePositionCurrent;
+	glm::vec2 mousePositionCurrentNormalized;
+	glm::vec2 mousePositionLast;
+	glm::vec2 mousePositionDelta;
 };
 
 class InputState

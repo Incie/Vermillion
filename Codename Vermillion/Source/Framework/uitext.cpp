@@ -24,7 +24,7 @@ const std::string UIText::Text()
 
 void UIText::Render(ServiceLocator& Services)
 {
-	Services.Text().Print(position.x, position.y, text, static_cast<unsigned int>(fontHeight), Colorf(0), false, false);
+	Services.Text().Print(position.x, position.y, text, static_cast<unsigned int>(fontHeight), glm::vec3(0), false, false);
 }
 
 glm::vec2 UIText::Measure(const TextService& text)

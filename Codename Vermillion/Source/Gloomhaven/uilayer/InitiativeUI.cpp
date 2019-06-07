@@ -57,7 +57,7 @@ void InitiativeTrackerUI::Render(ServiceLocator& Services)
 		Render::Quad(0,0, size.x - 16.0f, 20, color);
 
 		auto a = initiatives[i];
-		Services.Text().Print(0,-2.0f, fmt::format("{0} {1}", a->Initiative(), a->Name()), 20, Colorf(0), false, true);
+		Services.Text().Print(0,-2.0f, fmt::format("{0} {1}", a->Initiative(), a->Name()), 20, Colors::Black, false, true);
 		glTranslatef(0,4,0);
 	}
 }

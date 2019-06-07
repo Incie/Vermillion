@@ -43,9 +43,9 @@ void PlayerCard::Render(const TextService& text, const Texture& texture) const
 	}
 	glEnd();
 
-	text.PrintCenter(180, 20, name, 25, Colorf(1));
-	text.PrintCenter(180, 54, fmt::format("{0}", level), 18, Colorf(1));
-	text.PrintCenter(180, 275, fmt::format("{0}", initiative), 40, Colorf(1));
+	text.PrintCenter(180, 20, name, 25, Colors::White);
+	text.PrintCenter(180, 54, fmt::format("{0}", level), 18, Colors::White);
+	text.PrintCenter(180, 275, fmt::format("{0}", initiative), 40, Colors::White);
 
 	RenderAbility(text, topAction, glm::vec2(180, 120));
 	RenderAbility(text, bottomAction, glm::vec2(180, 330));
@@ -80,7 +80,7 @@ void PlayerCard::RenderAbility(const TextService& text, const std::vector<CardAb
 	glTranslatef(position.x, position.y, 0.0f);
 	for (auto& cardAbility : ability) {
 		int fontHeight = cardAbility.subtitle ? 16 : 25;
-		auto width = text.Print(0, 0, cardAbility.name, fontHeight, Colorf(1), true, false);
+		auto width = text.Print(0, 0, cardAbility.name, fontHeight, Colors::White, true, false);
 
 		glPushMatrix();
 		glTranslatef(width, 0, 0);
@@ -101,7 +101,7 @@ void PlayerCard::RenderAbility(const TextService& text, const std::vector<CardAb
 		}
 
 		if (cardAbility.value != 0)
-			text.Print(0, 0, fmt::format("{0}", cardAbility.value), fontHeight, Colorf(1), true, false);
+			text.Print(0, 0, fmt::format("{0}", cardAbility.value), fontHeight, Colors::White, true, false);
 		glPopMatrix();
 		text.NewLine(fontHeight);
 	}

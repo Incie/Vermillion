@@ -42,10 +42,10 @@ void PlayerRound::Render(const TextService& text) const
 	for( int i = 0; i < actions.size(); ++i ){
 		auto action = actions[i];
 
-		auto color = Colorf(1);
+		auto color = Colors::White;
 		if (i == currentAction)
-			color = Colorf(1, 1, 0);
+			color = Colors::Yellow;
 
-		text.Print(0, 0, action->Description(), 20, Colorf(1), false, true);
+		text.Print(0, 0, action->Description(), 20, color, false, true);
 	}
 }

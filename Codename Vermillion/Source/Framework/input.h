@@ -1,8 +1,6 @@
 #pragma once
 
-#include"pch.h"
 #include"inputstate.h"
-#include"point.h"
 #include"services.h"
 
 class InputManager : public InputService

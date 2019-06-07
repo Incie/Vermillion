@@ -94,7 +94,7 @@ void Text::NewLine(unsigned int fontHeight) const
 	glTranslatef(0, fontHeight + 2.0f, 0);
 }
 
-float Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color, bool center, bool newline) const
+float Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color, bool center, bool newline) const
 {
 	int textWidth = 0;
 	if (center)
@@ -108,11 +108,11 @@ float Text::Print(double x, double y, const std::string& text, unsigned int font
 	return (float)textWidth;
 }
 
-void Text::PrintText(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const
+void Text::PrintText(double x, double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color) const
 {
 	fontProgram.Use();
 	fontProgram.SetUniform("tex", 0);
-	fontProgram.SetUniform("color", color);
+	fontProgram.SetUniform("color", glm::vec4(color, 1.0f));
 
 	glColor4f(1,1,1,1);
 	glEnable(GL_BLEND);
@@ -174,7 +174,7 @@ void Text::PrintText(double x, double y, const std::string& text, unsigned int f
 	fontProgram.NoProgram();
 }
 
-void Text::PrintCenter(const double x, const double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const
+void Text::PrintCenter(const double x, const double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color) const
 {
 	double centerY = y - fontHeight * 0.5;
 

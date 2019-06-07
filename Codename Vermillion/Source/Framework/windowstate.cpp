@@ -2,6 +2,6 @@
 #include"windowstate.h"
 
 bool WindowState::hasChanged;
-Pointi WindowState::windowPosition;
-Pointi WindowState::windowSize;
+glm::ivec2 WindowState::windowPosition;
+glm::ivec2 WindowState::windowSize;
 
