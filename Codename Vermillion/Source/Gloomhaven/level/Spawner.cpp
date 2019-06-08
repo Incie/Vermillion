@@ -40,13 +40,13 @@ void Spawner::AddEntitySpawn(const std::string& entityName, const glm::ivec3& lo
 void Spawner::SpawnRoom(int roomNumber)
 {
 	for(auto esl : entitySpawns) {
+		if(roomNumber != esl->roomNumber)
+			continue;
+		
 		if(esl->entityName == "Start") {
 			SpawnPlayer(esl->location);
 			continue;
 		}
-
-		if(roomNumber != esl->roomNumber)
-			continue;
 
 		bool isMonster = monsterStats.find(esl->entityName) != monsterStats.end();
 
@@ -54,11 +54,10 @@ void Spawner::SpawnRoom(int roomNumber)
 			SpawnMonster(*esl, monsterStats[esl->entityName] );
 			continue;
 		}
-				
+
 		//isEntity
 		SpawnEntity(*esl);
 	}
-
 }
 
 void Spawner::SpawnPlayer(glm::ivec3 location)
