@@ -19,7 +19,7 @@ PaintProperties::~PaintProperties()
 
 void PaintProperties::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize, text);
+	UIView::Resize(windowSize, text);
 
 	auto currentPosition = glm::vec2(0.0f);
 	for(auto child : children) {
@@ -48,9 +48,4 @@ void PaintProperties::OnEvent(WindowEvent type, int id)
 {
 	if(type == WindowEvent::CLICK)
 		callback(id);
-}
-
-UILayerId PaintProperties::LayerId()
-{
-	return UILayerId();
 }

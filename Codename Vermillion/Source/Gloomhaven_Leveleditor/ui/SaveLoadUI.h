@@ -1,9 +1,9 @@
 #pragma once
 
-#include"..//uilayer.h"
+#include"..//uiview.h"
 #include<functional>
 
-class EditorMainMenu : public UILayer
+class EditorMainMenu : public UIView
 {
 public:
 	EditorMainMenu(std::function<void(int)> callback);
@@ -13,9 +13,6 @@ public:
 	void Measure(const glm::vec2& windowSize, const TextService& text);
 
 	void OnEvent(WindowEvent type, int id);
-
-	UILayerId LayerId() override;
-
 private:
 	std::function<void(int)> callback;
 };

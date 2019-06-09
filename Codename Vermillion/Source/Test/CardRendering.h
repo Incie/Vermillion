@@ -8,7 +8,7 @@
 #include<vector>
 
 class PlayerCard;
-class UILayer;
+class UIView;
 
 class CardRendering : public Activity {
 public:
@@ -26,7 +26,7 @@ public:
 private:
 	Level level;
 	CardGenerator cardGenerator;
-	std::vector<UILayer*> layers;
+	std::vector<UIView*> layers;
 	std::vector<PlayerCard> cards;
 
 	Texture card0;

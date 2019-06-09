@@ -21,7 +21,7 @@
 
 #include"icons/icons.h"
 
-#include"../uilayer.h"
+#include"../uiview.h"
 #include"uilayer/AbilitySelector.h"
 #include"uilayer/CardSelection.h"
 #include"uilayer/CardSelector.h"
@@ -31,6 +31,15 @@
 #include"uilayer/EnemyAdvancer.h"
 #include"uilayer/StatusBar.h"
 
+
+namespace G {
+const int CardSelectorId = 0;
+const int CardSelectionId = 1;
+const int AbilitySelectorId = 2;
+const int EnemyAdvancerId = 3;
+const int StatusBarId = 4;
+const int InitiativeTrackerId = 5;
+};
 
 Gloom::Gloom() 
 	: director(level, [this](auto eventId) {this->OnDirectorEvent(eventId); }), cardGenerator(level)
@@ -45,24 +54,18 @@ void Gloom::Initialize()
 {
 	Icons::Load(Services().Textures());
 	InitializeUI();
-
-
+	
 	level.LoadMap("levels/scenario_001.json");
 	level.SpawnRoom(1);
-	//level.SpawnRoom(2);
-	//level.SpawnRoom(3);
 
-	auto levelCenter = level.Center();
-	camera.SetPositionCenter(levelCenter);
-	/*level.Generate();
-	level.Spawn();*/
+	camera.SetPositionCenter( level.Center() );
 }
 
 void Gloom::Deinitialize()
 {
-	for (auto layer : layers)
-		delete layer;
-	layers.clear();
+	DeinitializeUI();
+
+	//level.delete
 
 	Icons::Unload();
 }
@@ -72,8 +75,8 @@ void Gloom::Resize()
 	Log::Info("CardRendering", "Resize");
 	const auto& windowSize = WindowState::Size();
 	glm::vec2 newWindowSize{ windowSize.x, windowSize.y };
-	for (auto layer : layers)
-		layer->Resize(newWindowSize, Services().Text());
+
+	Activity::Resize();
 }
 
 void Gloom::Update(double deltaTime)
@@ -94,19 +97,7 @@ void Gloom::Update(double deltaTime)
 	if (input.KeyDown(VK_ADD)) camera.ZoomByFactor(0.9f);
 	if (input.KeyDown(VK_SUBTRACT)) camera.ZoomByFactor(1.1f);
 
-	bool inputHandled = false;
-	for (auto layer : layers) {
-		if (layer->Active() == false)
-			continue;
-
-		if(layer->Invalidated()) {
-			auto p = WindowState::Size();
-			layer->Resize(glm::vec2(p.x, p.y), Services().Text());
-		}
-
-		if( !inputHandled )
-			inputHandled = layer->HandleInput(input);
-	}
+	auto inputHandled = UpdateUI();
 
 	glm::vec2 cameraMouse = camera.ScreenToViewCoords(input.GetMousePositionNormalized());
 	level.Update(cameraMouse);
@@ -150,13 +141,7 @@ void Gloom::Render()
 	director.RenderUI(text);
 	glPopMatrix();
 
-	for (auto layer : layers) {
-		if (layer->Active() == false)
-			continue;
-		layer->StartRender();
-		layer->Render(Services());
-		layer->EndRender();
-	}
+	RenderUI();
 
 	if (level.combatLog.size() > 0) {
 		glPushMatrix();
@@ -191,16 +176,16 @@ void Gloom::InitializeUI()
 		if (cardFound == hand.end())
 			throw "card not found";
 
-		auto cardSelection = dynamic_cast<CardSelection*>(layers[1]);
+		auto cardSelection = GetViewById<CardSelection>(1);
 		if (cardSelection == nullptr)
 			throw "layer not found";
 
 		cardSelection->AddCard(**cardFound);
 		});
 	cardSelector->SetSize(0, 150.0f);
-	cardSelector->SetAnchor(UILayer::WindowAnchor::BOTTOM | UILayer::WindowAnchor::LEFT | UILayer::WindowAnchor::RIGHT);
+	cardSelector->SetAnchor(UIView::WindowAnchor::BOTTOM | UIView::WindowAnchor::LEFT | UIView::WindowAnchor::RIGHT);
 	cardSelector->Activate();
-	layers.push_back(cardSelector);
+	AddView(cardSelector, G::CardSelectorId);
 
 	auto cardSelection = vnew CardSelection(*Icons::GetPlayerCard(), [this](CardSelection & cs, int eventId) {
 		auto cardName0 = cs.Card(0);
@@ -208,13 +193,13 @@ void Gloom::InitializeUI()
 
 		cs.Deactivate();
 
-		auto cardSelector = dynamic_cast<CardSelect*>(layers[0]);
+		auto cardSelector = GetViewById<CardSelect>(0);
 		cardSelector->Deactivate();
 
 		auto deck = cardGenerator.PlayerCards();
 		auto& hand = deck->Hand();
 
-		auto abilitySelector = dynamic_cast<AbilitySelector*>(layers[2]);
+		auto abilitySelector = GetViewById<AbilitySelector>(2);
 		auto playerCard0 = std::find_if(hand.begin(), hand.end(), [&cardName0](auto playerCard) { if (playerCard->Name().compare(cardName0) == 0) return true; return false; });
 		auto playerCard1 = std::find_if(hand.begin(), hand.end(), [&cardName1](auto playerCard) { if (playerCard->Name().compare(cardName1) == 0) return true; return false; });
 
@@ -228,7 +213,7 @@ void Gloom::InitializeUI()
 	});
 	cardSelection->SetSize(0, 0);
 	cardSelection->Activate();
-	layers.push_back(cardSelection);
+	AddView(cardSelection, 1);
 
 
 	auto abilitySelector = vnew AbilitySelector(*Icons::GetPlayerCard(), [this](auto eventId, auto abilityEnum) {
@@ -236,7 +221,9 @@ void Gloom::InitializeUI()
 			director.EndPlayerTurn();
 		}
 		else {
-			if (eventId == 1) {
+			auto abilitySelector = GetViewById<AbilitySelector>(2);
+			if (eventId == 1) {		
+
 				switch (abilityEnum) {
 				case AbilitySelector::ABILITY_DEFAULT_TOP:
 					director.SetPlayerRound( cardGenerator.GetDefaultTop( *level.GetPlayer() ) );
@@ -245,11 +232,11 @@ void Gloom::InitializeUI()
 					director.SetPlayerRound(cardGenerator.GetDefaultBottom(*level.GetPlayer()));
 					break;
 				case AbilitySelector::ABILITY_TOP: {
-					director.SetPlayerRound(cardGenerator.GetTopAction(*level.GetPlayer(), dynamic_cast<AbilitySelector*>(layers[2])->GetCardName(0)));
+					director.SetPlayerRound(cardGenerator.GetTopAction(*level.GetPlayer(), abilitySelector->GetCardName(0)));
 					break;
 				}
 				case AbilitySelector::ABILITY_BOTTOM: {
-					director.SetPlayerRound(cardGenerator.GetBottomAction(*level.GetPlayer(), dynamic_cast<AbilitySelector*>(layers[2])->GetCardName(0)));
+					director.SetPlayerRound(cardGenerator.GetBottomAction(*level.GetPlayer(), abilitySelector->GetCardName(0)));
 					break;
 				}
 				default: 
@@ -266,11 +253,11 @@ void Gloom::InitializeUI()
 					director.SetPlayerRound(cardGenerator.GetDefaultBottom(*level.GetPlayer()));
 					break;
 				case AbilitySelector::ABILITY_TOP: {
-					director.SetPlayerRound(cardGenerator.GetTopAction(*level.GetPlayer(), dynamic_cast<AbilitySelector*>(layers[2])->GetCardName(1)));
+					director.SetPlayerRound(cardGenerator.GetTopAction(*level.GetPlayer(), abilitySelector->GetCardName(1)));
 					break;
 				}
 				case AbilitySelector::ABILITY_BOTTOM: {
-					director.SetPlayerRound(cardGenerator.GetBottomAction(*level.GetPlayer(), dynamic_cast<AbilitySelector*>(layers[2])->GetCardName(1)));
+					director.SetPlayerRound(cardGenerator.GetBottomAction(*level.GetPlayer(), abilitySelector->GetCardName(1)));
 					break;
 				}
 				default: 
@@ -281,40 +268,40 @@ void Gloom::InitializeUI()
 		}
 	});
 	abilitySelector->Deactivate();
-	layers.push_back(abilitySelector);
+	AddView(abilitySelector, 2);
 
 	auto enemyAdvancer = vnew EnemyAdvancer([this]() {
 		director.AdvanceEnemy();
 	});
-	layers.push_back(enemyAdvancer);
+	AddView(enemyAdvancer, 3);
 
 	auto statusBar = vnew StatusBar();
-	layers.push_back(statusBar);
+	AddView(statusBar, 4);
 
 	auto initiativeTrackerUI = vnew InitiativeTrackerUI(director.GetInitiativeTracker());
-	layers.push_back(initiativeTrackerUI);
+	AddView(initiativeTrackerUI, 5);
 }
 
 void Gloom::OnDirectorEvent(DirectorEvent eventId)
 {
 	switch (eventId) {
 		case DirectorEvent::EndOfRound: {
-			layers[0]->Activate();
-			layers[0]->Invalidate();
-			layers[1]->Activate();
+			auto cs = GetViewById<CardSelect>(G::CardSelectorId);
+			cs->Activate();
+			cs->Invalidate();
+
+			auto selection = GetViewById<CardSelection>(G::CardSelectionId);
+			selection->Activate();
 		
-			auto cardSelection = dynamic_cast<CardSelection*>(layers[1]);
-
 			auto deck = cardGenerator.PlayerCards();
-			deck->Discard(cardSelection->Card(0));
-			deck->Discard(cardSelection->Card(1));
-			cardSelection->ClearCards();
+			deck->Discard(selection->Card(0));
+			deck->Discard(selection->Card(1));
+			selection->ClearCards();
 
+			GetViewById(G::AbilitySelectorId)->Deactivate();
+			GetViewById(G::EnemyAdvancerId)->Deactivate();
 
-			layers[2]->Deactivate();
-			layers[3]->Deactivate();
-
-			auto statusbar = dynamic_cast<StatusBar*>(layers[4]);
+			auto statusbar = GetViewById<StatusBar>(G::StatusBarId);
 			statusbar->SetStatusText("End of Round");
 			statusbar->NextRound();
 
@@ -322,27 +309,26 @@ void Gloom::OnDirectorEvent(DirectorEvent eventId)
 			break;
 		}
 		case DirectorEvent::EnemyTurn: {
-			layers[2]->Deactivate();
-			layers[3]->Activate();
+			GetViewById(G::AbilitySelectorId)->Deactivate();
+			auto ea = GetViewById<EnemyAdvancer>(G::EnemyAdvancerId);
 
-			auto ea = dynamic_cast<EnemyAdvancer*>(layers[3]);
+
+			ea->Activate();
 			ea->SetEnemyActions(director.GetEnemyRound());
 
-			auto statusbar = dynamic_cast<StatusBar*>(layers[4]);
-			statusbar->SetStatusText("AI Turn");
+			GetViewById<StatusBar>(G::StatusBarId)->SetStatusText("AI Turn");
 			break;
 		}
 		case DirectorEvent::PlayerTurn:{
-			layers[2]->Activate();
-			layers[3]->Deactivate();
 
-			auto statusbar = dynamic_cast<StatusBar*>(layers[4]);
-			statusbar->SetStatusText("Player Turn");
+			GetViewById(G::AbilitySelectorId)->Activate();
+			GetViewById(G::EnemyAdvancerId)->Deactivate();
+
+			GetViewById<StatusBar>(G::StatusBarId)->SetStatusText("Player Turn");
 			break;
 		}
 		case DirectorEvent::AdvanceEnemy: {
-			auto ea = dynamic_cast<EnemyAdvancer*>(layers[3]);
-			ea->Advance();
+			GetViewById<EnemyAdvancer>(G::EnemyAdvancerId)->Advance();
 			break;
 		}
 	}

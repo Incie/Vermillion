@@ -1,10 +1,10 @@
 #pragma once
 
 
-#include"..//uilayer.h"
+#include"..//uiview.h"
 #include<functional>
 
-class ActionSelector : public UILayer 
+class ActionSelector : public UIView 
 {
 public:
 	ActionSelector(std::function<void(int)> callback);
@@ -17,8 +17,6 @@ public:
 	void Render(ServiceLocator& Services);
 
 	void OnEvent(WindowEvent type, int id);
-
-	UILayerId LayerId() override;
 
 private:
 	std::function<void(int)> callback;

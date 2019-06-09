@@ -7,7 +7,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 	: callback(callback)
 {
 	Deactivate();
-	SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::BOTTOM);
+	SetAnchor(UIView::WindowAnchor::RIGHT | UIView::WindowAnchor::BOTTOM);
 
 	cardScalar = 0.66f;
 	this->texture = &texture;
@@ -98,7 +98,7 @@ AbilitySelector::~AbilitySelector()
 
 bool AbilitySelector::HandleInput(const InputService& inputService)
 {
-	if (!UILayer::HandleInput(inputService)) {
+	if (!UIView::HandleInput(inputService)) {
 		return false;
 	}
 
@@ -110,7 +110,7 @@ void AbilitySelector::Resize(const glm::vec2& windowSize, const TextService& tex
 	if (texture == nullptr)
 		throw "No texture";
 	
-	UILayer::Resize(windowSize, text);
+	UIView::Resize(windowSize, text);
 
 	auto button = dynamic_cast<Button*>(children[0]);
 	button->SetSize(150.0f, 20.0f);
@@ -144,7 +144,7 @@ void AbilitySelector::Measure(const glm::vec2& dimensions, const TextService& te
 void AbilitySelector::Render(ServiceLocator& Services)
 {
 	glPushMatrix();
-		UILayer::Render(Services);
+		UIView::Render(Services);
 	glPopMatrix();
 
 	glPushMatrix();

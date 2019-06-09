@@ -1,11 +1,11 @@
 #pragma once
 
-#include"../uilayer.h"
+#include"../uiview.h"
 
 class TextService;
 class InitiativeTracker;
 
-class InitiativeTrackerUI : public UILayer {
+class InitiativeTrackerUI : public UIView {
 public:
 	InitiativeTrackerUI(InitiativeTracker&);
 	~InitiativeTrackerUI();
@@ -16,8 +16,6 @@ public:
 	virtual void Update();
 	virtual void Render(ServiceLocator& Services);
 
-
-	virtual UILayerId LayerId() { return UILayerId(); }
 protected:
 	InitiativeTracker& initiativeTracker;
 

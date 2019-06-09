@@ -11,35 +11,37 @@ ModifierDeck::ModifierDeck()
 	deck.reserve(20);
 	discarded.reserve(20);
 
+	//Default Deck
 	Add(Modifier(ModifierValue::NoDamage));
 	Add(Modifier(ModifierValue::DoubleDamage));
-	//Add(Modifier(ModifierValue::Zero));
-	//Add(Modifier(ModifierValue::Zero));
-	//Add(Modifier(ModifierValue::Zero));
-	//Add(Modifier(ModifierValue::Zero));
-	//Add(Modifier(ModifierValue::Zero));
-	//Add(Modifier(ModifierValue::Zero));
-	//Add(Modifier(ModifierValue::MinusOne));
-	//Add(Modifier(ModifierValue::MinusOne));
-	//Add(Modifier(ModifierValue::MinusOne));
-	//Add(Modifier(ModifierValue::MinusOne));
-	//Add(Modifier(ModifierValue::MinusOne));
-	//Add(Modifier(ModifierValue::MinusTwo));
-	//Add(Modifier(ModifierValue::Two));
-	//Add(Modifier(ModifierValue::One));
-	//Add(Modifier(ModifierValue::One));
-	//Add(Modifier(ModifierValue::One));
-	//Add(Modifier(ModifierValue::One));
-	//Add(Modifier(ModifierValue::One));
+	Add(Modifier(ModifierValue::Zero));
+	Add(Modifier(ModifierValue::Zero));
+	Add(Modifier(ModifierValue::Zero));
+	Add(Modifier(ModifierValue::Zero));
+	Add(Modifier(ModifierValue::Zero));
+	Add(Modifier(ModifierValue::Zero));
+	Add(Modifier(ModifierValue::MinusOne));
+	Add(Modifier(ModifierValue::MinusOne));
+	Add(Modifier(ModifierValue::MinusOne));
+	Add(Modifier(ModifierValue::MinusOne));
+	Add(Modifier(ModifierValue::MinusOne));
+	Add(Modifier(ModifierValue::MinusTwo));
+	Add(Modifier(ModifierValue::Two));
+	Add(Modifier(ModifierValue::One));
+	Add(Modifier(ModifierValue::One));
+	Add(Modifier(ModifierValue::One));
+	Add(Modifier(ModifierValue::One));
+	Add(Modifier(ModifierValue::One));
 
 
-	//Remove(Modifier(ModifierValue::MinusOne));
-	//Remove(Modifier(ModifierValue::MinusOne));
+	// Perks
+	Remove(Modifier(ModifierValue::MinusOne));
+	Remove(Modifier(ModifierValue::MinusOne));
 
-	//Remove(Modifier(ModifierValue::MinusOne));
-	//Add(Modifier(ModifierValue::One));
+	Remove(Modifier(ModifierValue::MinusOne));
+	Add(Modifier(ModifierValue::One));
 
-	//Add(Modifier(ModifierValue::Three));
+	Add(Modifier(ModifierValue::Three));
 
 	Add(Modifier(ModifierValue::Zero, true, ModifierStatus::Pierce3));
 	Add(Modifier(ModifierValue::Zero, true, ModifierStatus::Pierce3));
@@ -50,21 +52,6 @@ ModifierDeck::ModifierDeck()
 
 	Add(Modifier(ModifierValue::One, true));
 	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-	Add(Modifier(ModifierValue::One, true));
-
 
 	Shuffle();
 }
@@ -206,6 +193,8 @@ std::string Modifier::StatusString(ModifierStatus status)
 		return "RefreshItem";
 		case ModifierStatus::HealSelf:
 		return "HealSelf";
+		case ModifierStatus::Bless:
+		return "Bless";
 	}
 
 	throw "Unknown status in StatusString";
@@ -220,12 +209,14 @@ std::string Modifier::ToString(const std::vector<Modifier>& modifiers)
 		if(modifierIndex != 0)
 			ss << " + ";
 
-		if(modifier.value == ModifierValue::NoDamage)
+		if(modifier.value == ModifierValue::NoDamage || modifier.status == ModifierStatus::Curse )
 			ss << "[NoDamage]";
-		else if(modifier.value == ModifierValue::DoubleDamage)
-			ss << "[Doubled!]";
-		else //if(modifierIndex != 0 && modifier.value != ModifierValue::Zero)
-			ss << modifier.ModifyValue(0);
+		else if(modifier.value == ModifierValue::DoubleDamage || modifier.status == ModifierStatus::Bless )
+			ss << "x2!";
+		else {
+			if( modifierIndex == 0 || modifier.value != ModifierValue::Zero )
+				ss << modifier.ModifyValue(0);
+		}
 
 		if(modifier.rolling)
 			ss << " R ";

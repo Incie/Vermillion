@@ -1,9 +1,9 @@
 #pragma once
 
-#include"..//uilayer.h"
+#include"..//uiview.h"
 #include<functional>
 
-class PaintProperties : public UILayer {
+class PaintProperties : public UIView {
 public:
 	PaintProperties(std::function<void(int)> callback);
 	~PaintProperties();
@@ -22,7 +22,6 @@ public:
 		ROOM_5 = 5
 	};
 
-	virtual UILayerId LayerId() override;
 private:
 	std::function<void(int)> callback;
 };

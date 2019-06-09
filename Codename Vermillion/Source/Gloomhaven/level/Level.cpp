@@ -38,6 +38,7 @@ void Level::LoadMap(const std::string& fileName)
 	auto jTiles = j["tiles"];
 
 	float size = hexagonSize;
+	float innerSize = size * 0.96f;
 	float width = 2.0f * size;
 	float height = sqrtf(3.0f) * size;
 
@@ -51,7 +52,7 @@ void Level::LoadMap(const std::string& fileName)
 		float hx = (3.0f / 4.0f) * width * static_cast<float>(x);
 		float hy = -static_cast<float>(y) * height - (1.0f / 2.0f) * height * static_cast<float>(x);
 		auto tile = vnew Tile(glm::ivec3(x, y, -(x + y)), glm::vec3(hx, hy, 0.0f));
-		tile->GetHexagon().Generate(glm::vec2(hx, hy), size * 0.9f, size);
+		tile->GetHexagon().Generate(glm::vec2(hx, hy), innerSize, size);
 		tile->Disable();
 		tile->RoomNumber(jTile.value("room", 1));
 		tiles.push_back(tile);
@@ -65,9 +66,10 @@ void Level::LoadMap(const std::string& fileName)
 
 void Level::Generate()
 {
-	double size = 50.0;
-	double width = 2.0 * size;
-	double height = sqrt(3.0) * size;
+	float size = 50.0f;
+	float innerSize = size * 0.99f;
+	float width = 2.f * size;
+	float height = sqrt(3.0f) * size;
 
 	auto nX = 7;
 	auto nY = 5;
@@ -92,7 +94,7 @@ void Level::Generate()
 
 			tiles.push_back( vnew Tile(coord, glm::vec3(w, h+add, 0.0f)) );
 			auto &tile = *tiles.back();
-			tile.GetHexagon().Generate(glm::vec2(w, h + add), 40, 50);
+			tile.GetHexagon().Generate(glm::vec2(w, h + add), innerSize, size);
 
 			coord.x++;
 			if (x % 2 == 0) 

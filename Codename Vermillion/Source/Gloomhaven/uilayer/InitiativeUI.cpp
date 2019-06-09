@@ -21,7 +21,7 @@ bool InitiativeTrackerUI::HandleInput(const InputService& inputService)
 
 void InitiativeTrackerUI::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize, text);
+	UIView::Resize(windowSize, text);
 }
 
 void InitiativeTrackerUI::Measure(const glm::vec2& dimensions, const TextService& text)
@@ -45,7 +45,7 @@ void InitiativeTrackerUI::Update()
 void InitiativeTrackerUI::Render(ServiceLocator& Services)
 {
 	Measure(glm::vec2(), Services.Text());
-	UILayer::Render(Services);
+	UIView::Render(Services);
 
 	auto initiatives = initiativeTracker.Initiatives();
 	auto currentTurn = initiativeTracker.CurrentInitiativeIndex();

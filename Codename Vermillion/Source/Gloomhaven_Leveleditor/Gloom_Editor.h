@@ -20,7 +20,7 @@ public:
 	void Render() override;
 
 private:
-	std::vector<UILayer*> layers;
+	std::vector<UIView*> layers;
 	EditorBoard editorBoard;
 	Camera2D camera;
 };

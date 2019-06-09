@@ -1,12 +1,12 @@
 #pragma once
 
 
-#include"..//uilayer.h"
+#include"..//uiview.h"
 #include<functional>
 
 class EditorTile;
 
-class TileModifier : public UILayer
+class TileModifier : public UIView
 {
 public:
 	TileModifier(std::function<void(const std::string&, const glm::ivec3&)> callback);
@@ -20,8 +20,6 @@ public:
 	void OnEvent(WindowEvent type, int id);
 
 	void SetTile(EditorTile* tile);
-
-	UILayerId LayerId() override;
 
 private:
 	void SetTileEntity(const std::string& entity);

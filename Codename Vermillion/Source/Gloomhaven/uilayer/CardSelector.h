@@ -1,6 +1,6 @@
 #pragma once
 
-#include"../uilayer.h"
+#include"../uiview.h"
 #include<vector>
 #include<functional>
 #include<string>
@@ -9,7 +9,7 @@ class PlayerDeck;
 class PlayerCard;
 class Texture;
 
-class CardSelect : public UILayer {
+class CardSelect : public UIView {
 public:
 	CardSelect(PlayerDeck& cards, Texture& texture, std::function<void(const std::string&)> onclick);
 	virtual ~CardSelect();
@@ -20,8 +20,6 @@ public:
 
 
 	void Render(ServiceLocator& Services);
-
-	UILayerId LayerId();
 
 protected:
 	Texture& texture;

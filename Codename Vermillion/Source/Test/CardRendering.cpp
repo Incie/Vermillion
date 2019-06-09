@@ -10,14 +10,14 @@
 
 #include<functional>
 
-#include"../Framework/uilayer.h"
+#include"../Framework/uiview.h"
 
 #include"../Gloomhaven/uilayer/CardSelection.h"
 #include"../Gloomhaven/uilayer/CardSelector.h"
 #include"../Gloomhaven/uilayer/AbilitySelector.h"
 
 
-class ButtonTest : public UILayer {
+class ButtonTest : public UIView {
 public:
 	ButtonTest() {
 		auto button = vnew Button();
@@ -31,11 +31,11 @@ public:
 
 	void Resize(const glm::vec2& windowSize, const TextService& text)
 	{
-		UILayer::Resize(windowSize, text);
+		UIView::Resize(windowSize, text);
 	}
 	
 	void Render(ServiceLocator& Services) {
-		UILayer::Render(Services);
+		UIView::Render(Services);
 	}
 	
 	void OnEvent(WindowEvent type, int id) {
@@ -46,10 +46,6 @@ public:
 		}
 	}
 
-	virtual UILayerId LayerId() override
-	{
-		return UILayerId();
-	}
 };
 
 #include"../Gloomhaven/cards/CardGenerator.h"
@@ -86,7 +82,7 @@ void CardRendering::Initialize()
 	//	cardLayer->AddCard(*cardFound);
 	//} );
 	//cardSelector->SetSize(0, 150.0f);
-	//cardSelector->SetAnchor(UILayer::WindowAnchor::BOTTOM | UILayer::WindowAnchor::LEFT | UILayer::WindowAnchor::RIGHT);
+	//cardSelector->SetAnchor(UIView::WindowAnchor::BOTTOM | UIView::WindowAnchor::LEFT | UIView::WindowAnchor::RIGHT);
 	//cardSelector->Activate();
 	//layers.push_back(cardSelector);
 
@@ -108,7 +104,7 @@ void CardRendering::Initialize()
 	//	abilitySelector->Activate();
 	//});
 	//cardSelection->SetSize(0, 0);
-	//cardSelection->SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::BOTTOM);
+	//cardSelection->SetAnchor(UIView::WindowAnchor::RIGHT | UIView::WindowAnchor::TOP | UIView::WindowAnchor::BOTTOM);
 	//cardSelection->Activate();
 	//layers.push_back(cardSelection);
 

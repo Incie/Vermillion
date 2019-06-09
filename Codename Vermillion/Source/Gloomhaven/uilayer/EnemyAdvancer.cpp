@@ -28,7 +28,7 @@ EnemyAdvancer::~EnemyAdvancer()
 
 bool EnemyAdvancer::HandleInput(const InputService& inputService)
 {
-	if (!UILayer::HandleInput(inputService))
+	if (!UIView::HandleInput(inputService))
 		return false;
 
 	return true;
@@ -36,7 +36,7 @@ bool EnemyAdvancer::HandleInput(const InputService& inputService)
 
 void EnemyAdvancer::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize, text);
+	UIView::Resize(windowSize, text);
 
 	if( children.size() > 0 )
 		children[0]->SetPosition(size.x * 0.5f - children[0]->Size().x * 0.5f, size.y - children[0]->Size().y - 8);
@@ -57,7 +57,7 @@ void EnemyAdvancer::Measure(const glm::vec2& windowSize, const TextService& text
 #include"..//servicelocator.h"
 void EnemyAdvancer::Render(ServiceLocator& Services)
 {
-	UILayer::Render(Services);
+	UIView::Render(Services);
 
 	float desiredWidth = 300.0f;
 	float scale = desiredWidth / static_cast<float>(texture->width);

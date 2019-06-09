@@ -8,7 +8,7 @@
 #include"Director.h"
 #include"cards/CardGenerator.h"
 
-class UILayer;
+class UIView;
 class Action;
 
 class Gloom : public Activity
@@ -28,7 +28,6 @@ public:
 private:
 	void InitializeUI();
 	void OnDirectorEvent(DirectorEvent event);
-	std::vector<UILayer*> layers;
 
 	Director director;
 	Camera2D camera;

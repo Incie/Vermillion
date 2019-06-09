@@ -6,7 +6,7 @@
 StatusBar::StatusBar()
 	: roundNumber(1)
 {
-	SetAnchor(UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::LEFT | UILayer::WindowAnchor::RIGHT);
+	SetAnchor(UIView::WindowAnchor::TOP | UIView::WindowAnchor::LEFT | UIView::WindowAnchor::RIGHT);
 	SetSize(0, 30.0f);
 	SetPosition(0, 0);
 
@@ -40,7 +40,7 @@ bool StatusBar::HandleInput(const InputService& inputService)
 
 void StatusBar::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize, text);
+	UIView::Resize(windowSize, text);
 
 	float x = 0;
 	auto center = Center();
@@ -72,12 +72,7 @@ void StatusBar::Measure(const glm::vec2& dimensions, const TextService& text)
 
 void StatusBar::Render(ServiceLocator& Services)
 {
-	UILayer::Render(Services);
+	UIView::Render(Services);
 	float centerX = size.x * 0.5f;
 	Services.Text().PrintCenter(centerX, 16+15+9.0, statusText, 14, Colors::Black);
-}
-
-UILayerId StatusBar::LayerId()
-{
-	return UILayerId();
 }

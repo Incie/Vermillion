@@ -9,8 +9,6 @@ class InputService;
 class ServiceLocator;
 class Texture;
 
-enum class UILayerId;
-
 
 class UIElement {
 public:
@@ -138,7 +136,6 @@ public:
 		UIElement::SetSize(width, height);
 	}
 
-	virtual UILayerId LayerId() = 0;
 	void SetAnchor(int newAnchor);
 
 	enum class WindowEvent {

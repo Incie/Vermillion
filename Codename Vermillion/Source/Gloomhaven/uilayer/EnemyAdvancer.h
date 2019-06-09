@@ -1,12 +1,12 @@
 #pragma once
 
 
-#include"../uilayer.h"
+#include"../uiview.h"
 #include<functional>
 
 class Texture;
 
-class EnemyAdvancer : public UILayer {
+class EnemyAdvancer : public UIView {
 public:
 	EnemyAdvancer(std::function<void()> callback);
 	virtual ~EnemyAdvancer();
@@ -16,8 +16,6 @@ public:
 	virtual void Measure(const glm::vec2& windowSize, const TextService& text);
 	virtual void OnEvent(WindowEvent type, int id);
 	virtual void Render(ServiceLocator& Services);
-
-	UILayerId LayerId() { return UILayerId(); }
 
 	void SetEnemyActions(const std::vector<std::string>& actions);
 	void Advance();

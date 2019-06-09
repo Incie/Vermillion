@@ -28,7 +28,7 @@ ActionSelector::~ActionSelector()
 
 bool ActionSelector::HandleInput(const InputService& inputService)
 {
-	if (!UILayer::HandleInput(inputService))
+	if (!UIView::HandleInput(inputService))
 		return false;
 
 	return true;
@@ -36,7 +36,7 @@ bool ActionSelector::HandleInput(const InputService& inputService)
 
 void ActionSelector::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize, text);
+	UIView::Resize(windowSize, text);
 }
 
 void ActionSelector::Measure(const glm::vec2& windowSize, const TextService& text)
@@ -51,7 +51,7 @@ void ActionSelector::Update()
 
 void ActionSelector::Render(ServiceLocator& Services)
 {
-	UILayer::Render(Services);
+	UIView::Render(Services);
 }
 
 
@@ -74,9 +74,4 @@ void ActionSelector::OnEvent(WindowEvent type, int id)
 
 		callback(id);
 	}
-}
-
-UILayerId ActionSelector::LayerId()
-{
-	return UILayerId();
 }

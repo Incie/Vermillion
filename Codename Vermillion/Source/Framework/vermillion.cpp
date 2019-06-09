@@ -5,6 +5,8 @@
 #include "text.h"
 #include "windowstate.h"
 
+#include<chrono>
+
 Vermillion::Vermillion(Activity* activity, HINSTANCE hInstance)
 	: runningActivity(activity), hInstance(hInstance)
 {
@@ -79,7 +81,7 @@ void Vermillion::InitializeEngine()
 
 	text.Init();
 
-	renderTimer.LimitByMilliseconds(0);
+	renderTimer.LimitByMilliseconds(15);
 	fpsTimer.LimitByMilliseconds(1000);
 
 	ServiceAssigner serviceAssigner(serviceLocator);
@@ -92,7 +94,7 @@ void Vermillion::DeinitializeEngine()
 {
 	Log::Info("Application", "Shutting down");
 
-	if(runningActivity)
+	if(runningActivity != nullptr)
 	{
 		runningActivity->Deinitialize();
 		delete runningActivity;

@@ -31,12 +31,12 @@ TileModifier::~TileModifier()
 
 bool TileModifier::HandleInput(const InputService& inputService)
 {
-	return UILayer::HandleInput(inputService);
+	return UIView::HandleInput(inputService);
 }
 
 void TileModifier::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize, text);
+	UIView::Resize(windowSize, text);
 
 	float y = 8.0f;
 
@@ -56,7 +56,7 @@ void TileModifier::Measure(const glm::vec2& windowSize, const TextService& text)
 
 void TileModifier::Render(ServiceLocator& Services)
 {
-	UILayer::Render(Services);
+	UIView::Render(Services);
 }
 
 void TileModifier::OnEvent(WindowEvent type, int id)
@@ -85,11 +85,6 @@ void TileModifier::SetTile(EditorTile* tile)
 
 	Activate();
 	ClearButtonStates();
-}
-
-UILayerId TileModifier::LayerId()
-{
-	return UILayerId();
 }
 
 void TileModifier::SetTileEntity(const std::string& entityName)

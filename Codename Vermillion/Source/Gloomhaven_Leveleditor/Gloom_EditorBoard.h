@@ -7,7 +7,7 @@
 
 class InputService;
 class TextService;
-class UILayer;
+class UIView;
 
 class EditorBoard
 {

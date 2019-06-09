@@ -1,6 +1,6 @@
 #pragma once
 
-#include"../uilayer.h"
+#include"../uiview.h"
 #include"glm/glm.hpp"
 #include<functional>
 #include<string>
@@ -8,7 +8,7 @@
 class Texture;
 class PlayerCard;
 
-class CardSelection : public UILayer {
+class CardSelection : public UIView {
 public:
 	CardSelection(Texture& texture, std::function<void(CardSelection&, int)> callback);
 	virtual ~CardSelection();
@@ -20,7 +20,6 @@ public:
 	void Render(ServiceLocator& Services);
 	void AddCard(const PlayerCard& playerCard);
 	bool IsFull() const;
-	UILayerId LayerId();
 
 	void OnEvent(WindowEvent type, int id);
 

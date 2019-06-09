@@ -25,7 +25,7 @@ EditorMainMenu::~EditorMainMenu()
 
 void EditorMainMenu::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize, text);
+	UIView::Resize(windowSize, text);
 
 	position.y += 26.0f;
 
@@ -47,9 +47,4 @@ void EditorMainMenu::OnEvent(WindowEvent type, int id)
 {
 	if(type == WindowEvent::CLICK)
 		callback(id);
-}
-
-UILayerId EditorMainMenu::LayerId()
-{
-	return UILayerId();
 }

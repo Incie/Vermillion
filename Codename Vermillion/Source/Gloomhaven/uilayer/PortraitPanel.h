@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include"../uilayer.h"
+#include"../uiview.h"
 
-class PortraitPanel : public UILayer {
+class PortraitPanel : public UIView {
 public:
 	PortraitPanel();
 	virtual ~PortraitPanel();

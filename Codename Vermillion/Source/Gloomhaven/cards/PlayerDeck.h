@@ -24,6 +24,7 @@ public:
 	void Lose(const std::string& cardName);
 	
 private:
+	void SortHand();
 
 	std::string name;
 

@@ -1,7 +1,5 @@
 #include"pch.h"
 #include "CardSelection.h"
-#include"UILayerId.h"
-
 #include"../cards/PlayerDeck.h"
 #include"GL/glew.h"
 
@@ -17,7 +15,7 @@
 CardSelection::CardSelection(Texture& texture, std::function<void(CardSelection&, int)> callback)
 	: texture(texture), callback(callback)
 {
-	SetAnchor(UILayer::WindowAnchor::RIGHT | UILayer::WindowAnchor::TOP | UILayer::WindowAnchor::BOTTOM);
+	SetAnchor(UIView::WindowAnchor::RIGHT | UIView::WindowAnchor::TOP | UIView::WindowAnchor::BOTTOM);
 
 	scalar = 0.66f;
 	playerCards[0] = nullptr;
@@ -38,7 +36,7 @@ CardSelection::~CardSelection()
 
 void CardSelection::Resize(const glm::vec2& windowSize, const TextService& text)
 {
-	UILayer::Resize(windowSize, text);
+	UIView::Resize(windowSize, text);
 
 	position.x = (windowSize.x - size.x);
 	position.y = (windowSize.y - size.y) / 2.0f;
@@ -61,7 +59,7 @@ void CardSelection::Measure(const glm::vec2& dimensions, const TextService& text
 
 bool CardSelection::HandleInput(const InputService& input)
 {
-	if (!UILayer::HandleInput(input)) {
+	if (!UIView::HandleInput(input)) {
 		return false;
 	}
 
@@ -92,7 +90,7 @@ bool CardSelection::HandleInput(const InputService& input)
 
 void CardSelection::Render(ServiceLocator& Services)
 {
-	UILayer::Render(Services);
+	UIView::Render(Services);
 
 	Services.Text().PrintCenter(8 + 0.5 * (double)scalar * (double)texture.width, 8.0 + 11.0, "Initiative", 22, Colors::Black);
 
@@ -132,11 +130,6 @@ void CardSelection::AddCard(const PlayerCard& playerCard)
 bool CardSelection::IsFull() const
 {
 	return false;
-}
-
-UILayerId CardSelection::LayerId()
-{
-	return UILayerId::CardSelection;
 }
 
 void CardSelection::OnEvent(WindowEvent type, int id)

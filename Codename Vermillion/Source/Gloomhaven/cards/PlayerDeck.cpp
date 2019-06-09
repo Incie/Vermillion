@@ -12,6 +12,8 @@ PlayerDeck::PlayerDeck(const std::string& player, std::vector<PlayerCard>& cards
 		handCards.push_back(&card);	
 		playingCards.push_back(&card);
 	}
+
+	SortHand();
 }
 
 PlayerDeck::~PlayerDeck()
@@ -68,4 +70,9 @@ void PlayerDeck::Lose(const std::string& cardName)
 	lostCards.push_back(foundCard);
 
 	handCards.erase(found);
+}
+
+void PlayerDeck::SortHand()
+{
+	std::sort(handCards.begin(), handCards.end(), [](auto a, auto b) { return a->Initiative() < b->Initiative(); });
 }

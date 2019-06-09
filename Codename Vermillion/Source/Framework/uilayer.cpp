@@ -1,23 +1,23 @@
 #include"pch.h"
-#include "uilayer.h"
+#include "uiview.h"
 #include"../Framework/services.h"
 #include"windowstate.h"
 #include"GL/glew.h"
 
 #include<Windows.h>
 
-UILayer::UILayer()
+UIView::UIView()
 	: anchor(0)
 {
 }
 
-UILayer::~UILayer() {
+UIView::~UIView() {
 	for (auto child : children)
 		delete child;
 	children.clear();
 }
 
-bool UILayer::HandleInput(const InputService & inputService)
+bool UIView::HandleInput(const InputService & inputService)
 {
 	const auto& mouseposition = inputService.GetMousePosition();
 
@@ -39,7 +39,7 @@ bool UILayer::HandleInput(const InputService & inputService)
 
 			if (inputService.KeyOnce(VK_LBUTTON)) {
 				child->SetState(UIElement::UIState::ACTIVATED);
-				OnEvent(UILayer::WindowEvent::CLICK, child->Id());
+				OnEvent(UIView::WindowEvent::CLICK, child->Id());
 			}
 		}
 	}
@@ -47,7 +47,7 @@ bool UILayer::HandleInput(const InputService & inputService)
 	return true;
 }
 
-void UILayer::Resize(const glm::vec2 & windowSize, const TextService& text)
+void UIView::Resize(const glm::vec2 & windowSize, const TextService& text)
 {
 	Measure(windowSize, text);
 
@@ -68,13 +68,13 @@ void UILayer::Resize(const glm::vec2 & windowSize, const TextService& text)
 	invalidated = false;
 }
 
-void UILayer::Update()
+void UIView::Update()
 {
 	if (active == false)
 		return;
 }
 
-void UILayer::StartRender()
+void UIView::StartRender()
 {
 	if (active == false)
 		return;
@@ -84,7 +84,7 @@ void UILayer::StartRender()
 }
 
 #include"render.h"
-void UILayer::Render(ServiceLocator & Services)
+void UIView::Render(ServiceLocator & Services)
 {
 	if (!active)
 		return;
@@ -95,7 +95,7 @@ void UILayer::Render(ServiceLocator & Services)
 		child->Render(Services);
 }
 
-void UILayer::EndRender()
+void UIView::EndRender()
 {
 	if (active == false)
 		return;
@@ -103,23 +103,23 @@ void UILayer::EndRender()
 	glPopMatrix();
 }
 
-void UILayer::OnEvent(WindowEvent type, int id)
+void UIView::OnEvent(WindowEvent type, int id)
 {
 }
 
-void UILayer::AddChild(UIElement* child)
+void UIView::AddChild(UIElement* child)
 {
 	children.push_back(child);
 }
 
-void UILayer::Resize(const TextService& text) {
+void UIView::Resize(const TextService& text) {
 	const auto& windowSize = WindowState::Size();
 	Resize(glm::vec2((float)windowSize.x, (float)windowSize.y), text);
 }
 
 
 
-void UILayer::SetAnchor(int newAnchor)
+void UIView::SetAnchor(int newAnchor)
 {
 	anchor = newAnchor;
 }

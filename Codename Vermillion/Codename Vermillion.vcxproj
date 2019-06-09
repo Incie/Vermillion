@@ -54,6 +54,8 @@
     <ClCompile Include="Source\Gloomhaven\action\CardAction.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\CardGenerator.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\Modifiers.cpp" />
+    <ClCompile Include="Source\Gloomhaven\cards\MonsterCardGenerator.cpp" />
+    <ClCompile Include="Source\Gloomhaven\cards\MonsterDeck.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\PlayerCard.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\PlayerDeck.cpp" />
     <ClCompile Include="Source\Gloomhaven\cards\PlayerRound.cpp" />
@@ -106,7 +108,7 @@
     <ClInclude Include="Source\Framework\textures.h" />
     <ClInclude Include="Source\Framework\textures_pngloader.h" />
     <ClInclude Include="Source\Framework\timer.h" />
-    <ClInclude Include="Source\Framework\uilayer.h" />
+    <ClInclude Include="Source\Framework\uiview.h" />
     <ClInclude Include="Source\Framework\vermillion.h" />
     <ClInclude Include="Source\Framework\window.h" />
     <ClInclude Include="Source\Framework\windowstate.h" />
@@ -117,6 +119,8 @@
     <ClInclude Include="Source\Gloomhaven\action\CardAction.h" />
     <ClInclude Include="Source\Gloomhaven\cards\CardGenerator.h" />
     <ClInclude Include="Source\Gloomhaven\cards\Modifiers.h" />
+    <ClInclude Include="Source\Gloomhaven\cards\MonsterCardGenerator.h" />
+    <ClInclude Include="Source\Gloomhaven\cards\MonsterDeck.h" />
     <ClInclude Include="Source\Gloomhaven\cards\PlayerCard.h" />
     <ClInclude Include="Source\Gloomhaven\cards\PlayerDeck.h" />
     <ClInclude Include="Source\Gloomhaven\cards\PlayerRound.h" />
@@ -139,7 +143,6 @@
     <ClInclude Include="Source\Gloomhaven\uilayer\InitiativeUI.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\PortraitPanel.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\StatusBar.h" />
-    <ClInclude Include="Source\Gloomhaven\uilayer\UILayerId.h" />
     <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.h" />
     <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_EditorBoard.h" />
     <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\ActionSelector.h" />
@@ -257,6 +260,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64)\include;Source\External</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -264,6 +268,8 @@
       <AdditionalOptions>/VERBOSE:UNUSEDLIBS %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib;fmtd.lib;libpng16d.lib;freetyped.lib;glew32d.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(VCPKG_64)\debug\lib</AdditionalLibraryDirectories>
+      <ShowProgress>NotSet</ShowProgress>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

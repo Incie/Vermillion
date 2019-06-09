@@ -7,8 +7,6 @@
 #include"../servicelocator.h"
 #include<Windows.h>
 
-#include"UILayerId.h"
-
 CardSelect::CardSelect(PlayerDeck& cards, Texture& texture, std::function<void(const std::string&)> onclick)
 	: texture(texture), cardList(&cards)
 {
@@ -25,7 +23,7 @@ void CardSelect::Resize(const glm::vec2& windowSize, const TextService& text)
 	if (texture.width == 0 || texture.height == 0)
 		return;
 
-	UILayer::Resize(windowSize, text);
+	UIView::Resize(windowSize, text);
 }
 
 void CardSelect::Measure(const glm::vec2& windowSize, const TextService& text)
@@ -46,7 +44,7 @@ void CardSelect::Measure(const glm::vec2& windowSize, const TextService& text)
 
 bool CardSelect::HandleInput(const InputService& input)
 {
-	if (!UILayer::HandleInput(input)) {
+	if (!UIView::HandleInput(input)) {
 		cardHighlight = -1;
 		return false;
 	}
@@ -73,7 +71,7 @@ bool CardSelect::HandleInput(const InputService& input)
 
 void CardSelect::Render(ServiceLocator& Services)
 {
-	UILayer::Render(Services);
+	UIView::Render(Services);
 
 	glPushMatrix();
 	glTranslatef(0, 0, 0.1f);
@@ -95,9 +93,4 @@ void CardSelect::Render(ServiceLocator& Services)
 		glTranslatef((texture.width * scale), 0, 0);
 	}
 	glPopMatrix();
-}
-
-UILayerId CardSelect::LayerId()
-{
-	return UILayerId::CardSelect;
 }

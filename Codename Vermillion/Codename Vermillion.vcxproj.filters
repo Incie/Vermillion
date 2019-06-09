@@ -289,6 +289,12 @@
     <ClCompile Include="Source\Framework\constants.cpp">
       <Filter>Source Files\Framework\shared</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\MonsterDeck.cpp">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\MonsterCardGenerator.cpp">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -402,16 +408,10 @@
     <ClInclude Include="Source\Gloomhaven\icons\icons.h">
       <Filter>Source Files\Gloomhaven\Icons</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Framework\uilayer.h">
-      <Filter>Source Files\Framework\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\CardSelection.h">
       <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\CardSelector.h">
-      <Filter>Source Files\Gloomhaven\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Gloomhaven\uilayer\UILayerId.h">
       <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\AbilitySelector.h">
@@ -470,6 +470,15 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\constants.h">
       <Filter>Source Files\Framework\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\MonsterDeck.h">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\MonsterCardGenerator.h">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\uiview.h">
+      <Filter>Source Files\Framework\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -28,7 +28,13 @@ public:
 
 	State state;
 
+
+	bool Reshuffle() { return reshuffle; }
+	void SetReshuffle() { reshuffle = true; }
+
 private:
+	bool reshuffle;
+
 	int currentAction;
 	std::vector<EnemyAction*> actions;
 };

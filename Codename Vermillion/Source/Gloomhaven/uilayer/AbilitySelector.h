@@ -1,20 +1,13 @@
 #pragma once
 
-#include"../uilayer.h"
+#include"../uiview.h"
 #include<functional>
 
 class PlayerCard;
 class Texture;
 
 
-//class AbilityCardPanel : public UILayer {
-//public:
-//
-//protected:
-//
-//};
-
-class AbilitySelector : public UILayer {
+class AbilitySelector : public UIView {
 public:
 	AbilitySelector(Texture& texture, std::function<void(int, int)> callback);
 	~AbilitySelector();
@@ -37,8 +30,6 @@ public:
 
 	const std::string& GetCardName(int i);
 	void SetCards(PlayerCard* card0, PlayerCard* card1);
-
-	virtual UILayerId LayerId() { return UILayerId(); }
 
 	void DisableCard(int cardId);
 	void DisableTop();
