@@ -43,9 +43,9 @@ void PlayerCard::Render(const TextService& text, const Texture& texture) const
 	}
 	glEnd();
 
-	text.PrintCenter(180, 20, name, 25, Colors::White);
-	text.PrintCenter(180, 54, fmt::format("{0}", level), 18, Colors::White);
-	text.PrintCenter(180, 275, fmt::format("{0}", initiative), 40, Colors::White);
+	text.Print(180, 20, name, 25, Colors::White, true);
+	text.Print(180, 54, fmt::format("{0}", level), 18, Colors::White, true);
+	text.Print(180, 275, fmt::format("{0}", initiative), 40, Colors::White, true);
 
 	RenderAbility(text, topAction, glm::vec2(180, 120));
 	RenderAbility(text, bottomAction, glm::vec2(180, 330));
@@ -83,25 +83,26 @@ void PlayerCard::RenderAbility(const TextService& text, const std::vector<CardAb
 		auto width = text.Print(0, 0, cardAbility.name, fontHeight, Colors::White, true, false);
 
 		glPushMatrix();
-		glTranslatef(width, 0, 0);
-
-		auto icon = Icons::Get(cardAbility.name);
-
-		if (icon != nullptr) {
-			int height = fontHeight;
-			if (cardAbility.subtitle)
-				height = (height / 2) * 3;
-
-			float iconScale = height / static_cast<float>(icon->height);
-
-			glTranslatef(-icon->width * iconScale, 0, 0);
-			auto width = Render::Quad(*icon, static_cast<float>(height));
-			glTranslatef(icon->width * iconScale, 0, 0);
 			glTranslatef(width * 0.5f, 0, 0);
-		}
 
-		if (cardAbility.value != 0)
-			text.Print(0, 0, fmt::format("{0}", cardAbility.value), fontHeight, Colors::White, true, false);
+			auto icon = Icons::Get(cardAbility.name);
+			if (icon != nullptr) {
+				auto iconWidth = static_cast<float>(fontHeight);
+				if (cardAbility.subtitle)
+					iconWidth = (iconWidth / 2.0f) * 3.0f;
+
+				Render::Quad(glm::vec2(iconWidth * 0.5f, 0), glm::vec2(iconWidth, iconWidth), *icon, Colors::White, true);
+				glEnable(GL_TEXTURE_2D);
+
+				glTranslatef(iconWidth, 0, 0);
+			}
+
+			if(cardAbility.value != 0) {
+				const auto t = fmt::format("{0}", cardAbility.value);
+				auto abilityValueWidth = 0.5f * text.CalculateWidth(t, fontHeight);
+				text.Print(abilityValueWidth, 0, t, fontHeight, Colors::White, true, false);
+			}
+			Render::OriginCross(15.0f);
 		glPopMatrix();
 		text.NewLine(fontHeight);
 	}
