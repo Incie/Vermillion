@@ -145,7 +145,8 @@ void CardRendering::Update(double delta)
 
 		if( !inputHandled )
 			inputHandled = layer->HandleInput(input);
-		layer->Update();
+		
+		layer->Update(static_cast<float>(delta), Services());
 	}
 
 

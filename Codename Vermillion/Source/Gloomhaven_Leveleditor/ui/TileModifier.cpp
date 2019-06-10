@@ -81,6 +81,7 @@ void TileModifier::SetTile(EditorTile* tile)
 	this->tile = tile;
 	if (tile == nullptr) {
 		Deactivate();
+		return;
 	}
 
 	Activate();

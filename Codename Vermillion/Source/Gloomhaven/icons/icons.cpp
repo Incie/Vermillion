@@ -17,7 +17,19 @@ void Icons::Load(TextureService& textures)
 	icons["disarm"] = textures.LoadTexture("textures/icons/disarm.png");
 	icons["range"] = textures.LoadTexture("textures/icons/range.png");
 	icons["poison"] = textures.LoadTexture("textures/icons/poison.png");
-	icons["shield"] = textures.LoadTexture("textures/icons/shield.png");
+	icons["muddle"] = textures.LoadTexture("textures/icons/muddle.png");
+	icons["strengthen"] = textures.LoadTexture("textures/icons/strengthen.png");
+	icons["shield"] = textures.LoadTexture("textures/icons/shield_outline.png");
+	icons["pierce"] = textures.LoadTexture("textures/icons/pierce.png");
+
+	Add(textures, "stun", "icons/stun.png");
+	Add(textures, "wound", "icons/wound.png");
+	Add(textures, "invisible", "icons/invisible.png");
+	Add(textures, "immobilise", "icons/immobilize.png");
+	Add(textures, "target", "icons/target.png");
+	Add(textures, "bless", "icons/bless.png");
+	Add(textures, "curse", "icons/curse.png");
+	Add(textures, "health", "icons/health.png");
 
 	texturePlayerCard = textures.LoadTexture("textures/player_ability_back.png");
 
@@ -47,6 +59,8 @@ void Icons::Load(TextureService& textures)
 	icons["element_earth"] = textures.LoadTexture("textures/icons/icon_earth.png");
 	icons["element_any"] = textures.LoadTexture("textures/icons/icon_any_element.png");
 	icons["element_spend"] = textures.LoadTexture("textures/icons/icon_spend_element.png");
+
+	icons["brute"] = textures.LoadTexture("textures/icons/player_brute.png");
 }
 
 void Icons::Unload()
@@ -70,4 +84,9 @@ Texture* Icons::Get(const std::string& name)
 Texture* Icons::GetPlayerCard()
 {
 	return &texturePlayerCard;
+}
+
+void Icons::Add(TextureService& textures, const std::string& name, const std::string& relativePath)
+{
+	icons[name] = textures.LoadTexture("textures/" + relativePath);
 }

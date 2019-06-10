@@ -171,7 +171,7 @@ bool ActionTrample::Perform(Actor& actor)
 			calculatedDamage = m.ModifyValue(calculatedDamage);
 
 
-		int actualDamage = targetActor->DoDamage(calculatedDamage);
+		int actualDamage = targetActor->DoDamage(calculatedDamage, 0);
 		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", "[Player]", actualDamage, "[Enemy]", Modifier::ToString(modifiers), attack));
 
 

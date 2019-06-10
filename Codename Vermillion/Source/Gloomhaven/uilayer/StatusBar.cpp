@@ -11,13 +11,13 @@ StatusBar::StatusBar()
 	SetPosition(0, 0);
 
 	auto imageSize = glm::vec2(30, 30);
-	AddChild(new Image(imageSize, Icons::Get("element_ice")));
-	AddChild(new Image(imageSize, Icons::Get("element_fire")));
-	AddChild(new Image(imageSize, Icons::Get("element_earth")));
-	AddChild(new UIText("Round 1"));
-	AddChild(new Image(imageSize, Icons::Get("element_dark")));
-	AddChild(new Image(imageSize, Icons::Get("element_light")));
-	AddChild(new Image(imageSize, Icons::Get("element_wind")));
+	AddChild(vnew Image(imageSize, Icons::Get("element_ice")));
+	AddChild(vnew Image(imageSize, Icons::Get("element_fire")));
+	AddChild(vnew Image(imageSize, Icons::Get("element_earth")));
+	AddChild(vnew UIText("Round 1"));
+	AddChild(vnew Image(imageSize, Icons::Get("element_dark")));
+	AddChild(vnew Image(imageSize, Icons::Get("element_light")));
+	AddChild(vnew Image(imageSize, Icons::Get("element_wind")));
 
 	int i = 0;
 	for(auto child : children) {

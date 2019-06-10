@@ -4,14 +4,14 @@
 #include"textures.h"
 #include"GL/glew.h"
 
-const glm::vec3 Render::BLACK = glm::vec3(0);
-const glm::vec3 Render::WHITE = glm::vec3(1);
 
-
-void Render::Quad(const glm::vec2& position, const glm::vec2& size, const Texture& texture, const glm::vec3& color)
+void Render::Quad(const glm::vec2& position, const glm::vec2& size, const Texture& texture, const glm::vec3& color, bool center)
 {
 	glPushMatrix();
 		glTranslatef(position.x, position.y, 0);
+
+		if(center)
+			glTranslatef(size.x * -0.5f, size.y * -0.5f, 0.0f);
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -19,7 +19,7 @@ void Render::Quad(const glm::vec2& position, const glm::vec2& size, const Textur
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture.textureId);
 
-		glColor3fv(&color.x);
+		glColor4f(color.x, color.y, color.z, 1.0f);
 		glBegin(GL_QUADS);
 			glTexCoord2f(0, 0); glVertex2f(0, 0);
 			glTexCoord2f(1, 0); glVertex2f(size.x, 0);
@@ -93,4 +93,43 @@ void Render::Quad(float x, float y, float w, float h, const glm::vec3& color)
 		glColor3f(1, 1, 1);
 		glEnable(GL_TEXTURE_2D);
 	glPopMatrix();
+}
+
+void Render::OriginCross(float size)
+{
+	glBegin(GL_LINES);
+		glVertex2f(0, -size); glVertex2f(0, size);
+		glVertex2f(-size, 0); glVertex2f(size, 0);
+	glEnd();
+}
+
+
+//naughty global data
+namespace VermillionRenderer {
+	float ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	float diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+	float specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	glm::vec4 lightDirection = glm::vec4(0.355336f, 0.906561, -0.227779, 0.0);
+}
+
+void Render::EnableLight()
+{
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_COLOR_MATERIAL);
+}
+
+void Render::NoLight()
+{
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
+	glDisable(GL_COLOR_MATERIAL);
+}
+
+void Render::SetLightData()
+{
+	glLightfv(GL_LIGHT0, GL_POSITION, &VermillionRenderer::lightDirection.x);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, VermillionRenderer::ambientLight);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, VermillionRenderer::diffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, VermillionRenderer::specularLight);
 }

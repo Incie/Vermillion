@@ -74,7 +74,9 @@
     <ClCompile Include="Source\Gloomhaven\uilayer\AbilitySelector.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\CardSelection.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\CardSelector.cpp" />
+    <ClCompile Include="Source\Gloomhaven\uilayer\CombatLog.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\EnemyAdvancer.cpp" />
+    <ClCompile Include="Source\Gloomhaven\uilayer\HoverCard.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\InitiativeUI.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\PortraitPanel.cpp" />
     <ClCompile Include="Source\Gloomhaven\uilayer\StatusBar.cpp" />
@@ -139,7 +141,9 @@
     <ClInclude Include="Source\Gloomhaven\uilayer\AbilitySelector.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\CardSelection.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\CardSelector.h" />
+    <ClInclude Include="Source\Gloomhaven\uilayer\CombatLog.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\EnemyAdvancer.h" />
+    <ClInclude Include="Source\Gloomhaven\uilayer\HoverCard.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\InitiativeUI.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\PortraitPanel.h" />
     <ClInclude Include="Source\Gloomhaven\uilayer\StatusBar.h" />

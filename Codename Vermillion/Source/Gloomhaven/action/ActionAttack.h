@@ -1,13 +1,15 @@
 #pragma once
 
 #include"Action.h"
+#include<vector>
+#include"..//entity/Entity.h"
 
 class Level;
 
 class ActionAttack : public Action
 {
 public:
-	ActionAttack(Level& level, Actor& actor, int range, int attackDamage, int attacks);
+	ActionAttack(Level& level, Actor& actor, int range, int attackDamage, int attacks, std::vector<StatusEffect> statusEffects = std::vector<StatusEffect>() );
 	~ActionAttack();
 
 	virtual void Click(const glm::ivec3& target) override;
@@ -23,7 +25,10 @@ public:
 	bool IsMarked(int entityId);
 private:
 
+
 	std::vector<glm::ivec3> marks;
+	
+	std::vector<StatusEffect> statusEffects;
 	int range;
 	int attacks;
 	int baseDamage;

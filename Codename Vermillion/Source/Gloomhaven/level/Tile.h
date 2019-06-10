@@ -17,7 +17,8 @@ public:
 	Hexagon& GetHexagon() { return hexagon; }
 
 	void AddEntity(Entity* entity) { containingEntities.push_back(entity); }
-	const std::vector<Entity*>& ContainingEntities() { return containingEntities; }
+	const std::vector<Entity*>& ContainingEntities() const { return containingEntities; }
+	bool ContainsEntities() const { return containingEntities.size() != 0; }
 
 	const glm::ivec3& Location() const { return cubeLocation; }
 	const glm::vec3& WorldPosition() const { return worldPosition; }

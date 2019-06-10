@@ -1,5 +1,7 @@
 #include"pch.h"
-#include "Gloom.h"
+#include"Gloom.h"
+#include"..//render.h"
+
 #include"GL/glew.h"
 #include"glm/glm.hpp"
 #include<vector>
@@ -30,15 +32,19 @@
 #include"uilayer/StatusBar.h"
 #include"uilayer/EnemyAdvancer.h"
 #include"uilayer/StatusBar.h"
+#include"uilayer/HoverCard.h"
+#include"uilayer/CombatLog.h"
 
 
 namespace G {
-const int CardSelectorId = 0;
-const int CardSelectionId = 1;
-const int AbilitySelectorId = 2;
-const int EnemyAdvancerId = 3;
-const int StatusBarId = 4;
-const int InitiativeTrackerId = 5;
+	const int CardSelectorId = 0;
+	const int CardSelectionId = 1;
+	const int AbilitySelectorId = 2;
+	const int EnemyAdvancerId = 3;
+	const int StatusBarId = 4;
+	const int InitiativeTrackerId = 5;
+	const int HoverCardId = 99;
+	const int CombatLogId = 100;
 };
 
 Gloom::Gloom() 
@@ -59,6 +65,8 @@ void Gloom::Initialize()
 	level.SpawnRoom(1);
 
 	camera.SetPositionCenter( level.Center() );
+
+	Render::SetLightData();
 }
 
 void Gloom::Deinitialize()
@@ -66,7 +74,6 @@ void Gloom::Deinitialize()
 	DeinitializeUI();
 
 	//level.delete
-
 	Icons::Unload();
 }
 
@@ -102,67 +109,39 @@ void Gloom::Update(double deltaTime)
 	glm::vec2 cameraMouse = camera.ScreenToViewCoords(input.GetMousePositionNormalized());
 	level.Update(cameraMouse);
 	director.Update(input);
+
+	auto hoverTarget = level.HasHoverTarget() ? &level.GetHoverTarget() : nullptr;
+	GetViewById<HoverCard>(G::HoverCardId)->SetHoverTile(level, inputHandled ? nullptr : hoverTarget );
+
+	auto combatLog = GetViewById<CombatLog>(G::CombatLogId);
+	if(input.KeyDown(VK_TAB)) {
+		if(combatLog->Active() == false) {
+			combatLog->Activate();
+			combatLog->Invalidate();
+		}
+	}
+	else if( combatLog->Active() ) 
+		combatLog->Deactivate();
 }
 
 void Gloom::Render()
 {
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_COLOR_MATERIAL);
-
-	float ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	float diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-	float specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	glm::vec4 lightDirection = glm::vec4(0.355336f, 0.906561, -0.227779, 0.0);
-
-	glLightfv(GL_LIGHT0, GL_POSITION, &lightDirection.x);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
-
 	const auto& text = Services().Text();
 
+	Render::EnableLight();
+
 	camera.Push();
-		glPushMatrix();
-			glBegin(GL_LINES);
-				glVertex2f(0, -500); glVertex2f(0, 500);
-				glVertex2f(-500, 0); glVertex2f(500, 0);
-			glEnd();
-		glPopMatrix();
-
 		level.Render(text);
-
 		director.Render();
 	camera.Pop();
 
-	glDisable(GL_LIGHTING);
+	Render::NoLight();
 
 	glPushMatrix();
-	director.RenderUI(text);
+		director.RenderUI(text);
 	glPopMatrix();
 
 	RenderUI();
-
-	if (level.combatLog.size() > 0) {
-		glPushMatrix();
-		glTranslatef(0, 500.0f, 0);
-		for (const auto& line : level.combatLog) {
-			text.Print(0, 0, line, 20, Colors::White, false, true);
-		}
-		glPopMatrix();
-	}
-
-	if (level.HasHoverTarget()) {
-		const auto& hoverTile = level.GetHoverTarget();
-		
-		if (hoverTile.IsOccupied()) {
-			const auto hoverActor = level.ActorById(hoverTile.OccupiedId());
-			glPushMatrix();
-			glTranslatef(5, 50, 0);
-			hoverActor->PrintStats(text);
-			glPopMatrix();
-		}
-	}
 }
 
 void Gloom::InitializeUI()
@@ -280,6 +259,12 @@ void Gloom::InitializeUI()
 
 	auto initiativeTrackerUI = vnew InitiativeTrackerUI(director.GetInitiativeTracker());
 	AddView(initiativeTrackerUI, 5);
+
+
+
+
+	AddView(vnew HoverCard(), G::HoverCardId);
+	AddView(vnew CombatLog(level), G::CombatLogId);
 }
 
 void Gloom::OnDirectorEvent(DirectorEvent eventId)

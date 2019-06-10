@@ -10,6 +10,7 @@
 #include"../level/Level.h"
 
 #define ATTACK(r, d, a) vnew ActionAttack(level, actor, r, d, a)
+#define ATTACK_STATUS(r, d, a, s) vnew ActionAttack(level, actor, r, d, a, std::vector<StatusEffect> s)
 #define MOVE(m) vnew ActionMove(level, actor, m)
 #define SHIELD(s) vnew ActionShieldSelf(level, actor, s)
 
@@ -71,7 +72,7 @@ CardGenerator::CardGenerator(Level& level)
 			{CardAbility{"Attack", 3}, CardAbility{"Pierce", 2, true}},
 			{CardAbility{"Move", 4}, CardAbility{"Jump", 0, true}, CardAbility{"Attack", 2}, CardAbility{"Target all enemies moved through",0, true}, CardAbility{"XP", 2}, CardAbility{"LOSS"}},
 			72, 1,
-			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{ATTACK(1,3,1)};  return vnew PlayerRound(v); },
+			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{ATTACK_STATUS(1,3,1, {StatusEffect::Pierce2})};  return vnew PlayerRound(v); },
 			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{vnew ActionTrample(level,actor,4,true,2)}; return vnew PlayerRound(v); }
 		},
 		PlayerCard{
@@ -95,16 +96,19 @@ CardGenerator::CardGenerator(Level& level)
 			{CardAbility{"Attack", 2}, CardAbility{"DISARM", 0, true}},
 			{CardAbility{"Move", 2}},
 			10, 1,
-			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{ATTACK(1,2,1)};  return vnew PlayerRound(v); },
+			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{ATTACK_STATUS(1,2,1, {StatusEffect::Disarmed})};  return vnew PlayerRound(v); },
 			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{MOVE(2)};  return vnew PlayerRound(v); }
 		},
 	};
 
-	playerDeck = new PlayerDeck("Player", playerCards);
+	playerDeck = vnew PlayerDeck("Player", playerCards);
 }
 
 CardGenerator::~CardGenerator()
 {
+	if(playerDeck != nullptr)
+		delete playerDeck;
+
 	playerCards.clear();
 }
 

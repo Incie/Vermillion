@@ -1,5 +1,6 @@
 #include"pch.h"
 #include "Tile.h"
+#include"..//entity/Entity.h"
 
 Tile::Tile(glm::ivec3 location, glm::vec3 worldpos)
 	: occupyingActorId(-1), cubeLocation(location), worldPosition(worldpos), enabled(true), roomNumber(1)
@@ -8,6 +9,9 @@ Tile::Tile(glm::ivec3 location, glm::vec3 worldpos)
 
 Tile::~Tile()
 {
+	for(auto ce : containingEntities)
+		delete ce;
+
 	containingEntities.clear();
 }
 

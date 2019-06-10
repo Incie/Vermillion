@@ -20,6 +20,15 @@ EnemyMove::EnemyMove(Level& level, int move)
 	actionDescription = fmt::format("Move {0}", move);
 }
 
+
+bool EnemyMove::CanPerform(const Actor& actor)
+{
+	if(actor.Immobilised() || actor.Stunned() )
+		return false;
+
+	return true;
+}
+
 void EnemyMove::Calculate(const Actor& actor)
 {
 	startPoint = level.TileAt(actor.Position()).WorldPosition();
@@ -105,6 +114,14 @@ EnemyAttack::EnemyAttack(Level& level, int attack, int range)
 	actionDescription = fmt::format("Attack {0} - range {1}", attack, range);
 }
 
+bool EnemyAttack::CanPerform(const Actor& actor)
+{
+	if(actor.Stunned() || actor.Disarmed())
+		return false;
+
+	return false;
+}
+
 void EnemyAttack::Calculate(const Actor& actor)
 {
 	startPoint = level.TileAt(actor.Position()).WorldPosition();
@@ -143,14 +160,39 @@ void EnemyAttack::Perform(Actor& attacker)
 		auto tile = level.TileAt(target);
 		auto actor = level.ActorById(tile.OccupiedId());
 
+		bool muddled = attacker.Muddled();
+		bool strengthened = attacker.Strengthened();
+
 		auto modifiers = level.monsterModifiers.Draw();
-		int calculatedDamage = attack;
+
+
+		if( muddled && strengthened ){
+			//cancels out
+		}
+		else if(muddled) {
+			auto modifiers2 = level.monsterModifiers.Draw();
+
+		}
+		else if(strengthened) {
+			auto modifiers2 = level.monsterModifiers.Draw();
+
+
+
+		}
+
+
+
+		int poisonDamage = actor->Poisoned() ? 1 : 0;
+		int calculatedDamage = attack + poisonDamage;
+
+
+
 	
 		for(auto m : modifiers) {
 			calculatedDamage = m.ModifyValue(calculatedDamage);
 		}
 
-		int actualDamage = actor->DoDamage(calculatedDamage);
+		int actualDamage = actor->DoDamage(calculatedDamage, 0);
 		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", "[Enemy]", actualDamage, "[Player]", Modifier::ToString(modifiers), attack));
 	}
 }

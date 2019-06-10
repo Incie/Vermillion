@@ -30,7 +30,7 @@ Spawner::~Spawner()
 
 void Spawner::AddEntitySpawn(const std::string& entityName, const glm::ivec3& location, int roomNumber)
 {
-	auto esl = new EntitySpawnLocation();
+	auto esl = vnew EntitySpawnLocation();
 	esl->entityName = entityName;
 	esl->location = location;
 	esl->roomNumber = roomNumber;
@@ -75,6 +75,7 @@ void Spawner::SpawnPlayer(glm::ivec3 location)
 	aa.attack = 0;
 	aa.move = 0;
 	aa.initiative = 35;
+	aa.pierce = 0;
 
 	playerattributes pa;
 	pa.playerId = 0;
@@ -86,9 +87,9 @@ void Spawner::SpawnPlayer(glm::ivec3 location)
 	auto& tile = level.TileAt(location);
 	newPlayer->SetPosition(tile.Location(), tile.WorldPosition());
 
-	auto hex = Hexagon();
 	newPlayer->RenderModel().Generate(glm::vec2(0, 0), 30, 35);
 	newPlayer->RenderModel().SetColor(glm::vec3(0.24f, 0.1f, 0.95f));
+	newPlayer->RenderModel().SetTexture(Icons::Get("brute"));
 	tile.SetOccupied(newPlayer->EntityId());
 	level.AddEntity(newPlayer);
 }
@@ -108,6 +109,7 @@ void Spawner::SpawnMonster(glm::ivec3 location, bool elite)
 	aa.move = elite ? 2 : 3;
 	aa.team = 1;
 	aa.initiative = 50;
+	aa.pierce = 0;
 
 	enemyattributes enemyattr;
 	enemyattr.enemyId = GetMonsterId(ea.name);
@@ -142,7 +144,8 @@ void Spawner::SpawnMonster(EntitySpawnLocation& entitySpawnLocation, const Monst
 	aa.shield = monsterStats.shield;
 	aa.attack = monsterStats.attack;
 	aa.move = monsterStats.move;
-	aa.team = monsterStats.team;;
+	aa.team = monsterStats.team;
+	aa.pierce = 0;
 	aa.initiative = 50;
 
 	enemyattributes enemyattr;

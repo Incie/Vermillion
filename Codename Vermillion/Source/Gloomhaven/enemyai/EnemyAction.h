@@ -12,6 +12,7 @@ public:
 	EnemyAction(Level& level);
 	virtual ~EnemyAction();
 
+	virtual bool CanPerform(const Actor& actor) { return true; }
 	virtual void Calculate(const Actor& actor) = 0;
 	virtual std::vector<glm::ivec3> Targets();
 	virtual void Perform(Actor& actor) {};
@@ -34,8 +35,9 @@ class EnemyMove : public EnemyAction {
 public:
 	EnemyMove(Level& level, int move);
 
-	void Calculate(const Actor& actor);
-	void Perform(Actor& actor);
+	bool CanPerform(const Actor& actor) override;
+	void Calculate(const Actor& actor) override;
+	void Perform(Actor& actor) override;
 	void Render();
 protected:
 
@@ -48,9 +50,10 @@ class EnemyAttack : public EnemyAction {
 public:
 	EnemyAttack(Level& level, int attack, int range);
 
-	void Calculate(const Actor& actor);
-	void Perform(Actor& actor);
-	void Render();
+	bool CanPerform(const Actor& actor) override;
+	void Calculate(const Actor& actor) override;
+	void Perform(Actor& actor) override;
+	void Render() override;
 
 private:
 	int range;

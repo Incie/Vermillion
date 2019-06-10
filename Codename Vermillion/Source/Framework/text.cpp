@@ -96,11 +96,14 @@ void Text::NewLine(unsigned int fontHeight) const
 
 float Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color, bool center, bool newline) const
 {
-	int textWidth = 0;
-	if (center)
-		textWidth = (int)CalculateWidth(text, fontHeight);
+	double textWidth = static_cast<double>(CalculateWidth(text, fontHeight));
 
-	PrintText(x - textWidth*0.5 , y, text, fontHeight, color);
+	if(center) {
+		x -= textWidth * 0.5;
+		y -= static_cast<double>(fontHeight) * 0.5;
+	}
+
+	PrintText(x, y, text, fontHeight, color);
 	
 	if (newline)
 		NewLine(fontHeight);

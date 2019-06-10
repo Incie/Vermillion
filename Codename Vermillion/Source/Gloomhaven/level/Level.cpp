@@ -256,6 +256,17 @@ void Level::RemoveActorById(int actorId)
 	tile.SetOccupied(-1);
 }
 
+const Actor* Level::ActorViewById(int actorId) const
+{
+	for(auto entity : entities)
+	{
+		if(entity->EntityId() == actorId)
+			return dynamic_cast<const Actor*>(entity);
+	}
+
+	return nullptr;
+}
+
 Actor* Level::ActorById(int actorId)
 {
 	for (auto entity : entities)

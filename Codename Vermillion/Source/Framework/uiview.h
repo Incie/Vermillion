@@ -128,7 +128,7 @@ public:
 	virtual bool HandleInput(const InputService& inputService);
 	virtual void Resize(const glm::vec2& windowSize, const TextService& text);
 	virtual void Measure(const glm::vec2& windowSize, const TextService& text) {}
-	virtual void Update();
+	virtual void Update(float deltaTime, ServiceLocator& services);
 	virtual void StartRender();
 	virtual void Render(ServiceLocator& Services);
 	virtual void EndRender();

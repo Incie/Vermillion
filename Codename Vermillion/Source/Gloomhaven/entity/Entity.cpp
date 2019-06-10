@@ -58,13 +58,13 @@ void Actor::Setup(const actorattributes& actorattr, const entityattributes& enti
 	retaliate = actorattr.retaliate;
 	move = actorattr.move;
 	initiative = actorattr.initiative;
+	pierce = 0;
 }
 
-int Actor::DoDamage(int attackDamage)
+int Actor::DoDamage(int attackDamage, int pierce)
 {
-	auto actualDamage = attackDamage - shield;
+	auto actualDamage = attackDamage - std::max<int>(shield - pierce, 0);
 
-	//if( isPoisoned ) actualDamage += 1
 	if (actualDamage < 0) 
 		actualDamage = 0;
 
@@ -73,35 +73,140 @@ int Actor::DoDamage(int attackDamage)
 	return actualDamage;
 }
 
-
-void Actor::PrintStats(const TextService& text)
+int Actor::DoHealing(int healAmount)
 {
-	text.Print(0, 0, fmt::format("Health: {0} / {1}", health, maxhealth), 16, Colors::White, false, true);
+	if(Poisoned()) {
+		healAmount = 0;
+		RemoveStatus(StatusEffect::Poison);
+	}
 
-	if (move != 0)
-		text.Print(0, 0, fmt::format("Move: {0}", move), 16, Colors::White, false, true);
+	if(Wounded()) {
+		RemoveStatus(StatusEffect::Wound);
+	}
 
-	if (attack != 0)
-		text.Print(0, 0, fmt::format("Attack: {0}", attack), 16, Colors::White, false, true);
-
-	if (range != 0)
-		text.Print(0, 0, fmt::format("Range: {0}", range), 16, Colors::White, false, true);
-
-	if (shield != 0) 
-		text.Print(0, 0, fmt::format("Shield: {0}", shield), 16, Colors::White, false, true);
-
-	if( retaliate != 0 )
-		text.Print(0, 0, fmt::format("Retaliate: {0}", retaliate), 16, Colors::White, false, true);
+	health = std::min<int>(health + healAmount, maxhealth);
+	return healAmount;
 }
 
+
+void Actor::PrintStats(std::vector<std::string>& text) const
+{
+	text.emplace_back(fmt::format("Health: {0} / {1}", health, maxhealth));
+
+	if(move != 0) text.emplace_back(fmt::format("Move: {0}", move));
+	if(attack != 0) text.emplace_back(fmt::format("Attack: {0}", attack));
+	if(range != 0) text.emplace_back(fmt::format("Range: {0}", range));
+	if(shield != 0) text.emplace_back(fmt::format("Shield: {0}", shield));
+	if(retaliate != 0) text.emplace_back(fmt::format("Retaliate: {0}", retaliate));
+	if(pierce != 0) text.emplace_back(fmt::format("Pierce: {0}", pierce));
+	if(statusEffects.size() > 0) {
+		for(auto status : statusEffects) {
+			text.emplace_back(StatusEffectToString(status));
+		}
+	}
+}
+
+#include"..//icons/icons.h"
+#include"..//render.h"
+#include"..//constants.h"
 void Actor::Render(const TextService& text)
 {
 	Entity::Render(text);
 
-	text.PrintCenter(positionWorld.x, positionWorld.y, fmt::format("H:{}", health), 12, Colors::Red);
+	glDisable(GL_LIGHTING);
 
-	if( shield > 0 )
-		text.PrintCenter(positionWorld.x, positionWorld.y+12.0f, fmt::format("S:{}", shield), 12, glm::vec3(0.6f, 0.6f, 0.6f));
+	auto iconSize = glm::vec2(20);
+	auto fontSize = 16;
+
+	const float stepSize = 6.28f / 6.0f;
+	auto healthPosition = glm::vec3(positionWorld.x + cos(stepSize * 4.0f) * 30.0f, positionWorld.y + sin(stepSize * 4.0f) * 30.0f, 0.0f);
+
+	auto healthTexture = Icons::Get("health");
+	Render::Quad(healthPosition, iconSize, *healthTexture, Colors::White, true);
+	text.Print(healthPosition.x, healthPosition.y - 2, fmt::format("{0}", health), fontSize - 4 * (health > 9 ? 1 : 0), Colors::White, true, false);
+
+	if(shield > 0) {
+		auto shieldPosition = glm::vec3(positionWorld.x + cos(stepSize * 5.0f) * 30.0f, positionWorld.y + sin(stepSize * 5.0f) * 30.0f, 0.0f);
+
+		auto healthTexture = Icons::Get("shield");
+		Render::Quad(shieldPosition, iconSize, *healthTexture, Colors::White, true);
+		text.Print(shieldPosition.x, shieldPosition.y - 2, fmt::format("{0}", shield), fontSize, Colors::Black, true, false);
+	}
+
+	if( statusEffects.size() > 0 ){
+
+		float step = 0.0f;
+
+		glm::vec3 position = positionWorld;
+		position.x -= (statusEffects.size() - 1) * (iconSize.x * 0.5f);
+		position.y += 5.0f;
+
+		for(auto st : statusEffects) {
+			auto statusPosition = glm::vec3(positionWorld.x + cos(stepSize * step) * 30.0f, positionWorld.y + sin(stepSize * step) * 30.0f, 0.0f);
+
+			auto statusTexture = StatusEffectToTexture(st);
+			Render::Quad(statusPosition, iconSize, *statusTexture, Colors::White, true);
+		}
+	}
+
+	glEnable(GL_LIGHTING);
+}
+
+void Actor::AddStatus(StatusEffect status)
+{
+	if(!HasStatus(status))
+		statusEffects.push_back(status);
+}
+
+void Actor::RemoveStatus(StatusEffect status)
+{
+	auto it = std::remove_if(statusEffects.begin(), statusEffects.end(), [status](StatusEffect s) { return s == status; });
+	statusEffects.erase(it);
+}
+
+bool Actor::HasStatus(StatusEffect status) const
+{
+	for(auto statusEffect : statusEffects)
+	{
+		if(statusEffect == status)
+			return true;
+	}
+	return false;
+}
+
+bool Actor::Stunned() const
+{
+	return HasStatus(StatusEffect::Stunned);
+}
+
+bool Actor::Wounded() const
+{
+	return HasStatus(StatusEffect::Wound);
+}
+
+bool Actor::Poisoned() const
+{
+	return HasStatus(StatusEffect::Poison);
+}
+
+bool Actor::Muddled() const
+{
+	return HasStatus(StatusEffect::Muddle);
+}
+
+bool Actor::Strengthened() const
+{
+	return HasStatus(StatusEffect::Strengthen);
+}
+
+bool Actor::Disarmed() const
+{
+	return HasStatus(StatusEffect::Disarmed);
+}
+
+bool Actor::Immobilised() const
+{
+	return HasStatus(StatusEffect::Immobilized);
 }
 
 Player::Player()
@@ -119,9 +224,9 @@ void Player::Setup(const playerattributes& playerattr, const actorattributes& ac
 	playerName = playerattr.playerName;
 }
 
-void Player::PrintStats(const TextService& text)
+void Player::PrintStats(std::vector<std::string>& text) const
 {
-	text.Print(0, 0, playerName, 18, Colors::White, false, true);
+	text.emplace_back(playerName);
 	Actor::PrintStats(text);
 }
 
@@ -140,8 +245,51 @@ void Enemy::Setup(const enemyattributes& enemyattr, const actorattributes& actor
 	enemyType = enemyattr.enemyType;
 }
 
-void Enemy::PrintStats(const TextService& text)
+void Enemy::PrintStats(std::vector<std::string>& text) const
 {
-	text.Print(0, 0, fmt::format("[{2}]{0} ({1})", name, enemyType == EnemyType::Elite ? "Elite" : "Normal", enemyId), 16, Colors::White, false, true);
+	text.emplace_back(fmt::format("[{2}]{0} ({1})", name, enemyType == EnemyType::Elite ? "Elite" : "Normal", enemyId));
 	Actor::PrintStats(text);
+}
+
+std::string StatusEffectToString(StatusEffect statusEffect)
+{
+	switch(statusEffect) {
+		case StatusEffect::Muddle: return "Muddle";
+		case StatusEffect::Strengthen: return "Strengthened";
+		case StatusEffect::Poison: return "Poisoned";
+		case StatusEffect::Wound: return "Wounded";
+		case StatusEffect::Immobilized: return "Immobilized";
+		case StatusEffect::Disarmed: return "Disarmed";
+		case StatusEffect::Stunned: return "Stunned";
+		case StatusEffect::Doomed: return "Doomed";
+		case StatusEffect::Regenerate: return "Regenerating";
+		case StatusEffect::Invisible: return "Invisible";
+		case StatusEffect::Pierce: return "Pierce 1";
+		case StatusEffect::Pierce2: return "Pierce 2";
+		case StatusEffect::Pierce3: return "Pierce 3";
+	}
+
+	throw "invalid StatusEffect in StatusEffectToString()";
+}
+
+#include"..//icons/icons.h"
+Texture* StatusEffectToTexture(StatusEffect statusEffect)
+{
+	switch(statusEffect) {
+		case StatusEffect::Muddle: return	  Icons::Get("muddle");
+		case StatusEffect::Strengthen: return Icons::Get("strengthen");
+		case StatusEffect::Poison: return 	  Icons::Get("poison");
+		case StatusEffect::Wound: return 	  Icons::Get("wound");
+		case StatusEffect::Immobilized: return Icons::Get("immobilize"); 
+		case StatusEffect::Disarmed: return   Icons::Get("disarm");
+		case StatusEffect::Stunned: return 	  Icons::Get("stun");
+		/*case StatusEffect::Doomed: return 	  Icons::Get("doomed");*/
+		//case StatusEffect::Regenerate: return Icons::Get("regenerate");
+		case StatusEffect::Invisible: return  Icons::Get("invisible");
+		//case StatusEffect::Pierce: return 	  Icons::Get("");
+		//case StatusEffect::Pierce2: return 	  Icons::Get("");
+		//case StatusEffect::Pierce3: return 	  Icons::Get("");
+	}
+
+	throw "invalid StatusEffect in StatusEffectToTexture()";
 }

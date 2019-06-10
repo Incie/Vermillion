@@ -36,6 +36,8 @@ public:
 	Tile& TileAt(const glm::ivec3& location);
 
 	void RemoveActorById(int actorId);
+
+	const Actor* ActorViewById(int actorId) const;
 	Actor* ActorById(int actorId);
 	Actor* GetPlayer();
 	std::vector<Actor*> Monsters();

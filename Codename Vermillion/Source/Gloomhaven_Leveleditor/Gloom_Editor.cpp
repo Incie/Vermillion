@@ -22,7 +22,7 @@ void GloomEditor::Initialize()
 {
 	Icons::Load(Services().Textures());
 
-	layers.push_back(new ActionSelector([&](auto i) {
+	layers.push_back(vnew ActionSelector([&](auto i) {
 		if(i == 1) { //paint mode
 			editorBoard.SetMode(0);
 
@@ -35,17 +35,17 @@ void GloomEditor::Initialize()
 			layers[3]->Deactivate();
 		}
 	}));
-	layers.push_back(new TileModifier([&](const std::string& entityName, const glm::ivec3& location) {
+	layers.push_back(vnew TileModifier([&](const std::string& entityName, const glm::ivec3& location) {
 		editorBoard.SpawnEntity(entityName, location);
 	}));
-	layers.push_back(new EditorMainMenu([&](auto i) {
+	layers.push_back(vnew EditorMainMenu([&](auto i) {
 		if(i == 0)
 			editorBoard.LoadFromDisk(); //load
 
 		if(i == 1) //save
 			editorBoard.SaveToDisk();
 	}));
-	layers.push_back(new PaintProperties([&](auto i) {
+	layers.push_back(vnew PaintProperties([&](auto i) {
 		editorBoard.SetRoomNumber(i);
 	}));
 

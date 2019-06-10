@@ -6,11 +6,11 @@ PaintProperties::PaintProperties(std::function<void(int)> callback)
 {
 	SetAnchor(WindowAnchor::TOP | WindowAnchor::BOTTOM | WindowAnchor::RIGHT);
 
-	AddChild(new Button("Room 1", 18, ButtonId::ROOM_1));
-	AddChild(new Button("Room 2", 18, ButtonId::ROOM_2));
-	AddChild(new Button("Room 3", 18, ButtonId::ROOM_3));
-	AddChild(new Button("Room 4", 18, ButtonId::ROOM_4));
-	AddChild(new Button("Room 5", 18, ButtonId::ROOM_5));
+	AddChild(vnew Button("Room 1", 18, ButtonId::ROOM_1));
+	AddChild(vnew Button("Room 2", 18, ButtonId::ROOM_2));
+	AddChild(vnew Button("Room 3", 18, ButtonId::ROOM_3));
+	AddChild(vnew Button("Room 4", 18, ButtonId::ROOM_4));
+	AddChild(vnew Button("Room 5", 18, ButtonId::ROOM_5));
 }
 
 PaintProperties::~PaintProperties()

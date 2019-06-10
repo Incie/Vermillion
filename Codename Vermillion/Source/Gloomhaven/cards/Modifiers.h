@@ -30,8 +30,10 @@ enum class ModifierStatus
 	Push1,
 	Stun,
 	Wound,
+	Poison,
 	Disarm,
 	Muddle,
+	Strengthen,
 	Target,
 	Curse,
 	Bless,
@@ -39,7 +41,8 @@ enum class ModifierStatus
 	Immobilize,
 	Pull,
 	Refresh,
-	HealSelf
+	HealSelf,
+	Invisible
 };
 
 

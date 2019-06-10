@@ -104,6 +104,9 @@ void Hexagon::Render() const
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture->textureId);
 
+		glEnable(GL_BLEND);
+		glColor4f(1, 1, 1, 1);
+
 		glBegin(GL_TRIANGLES);
 		for (int i = 0; i < 12; ++i) {
 				glTexCoord2fv(&texcoords[i].x);
@@ -112,6 +115,7 @@ void Hexagon::Render() const
 		glEnd();
 
 		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_BLEND);
 		glEnable(GL_LIGHTING);
 	}
 

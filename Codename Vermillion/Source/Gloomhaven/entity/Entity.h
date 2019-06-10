@@ -21,8 +21,20 @@ enum class StatusEffect {
 	Poison,
 	Wound,
 	Immobilized,
-	Disarmed
+	Disarmed,
+	Stunned,
+	Regenerate,
+	Invisible,
+	Doomed,
+
+	Pierce,
+	Pierce2,
+	Pierce3
 };
+
+std::string StatusEffectToString(StatusEffect statusEffect);
+Texture* StatusEffectToTexture(StatusEffect statusEffect);
+
 
 struct entityattributes {
 	std::string name;
@@ -38,6 +50,7 @@ struct actorattributes {
 	int attack;
 	int move;
 	int initiative;
+	int pierce;
 };
 
 struct playerattributes {
@@ -91,13 +104,16 @@ public:
 
 	void Setup(const actorattributes& actorattr, const entityattributes& entityattr);
 
-	int DoDamage(int attackDamage);
+	int DoDamage(int attackDamage, int pierce);
+	int DoHealing(int healAmount);
 
 	int Team() const { return team; }
 	int Health() { return health; }
 	int Shield() { return shield; }
+	int Pierce() { return pierce; }
 
 	void ModifyShield(int mod) { shield += mod; }
+	void ModifyPierce(int mod) { pierce += mod; }
 
 	void AddEndOfRoundAction(std::function<void(Actor*)> func) {
 		endOfRoundAction.push_back(func);
@@ -112,8 +128,20 @@ public:
 	void Initiative(int initiative) { this->initiative = initiative; }
 	int Initiative() { return initiative; }
 
-	virtual void PrintStats(const TextService& text);
+	virtual void PrintStats(std::vector <std::string> &text) const;
 	virtual void Render(const TextService& text) override;
+
+	void AddStatus(StatusEffect status);
+	void RemoveStatus(StatusEffect status);
+	bool HasStatus(StatusEffect status) const;
+	bool Stunned() const;
+	bool Wounded() const;
+	bool Poisoned() const;
+	bool Muddled() const;
+	bool Strengthened() const;
+	bool Disarmed() const;
+	bool Immobilised() const;
+
 protected:
 	int team;
 	int maxhealth;
@@ -125,6 +153,10 @@ protected:
 	int move;
 	int initiative;
 
+	int pierce; //todo not implemented yet
+
+	std::vector<StatusEffect> innateEffects;
+	std::vector<StatusEffect> immunities;
 	std::vector<StatusEffect> statusEffects;
 
 	std::vector<std::function<void(Actor*)>> endOfTurnAction;
@@ -138,8 +170,10 @@ public:
 	virtual ~Player();
 
 	void Setup(const playerattributes& playerattr, const actorattributes& actorattr, const entityattributes& entityattr);
-	virtual void PrintStats(const TextService& text);
+	virtual void PrintStats(std::vector<std::string>& text) const;
 
+
+	const std::string& PlayerName() { return playerName; }
 protected:
 	int playerId;
 	std::string playerName;
@@ -158,7 +192,7 @@ public:
 	virtual ~Enemy();
 
 	void Setup(const enemyattributes& enemyattr, const actorattributes& actorattr, const entityattributes& entityattr);
-	virtual void PrintStats(const TextService& text);
+	virtual void PrintStats(std::vector<std::string>& text) const;
 
 	int EnemyId() { return enemyId; }
 	bool Elite() { 

@@ -3,9 +3,10 @@
 #include"../level/Level.h"
 #include"../entity/Entity.h"
 
-ActionAttack::ActionAttack(Level& level, Actor& actor, int range, int attackDamage, int attacks)
+ActionAttack::ActionAttack(Level& level, Actor& actor, int range, int attackDamage, int attacks, std::vector<StatusEffect> statusEffects)
 	: Action(level, actor), range(range), attacks(attacks), baseDamage(attackDamage)
 {
+	this->statusEffects.insert(this->statusEffects.end(), statusEffects.begin(), statusEffects.end());
 	actionDescription = fmt::format("Attack {0} Range {1} Target {2}", attackDamage, range, attacks);
 	Highlight();
 }
@@ -22,7 +23,7 @@ void ActionAttack::Click(const glm::ivec3& target)
 	if (tile.IsOccupied()) {
 
 		if (IsMarked(tile.OccupiedId())){
-			//RemoveMark
+			//todo RemoveMark
 			return;
 		}
 
@@ -60,14 +61,74 @@ bool ActionAttack::Perform(Actor& actor)
 		auto tile = level.TileAt(mark);
 		auto targetActor = level.ActorById(tile.OccupiedId());
 
-		int calculatedDamage = baseDamage;
+		int poisonDamage = 0;
+		if(targetActor->Poisoned())
+			poisonDamage = 1;
+
+		int calculatedDamage = baseDamage + poisonDamage;
 		auto modifiers = level.playerModifiers.Draw();
 		for(auto m : modifiers)
 			calculatedDamage = m.ModifyValue(calculatedDamage);
 
+		int pierce = actor.Pierce();
 
-		int actualDamage = targetActor->DoDamage(calculatedDamage);
-		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", "[Player]", actualDamage, "[Enemy]", Modifier::ToString(modifiers), baseDamage));
+		for(auto status : statusEffects) {
+			if(status == StatusEffect::Pierce) pierce += 1;
+			if(status == StatusEffect::Pierce2) pierce += 2;
+			if(status == StatusEffect::Pierce3) pierce += 3;
+		}
+
+
+		for(auto& m : modifiers) {
+			if(m.status != ModifierStatus::None) {
+				switch(m.status) {
+					case ModifierStatus::ShieldSelf1: {
+						actor.ModifyShield(1);
+						actor.AddEndOfRoundAction([](Actor* a) { a->ModifyShield(-1); });
+						break;
+					}
+					case ModifierStatus::Pierce3: {
+						pierce += 3;
+						break;
+					}
+					default: {
+						switch(m.status) {
+							case ModifierStatus::Poison:	  statusEffects.push_back(StatusEffect::Poison);	 break;
+							case ModifierStatus::Wound: 	  statusEffects.push_back(StatusEffect::Wound);		 break;
+							case ModifierStatus::Stun: 		  statusEffects.push_back(StatusEffect::Stunned);	 break;
+							case ModifierStatus::Disarm:	  statusEffects.push_back(StatusEffect::Disarmed);	 break;
+							case ModifierStatus::Immobilize:  statusEffects.push_back(StatusEffect::Immobilized);break;
+							case ModifierStatus::Strengthen:  statusEffects.push_back(StatusEffect::Strengthen); break;
+							case ModifierStatus::Invisible:	  statusEffects.push_back(StatusEffect::Invisible);	 break;
+							case ModifierStatus::Muddle: 	  statusEffects.push_back(StatusEffect::Muddle);	 break;
+							default: 
+							break;
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		int actualDamage = targetActor->DoDamage(calculatedDamage, pierce);
+		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", dynamic_cast<Player*>(&actor)->PlayerName(), actualDamage, targetActor->Name(), Modifier::ToString(modifiers), baseDamage));
+
+		for(auto st : statusEffects) {
+			switch(st) {
+				case StatusEffect::Strengthen: actor.AddStatus(st); break;
+				case StatusEffect::Invisible: actor.AddStatus (st); break;
+				case StatusEffect::Pierce: 
+				case StatusEffect::Pierce2:
+				case StatusEffect::Pierce3:
+					break;
+				default:  {
+					level.combatLog.push_back(fmt::format("[Target] gained {0}", StatusEffectToString(st)));
+					targetActor->AddStatus(st);
+					break;
+				}
+			}
+		}
+		
 
 
 		if (targetActor->Health() <= 0) {

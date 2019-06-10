@@ -175,6 +175,8 @@ std::string Modifier::StatusString(ModifierStatus status)
 		return "Stun";
 		case ModifierStatus::Wound:
 		return "Wound";
+		case ModifierStatus::Poison:
+		return "Poison";
 		case ModifierStatus::Disarm:
 		return "Disarm";
 		case ModifierStatus::Muddle:
@@ -195,6 +197,10 @@ std::string Modifier::StatusString(ModifierStatus status)
 		return "HealSelf";
 		case ModifierStatus::Bless:
 		return "Bless";
+		case ModifierStatus::Strengthen:
+		return "Strengthen";
+		case ModifierStatus::Invisible:
+		return "Invisible";
 	}
 
 	throw "Unknown status in StatusString";

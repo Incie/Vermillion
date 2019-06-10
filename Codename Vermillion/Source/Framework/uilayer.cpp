@@ -3,11 +3,11 @@
 #include"../Framework/services.h"
 #include"windowstate.h"
 #include"GL/glew.h"
-
+#include"render.h"
 #include<Windows.h>
 
 UIView::UIView()
-	: anchor(0)
+	: anchor(0), invalidated(true)
 {
 }
 
@@ -68,7 +68,7 @@ void UIView::Resize(const glm::vec2 & windowSize, const TextService& text)
 	invalidated = false;
 }
 
-void UIView::Update()
+void UIView::Update(float deltaTime, ServiceLocator& services)
 {
 	if (active == false)
 		return;
@@ -83,7 +83,6 @@ void UIView::StartRender()
 	glTranslatef(position.x, position.y, 0.0f);
 }
 
-#include"render.h"
 void UIView::Render(ServiceLocator & Services)
 {
 	if (!active)

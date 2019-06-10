@@ -154,9 +154,9 @@ void Director::SetPlayerRound(PlayerRound* playerRound)
 void Director::SetPlayerRound()
 {
 	std::vector<Action*> playerActions;
-	playerActions.push_back(new ActionShieldSelf(level, *level.GetPlayer(), 1));
-	playerActions.push_back(new ActionMove(level, *level.GetPlayer(), 2));
-	playerActions.push_back(new ActionAttack(level, *level.GetPlayer(), 1, 4, 1));
+	playerActions.push_back(vnew ActionShieldSelf(level, *level.GetPlayer(), 1));
+	playerActions.push_back(vnew ActionMove(level, *level.GetPlayer(), 2));
+	playerActions.push_back(vnew ActionAttack(level, *level.GetPlayer(), 1, 4, 1));
 	playerRound = vnew PlayerRound(playerActions);
 
 	action = playerRound->GetAction();
