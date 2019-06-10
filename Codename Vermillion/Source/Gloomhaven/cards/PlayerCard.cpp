@@ -102,7 +102,7 @@ void PlayerCard::RenderAbility(const TextService& text, const std::vector<CardAb
 				auto abilityValueWidth = 0.5f * text.CalculateWidth(t, fontHeight);
 				text.Print(abilityValueWidth, 0, t, fontHeight, Colors::White, true, false);
 			}
-			Render::OriginCross(15.0f);
+
 		glPopMatrix();
 		text.NewLine(fontHeight);
 	}
