@@ -89,6 +89,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Test\CardRendering.cpp" />
     <ClCompile Include="Source\Test\GamepadTest.cpp" />
+    <ClCompile Include="Source\Test\Sandbox.cpp" />
     <ClCompile Include="Source\Test\Testing.cpp" />
     <ClCompile Include="Source\Test\Testing_Input.cpp" />
   </ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\TileModifier.h" />
     <ClInclude Include="Source\Test\CardRendering.h" />
     <ClInclude Include="Source\Test\GamepadTest.h" />
+    <ClInclude Include="Source\Test\SandBox.h" />
     <ClInclude Include="Source\Test\Testing.h" />
   </ItemGroup>
   <ItemGroup>

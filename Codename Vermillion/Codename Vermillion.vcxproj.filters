@@ -301,6 +301,9 @@
     <ClCompile Include="Source\Gloomhaven\uilayer\HoverCard.cpp">
       <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Test\Sandbox.cpp">
+      <Filter>Source Files\Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -491,6 +494,9 @@
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\HoverCard.h">
       <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Test\SandBox.h">
+      <Filter>Source Files\Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
