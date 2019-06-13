@@ -2,9 +2,14 @@
 #include"uiview.h"
 
 
+void UIElement::SetPosition(const glm::vec2& newPosition)
+{
+	position = newPosition;
+}
+
 void UIElement::SetPosition(float x, float y)
 {
-	position = glm::vec2(x, y);
+	SetPosition(glm::vec2(x, y));
 }
 
 void UIElement::SetSize(float width, float height)

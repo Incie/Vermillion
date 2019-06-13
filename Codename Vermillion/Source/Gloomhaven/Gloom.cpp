@@ -72,8 +72,6 @@ void Gloom::Initialize()
 void Gloom::Deinitialize()
 {
 	DeinitializeUI();
-
-	//level.delete
 	Icons::Unload();
 }
 
@@ -104,14 +102,36 @@ void Gloom::Update(double deltaTime)
 	if (input.KeyDown(VK_ADD)) camera.ZoomByFactor(0.9f);
 	if (input.KeyDown(VK_SUBTRACT)) camera.ZoomByFactor(1.1f);
 
-	auto inputHandled = UpdateUI();
+	auto inputHandled = UpdateUI(static_cast<float>(deltaTime));
 
 	glm::vec2 cameraMouse = camera.ScreenToViewCoords(input.GetMousePositionNormalized());
 	level.Update(cameraMouse);
 	director.Update(input);
 
 	auto hoverTarget = level.HasHoverTarget() ? &level.GetHoverTarget() : nullptr;
-	GetViewById<HoverCard>(G::HoverCardId)->SetHoverTile(level, inputHandled ? nullptr : hoverTarget );
+	hoverTarget = inputHandled ? nullptr : hoverTarget;
+
+	auto hoverCard = GetViewById<HoverCard>(G::HoverCardId);
+	hoverCard->SetHoverTile(level, hoverTarget);
+
+	if(hoverTarget != nullptr && hoverTarget->IsOccupied() && director.Status() == DirectorStatus::RoundStarted ) {
+		auto occupantId = hoverTarget->OccupiedId();
+		auto occupant = level.ActorById(occupantId);
+
+		if(occupant != nullptr) {
+			auto enemy = dynamic_cast<Enemy*>(occupant);
+
+			if(enemy != nullptr) {
+				auto er = director.GetEnemyRound();
+				hoverCard->SetEnemyRound(er);
+			}
+			else hoverCard->NoEnemyRound();
+		}
+		else hoverCard->NoEnemyRound();
+	}
+	else hoverCard->NoEnemyRound();
+
+
 
 	auto combatLog = GetViewById<CombatLog>(G::CombatLogId);
 	if(input.KeyDown(VK_TAB)) {
@@ -261,8 +281,6 @@ void Gloom::InitializeUI()
 	AddView(initiativeTrackerUI, 5);
 
 
-
-
 	AddView(vnew HoverCard(), G::HoverCardId);
 	AddView(vnew CombatLog(level), G::CombatLogId);
 }
@@ -296,7 +314,6 @@ void Gloom::OnDirectorEvent(DirectorEvent eventId)
 		case DirectorEvent::EnemyTurn: {
 			GetViewById(G::AbilitySelectorId)->Deactivate();
 			auto ea = GetViewById<EnemyAdvancer>(G::EnemyAdvancerId);
-
 
 			ea->Activate();
 			ea->SetEnemyActions(director.GetEnemyRound());

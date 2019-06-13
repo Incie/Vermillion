@@ -19,6 +19,11 @@ enum class DirectorEvent {
 	AdvanceEnemy = 4
 };
 
+enum class DirectorStatus {
+	EndOfRound = 1,
+	RoundStarted = 2
+};
+
 class Director {
 public:
 	Director(Level& level, std::function<void(DirectorEvent)> onEvent);
@@ -32,15 +37,18 @@ public:
 	void EndPlayerTurn();
 
 	void SetPlayerRound(PlayerRound* playerRound);
-	void SetPlayerRound();
 	void AdvanceEnemy();
 
 	std::vector<std::string> GetEnemyRound();
 
 	InitiativeTracker& GetInitiativeTracker() { return initiativeTracker; }
+
+	DirectorStatus Status() { return directorStatus; }
 private:
 	void PlayerTurn(const InputService& input);
 	void NextActor();
+
+	DirectorStatus directorStatus;
 
 	InitiativeTracker initiativeTracker;
 	EnemyAI enemyAi;

@@ -30,6 +30,7 @@ public:
 
 	virtual void Render(ServiceLocator& Services) = 0;
 
+	virtual void SetPosition(const glm::vec2& newPosition);
 	virtual void SetPosition(float x, float y);
 	virtual void SetSize(float width, float height);
 	virtual void SetMargin(float width, float height);

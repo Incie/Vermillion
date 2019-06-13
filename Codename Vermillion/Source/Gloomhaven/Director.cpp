@@ -85,6 +85,7 @@ void Director::RenderUI(const TextService& text)
 
 void Director::StartRound()
 {
+	directorStatus = DirectorStatus::RoundStarted;
 	initiativeTracker.CalculateRoundOrder(level);
 	NextActor();
 }
@@ -151,18 +152,6 @@ void Director::SetPlayerRound(PlayerRound* playerRound)
 	action->Highlight();
 }
 
-void Director::SetPlayerRound()
-{
-	std::vector<Action*> playerActions;
-	playerActions.push_back(vnew ActionShieldSelf(level, *level.GetPlayer(), 1));
-	playerActions.push_back(vnew ActionMove(level, *level.GetPlayer(), 2));
-	playerActions.push_back(vnew ActionAttack(level, *level.GetPlayer(), 1, 4, 1));
-	playerRound = vnew PlayerRound(playerActions);
-
-	action = playerRound->GetAction();
-	action->Highlight();
-}
-
 void Director::AdvanceEnemy()
 {
 	if (initiativeTracker.EnemyTurn()) {
@@ -190,6 +179,7 @@ void Director::NextActor()
 	auto a = initiativeTracker.NextActor();
 
 	if (a == nullptr) {
+		directorStatus = DirectorStatus::EndOfRound;
 		onEvent(DirectorEvent::EndOfRound);
 	}
 	else if (initiativeTracker.EnemyTurn()) {

@@ -32,9 +32,11 @@ protected:
 	}
 
 
-	bool UpdateUI() {
+	bool UpdateUI(float deltaTime) {
 		bool inputHandled = false;
 		for(auto layer : layers) {
+			layer->Update(deltaTime, Services());
+
 			if(layer->Active() == false)
 				continue;
 
