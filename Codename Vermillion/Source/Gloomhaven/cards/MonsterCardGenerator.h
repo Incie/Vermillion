@@ -4,17 +4,20 @@
 #include<vector>
 #include<map>
 
+class Level;
 class MonsterDeck;
 
 class MonsterCardGenerator
 {
 public:
-	MonsterCardGenerator();
+	MonsterCardGenerator(Level& level);
 	~MonsterCardGenerator();
 
-	std::vector<MonsterDeck*> GetMonsterDeck(const std::string& entityName);
-
+	MonsterDeck* GetMonsterDeck(const std::string& entityName);
 
 private:
-	std::map<std::string, std::vector<MonsterDeck*>> monsterMap;
+	bool LoadDeck(const std::string& entityName);
+
+	Level& level;
+	std::map<std::string, MonsterDeck*> monsterMap;
 };

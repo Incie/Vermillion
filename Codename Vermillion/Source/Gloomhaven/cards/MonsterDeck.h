@@ -7,7 +7,7 @@
 class MonsterDeck
 {
 public:
-	MonsterDeck(const std::string& entityName);
+	MonsterDeck(const std::string& entityName, std::vector<EnemyRound*> er);
 	~MonsterDeck();
 
 	void Draw();
@@ -21,5 +21,4 @@ private:
 
 	std::vector<EnemyRound*> enemyRounds;
 	std::vector<EnemyRound*> discardedRounds;
-
 };

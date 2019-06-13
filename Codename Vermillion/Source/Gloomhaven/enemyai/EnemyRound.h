@@ -9,6 +9,7 @@ class TextService;
 class EnemyRound {
 public:
 	EnemyRound();
+	EnemyRound(int initiative, std::vector<EnemyAction*> actions);
 	~EnemyRound();
 
 	void AddAction(EnemyAction* action);
@@ -29,12 +30,13 @@ public:
 	State state;
 
 
+	int Initiative() { return initiative; }
 	bool Reshuffle() { return reshuffle; }
 	void SetReshuffle() { reshuffle = true; }
 
 private:
 	bool reshuffle;
-
+	int initiative;
 	int currentAction;
 	std::vector<EnemyAction*> actions;
 };

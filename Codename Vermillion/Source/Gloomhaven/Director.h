@@ -3,6 +3,7 @@
 #include<vector>
 #include<string>
 #include"enemyai/EnemyAI.h"
+#include"cards/MonsterCardGenerator.h"
 #include"director/Initiative.h"
 
 class InputService;

@@ -6,10 +6,10 @@
 #include <iterator>
 #include <numeric>
 
-MonsterDeck::MonsterDeck(const std::string& entityName)
+MonsterDeck::MonsterDeck(const std::string& entityName, std::vector<EnemyRound*> er)
 	: entityName(entityName), active(nullptr)
 {
-
+	enemyRounds.insert(enemyRounds.end(), er.begin(), er.end());
 }
 
 MonsterDeck::~MonsterDeck()

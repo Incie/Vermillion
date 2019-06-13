@@ -8,6 +8,12 @@ EnemyRound::EnemyRound()
 {
 }
 
+EnemyRound::EnemyRound(int initiative, std::vector<EnemyAction*> actions)
+	: initiative(initiative), currentAction(-1), state(State::Stopped), reshuffle(true)
+{
+	this->actions.insert(this->actions.begin(), actions.begin(), actions.end());
+}
+
 EnemyRound::~EnemyRound()
 {
 	for (auto action : actions) {
