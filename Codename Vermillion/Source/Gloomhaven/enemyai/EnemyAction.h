@@ -64,3 +64,48 @@ private:
 //Shield (end of round)
 //Retaliate (end of round)
 class EnemySelfCast {};
+
+class EnemyHealSelf : public EnemyAction {
+public:
+	EnemyHealSelf(Level& level, int healAmount);
+
+	virtual bool CanPerform(const Actor& actor) override;
+	virtual void Calculate(const Actor& actor) override;
+	virtual void Perform(Actor& actor) override;
+	void Render() override;
+
+private:
+	int heal;
+	bool calculated;
+	glm::vec3 actorWorldPosition;
+};
+
+class EnemyShieldSelf : public EnemyAction {
+public:
+	EnemyShieldSelf(Level& level, int shield);
+
+	virtual bool CanPerform(const Actor& actor) override;
+	virtual void Calculate(const Actor& actor) override;
+	virtual void Perform(Actor& actor) override;
+	void Render() override;
+
+private:
+	int shield;
+	bool calculated;
+	glm::vec3 actorWorldPosition;
+};
+
+class EnemyRetaliate : public EnemyAction {
+public:
+	EnemyRetaliate(Level& level, int retliate);
+
+	virtual bool CanPerform(const Actor& actor) override;
+	virtual void Calculate(const Actor& actor) override;
+	virtual void Perform(Actor& actor) override;
+	void Render() override;
+
+private:
+	int retaliate;
+	bool calculated;
+	glm::vec3 actorWorldPosition;
+};

@@ -21,6 +21,7 @@ void Icons::Load(TextureService& textures)
 	icons["strengthen"] = textures.LoadTexture("textures/icons/strengthen.png");
 	icons["shield"] = textures.LoadTexture("textures/icons/shield_outline.png");
 	icons["pierce"] = textures.LoadTexture("textures/icons/pierce.png");
+	icons["heal"] = textures.LoadTexture("textures/icons/heal.png");
 
 	Add(textures, "stun", "icons/stun.png");
 	Add(textures, "wound", "icons/wound.png");

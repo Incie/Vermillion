@@ -206,3 +206,103 @@ void EnemyAttack::Render()
 		glEnd();
 	}
 }
+
+EnemyHealSelf::EnemyHealSelf(Level& level, int healAmount)
+	: EnemyAction(level), heal(healAmount), calculated(false)
+{
+}
+
+bool EnemyHealSelf::CanPerform(const Actor& actor)
+{
+	if( actor.Stunned() )
+		return false;
+	return true;
+}
+
+void EnemyHealSelf::Calculate(const Actor& actor)
+{
+	calculated = true;
+	actorWorldPosition = actor.WorldPosition();
+}
+
+void EnemyHealSelf::Perform(Actor& actor)
+{
+	auto healedFor = actor.DoHealing(heal);
+	level.combatLog.push_back(fmt::format("{0} healed for {1}", actor.Name(), healedFor));
+}
+
+#include"..//icons/icons.h"
+#include"..//render.h"
+void EnemyHealSelf::Render()
+{
+	if( !calculated )
+		return;
+
+	auto texture = Icons::Get("heal");
+	Render::Quad(actorWorldPosition, glm::vec2(15,15), glm::vec3(0,1,0));
+}
+
+
+EnemyShieldSelf::EnemyShieldSelf(Level& level, int shield)
+	: EnemyAction(level), shield(shield), calculated(false)
+{
+}
+
+bool EnemyShieldSelf::CanPerform(const Actor& actor)
+{
+	return !actor.Stunned();
+}
+
+void EnemyShieldSelf::Calculate(const Actor& actor)
+{
+	actorWorldPosition = actor.WorldPosition();
+	calculated = true;
+}
+
+void EnemyShieldSelf::Perform(Actor& actor)
+{
+	actor.ModifyShield(shield);
+	int s = shield;
+	actor.AddEndOfRoundAction([s](Actor*a){ a->ModifyShield(-s); })
+}
+
+void EnemyShieldSelf::Render()
+{
+	if( !calculated )
+		return;
+
+	auto texture = Icons::Get("shield");
+	Render::Quad(actorWorldPosition, glm::vec2(15,15), glm::vec3(0,1,0));
+}
+
+EnemyRetaliate::EnemyRetaliate(Level& level, int retaliate)
+	: EnemyAction(level), retaliate(retaliate), calculated(false)
+{
+}
+
+bool EnemyRetaliate::CanPerform(const Actor& actor)
+{
+	return !actor.Stunned();
+}
+
+void EnemyRetaliate::Calculate(const Actor& actor)
+{
+	calculated=true;
+	actorWorldPosition = actor.WorldPosition();
+}
+
+void EnemyRetaliate::Perform(Actor& actor)
+{
+	actor.ModifyRetaliate(retaliate);
+	int r = retaliate;
+	actor.AddEndOfRoundAction([r](Actor* a){ a->ModifyRetaliate(-r); })
+}
+
+void EnemyRetaliate::Render()
+{
+	if( !calculated )
+		return;
+
+	auto texture = Icons::Get("retaliate");
+	Render::Quad(actorWorldPosition, glm::vec2(15,15), glm::vec3(1,0,0));
+}

@@ -111,9 +111,11 @@ public:
 	int Health() { return health; }
 	int Shield() { return shield; }
 	int Pierce() { return pierce; }
+	int Retaliate() { return retaliate; }
 
 	void ModifyShield(int mod) { shield += mod; }
 	void ModifyPierce(int mod) { pierce += mod; }
+	void ModifyRetaliate(int mod) { retaliate += mod; }
 
 	void AddEndOfRoundAction(std::function<void(Actor*)> func) {
 		endOfRoundAction.push_back(func);
