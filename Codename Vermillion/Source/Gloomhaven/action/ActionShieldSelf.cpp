@@ -40,5 +40,6 @@ void ActionShieldSelf::Render()
 {
 	auto texture = Icons::Get("Shield");
 	auto& tile = level.TileAt(actor.Position());
-	Render::Quad(tile.WorldPosition(), *texture, 30);
+
+	Render::Quad(tile.WorldPosition(), glm::vec2(20, 20), *texture, Colors::Green, true);
 }

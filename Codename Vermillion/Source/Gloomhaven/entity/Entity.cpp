@@ -128,15 +128,22 @@ void Actor::Render(const TextService& text)
 	if(shield > 0) {
 		auto shieldPosition = glm::vec3(positionWorld.x + cos(stepSize * 5.0f) * 30.0f, positionWorld.y + sin(stepSize * 5.0f) * 30.0f, 0.0f);
 
-		auto healthTexture = Icons::Get("shield");
-		Render::Quad(shieldPosition, iconSize, *healthTexture, Colors::White, true);
+		auto shieldTexture = Icons::Get("shield");
+		Render::Quad(shieldPosition, iconSize, *shieldTexture, Colors::White, true);
 		text.Print(shieldPosition.x, shieldPosition.y - 2, fmt::format("{0}", shield), fontSize, Colors::Black, true, false);
 	}
 
+	float step = 0.0f;
+
+	if(retaliate > 0) {
+		auto statusPosition = glm::vec3(positionWorld.x + cos(stepSize * step) * 30.0f, positionWorld.y + sin(stepSize * step) * 30.0f, 0.0f);
+
+		auto retaliateTexture = Icons::Get("retaliate");
+		Render::Quad(statusPosition, iconSize, *retaliateTexture, Colors::Red, true);
+		step += 1.0f;
+	}
+
 	if( statusEffects.size() > 0 ){
-
-		float step = 0.0f;
-
 		glm::vec3 position = positionWorld;
 		position.x -= (statusEffects.size() - 1) * (iconSize.x * 0.5f);
 		position.y += 5.0f;
@@ -146,6 +153,7 @@ void Actor::Render(const TextService& text)
 
 			auto statusTexture = StatusEffectToTexture(st);
 			Render::Quad(statusPosition, iconSize, *statusTexture, Colors::White, true);
+			step += 1.0f;
 		}
 	}
 

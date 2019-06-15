@@ -189,28 +189,37 @@ void Gloom::InitializeUI()
 	AddView(cardSelector, G::CardSelectorId);
 
 	auto cardSelection = vnew CardSelection(*Icons::GetPlayerCard(), [this](CardSelection & cs, int eventId) {
-		auto cardName0 = cs.Card(0);
-		auto cardName1 = cs.Card(1);
 
-		cs.Deactivate();
+		if( eventId == 0 ){
+			auto cardName0 = cs.Card(0);
+			auto cardName1 = cs.Card(1);
 
-		auto cardSelector = GetViewById<CardSelect>(0);
-		cardSelector->Deactivate();
+			cs.Deactivate();
 
-		auto deck = cardGenerator.PlayerCards();
-		auto& hand = deck->Hand();
+			auto cardSelector = GetViewById<CardSelect>(0);
+			cardSelector->Deactivate();
 
-		auto abilitySelector = GetViewById<AbilitySelector>(2);
-		auto playerCard0 = std::find_if(hand.begin(), hand.end(), [&cardName0](auto playerCard) { if (playerCard->Name().compare(cardName0) == 0) return true; return false; });
-		auto playerCard1 = std::find_if(hand.begin(), hand.end(), [&cardName1](auto playerCard) { if (playerCard->Name().compare(cardName1) == 0) return true; return false; });
+			auto deck = cardGenerator.PlayerCards();
+			auto& hand = deck->Hand();
 
-		abilitySelector->SetCards(*playerCard0, *playerCard1);
-		abilitySelector->Activate();
+			auto abilitySelector = GetViewById<AbilitySelector>(2);
+			auto playerCard0 = std::find_if(hand.begin(), hand.end(), [&cardName0](auto playerCard) { if (playerCard->Name().compare(cardName0) == 0) return true; return false; });
+			auto playerCard1 = std::find_if(hand.begin(), hand.end(), [&cardName1](auto playerCard) { if (playerCard->Name().compare(cardName1) == 0) return true; return false; });
 
-		auto initiativeCard = *playerCard0;
-		level.GetPlayer()->Initiative(initiativeCard->Initiative());
+			abilitySelector->SetCards(*playerCard0, *playerCard1);
+			abilitySelector->Activate();
 
-		director.StartRound();
+			auto initiativeCard = *playerCard0;
+			level.GetPlayer()->Initiative(initiativeCard->Initiative());
+
+			director.StartRound();
+		}
+		else if(eventId == 1) {
+			auto deck = cardGenerator.PlayerCards();
+			deck->ShortRest();
+
+			GetViewById(G::CardSelectorId)->Invalidate();
+		}
 	});
 	cardSelection->SetSize(0, 0);
 	cardSelection->Activate();

@@ -72,6 +72,29 @@ void PlayerDeck::Lose(const std::string& cardName)
 	handCards.erase(found);
 }
 
+#include <random>
+#include <algorithm>
+#include <iterator>
+#include <numeric>
+
+void PlayerDeck::ShortRest()
+{
+	if(discardedCards.size() == 0)
+		return;
+
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	std::uniform_real_distribution<float> dist(0.0f, static_cast<float>(this->discardedCards.size()) );
+	auto val = static_cast<int>(dist(mt));
+
+	auto toLost = discardedCards[val];
+	discardedCards.erase(discardedCards.begin() + val);
+	lostCards.push_back(toLost);
+
+	handCards.insert(handCards.begin(), discardedCards.begin(), discardedCards.end());
+	discardedCards.clear();
+}
+
 void PlayerDeck::SortHand()
 {
 	std::sort(handCards.begin(), handCards.end(), [](auto a, auto b) { return a->Initiative() < b->Initiative(); });

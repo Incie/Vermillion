@@ -10,7 +10,9 @@
 #include<functional>
 #include<Windows.h>
 
-#define BUTTON_ID_READY 1
+#define ButtonIdReady 1
+#define ButtonIdShortRest 2
+#define ButtonIdLongRest 3
 
 CardSelection::CardSelection(Texture& texture, std::function<void(CardSelection&, int)> callback)
 	: texture(texture), callback(callback)
@@ -26,8 +28,28 @@ CardSelection::CardSelection(Texture& texture, std::function<void(CardSelection&
 	button->SetState(UIElement::UIState::DISABLED);
 	button->SetColor(glm::vec3(0.6f));
 	button->SetTextColor(glm::vec3(0.2f));
-	button->SetId(BUTTON_ID_READY);
+	button->SetId(ButtonIdReady);
+	button->SetSize(125.0f, 22.0f);
+	button->SetTextSize(18.f);
 	children.push_back(button);
+
+	auto buttonShortRest = vnew Button();
+	buttonShortRest->SetText("Short Rest");
+	buttonShortRest->SetColor(glm::vec3(0.6f));
+	buttonShortRest->SetTextColor(glm::vec3(0.2f));
+	buttonShortRest->SetId(ButtonIdShortRest);
+	buttonShortRest->SetSize(125.0f, 22.0f);
+	buttonShortRest->SetTextSize(18.f);
+	children.push_back(buttonShortRest);
+
+	auto buttonLongRest = vnew Button();
+	buttonLongRest->SetText("Long Rest");
+	buttonLongRest->SetColor(glm::vec3(0.6f));
+	buttonLongRest->SetTextColor(glm::vec3(0.2f));
+	buttonLongRest->SetId(ButtonIdLongRest);
+	buttonLongRest->SetSize(125.0f, 22.0f);
+	buttonLongRest->SetTextSize(18.f);
+	children.push_back(buttonLongRest);
 }
 
 CardSelection::~CardSelection()
@@ -41,17 +63,24 @@ void CardSelection::Resize(const glm::vec2& windowSize, const TextService& text)
 	position.x = (windowSize.x - size.x);
 	position.y = (windowSize.y - size.y) / 2.0f;
 
+	auto x = size.x * 0.5f - 125.f * 0.5f;
+	auto y = size.y - (8 + 22.0f) * 3.0f;
+
 	auto button = dynamic_cast<Button*>(children[0]);
-	button->SetPosition(size.x * 0.5f - 125.f * 0.5f, size.y - 8 - 22.0f);
-	button->SetSize(125.0f, 22.0f);
-	button->SetTextSize(18.f);
+	button->SetPosition(x,y);
+
+	y += 30.0f;
+	children[1]->SetPosition(x, y);
+	
+	y += 30.0f;
+	children[2]->SetPosition(x, y);
 }
 
 void CardSelection::Measure(const glm::vec2& dimensions, const TextService& text)
 {
 	float width = scalar * texture.width * 2 + 3 * 8.0f;
 	float mainHeight = scalar * texture.height + 3 * 8.0f + 22.0f;
-	float height = mainHeight + 8 + 8 + 22.0f; //button height + margins
+	float height = mainHeight + 8 + (8 + 22.0f) * 3.0f; //button height + margins
 
 	size.x = width;
 	size.y = height;
@@ -134,7 +163,10 @@ bool CardSelection::IsFull() const
 
 void CardSelection::OnEvent(WindowEvent type, int id)
 {
-	callback(*this, 0);
+	if( id == ButtonIdReady )
+		callback(*this, 0);
+	if(id == ButtonIdShortRest)
+		callback(*this, 1);
 }
 
 std::string nocard = "no-card";

@@ -270,7 +270,7 @@ void EnemyShieldSelf::Render()
 		return;
 
 	auto texture = Icons::Get("shield");
-	Render::Quad(actorWorldPosition, glm::vec2(15,15), glm::vec3(0,1,0));
+	Render::Quad(actorWorldPosition, glm::vec2(15,15), *texture, glm::vec3(0,1,0), true);
 }
 
 EnemyRetaliate::EnemyRetaliate(int retaliate)
@@ -303,5 +303,5 @@ void EnemyRetaliate::Render()
 		return;
 
 	auto texture = Icons::Get("retaliate");
-	Render::Quad(actorWorldPosition, glm::vec2(15,15), glm::vec3(1,0,0));
+	Render::Quad(actorWorldPosition, glm::vec2(15, 15), *texture, glm::vec3(1, 0, 0), true);
 }

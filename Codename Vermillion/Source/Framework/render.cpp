@@ -54,6 +54,7 @@ float Render::Quad(const Texture& texture, float height)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glColor4f(1, 1, 1, 1);
 
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture.textureId);
 	glBegin(GL_QUADS);
 	float w = static_cast<float>(texture.width);
@@ -64,6 +65,7 @@ float Render::Quad(const Texture& texture, float height)
 	glTexCoord2f(0, 1); glVertex2f(0, h);
 	glEnd();
 
+	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 	glPopMatrix();
 

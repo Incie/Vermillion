@@ -23,6 +23,8 @@ public:
 	void Discard(const std::string& cardName);
 	void Lose(const std::string& cardName);
 	
+
+	void ShortRest();
 private:
 	void SortHand();
 
