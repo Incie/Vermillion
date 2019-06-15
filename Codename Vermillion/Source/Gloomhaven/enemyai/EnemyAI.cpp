@@ -7,8 +7,8 @@
 #include"GL/glew.h"
 #include"../../Framework/services.h"
 
-EnemyAI::EnemyAI(Level& level)
-	: level(level), actor(nullptr), enemyRound(nullptr)
+EnemyAI::EnemyAI()
+	: actor(nullptr), enemyRound(nullptr)
 {
 }
 
@@ -22,7 +22,7 @@ void EnemyAI::SetRoundActions(EnemyRound* enemyRound)
 
 	if (enemyRound != nullptr) {
 		enemyRound->Reset();
-		enemyRound->state = EnemyRound::State::Stopped;
+		enemyRound->state = EnemyRound::RoundState::Stopped;
 	}
 }
 
@@ -32,49 +32,49 @@ void EnemyAI::SetActor(Actor* actor)
 
 	if( enemyRound != nullptr ){
 		enemyRound->Reset();
-		enemyRound->state = EnemyRound::State::Stopped;
+		enemyRound->state = EnemyRound::RoundState::Stopped;
 	}
 }
 
 bool EnemyAI::Finished()
 {
-	return enemyRound->state == EnemyRound::State::Finished;
+	return enemyRound->state == EnemyRound::RoundState::Finished;
 }
 
-void EnemyAI::Step()
+void EnemyAI::Step(Level& level)
 {
-	if (enemyRound->state == EnemyRound::State::Stopped) {
-		CalculateStep();
+	if (enemyRound->state == EnemyRound::RoundState::Stopped) {
+		CalculateStep(level);
 	}
-	else if (enemyRound->state == EnemyRound::State::Calculated) {
-		PerformStep();
+	else if (enemyRound->state == EnemyRound::RoundState::Calculated) {
+		PerformStep(level);
 	}
-	else if (enemyRound->state == EnemyRound::State::Finished) {
+	else if (enemyRound->state == EnemyRound::RoundState::Finished) {
 	}
 }
 
-void EnemyAI::CalculateStep()
+void EnemyAI::CalculateStep(Level& level)
 {
 	if (enemyRound->HasNextAction()) {
 		enemyRound->NextAction();
 
 		auto action = enemyRound->GetAction();
-		action->Calculate(*actor);
-		enemyRound->state = EnemyRound::State::Calculated;
+		action->Calculate(level , *actor);
+		enemyRound->state = EnemyRound::RoundState::Calculated;
 	}
 }
 
-void EnemyAI::PerformStep()
+void EnemyAI::PerformStep(Level& level)
 {
 	auto action = enemyRound->GetAction();
-	action->Perform(*actor);
+	action->Perform(level, *actor);
 
 	if (enemyRound->HasNextAction()) {
-		enemyRound->state = EnemyRound::State::Stopped;
-		CalculateStep();
+		enemyRound->state = EnemyRound::RoundState::Stopped;
+		CalculateStep(level);
 	}
 	else 
-		enemyRound->state = EnemyRound::State::Finished;
+		enemyRound->state = EnemyRound::RoundState::Finished;
 }
 
 void EnemyAI::Render()

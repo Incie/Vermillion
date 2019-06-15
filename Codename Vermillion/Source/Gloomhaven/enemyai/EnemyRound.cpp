@@ -4,12 +4,12 @@
 #include"../../Framework/services.h"
 
 EnemyRound::EnemyRound()
-	: currentAction(-1), state(State::Stopped)
+	: currentAction(-1), state(RoundState::Stopped)
 {
 }
 
 EnemyRound::EnemyRound(int initiative, std::vector<EnemyAction*> actions)
-	: initiative(initiative), currentAction(-1), state(State::Stopped), reshuffle(true)
+	: initiative(initiative), currentAction(-1), state(RoundState::Stopped), reshuffle(true)
 {
 	this->actions.insert(this->actions.begin(), actions.begin(), actions.end());
 }
@@ -55,7 +55,7 @@ void EnemyRound::Render()
 {
 	if (currentAction >= 0 && currentAction < actions.size()) {
 		EnemyAction* action = actions[currentAction];
-		if (state == State::Calculated)
+		if (state == RoundState::Calculated)
 			action->Render();
 	}
 }

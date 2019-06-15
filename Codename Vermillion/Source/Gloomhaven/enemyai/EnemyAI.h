@@ -11,7 +11,7 @@ class TextService;
 class EnemyAI
 {
 public:
-	EnemyAI(Level& level);
+	EnemyAI();
 	~EnemyAI();
 
 	void SetRoundActions(EnemyRound* enemyRound);
@@ -19,15 +19,14 @@ public:
 	Actor* GetActor() { return actor; }
 	
 	bool Finished();
-	void Step();
+	void Step(Level& level);
 
 	void Render();
 
 private:
-	void CalculateStep();
-	void PerformStep();
+	void CalculateStep(Level& level);
+	void PerformStep(Level& level);
 
 	EnemyRound* enemyRound;
 	Actor* actor;
-	Level& level;
 };

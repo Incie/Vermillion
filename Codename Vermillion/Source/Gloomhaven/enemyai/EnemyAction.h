@@ -9,13 +9,14 @@ class Actor;
 
 class EnemyAction {
 public:
-	EnemyAction(Level& level);
+	EnemyAction();
 	virtual ~EnemyAction();
 
 	virtual bool CanPerform(const Actor& actor) { return true; }
-	virtual void Calculate(const Actor& actor) = 0;
-	virtual std::vector<glm::ivec3> Targets();
-	virtual void Perform(Actor& actor) {};
+	virtual void Calculate(Level& level, const Actor& actor) = 0;
+	virtual void Perform(Level& level, Actor& actor) {};
+
+	virtual std::vector<std::pair<glm::ivec3, glm::vec3>> Targets();
 
 	virtual void Render() {}
 	virtual void Reset() { state = 0; targets.clear(); }
@@ -24,20 +25,19 @@ public:
 	const std::string ActionDescription() { return actionDescription; }
 protected:
 	std::string actionDescription;
-	Level& level;
 	glm::vec2 startPoint;
-	std::vector<glm::ivec3> targets;
+	std::vector<std::pair<glm::ivec3, glm::vec3>> targets;
 };
 
 //Move towards focus
 //landing effects?
 class EnemyMove : public EnemyAction {
 public:
-	EnemyMove(Level& level, int move);
+	EnemyMove(int move);
 
 	bool CanPerform(const Actor& actor) override;
-	void Calculate(const Actor& actor) override;
-	void Perform(Actor& actor) override;
+	void Calculate(Level& level, const Actor& actor) override;
+	void Perform(Level& level, Actor& actor) override;
 	void Render();
 protected:
 
@@ -48,11 +48,11 @@ protected:
 //post-hit effects
 class EnemyAttack : public EnemyAction {
 public:
-	EnemyAttack(Level& level, int attack, int range);
+	EnemyAttack(int attack, int range);
 
 	bool CanPerform(const Actor& actor) override;
-	void Calculate(const Actor& actor) override;
-	void Perform(Actor& actor) override;
+	void Calculate(Level& level, const Actor& actor) override;
+	void Perform(Level& level, Actor& actor) override;
 	void Render() override;
 
 private:
@@ -67,11 +67,11 @@ class EnemySelfCast {};
 
 class EnemyHealSelf : public EnemyAction {
 public:
-	EnemyHealSelf(Level& level, int healAmount);
+	EnemyHealSelf(int healAmount);
 
 	virtual bool CanPerform(const Actor& actor) override;
-	virtual void Calculate(const Actor& actor) override;
-	virtual void Perform(Actor& actor) override;
+	virtual void Calculate(Level& level, const Actor& actor) override;
+	virtual void Perform(Level& level, Actor& actor) override;
 	void Render() override;
 
 private:
@@ -82,11 +82,11 @@ private:
 
 class EnemyShieldSelf : public EnemyAction {
 public:
-	EnemyShieldSelf(Level& level, int shield);
+	EnemyShieldSelf(int shield);
 
 	virtual bool CanPerform(const Actor& actor) override;
-	virtual void Calculate(const Actor& actor) override;
-	virtual void Perform(Actor& actor) override;
+	virtual void Calculate(Level& level, const Actor& actor) override;
+	virtual void Perform(Level& level, Actor& actor) override;
 	void Render() override;
 
 private:
@@ -97,11 +97,11 @@ private:
 
 class EnemyRetaliate : public EnemyAction {
 public:
-	EnemyRetaliate(Level& level, int retliate);
+	EnemyRetaliate(int retliate);
 
 	virtual bool CanPerform(const Actor& actor) override;
-	virtual void Calculate(const Actor& actor) override;
-	virtual void Perform(Actor& actor) override;
+	virtual void Calculate(Level& level, const Actor& actor) override;
+	virtual void Perform(Level& level, Actor& actor) override;
 	void Render() override;
 
 private:

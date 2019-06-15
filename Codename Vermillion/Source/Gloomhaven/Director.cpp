@@ -21,7 +21,7 @@
 
 
 Director::Director(Level& level, std::function<void(DirectorEvent)> onEvent)
-	: level(level), action(nullptr), enemyAi(level), onEvent(onEvent), directorStatus(DirectorStatus::EndOfRound), monsterCardDecks(level)
+	: level(level), action(nullptr), onEvent(onEvent), directorStatus(DirectorStatus::EndOfRound), monsterCardDecks(level)
 {
 	playerRound = nullptr;
 }
@@ -162,7 +162,7 @@ void Director::SetPlayerRound(PlayerRound* playerRound)
 void Director::AdvanceEnemy()
 {
 	if (initiativeTracker.EnemyTurn()) {
-		enemyAi.Step();
+		enemyAi.Step(level);
 
 		if (enemyAi.Finished()) {
 			NextActor();

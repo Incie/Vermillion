@@ -4,8 +4,8 @@
 #include"../level/Level.h"
 #include"GL/glew.h"
 
-EnemyAction::EnemyAction(Level& level)
-	: level(level), state(0)
+EnemyAction::EnemyAction()
+	: state(0)
 {
 }
 
@@ -14,8 +14,8 @@ EnemyAction::~EnemyAction()
 	targets.clear();
 }
 
-EnemyMove::EnemyMove(Level& level, int move)
-	: EnemyAction(level), move(move)
+EnemyMove::EnemyMove(int move)
+	: EnemyAction(), move(move)
 {
 	actionDescription = fmt::format("Move {0}", move);
 }
@@ -29,7 +29,7 @@ bool EnemyMove::CanPerform(const Actor& actor)
 	return true;
 }
 
-void EnemyMove::Calculate(const Actor& actor)
+void EnemyMove::Calculate(Level& level, const Actor& actor)
 {
 	startPoint = level.TileAt(actor.Position()).WorldPosition();
 	state = 1;
@@ -69,12 +69,12 @@ void EnemyMove::Calculate(const Actor& actor)
 		if (tile->IsOccupied())
 			continue;
 
-		targets.push_back(tile->Location());
+		targets.push_back(std::pair(tile->Location(), tile->WorldPosition()));
 		break;
 	}
 }
 
-void EnemyMove::Perform(Actor& actor)
+void EnemyMove::Perform(Level& level, Actor& actor)
 {
 	level.ClearHighlights();
 	auto currentPosition = actor.Position();
@@ -83,7 +83,7 @@ void EnemyMove::Perform(Actor& actor)
 
 	if (moveTargets.size() == 1) {
 		auto nextPosition = moveTargets[0];
-		auto& targetTile = level.TileAt(nextPosition);
+		auto& targetTile = level.TileAt(nextPosition.first);
 		auto& startTile = level.TileAt(currentPosition);
 
 		startTile.SetOccupied(-1);
@@ -92,7 +92,7 @@ void EnemyMove::Perform(Actor& actor)
 	}
 }
 
-std::vector<glm::ivec3> EnemyAction::Targets()
+std::vector<std::pair<glm::ivec3, glm::vec3>> EnemyAction::Targets()
 {
 	return targets;
 }
@@ -102,14 +102,14 @@ void EnemyMove::Render()
 	for (auto target : targets) {
 		glBegin(GL_LINES);
 		glVertex2fv(&startPoint.x);
-		glVertex2fv(&level.TileAt(target).WorldPosition().x);
+		glVertex2fv(&target.second.x);
 		glEnd();
 	}
 }
 
 
-EnemyAttack::EnemyAttack(Level& level, int attack, int range)
-	: EnemyAction(level), attack(attack), range(range)
+EnemyAttack::EnemyAttack(int attack, int range)
+	: EnemyAction(), attack(attack), range(range)
 {
 	actionDescription = fmt::format("Attack {0} - range {1}", attack, range);
 }
@@ -122,7 +122,7 @@ bool EnemyAttack::CanPerform(const Actor& actor)
 	return true;
 }
 
-void EnemyAttack::Calculate(const Actor& actor)
+void EnemyAttack::Calculate(Level& level, const Actor& actor)
 {
 	startPoint = level.TileAt(actor.Position()).WorldPosition();
 	auto tiles = level.TilesWithin(actor.Position(), range + actor.Range());
@@ -131,7 +131,7 @@ void EnemyAttack::Calculate(const Actor& actor)
 		tile->GetHexagon().SetHighlight(glm::vec3(0, 0, 1));
 	}
 
-	auto removedTiles = std::remove_if(tiles.begin(), tiles.end(), [&actor, this](const Tile * x) {
+	auto removedTiles = std::remove_if(tiles.begin(), tiles.end(), [&level, &actor, this](const Tile * x) {
 		if (!x->IsOccupied())
 			return true;
 
@@ -148,16 +148,17 @@ void EnemyAttack::Calculate(const Actor& actor)
 	}
 
 	if (tiles.size() > 0) {
-		targets.push_back(tiles[0]->Location());
+		auto tile = tiles[0];
+		targets.push_back(std::pair(tile->Location(), tile->WorldPosition()));
 	}
 }
 
-void EnemyAttack::Perform(Actor& attacker)
+void EnemyAttack::Perform(Level& level, Actor& attacker)
 {
 	level.ClearHighlights();
 
 	for (auto target : targets) {
-		auto& tile = level.TileAt(target);
+		auto& tile = level.TileAt(target.first);
 		auto actor = level.ActorById(tile.OccupiedId());
 
 		bool muddled = attacker.Muddled();
@@ -197,14 +198,15 @@ void EnemyAttack::Render()
 	for (auto target : targets) {
 		glBegin(GL_LINES);
 		glVertex2fv(&startPoint.x);
-		glVertex2fv(&level.TileAt(target).WorldPosition().x);
+		glVertex2fv(&target.second.x);
 		glEnd();
 	}
 }
 
-EnemyHealSelf::EnemyHealSelf(Level& level, int healAmount)
-	: EnemyAction(level), heal(healAmount), calculated(false)
+EnemyHealSelf::EnemyHealSelf(int healAmount)
+	: EnemyAction(), heal(healAmount), calculated(false)
 {
+	actionDescription = fmt::format("Heal self {0}", healAmount);
 }
 
 bool EnemyHealSelf::CanPerform(const Actor& actor)
@@ -214,13 +216,13 @@ bool EnemyHealSelf::CanPerform(const Actor& actor)
 	return true;
 }
 
-void EnemyHealSelf::Calculate(const Actor& actor)
+void EnemyHealSelf::Calculate(Level& level, const Actor& actor)
 {
 	calculated = true;
 	actorWorldPosition = actor.WorldPosition();
 }
 
-void EnemyHealSelf::Perform(Actor& actor)
+void EnemyHealSelf::Perform(Level& level, Actor& actor)
 {
 	auto healedFor = actor.DoHealing(heal);
 	level.combatLog.push_back(fmt::format("{0} healed for {1}", actor.Name(), healedFor));
@@ -238,9 +240,10 @@ void EnemyHealSelf::Render()
 }
 
 
-EnemyShieldSelf::EnemyShieldSelf(Level& level, int shield)
-	: EnemyAction(level), shield(shield), calculated(false)
+EnemyShieldSelf::EnemyShieldSelf(int shield)
+	: EnemyAction(), shield(shield), calculated(false)
 {
+	actionDescription = fmt::format("Shield self {0}", shield);
 }
 
 bool EnemyShieldSelf::CanPerform(const Actor& actor)
@@ -248,13 +251,13 @@ bool EnemyShieldSelf::CanPerform(const Actor& actor)
 	return !actor.Stunned();
 }
 
-void EnemyShieldSelf::Calculate(const Actor& actor)
+void EnemyShieldSelf::Calculate(Level& level, const Actor& actor)
 {
 	actorWorldPosition = actor.WorldPosition();
 	calculated = true;
 }
 
-void EnemyShieldSelf::Perform(Actor& actor)
+void EnemyShieldSelf::Perform(Level& level, Actor& actor)
 {
 	actor.ModifyShield(shield);
 	int s = shield;
@@ -270,9 +273,10 @@ void EnemyShieldSelf::Render()
 	Render::Quad(actorWorldPosition, glm::vec2(15,15), glm::vec3(0,1,0));
 }
 
-EnemyRetaliate::EnemyRetaliate(Level& level, int retaliate)
-	: EnemyAction(level), retaliate(retaliate), calculated(false)
+EnemyRetaliate::EnemyRetaliate(int retaliate)
+	: EnemyAction(), retaliate(retaliate), calculated(false)
 {
+	actionDescription = fmt::format("Retaliate {0}", retaliate);
 }
 
 bool EnemyRetaliate::CanPerform(const Actor& actor)
@@ -280,13 +284,13 @@ bool EnemyRetaliate::CanPerform(const Actor& actor)
 	return !actor.Stunned();
 }
 
-void EnemyRetaliate::Calculate(const Actor& actor)
+void EnemyRetaliate::Calculate(Level& level, const Actor& actor)
 {
 	calculated=true;
 	actorWorldPosition = actor.WorldPosition();
 }
 
-void EnemyRetaliate::Perform(Actor& actor)
+void EnemyRetaliate::Perform(Level& level, Actor& actor)
 {
 	actor.ModifyRetaliate(retaliate);
 	int r = retaliate;

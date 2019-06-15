@@ -21,13 +21,13 @@ public:
 	void Render();
 	void RenderRoundCard(const TextService& text);
 
-	enum class State {
+	enum class RoundState {
 		Stopped, Inprogress, Calculated, Finished
 	};
 
 	void ToString(std::vector<std::string>&);
 
-	State state;
+	RoundState state;
 
 
 	int Initiative() { return initiative; }

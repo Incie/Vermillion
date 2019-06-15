@@ -60,8 +60,5 @@ private:
 	Level& level;
 	Action* action;
 
-	std::vector<int> turnOrder;
-	std::vector<std::string> turnOrderNames;
-
 	std::function<void(DirectorEvent)> onEvent;
 };
