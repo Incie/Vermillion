@@ -58,7 +58,7 @@ void ActionAttack::Reset()
 bool ActionAttack::Perform(Actor& actor)
 {
 	for (auto& mark : marks) {
-		auto tile = level.TileAt(mark);
+		auto& tile = level.TileAt(mark);
 		auto targetActor = level.ActorById(tile.OccupiedId());
 
 		int poisonDamage = 0;

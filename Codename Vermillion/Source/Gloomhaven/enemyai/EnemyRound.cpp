@@ -39,7 +39,6 @@ bool EnemyRound::HasNextAction()
 
 void EnemyRound::Reset()
 {
-
 	for (auto action : actions)
 		action->Reset();
 	currentAction = -1;

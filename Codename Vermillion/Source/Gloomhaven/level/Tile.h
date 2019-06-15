@@ -8,7 +8,10 @@ class Entity;
 class Tile {
 public:
 	Tile(glm::ivec3 location, glm::vec3 worldpos);
+	Tile(const Tile&) = delete;
 	~Tile();
+	
+	Tile& operator=(const Tile&) = delete;
 
 	int OccupiedId() const { return occupyingActorId; };
 	bool IsOccupied() const;

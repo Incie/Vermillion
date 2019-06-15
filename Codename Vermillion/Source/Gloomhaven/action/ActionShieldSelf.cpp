@@ -39,6 +39,6 @@ bool ActionShieldSelf::Perform(Actor& actor)
 void ActionShieldSelf::Render()
 {
 	auto texture = Icons::Get("Shield");
-	auto tile = level.TileAt(actor.Position());
+	auto& tile = level.TileAt(actor.Position());
 	Render::Quad(tile.WorldPosition(), *texture, 30);
 }

@@ -21,7 +21,7 @@ void ActionMove::Click(const glm::ivec3& target)
 	if (movesLeft == 0)
 		return;
 
-	auto clickedTile = level.TileAt(target);
+	auto& clickedTile = level.TileAt(target);
 
 	if (clickedTile.DistanceTo(currentPosition) != 1)
 		return;
@@ -156,7 +156,7 @@ bool ActionTrample::Perform(Actor& actor)
 
 
 	for(auto tileLocation : plannedRoute) {
-		auto tile = level.TileAt(tileLocation);
+		auto& tile = level.TileAt(tileLocation);
 		
 		if(!tile.IsOccupied())
 			continue;
