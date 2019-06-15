@@ -11,8 +11,9 @@ public:
 	~MonsterDeck();
 
 	void Draw();
-
 	void Shuffle();
+
+	EnemyRound* Active();
 
 private:
 	std::string entityName;

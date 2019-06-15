@@ -30,6 +30,8 @@ public:
 	Director(Level& level, std::function<void(DirectorEvent)> onEvent);
 	~Director();
 
+	void Initialize();
+
 	void Update(const InputService& input);
 	void Render();
 	void RenderUI(const TextService& text);
@@ -40,7 +42,7 @@ public:
 	void SetPlayerRound(PlayerRound* playerRound);
 	void AdvanceEnemy();
 
-	std::vector<std::string> GetEnemyRound();
+	std::pair<int, std::vector<std::string>> GetEnemyRound(const std::string& name = "");
 
 	InitiativeTracker& GetInitiativeTracker() { return initiativeTracker; }
 
@@ -51,12 +53,13 @@ private:
 
 	DirectorStatus directorStatus;
 
+	MonsterCardGenerator monsterCardDecks;
 	InitiativeTracker initiativeTracker;
 	EnemyAI enemyAi;
 	PlayerRound* playerRound;
 	Level& level;
 	Action* action;
-	EnemyRound* enemyRound;
+
 	std::vector<int> turnOrder;
 	std::vector<std::string> turnOrderNames;
 

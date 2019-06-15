@@ -19,6 +19,10 @@ MonsterDeck::~MonsterDeck()
 	discardedRounds.clear();
 }
 
+EnemyRound* MonsterDeck::Active() {
+	return active;
+}
+
 void MonsterDeck::Draw()
 {
 	active = enemyRounds.back();

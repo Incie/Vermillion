@@ -16,6 +16,7 @@ public:
 
 	void SetRoundActions(EnemyRound* enemyRound);
 	void SetActor(Actor* actor);
+	Actor* GetActor() { return actor; }
 	
 	bool Finished();
 	void Step();

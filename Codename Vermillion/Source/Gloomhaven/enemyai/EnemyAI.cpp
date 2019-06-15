@@ -79,4 +79,6 @@ void EnemyAI::PerformStep()
 
 void EnemyAI::Render()
 {
+	if(enemyRound != nullptr)
+		enemyRound->Render();
 }

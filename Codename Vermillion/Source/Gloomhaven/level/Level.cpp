@@ -12,6 +12,8 @@ Level::Level()
 	showCoords = false;
 	hasDistance = false;
 	selectedHex = nullptr;
+
+	playerModifiers.AddPerks();
 }
 
 Level::~Level()
@@ -254,6 +256,19 @@ void Level::RemoveActorById(int actorId)
 	auto& tile = TileOccupiedBy(actorId);
 
 	tile.SetOccupied(-1);
+}
+
+std::vector<Enemy*> Level::Enemies() const
+{
+	auto actors = std::vector<Enemy*>();
+
+	for(auto entity : entities) {
+		auto e = dynamic_cast<Enemy*>(entity);
+		if(e)
+			actors.push_back(e);
+	}
+
+	return actors;
 }
 
 const Actor* Level::ActorViewById(int actorId) const

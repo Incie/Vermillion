@@ -80,6 +80,8 @@ public:
 	void Add(Modifier m);
 	void Remove(Modifier m);
 
+	void AddPerks();
+
 private:
 	bool needShuffle;
 

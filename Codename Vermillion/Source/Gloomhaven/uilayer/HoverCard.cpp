@@ -79,7 +79,7 @@ void HoverCard::Render(ServiceLocator& Services)
 		float desiredWidth = 300.0f;
 		float scale = desiredWidth / static_cast<float>(enemyround_texture->width);
 		Render::Quad(*enemyround_texture, static_cast<float>(enemyround_texture->height) * scale);
-
+		Services.Text().Print(30, 50, fmt::format("{0}", initiative), static_cast<unsigned int>(20), Colors::White, true);
 		float textX = 8 + desiredWidth * 0.5f;
 		float textY = 8 + 40.0f;
 		float textSize = 18.0f;
@@ -99,8 +99,9 @@ void HoverCard::NoEnemyRound()
 	enemyRoundTexts.clear();
 }
 
-void HoverCard::SetEnemyRound(const std::vector<std::string>& enemyRound)
+void HoverCard::SetEnemyRound(const std::vector<std::string>& enemyRound, int initiative)
 {
+	this->initiative = initiative;
 	this->enemyRound = true;
 	this->enemyRoundTexts = enemyRound;
 }

@@ -9,6 +9,7 @@
 class TextService;
 class Actor;
 class Entity;
+class Enemy;
 
 class Level
 {
@@ -37,6 +38,7 @@ public:
 
 	void RemoveActorById(int actorId);
 
+	std::vector<Enemy*> Enemies() const;
 	const Actor* ActorViewById(int actorId) const;
 	Actor* ActorById(int actorId);
 	Actor* GetPlayer();

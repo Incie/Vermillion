@@ -64,6 +64,8 @@ void Gloom::Initialize()
 	level.LoadMap("levels/scenario_001.json");
 	level.SpawnRoom(1);
 
+	director.Initialize();
+
 	camera.SetPositionCenter( level.Center() );
 
 	Render::SetLightData();
@@ -122,8 +124,8 @@ void Gloom::Update(double deltaTime)
 			auto enemy = dynamic_cast<Enemy*>(occupant);
 
 			if(enemy != nullptr) {
-				auto er = director.GetEnemyRound();
-				hoverCard->SetEnemyRound(er);
+				auto er = director.GetEnemyRound(enemy->Name());
+				hoverCard->SetEnemyRound(er.second, er.first);
 			}
 			else hoverCard->NoEnemyRound();
 		}
@@ -316,7 +318,8 @@ void Gloom::OnDirectorEvent(DirectorEvent eventId)
 			auto ea = GetViewById<EnemyAdvancer>(G::EnemyAdvancerId);
 
 			ea->Activate();
-			ea->SetEnemyActions(director.GetEnemyRound());
+			auto er = director.GetEnemyRound();
+			ea->SetEnemyActions(er.second, er.first);
 
 			GetViewById<StatusBar>(G::StatusBarId)->SetStatusText("AI Turn");
 			break;

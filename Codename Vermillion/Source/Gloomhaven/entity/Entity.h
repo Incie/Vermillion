@@ -84,7 +84,7 @@ public:
 	void Deactivate() { active = false; }
 	const std::string& Name() const { return name; }
 	const glm::ivec3& Position() const { return positionTile; }
-	const glm::vec3& WorldPosition() const { return positionWorld; }
+	const glm::vec3 WorldPosition() const { return positionWorld; }
 
 protected:
 	bool active;
@@ -107,6 +107,9 @@ public:
 	int DoDamage(int attackDamage, int pierce);
 	int DoHealing(int healAmount);
 
+	int Attack() const { return attack; }
+	int Range() const { return range; }
+	int Move() const { return move; }
 	int Team() const { return team; }
 	int Health() { return health; }
 	int Shield() { return shield; }

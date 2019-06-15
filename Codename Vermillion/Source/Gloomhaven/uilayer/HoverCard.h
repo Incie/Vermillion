@@ -20,7 +20,7 @@ public:
 	virtual void Render(ServiceLocator& Services) override;
 
 	void NoEnemyRound();
-	void SetEnemyRound(const std::vector<std::string>& enemyRound);
+	void SetEnemyRound(const std::vector<std::string>& enemyRound, int initiative);
 	void SetHoverTile(const Level& level, const Tile* tile);
 private:
 	Texture* entity_icon;
@@ -28,6 +28,7 @@ private:
 
 	Texture* enemyround_texture;
 	bool enemyRound;
+	int initiative;
 	std::vector<std::string> enemyRoundTexts;
 
 	std::vector<std::string> texts;

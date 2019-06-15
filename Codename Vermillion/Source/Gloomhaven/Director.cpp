@@ -2,6 +2,8 @@
 #include "Director.h"
 #include"../services.h"
 
+#include"cards/MonsterDeck.h"
+
 #include"action/Action.h"
 #include"action/ActionAttack.h"
 #include"action/ActionMove.h"
@@ -19,28 +21,25 @@
 
 
 Director::Director(Level& level, std::function<void(DirectorEvent)> onEvent)
-	: level(level), action(nullptr), enemyAi(level), onEvent(onEvent)
+	: level(level), action(nullptr), enemyAi(level), onEvent(onEvent), directorStatus(DirectorStatus::EndOfRound), monsterCardDecks(level)
 {
-	enemyRound = vnew EnemyRound();
-	enemyRound->AddAction(vnew EnemyMove(level, 2));
-	enemyRound->AddAction(vnew EnemyAttack(level, 2, 1));
-
-	enemyAi.SetActor(level.ActorById(2));
-	enemyAi.SetRoundActions(enemyRound);
-
 	playerRound = nullptr;
 }
 
 Director::~Director()
 {
-	if( enemyRound )
-		delete enemyRound;
-
 	if (action)
 		delete action;
 
 	if (playerRound)
 		delete playerRound;
+}
+
+void Director::Initialize()
+{
+	for(auto enemy : level.Enemies()) {
+		monsterCardDecks.GetMonsterDeck(enemy->Name());
+	}
 }
 
 void Director::Update(const InputService& input)
@@ -54,9 +53,12 @@ void Director::Render()
 	glPushMatrix();
 	if (action)
 		action->Render();
+	
+	glPopMatrix();
 
-	if( enemyRound )
-		enemyRound->Render();
+	glPushMatrix();
+	if( initiativeTracker.EnemyTurn() )
+		enemyAi.Render();
 	glPopMatrix();
 }
 
@@ -66,9 +68,6 @@ void Director::RenderUI(const TextService& text)
 
 	glTranslatef(5.0f, 300.0f, 0.0f);
 	if(initiativeTracker.EnemyTurn()) {
-
-		if( enemyRound != nullptr )
-			enemyRound->RenderRoundCard(text);
 	}
 	else {
 		if (playerRound == nullptr || playerRound->Finished()){}
@@ -86,6 +85,14 @@ void Director::RenderUI(const TextService& text)
 void Director::StartRound()
 {
 	directorStatus = DirectorStatus::RoundStarted;
+
+	monsterCardDecks.DrawAll();
+
+	for(auto enemy : level.Enemies() ) {
+		auto er = monsterCardDecks.GetMonsterDeck(enemy->Name());
+		enemy->Initiative(er->Active()->Initiative());
+	}
+
 	initiativeTracker.CalculateRoundOrder(level);
 	NextActor();
 }
@@ -166,13 +173,24 @@ void Director::AdvanceEnemy()
 	}
 }
 
+
+
 //TODO: Utilize render2texture instead?
-std::vector<std::string> Director::GetEnemyRound()
+std::pair<int, std::vector<std::string>> Director::GetEnemyRound(const std::string& name)
 {
+	MonsterDeck* monsterDeck = nullptr;
+	if(name == "") 
+		monsterDeck = this->monsterCardDecks.GetMonsterDeck(enemyAi.GetActor()->Name());
+	else 
+		monsterDeck = this->monsterCardDecks.GetMonsterDeck(name);
+	auto er = monsterDeck->Active();
+	
 	auto enemyRoundText = std::vector<std::string>();
-	enemyRound->ToString(enemyRoundText);
-	return enemyRoundText;
+	er->ToString(enemyRoundText);
+	return std::pair(er->Initiative(), enemyRoundText);
 }
+
+
 
 void Director::NextActor()
 {
@@ -184,7 +202,12 @@ void Director::NextActor()
 	}
 	else if (initiativeTracker.EnemyTurn()) {
 		enemyAi.SetActor(a);
-		enemyAi.SetRoundActions(enemyRound);
+
+		auto monsterDeck = this->monsterCardDecks.GetMonsterDeck(a->Name());
+		auto er = monsterDeck->Active();
+		er->Reset();
+
+		enemyAi.SetRoundActions(er);
 		onEvent(DirectorEvent::EnemyTurn);
 	}
 	else {

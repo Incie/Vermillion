@@ -35,14 +35,14 @@ void EnemyMove::Calculate(const Actor& actor)
 	state = 1;
 
 	const auto player = level.GetPlayer();
-	const auto playerTile = level.TileAt(player->Position());
+	const auto& playerTile = level.TileAt(player->Position());
 
-	const auto enemyTile = level.TileAt(actor.Position());
+	const auto& enemyTile = level.TileAt(actor.Position());
 
 	if (playerTile.DistanceTo(enemyTile.Location()) == 1)
 		return;
 
-	auto tilesWithinRange = level.TilesWithin(actor.Position(), move);
+	auto tilesWithinRange = level.TilesWithin(actor.Position(), actor.Move() + move);
 
 	if (tilesWithinRange.size() == 0)
 		return;
@@ -119,13 +119,13 @@ bool EnemyAttack::CanPerform(const Actor& actor)
 	if(actor.Stunned() || actor.Disarmed())
 		return false;
 
-	return false;
+	return true;
 }
 
 void EnemyAttack::Calculate(const Actor& actor)
 {
 	startPoint = level.TileAt(actor.Position()).WorldPosition();
-	auto tiles = level.TilesWithin(actor.Position(), range);
+	auto tiles = level.TilesWithin(actor.Position(), range + actor.Range());
 
 	for (auto tile : tiles) {
 		tile->GetHexagon().SetHighlight(glm::vec3(0, 0, 1));
@@ -157,7 +157,7 @@ void EnemyAttack::Perform(Actor& attacker)
 	level.ClearHighlights();
 
 	for (auto target : targets) {
-		auto tile = level.TileAt(target);
+		auto& tile = level.TileAt(target);
 		auto actor = level.ActorById(tile.OccupiedId());
 
 		bool muddled = attacker.Muddled();
@@ -180,13 +180,8 @@ void EnemyAttack::Perform(Actor& attacker)
 
 		}
 
-
-
 		int poisonDamage = actor->Poisoned() ? 1 : 0;
-		int calculatedDamage = attack + poisonDamage;
-
-
-
+		int calculatedDamage = attack + poisonDamage + attacker.Attack();
 	
 		for(auto m : modifiers) {
 			calculatedDamage = m.ModifyValue(calculatedDamage);
@@ -263,7 +258,7 @@ void EnemyShieldSelf::Perform(Actor& actor)
 {
 	actor.ModifyShield(shield);
 	int s = shield;
-	actor.AddEndOfRoundAction([s](Actor*a){ a->ModifyShield(-s); })
+	actor.AddEndOfRoundAction([s](Actor* a) { a->ModifyShield(-s); });
 }
 
 void EnemyShieldSelf::Render()
@@ -295,7 +290,7 @@ void EnemyRetaliate::Perform(Actor& actor)
 {
 	actor.ModifyRetaliate(retaliate);
 	int r = retaliate;
-	actor.AddEndOfRoundAction([r](Actor* a){ a->ModifyRetaliate(-r); })
+	actor.AddEndOfRoundAction([r](Actor* a) { a->ModifyRetaliate(-r); });
 }
 
 void EnemyRetaliate::Render()

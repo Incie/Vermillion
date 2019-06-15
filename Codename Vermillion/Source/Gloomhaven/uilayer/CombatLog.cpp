@@ -26,7 +26,7 @@ void CombatLog::Measure(const glm::vec2& windowSize, const TextService& text)
 		maxWidth = std::max<float>(text.CalculateWidth(s, 16), maxWidth);
 	}
 
-	size.x = maxWidth;
+	size.x = maxWidth + 16.0f;
 	size.y = windowSize.y;
 }
 

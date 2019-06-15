@@ -12,13 +12,13 @@
 Spawner::Spawner(Level& level)
 	: level(level), spawnerIdGenerator(0)
 {
-	monsterStats["Bandit Guard"] =		 MonsterStats{ "Bandit Guard",  6, 0, 0, 0, 3, 3, 1, false };
-	monsterStats["Bandit Guard Elite"] = MonsterStats{ "Bandit Guard", 10, 0, 0, 1, 4, 2, 1, true };
+	monsterStats["Bandit Guard"] =		 MonsterStats{ "Bandit Guard",  6, 1, 0, 0, 3, 3, 1, false };
+	monsterStats["Bandit Guard Elite"] = MonsterStats{ "Bandit Guard", 10, 1, 0, 1, 4, 2, 1, true };
 	monsterStats["Bandit Archer"] =		  MonsterStats{ "Bandit Archer", 6, 4, 0, 0, 2, 3, 1, false };
 	monsterStats["Bandit Archer Elite"] = MonsterStats{ "Bandit Archer", 9, 5, 0, 0, 3, 5, 1, true };
 	
-	monsterStats["Living Bones"]	   = MonsterStats{ "Living Bones", 5, 0, 0, 1, 2, 3, 1, false };
-	monsterStats["Living Bones Elite"] = MonsterStats{ "Living Bones", 7, 0, 0, 1, 3, 4, 1, true };
+	monsterStats["Living Bones"]	   = MonsterStats{ "Living Bones", 5, 1, 0, 1, 2, 3, 1, false };
+	monsterStats["Living Bones Elite"] = MonsterStats{ "Living Bones", 7, 1, 0, 1, 3, 4, 1, true };
 }
 
 Spawner::~Spawner()

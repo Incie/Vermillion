@@ -92,6 +92,12 @@
     <Filter Include="Documentation">
       <UniqueIdentifier>{4d706eb4-45eb-4e6c-b746-c870ce9214be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Gloomhaven\Cards\Generators">
+      <UniqueIdentifier>{764bc998-8c08-433f-8ba1-928e9c5b6c43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\Cards\Player">
+      <UniqueIdentifier>{6f14e6e9-e703-43b1-a786-6ac05f239e09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -190,9 +196,6 @@
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyRound.cpp">
       <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Gloomhaven\cards\PlayerDeck.cpp">
-      <Filter>Source Files\Gloomhaven\Cards</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Gloomhaven\action\CardAction.cpp">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
     </ClCompile>
@@ -241,20 +244,11 @@
     <ClCompile Include="Source\Gloomhaven\uilayer\InitiativeUI.cpp">
       <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Gloomhaven\cards\CardGenerator.cpp">
-      <Filter>Source Files\Gloomhaven\Cards</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Gloomhaven\cards\PlayerRound.cpp">
-      <Filter>Source Files\Gloomhaven\Cards</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Gloomhaven\uilayer\EnemyAdvancer.cpp">
       <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\action\ActionShieldSelf.cpp">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Gloomhaven\cards\PlayerCard.cpp">
-      <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\vermillion.cpp">
       <Filter>Source Files\Framework</Filter>
@@ -292,9 +286,6 @@
     <ClCompile Include="Source\Gloomhaven\cards\MonsterDeck.cpp">
       <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Gloomhaven\cards\MonsterCardGenerator.cpp">
-      <Filter>Source Files\Gloomhaven\Cards</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Gloomhaven\uilayer\CombatLog.cpp">
       <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClCompile>
@@ -303,6 +294,21 @@
     </ClCompile>
     <ClCompile Include="Source\Test\Sandbox.cpp">
       <Filter>Source Files\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\CardGenerator.cpp">
+      <Filter>Source Files\Gloomhaven\Cards\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\MonsterCardGenerator.cpp">
+      <Filter>Source Files\Gloomhaven\Cards\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerCard.cpp">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerDeck.cpp">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerRound.cpp">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -393,9 +399,6 @@
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyRound.h">
       <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Gloomhaven\cards\PlayerDeck.h">
-      <Filter>Source Files\Gloomhaven\Cards</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Gloomhaven\action\CardAction.h">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
     </ClInclude>
@@ -435,20 +438,11 @@
     <ClInclude Include="Source\Gloomhaven\uilayer\InitiativeUI.h">
       <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Gloomhaven\cards\CardGenerator.h">
-      <Filter>Source Files\Gloomhaven\Cards</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Gloomhaven\cards\PlayerRound.h">
-      <Filter>Source Files\Gloomhaven\Cards</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Gloomhaven\uilayer\EnemyAdvancer.h">
       <Filter>Source Files\Gloomhaven\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\action\ActionShieldSelf.h">
       <Filter>Source Files\Gloomhaven\Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Gloomhaven\cards\PlayerCard.h">
-      <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\vermillion.h">
       <Filter>Source Files\Framework</Filter>
@@ -483,9 +477,6 @@
     <ClInclude Include="Source\Gloomhaven\cards\MonsterDeck.h">
       <Filter>Source Files\Gloomhaven\Cards</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Gloomhaven\cards\MonsterCardGenerator.h">
-      <Filter>Source Files\Gloomhaven\Cards</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Framework\uiview.h">
       <Filter>Source Files\Framework\UI</Filter>
     </ClInclude>
@@ -497,6 +488,21 @@
     </ClInclude>
     <ClInclude Include="Source\Test\SandBox.h">
       <Filter>Source Files\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\CardGenerator.h">
+      <Filter>Source Files\Gloomhaven\Cards\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\MonsterCardGenerator.h">
+      <Filter>Source Files\Gloomhaven\Cards\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerCard.h">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerDeck.h">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerRound.h">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

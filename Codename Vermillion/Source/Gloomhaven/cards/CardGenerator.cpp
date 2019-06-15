@@ -77,10 +77,10 @@ CardGenerator::CardGenerator(Level& level)
 		},
 		PlayerCard{
 			"Skewer",
-			{CardAbility{"Attack", 3}, CardAbility{"Range", 3, true}, CardAbility{"PULL", 2, true}},
+			{CardAbility{"Attack", 3}, CardAbility{"Range", 2, true}, CardAbility{"Target", 2, true}, CardAbility{"PULL", 2, true}},
 			{CardAbility{"Move", 4}},
 			35, 1,
-			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{ATTACK(3,3,1)};  return vnew PlayerRound(v); },
+			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{ATTACK(3,2,2)};  return vnew PlayerRound(v); },
 			[](Level& level, Actor& actor) {auto v = std::vector<Action*>{MOVE(4)};  return vnew PlayerRound(v); }
 		},
 		PlayerCard{

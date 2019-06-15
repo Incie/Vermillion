@@ -34,6 +34,14 @@ ModifierDeck::ModifierDeck()
 	Add(Modifier(ModifierValue::One));
 
 
+	Shuffle();
+}
+
+ModifierDeck::~ModifierDeck()
+{
+}
+
+void ModifierDeck::AddPerks() {
 	// Perks
 	Remove(Modifier(ModifierValue::MinusOne));
 	Remove(Modifier(ModifierValue::MinusOne));
@@ -52,12 +60,6 @@ ModifierDeck::ModifierDeck()
 
 	Add(Modifier(ModifierValue::One, true));
 	Add(Modifier(ModifierValue::One, true));
-
-	Shuffle();
-}
-
-ModifierDeck::~ModifierDeck()
-{
 }
 
 std::vector<Modifier> ModifierDeck::Draw()

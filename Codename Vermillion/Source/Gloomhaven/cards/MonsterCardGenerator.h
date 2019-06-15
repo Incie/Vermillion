@@ -14,6 +14,8 @@ public:
 	~MonsterCardGenerator();
 
 	MonsterDeck* GetMonsterDeck(const std::string& entityName);
+	void DrawAll();
+	void Reshuffle();
 
 private:
 	bool LoadDeck(const std::string& entityName);

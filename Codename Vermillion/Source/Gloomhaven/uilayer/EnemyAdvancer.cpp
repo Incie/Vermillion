@@ -63,6 +63,8 @@ void EnemyAdvancer::Render(ServiceLocator& Services)
 	float scale = desiredWidth / static_cast<float>(texture->width);
 	Render::Quad(*texture, static_cast<float>(texture->height) * scale);
 
+	Services.Text().Print(30, 50, fmt::format("{0}", initiative), static_cast<unsigned int>(20), Colors::White, true);
+
 	float textX = 8 + desiredWidth * 0.5f;
 	float textY = 8 + 40.0f;
 	float textSize = 18.0f;
@@ -77,8 +79,9 @@ void EnemyAdvancer::Render(ServiceLocator& Services)
 	}
 }
 
-void EnemyAdvancer::SetEnemyActions(const std::vector<std::string>& actions)
+void EnemyAdvancer::SetEnemyActions(const std::vector<std::string>& actions, int initiative)
 {
+	this->initiative = initiative;
 	this->actions.clear();
 	this->actions = actions;
 	currentAction = -1;

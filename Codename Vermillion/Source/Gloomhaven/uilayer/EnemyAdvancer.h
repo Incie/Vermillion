@@ -17,11 +17,12 @@ public:
 	virtual void OnEvent(WindowEvent type, int id);
 	virtual void Render(ServiceLocator& Services);
 
-	void SetEnemyActions(const std::vector<std::string>& actions);
+	void SetEnemyActions(const std::vector<std::string>& actions, int initiative);
 	void Advance();
 private:
 	std::function<void()> callback;
 	int currentAction;
+	int initiative;
 	std::vector<std::string> actions;
 	Texture* texture;
 };
