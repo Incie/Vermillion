@@ -13,3 +13,4 @@ version.h
 
 .user
 *.rar
+/Build_Static
