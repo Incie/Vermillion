@@ -183,11 +183,16 @@ std::pair<int, std::vector<std::string>> Director::GetEnemyRound(const std::stri
 		monsterDeck = this->monsterCardDecks.GetMonsterDeck(enemyAi.GetActor()->Name());
 	else 
 		monsterDeck = this->monsterCardDecks.GetMonsterDeck(name);
-	auto er = monsterDeck->Active();
+	
+	auto activeEnemyRound = monsterDeck->Active();
 	
 	auto enemyRoundText = std::vector<std::string>();
-	er->ToString(enemyRoundText);
-	return std::pair(er->Initiative(), enemyRoundText);
+
+	if(activeEnemyRound == nullptr)
+		return std::pair<int, std::vector<std::string>>(-1, enemyRoundText);
+
+	activeEnemyRound->ToString(enemyRoundText);
+	return std::pair<int, std::vector<std::string>>(activeEnemyRound->Initiative(), enemyRoundText);
 }
 
 
