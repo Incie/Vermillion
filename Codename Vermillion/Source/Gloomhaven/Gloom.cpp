@@ -320,6 +320,11 @@ void Gloom::OnDirectorEvent(DirectorEvent eventId)
 			statusbar->NextRound();
 
 			level.GetPlayer()->EndOfRoundActions();
+
+			for(auto e : level.Enemies()) {
+				e->EndOfRoundActions();
+			}
+
 			break;
 		}
 		case DirectorEvent::EnemyTurn: {

@@ -116,6 +116,7 @@ public:
 	int Pierce() { return pierce; }
 	int Retaliate() { return retaliate; }
 
+	void ModifyHealth(int mod) { health += mod; }
 	void ModifyShield(int mod) { shield += mod; }
 	void ModifyPierce(int mod) { pierce += mod; }
 	void ModifyRetaliate(int mod) { retaliate += mod; }

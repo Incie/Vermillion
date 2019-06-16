@@ -6,6 +6,8 @@
 #include"../level/Spawner.h"
 #include"../cards/Modifiers.h"
 
+#include"..//entity/Entity.h"
+
 class TextService;
 class Actor;
 class Entity;
@@ -54,6 +56,8 @@ public:
 	std::vector<std::string> combatLog;
 
 	glm::vec2 Center();
+
+	void PerformAttack(int baseDamage, std::vector<StatusEffect> statusEffects, Actor& attacker, ModifierDeck& attackerDeck, Actor& victim);
 
 private:
 	Spawner spawner;

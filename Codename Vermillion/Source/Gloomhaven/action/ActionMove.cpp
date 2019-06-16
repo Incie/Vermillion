@@ -161,25 +161,8 @@ bool ActionTrample::Perform(Actor& actor)
 		if(!tile.IsOccupied())
 			continue;
 
-		//do Attack
 		auto targetActor = level.ActorById(tile.OccupiedId());
-
-		int calculatedDamage = attack;
-		auto modifiers = level.playerModifiers.Draw();
-		
-		for(auto m : modifiers)
-			calculatedDamage = m.ModifyValue(calculatedDamage);
-
-
-		int actualDamage = targetActor->DoDamage(calculatedDamage, 0);
-		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", "[Player]", actualDamage, "[Enemy]", Modifier::ToString(modifiers), attack));
-
-
-		if(targetActor->Health() <= 0) {
-			level.combatLog.push_back("[Enemy] died");
-			level.RemoveActorById(targetActor->EntityId());
-			targetActor->Deactivate();
-		}
+		level.PerformAttack(attack, std::vector<StatusEffect>{}, actor, level.playerModifiers, *targetActor);
 	}
 
 	return ActionMove::Perform(actor);

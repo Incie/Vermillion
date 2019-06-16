@@ -348,6 +348,131 @@ glm::vec2 Level::Center()
 	return min + (max - min) * 0.5f;
 }
 
+//#include"../entity/Entity.h"
+void Level::PerformAttack(int baseDamage, std::vector<StatusEffect> statusEffects, Actor& attacker, ModifierDeck& attackerDeck, Actor& victim)
+{
+	int poisonDamage = 0;
+	if(victim.Poisoned())
+		poisonDamage = 1;
+
+	int calculatedDamage = baseDamage + poisonDamage;
+	auto modifierDraw = attackerDeck.Draw();
+
+	bool disadvantage = false;
+	bool advantage = false;
+
+	if(attacker.Muddled())
+		disadvantage = true;
+	if(attacker.Strengthened())
+		advantage = true;
+	//if attacker is doing ranged in melee
+		//disadvantage = true
+
+
+	if(disadvantage != advantage) {
+		auto modifierDraw2 = attackerDeck.Draw();
+
+		combatLog.push_back(fmt::format("{0} drew {1}", attacker.Name(), Modifier::ToString(modifierDraw.modifiers)));
+		combatLog.push_back(fmt::format("{0} drew {1}", attacker.Name(), Modifier::ToString(modifierDraw2.modifiers)));
+
+
+		bool secondDrawIsBetter = modifierDraw2.TotalDamage(calculatedDamage).first > modifierDraw.TotalDamage(calculatedDamage).first;
+
+		if(secondDrawIsBetter && advantage) {
+			modifierDraw = modifierDraw2;
+			combatLog.push_back("Second draw was chosen");
+		}
+		else {
+			combatLog.push_back("First draw was chosen");
+		}
+	}
+
+
+	for(auto m : modifierDraw.modifiers)
+		calculatedDamage = m.ModifyValue(calculatedDamage);
+
+	int pierce = attacker.Pierce();
+
+	for(auto status : statusEffects) {
+		if(status == StatusEffect::Pierce) pierce += 1;
+		if(status == StatusEffect::Pierce2) pierce += 2;
+		if(status == StatusEffect::Pierce3) pierce += 3;
+	}
+
+
+	for(auto& m : modifierDraw.modifiers) {
+		if(m.status != ModifierStatus::None) {
+			switch(m.status) {
+			case ModifierStatus::ShieldSelf1: {
+				attacker.ModifyShield(1);
+				attacker.AddEndOfRoundAction([](Actor* a) { a->ModifyShield(-1); });
+				break;
+			}
+			case ModifierStatus::Pierce3: {
+				pierce += 3;
+				break;
+			}
+			default: {
+				switch(m.status) {
+				case ModifierStatus::Poison:	  statusEffects.push_back(StatusEffect::Poison);	 break;
+				case ModifierStatus::Wound: 	  statusEffects.push_back(StatusEffect::Wound);		 break;
+				case ModifierStatus::Stun: 		  statusEffects.push_back(StatusEffect::Stunned);	 break;
+				case ModifierStatus::Disarm:	  statusEffects.push_back(StatusEffect::Disarmed);	 break;
+				case ModifierStatus::Immobilize:  statusEffects.push_back(StatusEffect::Immobilized); break;
+				case ModifierStatus::Strengthen:  statusEffects.push_back(StatusEffect::Strengthen); break;
+				case ModifierStatus::Invisible:	  statusEffects.push_back(StatusEffect::Invisible);	 break;
+				case ModifierStatus::Muddle: 	  statusEffects.push_back(StatusEffect::Muddle);	 break;
+				default:
+				break;
+				}
+				break;
+			}
+			}
+		}
+	}
+
+	int actualDamage = victim.DoDamage(calculatedDamage, pierce);
+
+	auto attackerAsPlayer = dynamic_cast<Player*>(&attacker);
+	auto attackerName = attackerAsPlayer == nullptr ? attacker.Name() : attackerAsPlayer->PlayerName();
+
+	auto victimAsPlayer = dynamic_cast<Player*>(&victim);
+	auto victimName = victimAsPlayer == nullptr ? victim.Name() : victimAsPlayer->PlayerName();
+
+	combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", attackerName, actualDamage, victimName, Modifier::ToString(modifierDraw.modifiers), baseDamage));
+
+	for(auto st : statusEffects) {
+		switch(st) {
+		case StatusEffect::Strengthen: attacker.AddStatus(st); break;
+		case StatusEffect::Invisible: attacker.AddStatus(st); break;
+		case StatusEffect::Pierce:
+		case StatusEffect::Pierce2:
+		case StatusEffect::Pierce3:
+		break;
+		default: {
+			combatLog.push_back(fmt::format("{1} was {0}", StatusEffectToString(st), victim.Name()));
+			victim.AddStatus(st);
+			break;
+		}
+		}
+	}
+
+	if(victim.Health() <= 0) {
+		combatLog.push_back(fmt::format("{0} died", victim.Name()));
+		RemoveActorById(victim.EntityId());
+		victim.Deactivate();
+	}
+	else {
+		if(victim.Retaliate() > 0) {
+			// if( health - retaliate <= 0 )
+				// query what to do
+
+			auto retaliate = victim.Retaliate();
+			attacker.ModifyHealth(-retaliate);
+		}
+	}
+}
+
 glm::ivec3 Level::GetCenterCoord(int x, int y, int z)
 {
 	for (auto tile : tiles) {

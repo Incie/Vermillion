@@ -69,7 +69,7 @@ void EnemyMove::Calculate(Level& level, const Actor& actor)
 		if (tile->IsOccupied())
 			continue;
 
-		targets.push_back(std::pair(tile->Location(), tile->WorldPosition()));
+		targets.push_back(std::pair<glm::ivec3, glm::vec3>(tile->Location(), tile->WorldPosition()));
 		break;
 	}
 }
@@ -149,7 +149,8 @@ void EnemyAttack::Calculate(Level& level, const Actor& actor)
 
 	if (tiles.size() > 0) {
 		auto tile = tiles[0];
-		targets.push_back(std::pair(tile->Location(), tile->WorldPosition()));
+		auto target = std::pair<glm::ivec3, glm::vec3>(tile->Location(), tile->WorldPosition());
+		targets.push_back(target);
 	}
 }
 
@@ -161,35 +162,8 @@ void EnemyAttack::Perform(Level& level, Actor& attacker)
 		auto& tile = level.TileAt(target.first);
 		auto actor = level.ActorById(tile.OccupiedId());
 
-		bool muddled = attacker.Muddled();
-		bool strengthened = attacker.Strengthened();
-
-		auto modifiers = level.monsterModifiers.Draw();
-
-
-		if( muddled && strengthened ){
-			//cancels out
-		}
-		else if(muddled) {
-			auto modifiers2 = level.monsterModifiers.Draw();
-
-		}
-		else if(strengthened) {
-			auto modifiers2 = level.monsterModifiers.Draw();
-
-
-
-		}
-
-		int poisonDamage = actor->Poisoned() ? 1 : 0;
-		int calculatedDamage = attack + poisonDamage + attacker.Attack();
-	
-		for(auto m : modifiers) {
-			calculatedDamage = m.ModifyValue(calculatedDamage);
-		}
-
-		int actualDamage = actor->DoDamage(calculatedDamage, 0);
-		level.combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", "[Enemy]", actualDamage, "[Player]", Modifier::ToString(modifiers), attack));
+		auto statusEffects = std::vector<StatusEffect>{};
+		level.PerformAttack(attack, statusEffects, attacker, level.monsterModifiers, *actor);
 	}
 }
 

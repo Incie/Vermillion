@@ -62,9 +62,10 @@ void ModifierDeck::AddPerks() {
 	Add(Modifier(ModifierValue::One, true));
 }
 
-std::vector<Modifier> ModifierDeck::Draw()
+ModifierDraw ModifierDeck::Draw()
 {
-	std::vector<Modifier> modifiers;
+	ModifierDraw modifierDraw;
+
 	while(1) 
 	{
 		if (deck.size() == 0)
@@ -76,7 +77,7 @@ std::vector<Modifier> ModifierDeck::Draw()
 		deck.pop_back();
 
 		discarded.push_back(draw);
-		modifiers.push_back(draw);
+		modifierDraw.modifiers.push_back(draw);
 
 		if (draw == ModifierValue::NoDamage || draw == ModifierValue::DoubleDamage )
 			needShuffle = true;
@@ -85,7 +86,7 @@ std::vector<Modifier> ModifierDeck::Draw()
 			break;
 	}
 
-	return modifiers;
+	return modifierDraw;
 }
 
 void ModifierDeck::Shuffle()
@@ -237,4 +238,18 @@ std::string Modifier::ToString(const std::vector<Modifier>& modifiers)
 	}
 
 	return ss.str();
+}
+
+std::pair<int, int> ModifierDraw::TotalDamage(int baseDamage)
+{
+	auto damage = std::pair<int, int>(baseDamage, 0);
+
+	for(auto modifier : modifiers) {
+		damage.first = modifier.ModifyValue(damage.first);
+		
+		if(modifier.status != ModifierStatus::None)
+			damage.second++;
+	}
+
+	return damage;
 }

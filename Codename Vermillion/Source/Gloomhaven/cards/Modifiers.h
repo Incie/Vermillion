@@ -66,13 +66,22 @@ public:
 	static std::string ToString(const std::vector<Modifier>& modifiers);
 };
 
+class ModifierDraw {
+public:
+
+	std::pair<int, int> TotalDamage(int baseDamage);
+
+	std::vector<Modifier> modifiers;
+};
+
+
 class ModifierDeck
 {
 public:
 	ModifierDeck();
 	~ModifierDeck();
 
-	std::vector<Modifier> Draw();
+	ModifierDraw Draw();
 
 	void Shuffle();
 	bool MarkedForShuffle();
