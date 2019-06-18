@@ -15,6 +15,13 @@ MonsterDeck::MonsterDeck(const std::string& entityName, std::vector<EnemyRound*>
 MonsterDeck::~MonsterDeck()
 {
 	active = nullptr;
+
+	for( auto er : enemyRounds )
+		delete er;
+
+	for( auto er : discardedRounds )
+		delete er;
+
 	enemyRounds.clear();
 	discardedRounds.clear();
 }

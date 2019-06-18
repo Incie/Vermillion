@@ -10,6 +10,12 @@ MonsterCardGenerator::MonsterCardGenerator(Level& level)
 
 MonsterCardGenerator::~MonsterCardGenerator()
 {
+	for( auto md : monsterMap ){
+		auto er = md.second;
+		delete er;
+	}
+
+	monsterMap.clear();
 }
 
 MonsterDeck* MonsterCardGenerator::GetMonsterDeck(const std::string& entityName)
