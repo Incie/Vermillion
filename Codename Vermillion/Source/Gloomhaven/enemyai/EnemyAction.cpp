@@ -3,6 +3,7 @@
 #include"../entity/Entity.h"
 #include"../level/Level.h"
 #include"GL/glew.h"
+#include"..//Director.h"
 
 EnemyAction::EnemyAction()
 	: state(0)
@@ -74,7 +75,7 @@ void EnemyMove::Calculate(Level& level, const Actor& actor)
 	}
 }
 
-void EnemyMove::Perform(Level& level, Actor& actor)
+void EnemyMove::Perform(Director& director, Level& level, Actor& actor)
 {
 	level.ClearHighlights();
 	auto currentPosition = actor.Position();
@@ -154,7 +155,7 @@ void EnemyAttack::Calculate(Level& level, const Actor& actor)
 	}
 }
 
-void EnemyAttack::Perform(Level& level, Actor& attacker)
+void EnemyAttack::Perform(Director& director, Level& level, Actor& attacker)
 {
 	level.ClearHighlights();
 
@@ -163,7 +164,7 @@ void EnemyAttack::Perform(Level& level, Actor& attacker)
 		auto actor = level.ActorById(tile.OccupiedId());
 
 		auto statusEffects = std::vector<StatusEffect>{};
-		level.PerformAttack(attack, statusEffects, attacker, level.monsterModifiers, *actor);
+		director.PerformAttack(attack, range, statusEffects, attacker, level.monsterModifiers, *actor);
 	}
 }
 
@@ -196,7 +197,7 @@ void EnemyHealSelf::Calculate(Level& level, const Actor& actor)
 	actorWorldPosition = actor.WorldPosition();
 }
 
-void EnemyHealSelf::Perform(Level& level, Actor& actor)
+void EnemyHealSelf::Perform(Director& director, Level& level, Actor& actor)
 {
 	auto healedFor = actor.DoHealing(heal);
 	level.combatLog.push_back(fmt::format("{0} healed for {1}", actor.Name(), healedFor));
@@ -231,7 +232,7 @@ void EnemyShieldSelf::Calculate(Level& level, const Actor& actor)
 	calculated = true;
 }
 
-void EnemyShieldSelf::Perform(Level& level, Actor& actor)
+void EnemyShieldSelf::Perform(Director& director, Level& level, Actor& actor)
 {
 	actor.ModifyShield(shield);
 	int s = shield;
@@ -264,7 +265,7 @@ void EnemyRetaliate::Calculate(Level& level, const Actor& actor)
 	actorWorldPosition = actor.WorldPosition();
 }
 
-void EnemyRetaliate::Perform(Level& level, Actor& actor)
+void EnemyRetaliate::Perform(Director& director, Level& level, Actor& actor)
 {
 	actor.ModifyRetaliate(retaliate);
 	int r = retaliate;

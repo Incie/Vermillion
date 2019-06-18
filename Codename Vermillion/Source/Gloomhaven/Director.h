@@ -5,6 +5,9 @@
 #include"enemyai/EnemyAI.h"
 #include"cards/MonsterCardGenerator.h"
 #include"director/Initiative.h"
+#include"entity/Entity.h"
+#include"cards/Modifiers.h"
+#include"level/Spawner.h"
 
 class InputService;
 class TextService;
@@ -46,6 +49,9 @@ public:
 
 	InitiativeTracker& GetInitiativeTracker() { return initiativeTracker; }
 
+	void OnSpawnRoom();
+
+	void PerformAttack(int baseDamage, int range, std::vector<StatusEffect> statusEffects, Actor& attacker, ModifierDeck& attackerDeck, Actor& victim);
 	DirectorStatus Status() { return directorStatus; }
 private:
 	void PlayerTurn(const InputService& input);
@@ -53,12 +59,17 @@ private:
 
 	DirectorStatus directorStatus;
 
-	MonsterCardGenerator monsterCardDecks;
+	Spawner spawner;
+	
 	InitiativeTracker initiativeTracker;
+	
+	MonsterCardGenerator monsterCardDecks;
 	EnemyAI enemyAi;
+	
 	PlayerRound* playerRound;
-	Level& level;
 	Action* action;
+	
+	Level& level;
 
 	std::function<void(DirectorEvent)> onEvent;
 };

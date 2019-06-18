@@ -2,6 +2,7 @@
 #include"ActionAttack.h"
 #include"../level/Level.h"
 #include"../entity/Entity.h"
+#include"..//Director.h"
 
 ActionAttack::ActionAttack(Level& level, Actor& actor, int range, int attackDamage, int attacks, std::vector<StatusEffect> statusEffects)
 	: Action(level, actor), range(range), attacks(attacks), baseDamage(attackDamage)
@@ -16,7 +17,7 @@ ActionAttack::~ActionAttack()
 	marks.clear();
 }
 
-void ActionAttack::Click(const glm::ivec3& target)
+void ActionAttack::Click(Director& director, const glm::ivec3& target)
 {
 	const Tile& tile = level.TileAt(target);
 
@@ -55,13 +56,13 @@ void ActionAttack::Reset()
 	Highlight();
 }
 
-bool ActionAttack::Perform(Actor& actor)
+bool ActionAttack::Perform(Director& director, Actor& actor)
 {
 	for (auto& mark : marks) {
 		auto& tile = level.TileAt(mark);
 		auto targetActor = level.ActorById(tile.OccupiedId());
 
-		level.PerformAttack(baseDamage, statusEffects, actor, level.playerModifiers, *targetActor);
+		director.PerformAttack(baseDamage, range, statusEffects, actor, level.playerModifiers, *targetActor);
 	}
 
 	return true;

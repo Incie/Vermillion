@@ -8,10 +8,10 @@ public:
 	ActionShieldSelf(Level& level, Actor& actor, int shield);
 	virtual ~ActionShieldSelf();
 
-	virtual void Click(const glm::ivec3& target);
+	virtual void Click(Director& director, const glm::ivec3& target);
 	virtual void Undo();
 	virtual void Reset();
-	virtual bool Perform(Actor& actor) ;
+	virtual bool Perform(Director& director, Actor& actor) ;
 	virtual void Render();
 private:
 	int shield;

@@ -10,10 +10,10 @@ public:
 	ActionMove(Level& level, Actor& actor, int moveMax, bool flying=false);
 	virtual ~ActionMove();
 
-	virtual void Click(const glm::ivec3& target) override;
+	virtual void Click(Director& director, const glm::ivec3& target) override;
 	virtual void Undo() override;
 	virtual void Reset() override;
-	virtual bool Perform(Actor& actor) override;
+	virtual bool Perform(Director& director, Actor& actor) override;
 
 	virtual void Render() override;
 
@@ -33,7 +33,7 @@ public:
 	ActionTrample(Level& level, Actor& actor, int moveMax, bool flying, int attack);
 	virtual ~ActionTrample();
 
-	virtual bool Perform(Actor& actor) override;
+	virtual bool Perform(Director& director, Actor& actor) override;
 
 protected:
 	int attack;

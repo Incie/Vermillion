@@ -148,6 +148,10 @@ public:
 	bool Disarmed() const;
 	bool Immobilised() const;
 
+	bool HasMoved() { return hasMoved; }
+	void Moved() { hasMoved = true; }
+	void MovedReset() { hasMoved = false; }
+
 protected:
 	int team;
 	int maxhealth;
@@ -158,8 +162,9 @@ protected:
 	int retaliate;
 	int move;
 	int initiative;
+	int pierce;
 
-	int pierce; //todo not implemented yet
+	bool hasMoved;
 
 	std::vector<StatusEffect> innateEffects;
 	std::vector<StatusEffect> immunities;

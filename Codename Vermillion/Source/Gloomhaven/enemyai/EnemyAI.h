@@ -4,6 +4,7 @@ class Level;
 class Actor;
 class EnemyRound;
 class TextService;
+class Director;
 
 #include<vector>
 #include"glm/glm.hpp"
@@ -19,13 +20,13 @@ public:
 	Actor* GetActor() { return actor; }
 	
 	bool Finished();
-	void Step(Level& level);
+	void Step(Director& director, Level& level);
 
 	void Render();
 
 private:
 	void CalculateStep(Level& level);
-	void PerformStep(Level& level);
+	void PerformStep(Director& director, Level& level);
 
 	EnemyRound* enemyRound;
 	Actor* actor;

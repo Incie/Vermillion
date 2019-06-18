@@ -39,6 +39,7 @@ void Entity::Render(const TextService& text)
 }
 
 Actor::Actor()
+	: hasMoved(false)
 {
 }
 

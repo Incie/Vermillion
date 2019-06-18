@@ -38,7 +38,7 @@ public:
 	Tile& TileOccupiedBy(int entityId);
 	Tile& TileAt(const glm::ivec3& location);
 
-	void RemoveActorById(int actorId);
+	void RemoveActorFromTileById(int actorId);
 
 	std::vector<Enemy*> Enemies() const;
 	const Actor* ActorViewById(int actorId) const;
@@ -49,15 +49,12 @@ public:
 	void AddEntity(Entity* entity);
 
 	void ShowCoords(bool);
+	glm::vec2 Center();
 
 	ModifierDeck monsterModifiers;
 	ModifierDeck playerModifiers;
 
 	std::vector<std::string> combatLog;
-
-	glm::vec2 Center();
-
-	void PerformAttack(int baseDamage, std::vector<StatusEffect> statusEffects, Actor& attacker, ModifierDeck& attackerDeck, Actor& victim);
 
 private:
 	Spawner spawner;

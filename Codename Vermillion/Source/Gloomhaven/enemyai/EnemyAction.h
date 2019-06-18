@@ -4,6 +4,7 @@
 #include<string>
 #include<vector>
 
+class Director;
 class Level;
 class Actor;
 
@@ -14,7 +15,7 @@ public:
 
 	virtual bool CanPerform(const Actor& actor) { return true; }
 	virtual void Calculate(Level& level, const Actor& actor) = 0;
-	virtual void Perform(Level& level, Actor& actor) {};
+	virtual void Perform(Director& director, Level& level, Actor& actor) {};
 
 	virtual std::vector<std::pair<glm::ivec3, glm::vec3>> Targets();
 
@@ -37,7 +38,7 @@ public:
 
 	bool CanPerform(const Actor& actor) override;
 	void Calculate(Level& level, const Actor& actor) override;
-	void Perform(Level& level, Actor& actor) override;
+	void Perform(Director& director, Level& level, Actor& actor) override;
 	void Render();
 protected:
 
@@ -52,7 +53,7 @@ public:
 
 	bool CanPerform(const Actor& actor) override;
 	void Calculate(Level& level, const Actor& actor) override;
-	void Perform(Level& level, Actor& actor) override;
+	void Perform(Director& director, Level& level, Actor& actor) override;
 	void Render() override;
 
 private:
@@ -71,7 +72,7 @@ public:
 
 	virtual bool CanPerform(const Actor& actor) override;
 	virtual void Calculate(Level& level, const Actor& actor) override;
-	virtual void Perform(Level& level, Actor& actor) override;
+	virtual void Perform(Director& director, Level& level, Actor& actor) override;
 	void Render() override;
 
 private:
@@ -86,7 +87,7 @@ public:
 
 	virtual bool CanPerform(const Actor& actor) override;
 	virtual void Calculate(Level& level, const Actor& actor) override;
-	virtual void Perform(Level& level, Actor& actor) override;
+	virtual void Perform(Director& director, Level& level, Actor& actor) override;
 	void Render() override;
 
 private:
@@ -101,7 +102,7 @@ public:
 
 	virtual bool CanPerform(const Actor& actor) override;
 	virtual void Calculate(Level& level, const Actor& actor) override;
-	virtual void Perform(Level& level, Actor& actor) override;
+	virtual void Perform(Director& director, Level& level, Actor& actor) override;
 	void Render() override;
 
 private:

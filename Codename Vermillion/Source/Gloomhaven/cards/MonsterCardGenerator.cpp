@@ -34,8 +34,26 @@ void MonsterCardGenerator::DrawAll()
 void MonsterCardGenerator::Reshuffle()
 {
 	for(auto it : monsterMap) {
-		//if( it.second->NeedsReshuffle() ) 
-		it.second->Shuffle();
+		if(it.second->Active() != nullptr) {
+			if( it.second->Active()->Reshuffle() )
+				it.second->Shuffle();
+		}
+	}
+}
+
+void MonsterCardGenerator::EndOfRound()
+{
+	for(auto kv : monsterMap) {
+		auto monsterDeck = kv.second;
+		
+		auto active = monsterDeck->Active();
+		if(active != nullptr) {
+			if(active->Reshuffle()) {
+				monsterDeck->Shuffle();
+			}
+
+			monsterDeck->Reset();
+		}
 	}
 }
 

@@ -166,6 +166,13 @@ void Spawner::SpawnMonster(EntitySpawnLocation& entitySpawnLocation, const Monst
 	level.AddEntity(newEnemy);
 }
 
+void Spawner::SpawnCoinAt(const glm::ivec3& tileLocation) {
+	EntitySpawnLocation esl;
+	esl.entityName = "Coin";
+	esl.location = tileLocation;
+	SpawnEntity(esl);
+}
+
 void Spawner::SpawnEntity(const EntitySpawnLocation& esl)
 {
 	auto& tile = level.TileAt(esl.location);

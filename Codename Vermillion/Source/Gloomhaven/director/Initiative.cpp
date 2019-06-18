@@ -5,7 +5,7 @@
 #include"../level/Level.h"
 
 InitiativeTracker::InitiativeTracker() 
-	: currentTurnIndex(-1), enemyTurn(false)
+	: currentTurnIndex(-1), enemyTurn(false), resetOnNextActor(false)
 {
 }
 
@@ -39,10 +39,12 @@ void InitiativeTracker::CalculateRoundOrder(Level& level)
 
 	ClearInitiatives();
 
-	initiativeOrder.insert(initiativeOrder.end(), monsters.begin(), monsters.end());	
-	initiativeOrder.push_back(player);
+	for(auto a : monsters) 
+		initiativeOrder.push_back(std::pair<Actor*, bool>(a, a->HasMoved()));
+
+	initiativeOrder.push_back(std::pair<Actor*, bool>(player, player->HasMoved()));
 	std::sort(initiativeOrder.begin(), initiativeOrder.end(), [](auto a1, auto a2) {
-		return a1->Initiative() < a2->Initiative();
+		return a1.first->Initiative() < a2.first->Initiative();
 	});
 }
 
@@ -61,10 +63,18 @@ Actor* InitiativeTracker::NextActor()
 {
 	currentTurnIndex++;
 
+	if(resetOnNextActor) {
+		resetOnNextActor = false;
+		currentTurnIndex = 0;
+	}
+
 	if (currentTurnIndex >= 0 && currentTurnIndex < initiativeOrder.size()) {
-		auto nextActor = initiativeOrder[currentTurnIndex];
+		auto nextActor = initiativeOrder[currentTurnIndex].first;
 
 		if (nextActor->Health() <= 0)
+			return NextActor();
+
+		if(nextActor->HasMoved())
 			return NextActor();
 
 
@@ -82,6 +92,6 @@ void InitiativeTracker::ClearInitiatives()
 {
 	currentTurnIndex = -1;
 	initiativeOrder.clear();
-	initiativeGroups.clear();
-	initiativeNames.clear();
+	//initiativeGroups.clear();
+	//initiativeNames.clear();
 }

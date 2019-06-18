@@ -43,7 +43,7 @@ public:
 
 	void SpawnPlayer(glm::ivec3 location);
 	void SpawnMonster(glm::ivec3 location, bool elite);
-
+	void SpawnCoinAt(const glm::ivec3& tileLocation);
 
 private:
 	struct EntitySpawnLocation {

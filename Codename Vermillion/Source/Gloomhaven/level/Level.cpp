@@ -6,8 +6,8 @@
 #include"../level/Spawner.h"
 #include"../entity/Entity.h"
 
-Level::Level() 
-	: distance(), selectedCoord(), hoverTarget(nullptr), spawner(*this), hexagonSize(50.0f)
+Level::Level()
+	: distance(), selectedCoord(), hoverTarget(nullptr), hexagonSize(50.0f), spawner(*this)
 {
 	showCoords = false;
 	hasDistance = false;
@@ -18,11 +18,11 @@ Level::Level()
 
 Level::~Level()
 {
-	for (auto tile : tiles)
+	for(auto tile : tiles)
 		delete tile;
 	tiles.clear();
 
-	for (auto entity : entities)
+	for(auto entity : entities)
 		delete entity;
 	entities.clear();
 
@@ -49,7 +49,7 @@ void Level::LoadMap(const std::string& fileName)
 		auto x = jTile.value("x", -1);
 		auto y = jTile.value("y", -1);
 		auto entityName = jTile.value("entity", "None");
-		
+
 
 		float hx = (3.0f / 4.0f) * width * static_cast<float>(x);
 		float hy = -static_cast<float>(y) * height - (1.0f / 2.0f) * height * static_cast<float>(x);
@@ -61,7 +61,7 @@ void Level::LoadMap(const std::string& fileName)
 
 
 		if(!(entityName == "None" || entityName == "")) {
-			spawner.AddEntitySpawn(entityName, tile->Location(), tile->RoomNumber() );
+			spawner.AddEntitySpawn(entityName, tile->Location(), tile->RoomNumber());
 		}
 	}
 }
@@ -80,26 +80,26 @@ void Level::Generate()
 	auto startY = 0;
 
 	glm::ivec3 coord = glm::ivec3(0, 0, 0);
-	for (int y = startY; y < nY; ++y) {
+	for(int y = startY; y < nY; ++y) {
 		auto h = height * (double)y;
 
 		coord.x = startX;
 		coord.y = -y;
 		coord.z = y;
 
-		for (int x = startX; x < nX + startX; ++x) {
+		for(int x = startX; x < nX + startX; ++x) {
 			auto w = (3.0 / 4.0) * width * (double)x;
 
 			double add = 0.0;
-			if (x % 2 == 1)
+			if(x % 2 == 1)
 				add = 0.5 * height;
 
-			tiles.push_back( vnew Tile(coord, glm::vec3(w, h+add, 0.0f)) );
-			auto &tile = *tiles.back();
+			tiles.push_back(vnew Tile(coord, glm::vec3(w, h + add, 0.0f)));
+			auto& tile = *tiles.back();
 			tile.GetHexagon().Generate(glm::vec2(w, h + add), innerSize, size);
 
 			coord.x++;
-			if (x % 2 == 0) 
+			if(x % 2 == 0)
 				coord.y--;
 			coord.z = -(coord.x + coord.y);
 		}
@@ -112,7 +112,7 @@ void Level::SpawnRoom(int roomNumber)
 		if(tile->RoomNumber() == roomNumber)
 			tile->Enable();
 	}
-	
+
 	spawner.SpawnRoom(roomNumber);
 }
 
@@ -120,11 +120,11 @@ void Level::Update(const glm::vec2& cameraMouse)
 {
 	Tile* closestTile = nullptr;
 	float closestDistance = 10e10f;
-	for (auto tile : tiles) {
-		
+	for(auto tile : tiles) {
+
 		auto distFromCenter = tile->DistanceFromCenterTo(cameraMouse);
-		if (distFromCenter < 50.0) {
-			if (distFromCenter < closestDistance) {
+		if(distFromCenter < 50.0) {
+			if(distFromCenter < closestDistance) {
 				closestTile = tile;
 				closestDistance = (float)distFromCenter;
 			}
@@ -132,7 +132,7 @@ void Level::Update(const glm::vec2& cameraMouse)
 	}
 
 	hoverTarget = nullptr;
-	if (closestTile != nullptr) {
+	if(closestTile != nullptr) {
 		hoverTarget = closestTile;
 	}
 }
@@ -147,12 +147,12 @@ void Level::Render(const TextService& text)
 
 			for(auto ce : tile->ContainingEntities()) {
 
-				if( ce->Active() )
+				if(ce->Active())
 					ce->RenderModel().Render();
 			}
 		}
 	}
-	
+
 	for(auto entity : entities) {
 		if(!entity->Active())
 			continue;
@@ -167,59 +167,59 @@ void Level::Render(const TextService& text)
 		auto& hex = tile->GetHexagon();
 
 		glPushMatrix();
-			glTranslatef(tile->WorldPosition().x - 20.0f, tile->WorldPosition().y, tile->WorldPosition().z);
+		glTranslatef(tile->WorldPosition().x - 20.0f, tile->WorldPosition().y, tile->WorldPosition().z);
 
-			if (showCoords) {
-				const auto& coord = tile->Location();
-				text.Print(0, 0, fmt::format("{0},{1},{2}", coord.x, coord.y, coord.z), 16, Colors::Black);
-			}
+		if(showCoords) {
+			const auto& coord = tile->Location();
+			text.Print(0, 0, fmt::format("{0},{1},{2}", coord.x, coord.y, coord.z), 16, Colors::Black);
+		}
 		glPopMatrix();
 	}
 }
 
 void Level::Highlight(const glm::ivec3& center, int range, const glm::vec3& highlightColor, std::function<bool(const Tile&)> highlightPredicate)
 {
-	for (auto& tile : tiles) {
+	for(auto& tile : tiles) {
 		auto& hex = tile->GetHexagon();
 		auto distance = tile->DistanceTo(center);
 
-		if (distance > range)
+		if(distance > range)
 			continue;
 
-		if(highlightPredicate(*tile) )
+		if(highlightPredicate(*tile))
 			hex.SetHighlight(highlightColor);
 	}
 }
 
 void Level::Highlight(const glm::ivec3& center, int range, const glm::vec3& highlightColor, bool ignoreOccupied)
 {
-	for (auto& tile : tiles) {
+	for(auto& tile : tiles) {
 		auto& hex = tile->GetHexagon();
 		auto distance = tile->DistanceTo(center);
 
-		if (tile->IsOccupied() && tile->DistanceTo(center) != 0 && !ignoreOccupied)
+		if(tile->IsOccupied() && tile->DistanceTo(center) != 0 && !ignoreOccupied)
 			continue;
 
-		if (distance <= range)
+		if(distance <= range)
 			hex.SetHighlight(highlightColor);
 	}
 }
 
 void Level::ClearHighlights()
 {
-	for (auto& tile : tiles)
+	for(auto& tile : tiles)
 		tile->GetHexagon().NoHighlight();
 }
 
 std::vector<Tile*> Level::TilesWithin(const glm::ivec3& center, int range)
 {
 	auto tilesWithin = std::vector<Tile*>();
-	for (auto tile : tiles ) {
+	for(auto tile : tiles) {
 		auto distance = tile->DistanceTo(center);
-		if (distance == 0)
+		if(distance == 0)
 			continue;
 
-		if (distance <= range)
+		if(distance <= range)
 			tilesWithin.push_back(tile);
 	}
 
@@ -228,10 +228,10 @@ std::vector<Tile*> Level::TilesWithin(const glm::ivec3& center, int range)
 
 Tile& Level::TileOccupiedBy(int entityId)
 {
-	for (auto& tile : tiles) {
-		if (!tile->IsOccupied())
+	for(auto& tile : tiles) {
+		if(!tile->IsOccupied())
 			continue;
-		if (tile->OccupiedId() == entityId)
+		if(tile->OccupiedId() == entityId)
 			return *tile;
 	}
 
@@ -240,9 +240,9 @@ Tile& Level::TileOccupiedBy(int entityId)
 
 Tile& Level::TileAt(const glm::ivec3& location)
 {
-	for (auto& tile : tiles) {
+	for(auto& tile : tiles) {
 		auto& hex = tile->GetHexagon();
-		if (tile->Location().x == location.x && tile->Location().y == location.y && tile->Location().z == location.z) {
+		if(tile->Location().x == location.x && tile->Location().y == location.y && tile->Location().z == location.z) {
 			return *tile;
 		}
 	}
@@ -250,7 +250,7 @@ Tile& Level::TileAt(const glm::ivec3& location)
 	return *tiles[0];
 }
 
-void Level::RemoveActorById(int actorId)
+void Level::RemoveActorFromTileById(int actorId)
 {
 	auto actor = ActorById(actorId);
 	auto& tile = TileOccupiedBy(actorId);
@@ -284,9 +284,9 @@ const Actor* Level::ActorViewById(int actorId) const
 
 Actor* Level::ActorById(int actorId)
 {
-	for (auto entity : entities)
+	for(auto entity : entities)
 	{
-		if (entity->EntityId() == actorId)
+		if(entity->EntityId() == actorId)
 			return dynamic_cast<Actor*>(entity);
 	}
 
@@ -295,10 +295,10 @@ Actor* Level::ActorById(int actorId)
 
 Actor* Level::GetPlayer()
 {
-	for (auto entity : entities) {
+	for(auto entity : entities) {
 		auto player = dynamic_cast<Player*>(entity);
 
-		if (player != nullptr)
+		if(player != nullptr)
 			return player;
 	}
 
@@ -309,10 +309,10 @@ std::vector<Actor*> Level::Monsters()
 {
 	auto monsters = std::vector<Actor*>();
 
-	for (auto entity : entities) {
+	for(auto entity : entities) {
 		auto monster = dynamic_cast<Enemy*>(entity);
 
-		if (monster != nullptr && monster->Health() > 0 && monster->Active() )
+		if(monster != nullptr && monster->Health() > 0 && monster->Active())
 			monsters.push_back(monster);
 
 	}
@@ -339,7 +339,7 @@ glm::vec2 Level::Center()
 			const auto& wp = tile->WorldPosition();
 			min.x = std::min<float>(min.x, wp.x);
 			min.y = std::min<float>(min.y, wp.y);
-			
+
 			max.x = std::max<float>(max.x, wp.x);
 			max.y = std::max<float>(max.y, wp.y);
 		}
@@ -348,136 +348,11 @@ glm::vec2 Level::Center()
 	return min + (max - min) * 0.5f;
 }
 
-//#include"../entity/Entity.h"
-void Level::PerformAttack(int baseDamage, std::vector<StatusEffect> statusEffects, Actor& attacker, ModifierDeck& attackerDeck, Actor& victim)
-{
-	int poisonDamage = 0;
-	if(victim.Poisoned())
-		poisonDamage = 1;
-
-	int calculatedDamage = baseDamage + poisonDamage;
-	auto modifierDraw = attackerDeck.Draw();
-
-	bool disadvantage = false;
-	bool advantage = false;
-
-	if(attacker.Muddled())
-		disadvantage = true;
-	if(attacker.Strengthened())
-		advantage = true;
-	//if attacker is doing ranged in melee
-		//disadvantage = true
-
-
-	if(disadvantage != advantage) {
-		auto modifierDraw2 = attackerDeck.Draw();
-
-		combatLog.push_back(fmt::format("{0} drew {1}", attacker.Name(), Modifier::ToString(modifierDraw.modifiers)));
-		combatLog.push_back(fmt::format("{0} drew {1}", attacker.Name(), Modifier::ToString(modifierDraw2.modifiers)));
-
-
-		bool secondDrawIsBetter = modifierDraw2.TotalDamage(calculatedDamage).first > modifierDraw.TotalDamage(calculatedDamage).first;
-
-		if(secondDrawIsBetter && advantage) {
-			modifierDraw = modifierDraw2;
-			combatLog.push_back("Second draw was chosen");
-		}
-		else {
-			combatLog.push_back("First draw was chosen");
-		}
-	}
-
-
-	for(auto m : modifierDraw.modifiers)
-		calculatedDamage = m.ModifyValue(calculatedDamage);
-
-	int pierce = attacker.Pierce();
-
-	for(auto status : statusEffects) {
-		if(status == StatusEffect::Pierce) pierce += 1;
-		if(status == StatusEffect::Pierce2) pierce += 2;
-		if(status == StatusEffect::Pierce3) pierce += 3;
-	}
-
-
-	for(auto& m : modifierDraw.modifiers) {
-		if(m.status != ModifierStatus::None) {
-			switch(m.status) {
-			case ModifierStatus::ShieldSelf1: {
-				attacker.ModifyShield(1);
-				attacker.AddEndOfRoundAction([](Actor* a) { a->ModifyShield(-1); });
-				break;
-			}
-			case ModifierStatus::Pierce3: {
-				pierce += 3;
-				break;
-			}
-			default: {
-				switch(m.status) {
-				case ModifierStatus::Poison:	  statusEffects.push_back(StatusEffect::Poison);	 break;
-				case ModifierStatus::Wound: 	  statusEffects.push_back(StatusEffect::Wound);		 break;
-				case ModifierStatus::Stun: 		  statusEffects.push_back(StatusEffect::Stunned);	 break;
-				case ModifierStatus::Disarm:	  statusEffects.push_back(StatusEffect::Disarmed);	 break;
-				case ModifierStatus::Immobilize:  statusEffects.push_back(StatusEffect::Immobilized); break;
-				case ModifierStatus::Strengthen:  statusEffects.push_back(StatusEffect::Strengthen); break;
-				case ModifierStatus::Invisible:	  statusEffects.push_back(StatusEffect::Invisible);	 break;
-				case ModifierStatus::Muddle: 	  statusEffects.push_back(StatusEffect::Muddle);	 break;
-				default:
-				break;
-				}
-				break;
-			}
-			}
-		}
-	}
-
-	int actualDamage = victim.DoDamage(calculatedDamage, pierce);
-
-	auto attackerAsPlayer = dynamic_cast<Player*>(&attacker);
-	auto attackerName = attackerAsPlayer == nullptr ? attacker.Name() : attackerAsPlayer->PlayerName();
-
-	auto victimAsPlayer = dynamic_cast<Player*>(&victim);
-	auto victimName = victimAsPlayer == nullptr ? victim.Name() : victimAsPlayer->PlayerName();
-
-	combatLog.push_back(fmt::format("{0} did {1} ({4} + {3}) damage to {2}", attackerName, actualDamage, victimName, Modifier::ToString(modifierDraw.modifiers), baseDamage));
-
-	for(auto st : statusEffects) {
-		switch(st) {
-		case StatusEffect::Strengthen: attacker.AddStatus(st); break;
-		case StatusEffect::Invisible: attacker.AddStatus(st); break;
-		case StatusEffect::Pierce:
-		case StatusEffect::Pierce2:
-		case StatusEffect::Pierce3:
-		break;
-		default: {
-			combatLog.push_back(fmt::format("{1} was {0}", StatusEffectToString(st), victim.Name()));
-			victim.AddStatus(st);
-			break;
-		}
-		}
-	}
-
-	if(victim.Health() <= 0) {
-		combatLog.push_back(fmt::format("{0} died", victim.Name()));
-		RemoveActorById(victim.EntityId());
-		victim.Deactivate();
-	}
-	else {
-		if(victim.Retaliate() > 0) {
-			// if( health - retaliate <= 0 )
-				// query what to do
-
-			auto retaliate = victim.Retaliate();
-			attacker.ModifyHealth(-retaliate);
-		}
-	}
-}
-
 glm::ivec3 Level::GetCenterCoord(int x, int y, int z)
 {
-	for (auto tile : tiles) {
+	for(auto tile : tiles) {
 		auto& hex = tile->GetHexagon();
-		if (tile->Location().x == x && tile->Location().y == y && tile->Location().z == z) {
+		if(tile->Location().x == x && tile->Location().y == y && tile->Location().z == z) {
 			return tile->WorldPosition();
 		}
 	}

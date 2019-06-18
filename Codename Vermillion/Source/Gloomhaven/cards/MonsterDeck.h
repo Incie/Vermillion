@@ -14,6 +14,7 @@ public:
 	void Shuffle();
 
 	EnemyRound* Active();
+	void Reset() { active = nullptr; }
 
 private:
 	std::string entityName;

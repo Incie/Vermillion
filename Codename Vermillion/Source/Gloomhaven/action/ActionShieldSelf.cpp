@@ -16,7 +16,7 @@ ActionShieldSelf::~ActionShieldSelf()
 {
 }
 
-void ActionShieldSelf::Click(const glm::ivec3& target)
+void ActionShieldSelf::Click(Director& director, const glm::ivec3& target)
 {
 }
 
@@ -28,7 +28,7 @@ void ActionShieldSelf::Reset()
 {
 }
 
-bool ActionShieldSelf::Perform(Actor& actor)
+bool ActionShieldSelf::Perform(Director& director, Actor& actor)
 {
 	actor.ModifyShield(shield);
 	auto shieldCopy = shield;

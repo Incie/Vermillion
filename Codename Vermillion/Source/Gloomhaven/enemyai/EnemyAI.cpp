@@ -38,16 +38,21 @@ void EnemyAI::SetActor(Actor* actor)
 
 bool EnemyAI::Finished()
 {
-	return enemyRound->state == EnemyRound::RoundState::Finished;
+	auto finished = enemyRound->state == EnemyRound::RoundState::Finished;
+
+	if(finished)
+		actor->Moved();
+
+	return finished;
 }
 
-void EnemyAI::Step(Level& level)
+void EnemyAI::Step(Director& director, Level& level)
 {
 	if (enemyRound->state == EnemyRound::RoundState::Stopped) {
 		CalculateStep(level);
 	}
 	else if (enemyRound->state == EnemyRound::RoundState::Calculated) {
-		PerformStep(level);
+		PerformStep(director, level);
 	}
 	else if (enemyRound->state == EnemyRound::RoundState::Finished) {
 	}
@@ -64,10 +69,10 @@ void EnemyAI::CalculateStep(Level& level)
 	}
 }
 
-void EnemyAI::PerformStep(Level& level)
+void EnemyAI::PerformStep(Director& director, Level& level)
 {
 	auto action = enemyRound->GetAction();
-	action->Perform(level, *actor);
+	action->Perform(director, level, *actor);
 
 	if (enemyRound->HasNextAction()) {
 		enemyRound->state = EnemyRound::RoundState::Stopped;

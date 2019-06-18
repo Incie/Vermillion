@@ -16,6 +16,7 @@ public:
 	MonsterDeck* GetMonsterDeck(const std::string& entityName);
 	void DrawAll();
 	void Reshuffle();
+	void EndOfRound();
 
 private:
 	bool LoadDeck(const std::string& entityName);

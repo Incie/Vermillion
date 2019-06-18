@@ -2,6 +2,7 @@
 #include "ActionMove.h"
 #include"../entity/Entity.h"
 #include"../level/Level.h"
+#include"..//Director.h"
 
 
 ActionMove::ActionMove(Level&level, Actor& actor, int moveMax, bool flying)
@@ -16,7 +17,7 @@ ActionMove::~ActionMove()
 {
 }
 
-void ActionMove::Click(const glm::ivec3& target)
+void ActionMove::Click(Director& director, const glm::ivec3& target)
 {
 	if (movesLeft == 0)
 		return;
@@ -51,6 +52,7 @@ void ActionMove::Click(const glm::ivec3& target)
 			}
 
 			level.SpawnRoom(nextRoom);
+			director.OnSpawnRoom();
 
 			containingEntity->Deactivate();
 		}
@@ -86,7 +88,7 @@ void ActionMove::Reset()
 	level.ClearHighlights();
 }
 
-bool ActionMove::Perform(Actor& actor)
+bool ActionMove::Perform(Director& director, Actor& actor)
 {
 	auto& tile = level.TileAt(currentPosition);
 
@@ -147,7 +149,7 @@ ActionTrample::~ActionTrample()
 {
 }
 
-bool ActionTrample::Perform(Actor& actor)
+bool ActionTrample::Perform(Director& director, Actor& actor)
 {
 	auto& tile = level.TileAt(currentPosition);
 
@@ -162,8 +164,8 @@ bool ActionTrample::Perform(Actor& actor)
 			continue;
 
 		auto targetActor = level.ActorById(tile.OccupiedId());
-		level.PerformAttack(attack, std::vector<StatusEffect>{}, actor, level.playerModifiers, *targetActor);
+		director.PerformAttack(attack, 0, std::vector<StatusEffect>{}, actor, level.playerModifiers, *targetActor);
 	}
 
-	return ActionMove::Perform(actor);
+	return ActionMove::Perform(director, actor);
 }

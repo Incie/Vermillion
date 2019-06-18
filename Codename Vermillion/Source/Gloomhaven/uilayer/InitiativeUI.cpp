@@ -54,10 +54,30 @@ void InitiativeTrackerUI::Render(ServiceLocator& Services)
 		auto color = glm::vec3(0.68f);
 		if (i == currentTurn)
 			color = glm::vec3(0.78f, 0.93f, 0.78f);
-		Render::Quad(0,0, size.x - 16.0f, 20, color);
 
 		auto a = initiatives[i];
-		Services.Text().Print(0,-2.0f, fmt::format("{0} {1}", a->Initiative(), a->Name()), 20, Colors::Black, false, true);
+		if(a.first->HasMoved())
+			color = glm::vec3(1, 0.5f, 0.5f);
+
+		Render::Quad(0,0, size.x - 16.0f, 20, color);
+
+		std::string name;
+
+		auto player = dynamic_cast<Player*>(a.first);
+		auto enemy = dynamic_cast<Enemy*>(a.first);
+		if(player != nullptr) {
+			name = player->PlayerName();
+		}
+		else if(enemy != nullptr) {
+			name = fmt::format("{0} [{1}]", enemy->Name(), enemy->EnemyId() );
+		}
+		else {
+			name = "unknown";
+			throw "InitiativeTrackerUI did not find actor type";
+		}
+
+
+		Services.Text().Print(0,-2.0f, fmt::format("{0} {1}", a.first->Initiative(), name), 20, Colors::Black, false, true);
 		glTranslatef(0,4,0);
 	}
 }
