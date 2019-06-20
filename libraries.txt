@@ -20,8 +20,17 @@ zlib:x64-windows                                   1.2.11-5         A compressio
 zlib:x64-windows-static                            1.2.11-5         A compression library
 
 
-vcpkg.exe install spdlog:x64-windows
-vcpkg.exe install nlohmann-json:x64-windows
+vcpkg install bzip2:x64-windows-static
+vcpkg install fmt:x64-windows-static
+vcpkg install freetype:x64-windows-static
+vcpkg install glew:x64-windows-static
+vcpkg install glm:x64-windows-static
+vcpkg install libpng:x64-windows-static
+vcpkg install spdlog:x64-windows-static
+vcpkg install zlib:x64-windows-static
+vcpkg install enet:x64-windows-static
+vcpkg install spdlog:x64-windows-static
+vcpkg install nlohmann-json:x64-windows-static
 
 $(VCPKG_64) = vcpkg\installed\x64-windows
 $(VCPKG_64_STATIC) = vcpkg\installed\x64-windows-static
@@ -31,3 +40,5 @@ https://github.com/nlohmann/json
 
 miniaudio
 https://github.com/dr-soft/miniaudio
+
+

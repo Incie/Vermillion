@@ -29,17 +29,18 @@ void EnemyAttack::Calculate(Level& level, const Actor& actor)
 		tile->GetHexagon().SetHighlight(glm::vec3(0, 0, 1));
 	}
 
-	auto removedTiles = std::remove_if(tiles.begin(), tiles.end(), [&level, &actor, this](const Tile* x) {
-		if(!x->IsOccupied())
+	auto findNonAttackTiles = [&level, &actor, this](const Tile* tile) {
+		if(!tile->IsOccupied())
 			return true;
 
-		auto occupant = level.ActorById(x->OccupiedId());
+		auto occupant = level.ActorById(tile->OccupiedId());
 		if(occupant->Team() == actor.Team())
 			return true;
 
 		return false; 
-	});
+	};
 
+	auto removedTiles = std::remove_if(tiles.begin(), tiles.end(), findNonAttackTiles);
 	tiles.erase(removedTiles, tiles.end());
 
 	for(auto tile : tiles) {
@@ -61,7 +62,6 @@ void EnemyAttack::Perform(Director& director, Level& level, Actor& attacker)
 		auto& tile = level.TileAt(target.first);
 		auto actor = level.ActorById(tile.OccupiedId());
 
-		auto statusEffects = std::vector<StatusEffect>{};
 		director.PerformAttack(attack, range, statusEffects, attacker, level.monsterModifiers, *actor);
 	}
 }

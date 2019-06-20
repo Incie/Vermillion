@@ -23,4 +23,6 @@ private:
 
 	int originalAttack;
 	int attack;
+
+	std::vector<StatusEffect> statusEffects;
 };
