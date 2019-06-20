@@ -5,6 +5,7 @@
 #include<string>
 #include"../../Framework/services.h"
 #include"../Level/Hexagon.h"
+#include"StatusEffect.h"
 
 enum class EnemyType {
 	Normal,
@@ -15,22 +16,7 @@ enum class EnemyType {
 	Summon
 };
 
-enum class StatusEffect {
-	Muddle,
-	Strengthen,
-	Poison,
-	Wound,
-	Immobilized,
-	Disarmed,
-	Stunned,
-	Regenerate,
-	Invisible,
-	Doomed,
 
-	Pierce,
-	Pierce2,
-	Pierce3
-};
 
 std::string StatusEffectToString(StatusEffect statusEffect);
 Texture* StatusEffectToTexture(StatusEffect statusEffect);
@@ -121,14 +107,35 @@ public:
 	void ModifyPierce(int mod) { pierce += mod; }
 	void ModifyRetaliate(int mod) { retaliate += mod; }
 
+	void AddEndOfTurnAction(int rounds, std::function<void(Actor*)> func) {
+		endOfTurnAction.emplace_back( std::pair<int, std::function<void(Actor*)>>(rounds, func) );
+	}
+
+	void EndofTurnActions() {
+		for(auto it = endOfTurnAction.begin(); it != endOfTurnAction.end(); ) {
+			auto& pair = *it;
+			auto& turnCount = pair.first;
+			auto& callback = pair.second;
+			
+			turnCount--;
+			if(turnCount <= 0) {
+				callback(this);
+				it = endOfTurnAction.erase(it);
+				continue;
+			}			
+
+			++it;
+		}
+	}
+
 	void AddEndOfRoundAction(std::function<void(Actor*)> func) {
-		endOfRoundAction.push_back(func);
+		endOfRoundActions.push_back(func);
 	}
 
 	void EndOfRoundActions() {
-		for (auto endofroundAction : endOfRoundAction)
+		for (auto endofroundAction : endOfRoundActions)
 			endofroundAction(this);
-		endOfRoundAction.clear();
+		endOfRoundActions.clear();
 	}
 
 	void Initiative(int initiative) { this->initiative = initiative; }
@@ -170,8 +177,8 @@ protected:
 	std::vector<StatusEffect> immunities;
 	std::vector<StatusEffect> statusEffects;
 
-	std::vector<std::function<void(Actor*)>> endOfTurnAction;
-	std::vector<std::function<void(Actor*)>> endOfRoundAction;
+	std::vector<std::pair<int, std::function<void(Actor*)>>> endOfTurnAction;
+	std::vector<std::function<void(Actor*)>> endOfRoundActions;
 };
 
 

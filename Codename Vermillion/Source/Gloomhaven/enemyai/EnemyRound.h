@@ -5,11 +5,12 @@
 
 class EnemyAction;
 class TextService;
+class Actor;
 
 class EnemyRound {
 public:
 	EnemyRound();
-	EnemyRound(int initiative, std::vector<EnemyAction*> actions);
+	EnemyRound(int initiative, std::vector<EnemyAction*> actions, bool reshuffle = false);
 	~EnemyRound();
 
 	void AddAction(EnemyAction* action);
@@ -17,6 +18,8 @@ public:
 	bool HasNextAction();
 	void Reset();
 	EnemyAction* GetAction();
+
+	void SetActorStats(const Actor& actor);
 
 	void Render();
 	void RenderRoundCard(const TextService& text);

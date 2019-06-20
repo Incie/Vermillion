@@ -98,6 +98,9 @@
     <Filter Include="Source Files\Gloomhaven\Cards\Player">
       <UniqueIdentifier>{6f14e6e9-e703-43b1-a786-6ac05f239e09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Gloomhaven\EnemyAI\Actions">
+      <UniqueIdentifier>{675b901f-6da8-4dfb-9d69-b97e7c347fd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -189,9 +192,6 @@
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\level\Hexagon.cpp">
       <Filter>Source Files\Gloomhaven\Level</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Gloomhaven\enemyai\EnemyAction.cpp">
-      <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyRound.cpp">
       <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
@@ -310,6 +310,18 @@
     <ClCompile Include="Source\Gloomhaven\cards\PlayerRound.cpp">
       <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyAction.cpp">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyAttack.cpp">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyMove.cpp">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyShield.cpp">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">
@@ -392,9 +404,6 @@
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\level\Tile.h">
       <Filter>Source Files\Gloomhaven\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Gloomhaven\enemyai\EnemyAction.h">
-      <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyRound.h">
       <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
@@ -503,6 +512,21 @@
     </ClInclude>
     <ClInclude Include="Source\Gloomhaven\cards\PlayerRound.h">
       <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyAction.h">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyAttack.h">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyMove.h">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyShield.h">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\entity\StatusEffect.h">
+      <Filter>Source Files\Gloomhaven\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -68,6 +68,7 @@ private:
 	
 	PlayerRound* playerRound;
 	Action* action;
+	Actor* activeActor;
 	
 	Level& level;
 

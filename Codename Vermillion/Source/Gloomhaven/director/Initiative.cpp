@@ -77,7 +77,6 @@ Actor* InitiativeTracker::NextActor()
 		if(nextActor->HasMoved())
 			return NextActor();
 
-
 		enemyTurn = false;
 		if (dynamic_cast<Enemy*>(nextActor) != nullptr)
 			enemyTurn = true;

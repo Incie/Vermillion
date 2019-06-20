@@ -79,7 +79,10 @@
     <ClCompile Include="Source\Gloomhaven\cards\PlayerRound.cpp" />
     <ClCompile Include="Source\Gloomhaven\Director.cpp" />
     <ClCompile Include="Source\Gloomhaven\director\Initiative.cpp" />
-    <ClCompile Include="Source\Gloomhaven\enemyai\EnemyAction.cpp" />
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyAction.cpp" />
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyAttack.cpp" />
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyMove.cpp" />
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyShield.cpp" />
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyAI.cpp" />
     <ClCompile Include="Source\Gloomhaven\enemyai\EnemyRound.cpp" />
     <ClCompile Include="Source\Gloomhaven\entity\Entity.cpp" />
@@ -147,10 +150,14 @@
     <ClInclude Include="Source\Gloomhaven\cards\PlayerRound.h" />
     <ClInclude Include="Source\Gloomhaven\Director.h" />
     <ClInclude Include="Source\Gloomhaven\director\Initiative.h" />
-    <ClInclude Include="Source\Gloomhaven\enemyai\EnemyAction.h" />
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyAction.h" />
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyAttack.h" />
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyMove.h" />
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyShield.h" />
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyAI.h" />
     <ClInclude Include="Source\Gloomhaven\enemyai\EnemyRound.h" />
     <ClInclude Include="Source\Gloomhaven\entity\Entity.h" />
+    <ClInclude Include="Source\Gloomhaven\entity\StatusEffect.h" />
     <ClInclude Include="Source\Gloomhaven\Gloom.h" />
     <ClInclude Include="Source\Gloomhaven\icons\icons.h" />
     <ClInclude Include="Source\Gloomhaven\level\Hexagon.h" />

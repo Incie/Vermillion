@@ -2,7 +2,7 @@
 #include"../entity/Entity.h"
 #include"EnemyAI.h"
 #include"EnemyRound.h"
-#include"EnemyAction.h"
+#include"actions/EnemyAction.h"
 #include"../level/Level.h"
 #include"GL/glew.h"
 #include"../../Framework/services.h"

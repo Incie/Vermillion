@@ -11,7 +11,7 @@
 #include"level/Level.h"
 
 #include"enemyai/EnemyAI.h"
-#include"enemyai/EnemyAction.h"
+#include"enemyai/actions/EnemyAction.h"
 #include"enemyai/EnemyRound.h"
 
 #include<Windows.h>
@@ -21,7 +21,7 @@
 
 
 Director::Director(Level& level, std::function<void(DirectorEvent)> onEvent)
-	: level(level), action(nullptr), onEvent(onEvent), directorStatus(DirectorStatus::EndOfRound), monsterCardDecks(level), spawner(level)
+	: level(level), action(nullptr), onEvent(onEvent), directorStatus(DirectorStatus::EndOfRound), monsterCardDecks(level), spawner(level), activeActor(nullptr)
 {
 	playerRound = nullptr;
 }
@@ -198,20 +198,25 @@ std::pair<int, std::vector<std::string>> Director::GetEnemyRound(const std::stri
 
 void Director::NextActor()
 {
-	auto a = initiativeTracker.NextActor();
+	if(activeActor != nullptr) {
+		activeActor->EndofTurnActions();
+	}
 
-	if (a == nullptr) {
+	activeActor = initiativeTracker.NextActor();
+
+	if (activeActor == nullptr) {
 		directorStatus = DirectorStatus::EndOfRound;
 		onEvent(DirectorEvent::EndOfRound);
 		monsterCardDecks.EndOfRound();
 		initiativeTracker.ClearInitiatives();
 	}
 	else if (initiativeTracker.EnemyTurn()) {
-		enemyAi.SetActor(a);
+		enemyAi.SetActor(activeActor);
 
-		auto monsterDeck = this->monsterCardDecks.GetMonsterDeck(a->Name());
+		auto monsterDeck = this->monsterCardDecks.GetMonsterDeck(activeActor->Name());
 		auto er = monsterDeck->Active();
 		er->Reset();
+		er->SetActorStats(*activeActor);
 
 		enemyAi.SetRoundActions(er);
 		onEvent(DirectorEvent::EnemyTurn);

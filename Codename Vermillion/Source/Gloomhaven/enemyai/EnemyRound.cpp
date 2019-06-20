@@ -1,15 +1,15 @@
 #include"pch.h"
 #include"EnemyRound.h"
-#include"EnemyAction.h"
+#include"actions/EnemyAction.h"
 #include"../../Framework/services.h"
 
 EnemyRound::EnemyRound()
-	: currentAction(-1), state(RoundState::Stopped)
+	: currentAction(-1), state(RoundState::Stopped), initiative(0), reshuffle(false)
 {
 }
 
-EnemyRound::EnemyRound(int initiative, std::vector<EnemyAction*> actions)
-	: initiative(initiative), currentAction(-1), state(RoundState::Stopped), reshuffle(true)
+EnemyRound::EnemyRound(int initiative, std::vector<EnemyAction*> actions, bool reshuffle)
+	: initiative(initiative), currentAction(-1), state(RoundState::Stopped), reshuffle(reshuffle)
 {
 	this->actions.insert(this->actions.begin(), actions.begin(), actions.end());
 }
@@ -49,6 +49,13 @@ EnemyAction* EnemyRound::GetAction()
 	if (currentAction >= 0 && currentAction < actions.size())
 		return actions[currentAction];
 	return nullptr;
+}
+
+void EnemyRound::SetActorStats(const Actor& actor)
+{
+	for(auto action : actions) {
+		action->Modify(actor);
+	}
 }
 
 void EnemyRound::Render()

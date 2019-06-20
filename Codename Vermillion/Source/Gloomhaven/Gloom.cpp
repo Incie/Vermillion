@@ -18,7 +18,7 @@
 #include"action/ActionMove.h"
 
 #include"enemyai/EnemyAI.h"
-#include"enemyai/EnemyAction.h"
+#include"enemyai/actions/EnemyAction.h"
 #include"enemyai/EnemyRound.h"
 
 #include"icons/icons.h"
@@ -338,8 +338,7 @@ void Gloom::OnDirectorEvent(DirectorEvent eventId)
 			GetViewById<StatusBar>(G::StatusBarId)->SetStatusText("AI Turn");
 			break;
 		}
-		case DirectorEvent::PlayerTurn:{
-
+		case DirectorEvent::PlayerTurn: {
 			GetViewById(G::AbilitySelectorId)->Activate();
 			GetViewById(G::EnemyAdvancerId)->Deactivate();
 

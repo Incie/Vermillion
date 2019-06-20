@@ -22,5 +22,5 @@ private:
 	bool LoadDeck(const std::string& entityName);
 
 	Level& level;
-	std::map<std::string, MonsterDeck*> monsterMap;
+	std::map<std::string, MonsterDeck*> monsterDeckMap;
 };
