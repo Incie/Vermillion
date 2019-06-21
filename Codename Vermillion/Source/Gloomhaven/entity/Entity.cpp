@@ -47,6 +47,24 @@ Actor::~Actor()
 {
 }
 
+const Actor& Actor::NeutralActor()
+{
+	static bool initialized = false;
+	static Actor actor;
+
+	if( initialized )
+		return actor;
+
+	entityattributes ea;
+	ea.entityId = -1;
+	ea.name = "NeutralActor";
+	actorattributes aa = {0};
+	actor.Setup(aa, ea);
+	actor.Deactivate();
+	initialized = true;
+	return actor;
+}
+
 void Actor::Setup(const actorattributes& actorattr, const entityattributes& entityattr)
 {
 	Entity::Setup(entityattr);

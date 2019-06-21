@@ -88,6 +88,8 @@ public:
 	Actor();
 	virtual ~Actor();
 
+	static const Actor& NeutralActor();
+
 	void Setup(const actorattributes& actorattr, const entityattributes& entityattr);
 
 	int DoDamage(int attackDamage, int pierce);
@@ -97,10 +99,10 @@ public:
 	int Range() const { return range; }
 	int Move() const { return move; }
 	int Team() const { return team; }
-	int Health() { return health; }
-	int Shield() { return shield; }
-	int Pierce() { return pierce; }
-	int Retaliate() { return retaliate; }
+	int Health() const { return health; }
+	int Shield() const { return shield; }
+	int Pierce() const { return pierce; }
+	int Retaliate() const { return retaliate; }
 
 	void ModifyHealth(int mod) { health += mod; }
 	void ModifyShield(int mod) { shield += mod; }
@@ -155,7 +157,7 @@ public:
 	bool Disarmed() const;
 	bool Immobilised() const;
 
-	bool HasMoved() { return hasMoved; }
+	bool HasMoved() const { return hasMoved; }
 	void Moved() { hasMoved = true; }
 	void MovedReset() { hasMoved = false; }
 

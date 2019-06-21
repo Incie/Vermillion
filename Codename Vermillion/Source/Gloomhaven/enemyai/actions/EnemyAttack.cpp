@@ -7,9 +7,9 @@
 
 
 EnemyAttack::EnemyAttack(int attack, int range, int targets, std::vector<StatusEffect> statusEffects)
-	: EnemyAction(), attack(attack), originalAttack(attack), range(range), originalRange(range)
+	: EnemyAction(), attack(attack), originalAttack(attack), range(range), originalRange(range), originalTargets(targets), attackTargets(targets), statusEffects(statusEffects)
 {
-	actionDescription = fmt::format("Attack {0} - range {1}", attack, range);
+	Modify(Actor::NeutralActor());
 }
 
 bool EnemyAttack::CanPerform(const Actor& actor)
@@ -76,10 +76,31 @@ void EnemyAttack::Render()
 	}
 }
 
+#include <sstream>
+#include <iostream>
+
 void EnemyAttack::Modify(const Actor& actor)
 {
 	range = originalRange + actor.Range();
 	attack = originalAttack + actor.Attack();
+	attackTargets = originalTargets /* + actor.Targets() */;
 
-	actionDescription = fmt::format("Attack {0} ({2} + {4})- range {1} ({3} + {5})", attack, range, originalAttack, originalRange, actor.Attack(), actor.Range());
+	std::ostringstream ss;
+	if( actor.Attack() == 0 )
+		ss << fmt::format("Attack {0}", originalAttack);
+	else
+		ss << fmt::format("Attack {0} [{1}+{2}]", attack, actor.Attack(), originalAttack);
+
+	if( range >= 2 )
+		ss << fmt::format(" Range {0} [{1}+{2}]", range, actor.Range(), originalRange);
+
+	if( attackTargets > 1 )
+		ss << fmt::format(" Targets {0}", originalTargets);
+
+	if( statusEffects.size() > 0 ){
+		if( statusEffects[0] == StatusEffect::Poison )
+			ss << " [Poison]";
+	}
+
+	actionDescription = ss.str();
 }

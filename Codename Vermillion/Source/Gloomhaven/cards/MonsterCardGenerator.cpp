@@ -69,7 +69,7 @@ void MonsterCardGenerator::EndOfRound()
 bool MonsterCardGenerator::LoadDeck(const std::string& entityName)
 {
 	if( monsterDeckMap.find(entityName) != monsterDeckMap.end() )
-		return;
+		return false;
 
 	if(entityName == "Bandit Guard") {
 		auto md = vnew MonsterDeck(entityName, std::vector<EnemyRound*>{

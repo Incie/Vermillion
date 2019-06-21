@@ -93,6 +93,8 @@ void PlayerDeck::ShortRest()
 
 	handCards.insert(handCards.begin(), discardedCards.begin(), discardedCards.end());
 	discardedCards.clear();
+
+	SortHand();
 }
 
 void PlayerDeck::SortHand()
