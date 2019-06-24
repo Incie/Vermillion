@@ -322,6 +322,9 @@
     <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyShield.cpp">
       <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\action\Action.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Test\Testing.h">

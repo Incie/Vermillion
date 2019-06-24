@@ -188,13 +188,13 @@ void Gloom::InitializeUI()
 	cardSelector->Activate();
 	AddView(cardSelector, G::CardSelectorId);
 
-	auto cardSelection = vnew CardSelection(*Icons::GetPlayerCard(), [this](CardSelection & cs, int eventId) {
+	auto cardSelection = vnew CardSelection(*Icons::GetPlayerCard(), [this](CardSelection& cardSelectionUi, int eventId) {
 
 		if( eventId == 0 ){
-			auto cardName0 = cs.Card(0);
-			auto cardName1 = cs.Card(1);
+			auto cardName0 = cardSelectionUi.Card(0);
+			auto cardName1 = cardSelectionUi.Card(1);
 
-			cs.Deactivate();
+			cardSelectionUi.Deactivate();
 
 			auto cardSelector = GetViewById<CardSelect>(0);
 			cardSelector->Deactivate();

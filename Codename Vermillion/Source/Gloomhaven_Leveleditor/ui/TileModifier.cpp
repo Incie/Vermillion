@@ -1,7 +1,7 @@
 #include"pch.h"
 #include "TileModifier.h"
-#include"..//Gloomhaven/level/Tile.h"
-#include"..//Gloomhaven/icons/icons.h"
+#include"../../Gloomhaven/level/Tile.h"
+#include"../../Gloomhaven/icons/icons.h"
 
 TileModifier::TileModifier(std::function<void(const std::string&, const glm::ivec3&)> callback)
 	: callback(callback), tile(nullptr)

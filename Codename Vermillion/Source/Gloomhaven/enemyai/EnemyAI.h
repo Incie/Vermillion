@@ -27,6 +27,7 @@ public:
 private:
 	void CalculateStep(Level& level);
 	void PerformStep(Director& director, Level& level);
+	void NextAction(Level& level);
 
 	EnemyRound* enemyRound;
 	Actor* actor;

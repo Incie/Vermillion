@@ -66,6 +66,7 @@
     <ClCompile Include="Source\Framework\windowclass.cpp" />
     <ClCompile Include="Source\Framework\windowprocedure.cpp" />
     <ClCompile Include="Source\Framework\windowstate.cpp" />
+    <ClCompile Include="Source\Gloomhaven\action\Action.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionAttack.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionMove.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionShieldSelf.cpp" />
@@ -365,7 +366,7 @@
       <BrowseInformation>true</BrowseInformation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64)\include;Source\External</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64)\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <CallingConvention>StdCall</CallingConvention>
@@ -399,7 +400,7 @@
       <BrowseInformation>true</BrowseInformation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64_STATIC)\include;Source\External</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64_STATIC)\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CallingConvention>StdCall</CallingConvention>
@@ -466,7 +467,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64)\include;Source\External</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64)\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -486,7 +487,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64_STATIC)\include;Source\External</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source\Framework\pch;$(VCPKG_64_STATIC)\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

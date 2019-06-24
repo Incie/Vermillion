@@ -27,3 +27,15 @@ protected:
 
 	std::string actionDescription;
 };
+
+
+class ActionElement : public Action {
+public:
+	ActionElement(Level& level, Actor& actor);
+
+	virtual void Click(Director& director, const glm::ivec3& target) override;
+	virtual void Undo() override;
+	virtual void Reset() override;
+	virtual bool Perform(Director& director, Actor& actor) override;
+	virtual void Render() override;
+};

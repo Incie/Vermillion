@@ -93,6 +93,10 @@ void Director::StartRound()
 		enemy->Initiative(er->Active()->Initiative());
 	}
 
+	auto player = level.GetPlayer();
+	if(player != nullptr)
+		player->MovedReset();
+
 	for(auto e : level.Enemies())
 		e->MovedReset();
 
@@ -199,6 +203,7 @@ std::pair<int, std::vector<std::string>> Director::GetEnemyRound(const std::stri
 void Director::NextActor()
 {
 	if(activeActor != nullptr) {
+		activeActor->Moved();
 		activeActor->EndofTurnActions();
 	}
 
@@ -312,30 +317,30 @@ void Director::PerformAttack(int baseDamage, int range, std::vector<StatusEffect
 	for(auto& m : modifierDraw.modifiers) {
 		if(m.status != ModifierStatus::None) {
 			switch(m.status) {
-			case ModifierStatus::ShieldSelf1: {
-				attacker.ModifyShield(1);
-				attacker.AddEndOfRoundAction([](Actor* a) { a->ModifyShield(-1); });
-				break;
-			}
-			case ModifierStatus::Pierce3: {
-				pierce += 3;
-				break;
-			}
-			default: {
-				switch(m.status) {
-				case ModifierStatus::Poison:	  statusEffects.push_back(StatusEffect::Poison);	 break;
-				case ModifierStatus::Wound: 	  statusEffects.push_back(StatusEffect::Wound);		 break;
-				case ModifierStatus::Stun: 		  statusEffects.push_back(StatusEffect::Stunned);	 break;
-				case ModifierStatus::Disarm:	  statusEffects.push_back(StatusEffect::Disarmed);	 break;
-				case ModifierStatus::Immobilize:  statusEffects.push_back(StatusEffect::Immobilized); break;
-				case ModifierStatus::Strengthen:  statusEffects.push_back(StatusEffect::Strengthen); break;
-				case ModifierStatus::Invisible:	  statusEffects.push_back(StatusEffect::Invisible);	 break;
-				case ModifierStatus::Muddle: 	  statusEffects.push_back(StatusEffect::Muddle);	 break;
-				default:
-				break;
+				case ModifierStatus::ShieldSelf1: {
+					attacker.ModifyShield(1);
+					attacker.AddEndOfRoundAction([](Actor* a) { a->ModifyShield(-1); });
+					break;
 				}
-				break;
-			}
+				case ModifierStatus::Pierce3: {
+					pierce += 3;
+					break;
+				}
+				default: {
+					switch(m.status) {
+					case ModifierStatus::Poison:	  statusEffects.push_back(StatusEffect::Poison);	 break;
+					case ModifierStatus::Wound: 	  statusEffects.push_back(StatusEffect::Wound);		 break;
+					case ModifierStatus::Stun: 		  statusEffects.push_back(StatusEffect::Stunned);	 break;
+					case ModifierStatus::Disarm:	  statusEffects.push_back(StatusEffect::Disarmed);	 break;
+					case ModifierStatus::Immobilize:  statusEffects.push_back(StatusEffect::Immobilized); break;
+					case ModifierStatus::Strengthen:  statusEffects.push_back(StatusEffect::Strengthen); break;
+					case ModifierStatus::Invisible:	  statusEffects.push_back(StatusEffect::Invisible);	 break;
+					case ModifierStatus::Muddle: 	  statusEffects.push_back(StatusEffect::Muddle);	 break;
+					default:
+					break;
+					}
+					break;
+				}
 			}
 		}
 	}
@@ -350,17 +355,20 @@ void Director::PerformAttack(int baseDamage, int range, std::vector<StatusEffect
 
 	level.combatLog.push_back(fmt::format("{0} did {1} ({4}[Base] + {3}) damage to {2}", attackerName, actualDamage, victimName, Modifier::ToString(modifierDraw.modifiers), baseDamage));
 
-	for(auto st : statusEffects) {
-		switch(st) {
-		case StatusEffect::Strengthen: attacker.AddStatus(st); break;
-		case StatusEffect::Invisible: attacker.AddStatus(st); break;
+	for(auto statusEffect : statusEffects) {
+		switch(statusEffect) {
+		case StatusEffect::Strengthen: attacker.AddStatus(statusEffect); break;
+		case StatusEffect::Invisible: attacker.AddStatus(statusEffect); break;
 		case StatusEffect::Pierce:
 		case StatusEffect::Pierce2:
 		case StatusEffect::Pierce3:
 		break;
 		default: {
-			level.combatLog.push_back(fmt::format("{1} was {0}", StatusEffectToString(st), victim.Name()));
-			victim.AddStatus(st);
+			level.combatLog.push_back(fmt::format("{1} was {0}", StatusEffectToString(statusEffect), victim.Name()));
+			victim.AddStatus(statusEffect);
+
+			auto statusCopy = statusEffect;
+			victim.AddEndOfTurnAction(1, [statusCopy](Actor* actor) {actor->RemoveStatus(statusCopy); });
 			break;
 		}
 		}

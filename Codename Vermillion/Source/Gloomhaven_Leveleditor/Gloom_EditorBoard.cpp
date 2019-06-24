@@ -202,7 +202,7 @@ void EditorBoard::SpawnEntity(const std::string& entityName, const glm::ivec3& t
 	tile->entity->SetTexture(Icons::Get(entityName));
 }
 
-#include"nholmann-json/json.hpp"
+#include"nlohmann/json.hpp"
 #include<fstream>
 
 void EditorBoard::SaveToDisk()

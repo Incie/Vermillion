@@ -64,6 +64,13 @@ void EnemyAI::CalculateStep(Level& level)
 		enemyRound->NextAction();
 
 		auto action = enemyRound->GetAction();
+
+		if(!action->CanPerform(*actor)) {
+			auto combatMessage = fmt::format("{0} could not perform action {1}", actor->Name(), action->ActionDescription() );
+			level.combatLog.push_back(combatMessage);
+			NextAction(level);
+		}
+
 		action->Calculate(level , *actor);
 		enemyRound->state = EnemyRound::RoundState::Calculated;
 	}
@@ -73,13 +80,19 @@ void EnemyAI::PerformStep(Director& director, Level& level)
 {
 	auto action = enemyRound->GetAction();
 	action->Perform(director, level, *actor);
+	
+	NextAction(level);
+}
 
-	if (enemyRound->HasNextAction()) {
+void EnemyAI::NextAction(Level& level)
+{
+	if(enemyRound->HasNextAction()) {
 		enemyRound->state = EnemyRound::RoundState::Stopped;
 		CalculateStep(level);
+		return;
 	}
-	else 
-		enemyRound->state = EnemyRound::RoundState::Finished;
+	
+	enemyRound->state = EnemyRound::RoundState::Finished;
 }
 
 void EnemyAI::Render()

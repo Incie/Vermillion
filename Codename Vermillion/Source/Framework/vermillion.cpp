@@ -52,7 +52,7 @@ void Vermillion::Run()
 				runningActivity->Render();
 				text.Print(0, 0, fmt::format("FPS: {0} ({1}ms)", fps, lastFrameTime), 12, Colors::White );
 			
-			lastFrameTime = renderTimer.TimeSinceTick();
+				lastFrameTime = renderTimer.TimeSinceTick();
 			renderer.EndFrame();
 
 			fpsCounter++;
