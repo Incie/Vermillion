@@ -73,11 +73,11 @@ bool MonsterCardGenerator::LoadDeck(const std::string& entityName)
 
 	if(entityName == "Bandit Guard") {
 		auto md = vnew MonsterDeck(entityName, std::vector<EnemyRound*>{
-			//vnew EnemyRound{ 30, {vnew EnemyMove(1), vnew EnemyAttack(-1, 0)} },
-			//vnew EnemyRound{ 50, {vnew EnemyMove(0), vnew EnemyAttack(0, 0)} },
-			//vnew EnemyRound{ 15, {vnew EnemyShieldSelf(1), vnew EnemyRetaliate(1) }, true},
-			//vnew EnemyRound{ 70, {vnew EnemyMove(-1), vnew EnemyAttack(1, 0)} },
-			//vnew EnemyRound{ 35, {vnew EnemyMove(-1), vnew EnemyAttack(0, 1)} },
+			vnew EnemyRound{ 30, {vnew EnemyMove(1), vnew EnemyAttack(-1, 0)} },
+			vnew EnemyRound{ 50, {vnew EnemyMove(0), vnew EnemyAttack(0, 0)} },
+			vnew EnemyRound{ 15, {vnew EnemyShieldSelf(1), vnew EnemyRetaliate(1) }, true},
+			vnew EnemyRound{ 70, {vnew EnemyMove(-1), vnew EnemyAttack(1, 0)} },
+			vnew EnemyRound{ 35, {vnew EnemyMove(-1), vnew EnemyAttack(0, 1)} },
 			vnew EnemyRound{ 15, {vnew EnemyShieldSelf(1), vnew EnemyAttack(0, 0, 1, {StatusEffect::Poison})} },
 			vnew EnemyRound{ 50, {vnew EnemyMove(0), vnew EnemyAttack(0, 0)} },
 			vnew EnemyRound{ 55, {vnew EnemyMove(-1), vnew EnemyAttack(0, 0), vnew EnemySelfCast(StatusEffect::Strengthen)} }

@@ -66,8 +66,8 @@
     <ClCompile Include="Source\Framework\windowclass.cpp" />
     <ClCompile Include="Source\Framework\windowprocedure.cpp" />
     <ClCompile Include="Source\Framework\windowstate.cpp" />
-    <ClCompile Include="Source\Gloomhaven\action\Action.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionAttack.cpp" />
+    <ClCompile Include="Source\Gloomhaven\action\ActionElement.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionMove.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\ActionShieldSelf.cpp" />
     <ClCompile Include="Source\Gloomhaven\action\CardAction.cpp" />
