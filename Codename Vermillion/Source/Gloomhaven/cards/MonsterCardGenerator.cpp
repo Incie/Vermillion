@@ -103,7 +103,7 @@ bool MonsterCardGenerator::LoadDeck(const std::string& entityName)
 		auto md = vnew MonsterDeck(entityName, std::vector<EnemyRound*>{
 			vnew EnemyRound{ 16, {vnew EnemyMove(1), vnew EnemyAttack(-1, 0)} },
 			vnew EnemyRound{ 32, {vnew EnemyMove(0), vnew EnemyAttack(1, -1)} },
-			vnew EnemyRound{ 14, {vnew EnemyMove(-1), vnew EnemyAttack(-1, 0)}/* create trap */ },
+			vnew EnemyRound{ 14, {vnew EnemyMove(-1), vnew EnemyAttack(-1, 0), vnew EnemyCreateTrap(3, {}) } },
 			vnew EnemyRound{ 56, {vnew EnemyAttack(1, -1, 2)} },
 			vnew EnemyRound{ 68, {vnew EnemyAttack(1, 1)}, true },
 			vnew EnemyRound{ 31, {vnew EnemyMove(0), vnew EnemyAttack(0, 0)} },

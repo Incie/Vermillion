@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 enum class StatusEffect {
 	Muddle,
 	Strengthen,

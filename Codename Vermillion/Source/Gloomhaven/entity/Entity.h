@@ -114,19 +114,19 @@ public:
 	}
 
 	void EndofTurnActions() {
-		for(auto it = endOfTurnAction.begin(); it != endOfTurnAction.end(); ) {
-			auto& pair = *it;
-			auto& turnCount = pair.first;
-			auto& callback = pair.second;
+		for(auto iteratorEndOfTurnAction = endOfTurnAction.begin(); iteratorEndOfTurnAction != endOfTurnAction.end(); ) {
+			auto& endOfTurnPair = *iteratorEndOfTurnAction;
+			auto& turnCount = endOfTurnPair.first;
+			auto& callback = endOfTurnPair.second;
 			
 			turnCount--;
 			if(turnCount <= 0) {
 				callback(this);
-				it = endOfTurnAction.erase(it);
+				iteratorEndOfTurnAction = endOfTurnAction.erase(iteratorEndOfTurnAction);
 				continue;
 			}			
 
-			++it;
+			++iteratorEndOfTurnAction;
 		}
 	}
 

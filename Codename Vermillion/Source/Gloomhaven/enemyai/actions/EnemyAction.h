@@ -3,6 +3,7 @@
 #include"glm/glm.hpp"
 #include<string>
 #include<vector>
+#include"../../entity/StatusEffect.h"
 
 class Director;
 class Level;
@@ -33,4 +34,18 @@ protected:
 	std::string actionDescription;
 	glm::vec2 startPoint;
 	std::vector<std::pair<glm::ivec3, glm::vec3>> targets;
+};
+
+
+class EnemyCreateTrap : public EnemyAction {
+public:
+	EnemyCreateTrap(int trapDamage, std::vector<StatusEffect> statusEffects);
+
+	virtual void Perform(Director& director, Level& level, Actor& actor) override;
+	virtual void Calculate(Level& level, const Actor& actor) override;
+	virtual void Render() override;
+
+private:
+	int trapDamage;
+	std::vector<StatusEffect> statusEffects;
 };
