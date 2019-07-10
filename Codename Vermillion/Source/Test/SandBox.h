@@ -8,6 +8,6 @@ public:
 
 	virtual void Initialize() override;
 	virtual void Deinitialize() override;
-	virtual void Update(double delta) override;
+	virtual void Update(float delta) override;
 	virtual void Render() override;
 };

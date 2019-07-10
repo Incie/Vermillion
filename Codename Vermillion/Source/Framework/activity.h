@@ -11,15 +11,11 @@ public:
 	virtual void Initialize() = 0;
 	virtual void Deinitialize() = 0;
 
-	virtual void Resize() {
-		const auto& windowSize = WindowState::Size();
-		glm::vec2 newWindowSize{ windowSize.x, windowSize.y };
-
-		for(auto view : layers) {
+	virtual void Resize(const glm::ivec2& newWindowSize) {
+		for(auto view : layers)
 			view->Resize(newWindowSize, Services().Text());
-		}
 	}
-	virtual void Update(double delta) = 0;
+	virtual void Update(float delta) = 0;
 	virtual void Render() = 0;
 
 	void SetServiceLocator(ServiceLocator& locator) {

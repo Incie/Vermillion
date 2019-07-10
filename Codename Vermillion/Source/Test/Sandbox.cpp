@@ -24,7 +24,7 @@ void SandBox::Deinitialize()
 {
 }
 
-void SandBox::Update(double delta)
+void SandBox::Update(float delta)
 {
 	p = Services().Input().GetMousePosition();
 

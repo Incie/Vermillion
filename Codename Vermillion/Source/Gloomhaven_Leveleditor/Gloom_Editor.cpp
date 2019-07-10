@@ -66,16 +66,15 @@ void GloomEditor::Deinitialize()
 }
 
 #include"..//windowstate.h"
-void GloomEditor::Resize()
+void GloomEditor::Resize(const glm::ivec2& newWindowSize)
 {
-	auto size = WindowState::Size();
-	auto windowSize = glm::vec2(static_cast<float>(size.x), static_cast<float>(size.y));
+	auto windowSize = glm::vec2(static_cast<float>(newWindowSize.x), static_cast<float>(newWindowSize.y));
 	for (auto layer : layers) {
 		layer->Resize(windowSize, Services().Text());
 	}
 }
 
-void GloomEditor::Update(double delta)
+void GloomEditor::Update(float delta)
 {
 	auto& input = Services().Input();
 
@@ -91,7 +90,7 @@ void GloomEditor::Update(double delta)
 			continue;
 
 		if(layer->Invalidated()) {
-			Resize();
+			Resize(WindowState::Size());
 		}
 
 		if (layer->HandleInput(input)) {

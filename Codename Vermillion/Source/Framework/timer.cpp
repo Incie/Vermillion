@@ -40,12 +40,10 @@ double Timer::GetDelta()
 	return delta;
 }
 
-double Timer::TimeSinceTick()
+double Timer::TimeSinceTickAsMilliseconds()
 {
-	long long time = NowAsMicroseconds() - timelast;
-	
-
-	return (double) (time / 1000);
+	long long nowMinusLastTime = NowAsMicroseconds() - timelast;
+	return (double) (nowMinusLastTime / 1000);
 }
 
 void Timer::LimitByFPS(int fps)
@@ -63,7 +61,8 @@ void Timer::LimitByMicroseconds(int us)
 
 void Timer::LimitByMilliseconds(int ms)
 {
-	timestep = ms * 1000;
+	long long msToMicrosecondsMultiplier = 1000;
+	timestep = static_cast<long long>(ms) * msToMicrosecondsMultiplier;
 }
 
 long long Timer::NowAsMicroseconds()

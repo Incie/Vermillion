@@ -10,7 +10,7 @@ public:
 	bool Tick();
 	double GetDelta();
 
-	double TimeSinceTick();
+	double TimeSinceTickAsMilliseconds();
 
 	void LimitByFPS(int fps);
 	void LimitByMicroseconds(int us);

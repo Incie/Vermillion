@@ -17,13 +17,13 @@ public:
 	Gloom();
 	~Gloom();
 
-	void Initialize();
-	void Deinitialize();
+	void Initialize() override;
+	void Deinitialize() override;
 
-	void Resize();
+	void Resize(const glm::ivec2& newWindowSize) override;
 
-	void Update(double deltaTime);
-	void Render();
+	void Update(float deltaTime) override;
+	void Render() override;
 
 private:
 	void InitializeUI();

@@ -4,7 +4,6 @@
 
 #include"GL/glew.h"
 #include"glm/glm.hpp"
-#include<vector>
 #include<Windows.h>
 #include"level/Hexagon.h"
 #include"level/Level.h"
@@ -48,7 +47,7 @@ namespace G {
 };
 
 Gloom::Gloom() 
-	: director(level, [this](auto eventId) {this->OnDirectorEvent(eventId); }), cardGenerator(level)
+	: director(level, [this](auto eventId) { this->OnDirectorEvent(eventId); }), cardGenerator(level)
 {
 }
 
@@ -58,6 +57,8 @@ Gloom::~Gloom()
 
 void Gloom::Initialize()
 {
+	Log::Info("Gloom", "Initialize");
+
 	Icons::Load(Services().Textures());
 	InitializeUI();
 	
@@ -73,20 +74,19 @@ void Gloom::Initialize()
 
 void Gloom::Deinitialize()
 {
+	Log::Info("Gloom", "Deinitialize");
+
 	DeinitializeUI();
 	Icons::Unload();
 }
 
-void Gloom::Resize()
+void Gloom::Resize(const glm::ivec2& newWindowSize)
 {
-	Log::Info("CardRendering", "Resize");
-	const auto& windowSize = WindowState::Size();
-	glm::vec2 newWindowSize{ windowSize.x, windowSize.y };
-
-	Activity::Resize();
+	Log::Info("Gloom", "Resize");
+	Activity::Resize(newWindowSize);
 }
 
-void Gloom::Update(double deltaTime)
+void Gloom::Update(float deltaTime)
 {
 	const auto& input = Services().Input();
 

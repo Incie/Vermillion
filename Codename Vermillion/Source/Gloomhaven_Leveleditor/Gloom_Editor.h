@@ -12,11 +12,11 @@ public:
 	GloomEditor();
 	~GloomEditor();
 
-	void Resize() override;
+	void Resize(const glm::ivec2& newWindowSize) override;
 
 	void Initialize() override;
 	void Deinitialize() override;
-	void Update(double delta) override;
+	void Update(float delta) override;
 	void Render() override;
 
 private:
