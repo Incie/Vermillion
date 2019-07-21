@@ -10,19 +10,20 @@ Texture Icons::texturePlayerCard;
 
 void Icons::Load(TextureService& textures)
 {
-	icons["attack"] = textures.LoadTexture("textures/icons/attack.png");
-	icons["move"] = textures.LoadTexture("textures/icons/move.png");
-	icons["push"] = textures.LoadTexture("textures/icons/push.png");
-	icons["pull"] = textures.LoadTexture("textures/icons/pull.png");
-	icons["disarm"] = textures.LoadTexture("textures/icons/disarm.png");
-	icons["range"] = textures.LoadTexture("textures/icons/range.png");
-	icons["poison"] = textures.LoadTexture("textures/icons/poison.png");
-	icons["muddle"] = textures.LoadTexture("textures/icons/muddle.png");
-	icons["strengthen"] = textures.LoadTexture("textures/icons/strengthen.png");
-	icons["shield"] = textures.LoadTexture("textures/icons/shield_outline.png");
-	icons["pierce"] = textures.LoadTexture("textures/icons/pierce.png");
-	icons["heal"] = textures.LoadTexture("textures/icons/heal.png");
+	Add(textures, "attack", "icons/attack.png");
+	Add(textures, "move", "icons/move.png");
+	Add(textures, "push", "icons/push.png");
+	Add(textures, "pull", "icons/pull.png");
+	Add(textures, "disarm", "icons/disarm.png");
+	Add(textures, "range", "icons/range.png");
+	Add(textures, "poison", "icons/poison.png");
+	Add(textures, "muddle", "icons/muddle.png");
+	Add(textures, "strengthen", "icons/strengthen.png");
+	Add(textures, "shield", "icons/shield_outline.png");
+	Add(textures, "pierce", "icons/pierce.png");
+	Add(textures, "heal", "icons/heal.png");
 
+	Add(textures, "reshuffle", "icons/reshuffle.png");
 	Add(textures, "retaliate", "icons/retaliate.png");
 	Add(textures, "stun", "icons/stun.png");
 	Add(textures, "wound", "icons/wound.png");
@@ -35,34 +36,29 @@ void Icons::Load(TextureService& textures)
 
 	texturePlayerCard = textures.LoadTexture("textures/player_ability_back.png");
 
-	icons["monsterabilitycardback"] = textures.LoadTexture("textures/monster_ability_card_back.png");
-
-	icons["bandit guard"] = textures.LoadTexture("textures/monsters/Horz-Bandit Guard.png");
-	icons["living bones"] = textures.LoadTexture("textures/monsters/Horz-Living Bones.png");
-	icons["bandit archer"] = textures.LoadTexture("textures/monsters/Horz-Bandit Archer.png");
-	icons["bandit guard elite"] = textures.LoadTexture("textures/monsters/Horz-Bandit Guard_elite.png");
-	icons["living bones elite"] = textures.LoadTexture("textures/monsters/Horz-Living Bones_elite.png");
-	icons["bandit archer elite"] = textures.LoadTexture("textures/monsters/Horz-Bandit Archer_elite.png");
-
-	icons["trap"] = textures.LoadTexture("textures/monsters/Spike Trap 1h.png");
-	icons["obstacle"] = textures.LoadTexture("textures/monsters/Crate B 1h.png");
-	icons["coin"] = textures.LoadTexture("textures/monsters/Coin.png");
-	icons["treasure"] = textures.LoadTexture("textures/monsters/Treasure Tile 1h - Horiz.png");
-	icons["door (h)"] = textures.LoadTexture("textures/monsters/Stone Door Closed 1h - Horizontal.png");
-	icons["door (v)"] = textures.LoadTexture("textures/monsters/Stone Door Closed 1h - Vertical.png");
-
-	icons["start"] = textures.LoadTexture("textures/icons/icon_start.png");
-
-	icons["element_fire"] = textures.LoadTexture("textures/icons/icon_fire.png");
-	icons["element_ice"] = textures.LoadTexture("textures/icons/icon_ice.png");
-	icons["element_wind"] = textures.LoadTexture("textures/icons/icon_wind.png");
-	icons["element_light"] = textures.LoadTexture("textures/icons/icon_light.png");
-	icons["element_dark"] = textures.LoadTexture("textures/icons/icon_dark.png");
-	icons["element_earth"] = textures.LoadTexture("textures/icons/icon_earth.png");
-	icons["element_any"] = textures.LoadTexture("textures/icons/icon_any_element.png");
-	icons["element_spend"] = textures.LoadTexture("textures/icons/icon_spend_element.png");
-
-	icons["brute"] = textures.LoadTexture("textures/icons/player_brute.png");
+	Add(textures, "monsterabilitycardback", "monster_ability_card_back.png");
+	Add(textures, "bandit guard", "monsters/Horz-Bandit Guard.png");
+	Add(textures, "living bones", "monsters/Horz-Living Bones.png");
+	Add(textures, "bandit archer", "monsters/Horz-Bandit Archer.png");
+	Add(textures, "bandit guard elite", "monsters/Horz-Bandit Guard_elite.png");
+	Add(textures, "living bones elite", "monsters/Horz-Living Bones_elite.png");
+	Add(textures, "bandit archer elite", "monsters/Horz-Bandit Archer_elite.png");
+	Add(textures, "trap", "monsters/Spike Trap 1h.png");
+	Add(textures, "obstacle", "monsters/Crate B 1h.png");
+	Add(textures, "coin", "monsters/Coin.png");
+	Add(textures, "treasure", "monsters/Treasure Tile 1h - Horiz.png");
+	Add(textures, "door (h)", "monsters/Stone Door Closed 1h - Horizontal.png");
+	Add(textures, "door (v)", "monsters/Stone Door Closed 1h - Vertical.png");
+	Add(textures, "start", "icons/icon_start.png");
+	Add(textures, "element_fire", "icons/icon_fire.png");
+	Add(textures, "element_ice", "icons/icon_ice.png");
+	Add(textures, "element_wind", "icons/icon_wind.png");
+	Add(textures, "element_light", "icons/icon_light.png");
+	Add(textures, "element_dark", "icons/icon_dark.png");
+	Add(textures, "element_earth", "icons/icon_earth.png");
+	Add(textures, "element_any", "icons/icon_any_element.png");
+	Add(textures, "element_spend", "icons/icon_spend_element.png");
+	Add(textures, "brute", "icons/player_brute.png");
 }
 
 void Icons::Unload()
@@ -75,12 +71,13 @@ Texture* Icons::Get(const std::string& name)
 	name_dest.resize(name.size());
 	std::transform(name.begin(), name.end(), name_dest.begin(), std::tolower);
 
-	auto  it = icons.find(name_dest);
+	auto it = icons.find(name_dest);
 
-	if (it != icons.end())
-		return &(it->second);
+	if(it == icons.end())
+		return nullptr;
 
-	return nullptr;
+	auto pair = *it;
+	return &pair.second;
 }
 
 Texture* Icons::GetPlayerCard()
