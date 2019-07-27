@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\precompiled header">
+      <UniqueIdentifier>{08f10b9f-d6bf-4c72-a2fb-829cb5248a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\activity">
+      <UniqueIdentifier>{28b1d55c-cf66-430a-ab9e-ee8081690033}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\camera">
+      <UniqueIdentifier>{bf7fd118-9051-4fcf-acd2-54d43d29484e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\constants">
+      <UniqueIdentifier>{c46e6f20-c4ec-4bdd-9b5e-2d5a9474d665}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\file">
+      <UniqueIdentifier>{8bc6c48f-0c41-4815-a1fc-39bd09a1ba27}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\input.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\inputstate.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\log.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\opengl2.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\opengl2_shader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\render.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\servicelocator.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\services.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\text.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\textures.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\textures_pngloader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\timer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\uilayer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\uiview.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vermillion.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\version.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\window.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windowstate.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\pch\pch.h">
+      <Filter>Source Files\precompiled header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\activity.h">
+      <Filter>Source Files\activity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\camera2d.h">
+      <Filter>Source Files\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\constants.h">
+      <Filter>Source Files\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="source\file.h">
+      <Filter>Source Files\file</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input_getters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\inputstate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\opengl2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\opengl2_shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\servicelocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\text.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\textures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\textures_pngloader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\uibutton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\uielement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\uiimage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\uilayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\uitext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vermillion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windowclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windowprocedure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windowstate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\pch\pch.cpp">
+      <Filter>Source Files\precompiled header</Filter>
+    </ClCompile>
+    <ClCompile Include="source\camera2d.cpp">
+      <Filter>Source Files\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\constants.cpp">
+      <Filter>Source Files\constants</Filter>
+    </ClCompile>
+    <ClCompile Include="source\file.cpp">
+      <Filter>Source Files\file</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
