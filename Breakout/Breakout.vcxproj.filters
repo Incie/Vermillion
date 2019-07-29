@@ -16,9 +16,15 @@
     <ClCompile Include="source\breakout.cpp">
       <Filter>Source Files\Breakout</Filter>
     </ClCompile>
+    <ClCompile Include="source\math.cpp">
+      <Filter>Source Files\Breakout</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\breakout.h">
+      <Filter>Source Files\Breakout</Filter>
+    </ClInclude>
+    <ClInclude Include="source\math.h">
       <Filter>Source Files\Breakout</Filter>
     </ClInclude>
   </ItemGroup>

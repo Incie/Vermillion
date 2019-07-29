@@ -97,6 +97,63 @@ void Render::Quad(float x, float y, float w, float h, const glm::vec3& color)
 	glPopMatrix();
 }
 
+void Render::Rectangle(const glm::vec2& position, const glm::vec2& size, const glm::vec3& color)
+{
+	glPushMatrix();
+		glTranslatef(position.x - size.x * 0.5f, position.y - size.y * 0.5f, 0);
+		glDisable(GL_TEXTURE_2D);
+
+		glColor3fv(&color.x);
+		glBegin(GL_QUADS);
+			glVertex2f(0, 0);
+			glVertex2f(size.x, 0);
+			glVertex2f(size.x, size.y);
+			glVertex2f(0, size.y);
+		glEnd();
+
+		glColor3f(1, 1, 1);
+		glEnable(GL_TEXTURE_2D);
+	glPopMatrix();
+}
+
+void Render::Circle(const glm::vec2& position, float radius, const glm::vec3& color)
+{
+	glPushMatrix();
+		glTranslatef(position.x, position.y, 0);
+		glDisable(GL_TEXTURE_2D);
+
+		glColor3fv(&color.x);
+		//glBegin(GL_TRIANGLE_FAN);
+		//	glVertex2f(0, 0);
+		glBegin(GL_LINE_LOOP);
+
+			constexpr float twoPi = 3.14159265f * 2.0f;
+			const int n = 20;
+			for( int i = 0; i <= n; ++i ){
+				float fraction = static_cast<float>(i) / static_cast<float>(n);
+				float angle = fraction * twoPi;
+
+				glVertex2f(cos(angle) * radius, sin(angle) * radius);
+			}
+
+		glEnd();
+
+		glColor3f(1, 1, 1);
+		glEnable(GL_TEXTURE_2D);
+	glPopMatrix();
+}
+
+void Render::Line(const glm::vec2& point0, const glm::vec2& point1, const glm::vec3& color)
+{
+	glDisable(GL_TEXTURE_2D);
+	glColor3fv(&color.x);
+	glBegin(GL_LINES);
+		glVertex2f(point0.x, point0.y); 
+		glVertex2f(point1.x, point1.y);
+	glEnd();
+	glColor3f(1,1,1);
+}
+
 void Render::OriginCross(float size)
 {
 	glBegin(GL_LINES);
@@ -112,6 +169,16 @@ namespace VermillionRenderer {
 	float diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f };
 	float specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glm::vec4 lightDirection = glm::vec4(0.355336f, 0.906561, -0.227779, 0.0);
+}
+
+void Render::WireFrame()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+}
+
+void Render::Fill()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void Render::EnableLight()

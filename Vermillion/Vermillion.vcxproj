@@ -25,6 +25,7 @@
     <ClInclude Include="source\file.h" />
     <ClInclude Include="source\input.h" />
     <ClInclude Include="source\inputstate.h" />
+    <ClInclude Include="source\keycodes.h" />
     <ClInclude Include="source\log.h" />
     <ClInclude Include="source\opengl2.h" />
     <ClInclude Include="source\opengl2_shader.h" />

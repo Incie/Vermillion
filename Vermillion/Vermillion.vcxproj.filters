@@ -91,6 +91,9 @@
     <ClInclude Include="source\file.h">
       <Filter>Source Files\file</Filter>
     </ClInclude>
+    <ClInclude Include="source\keycodes.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\input.cpp">
