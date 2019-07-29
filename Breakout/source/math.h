@@ -11,6 +11,9 @@ public:
 
 	std::pair<bool, float> Collide(const glm::vec2& position, const glm::vec2& velocity, float radius);
 
+	std::pair<bool, float> CollidePoint(const glm::vec2& position, const glm::vec2& velocity, float radius, const glm::vec2& point);
+
+	glm::vec2 Normal() { return planeNormal; }
 private:
 	glm::vec2 point0;
 	glm::vec2 point1;

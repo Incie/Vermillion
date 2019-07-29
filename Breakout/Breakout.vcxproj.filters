@@ -19,12 +19,18 @@
     <ClCompile Include="source\math.cpp">
       <Filter>Source Files\Breakout</Filter>
     </ClCompile>
+    <ClCompile Include="source\brick.cpp">
+      <Filter>Source Files\Breakout</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\breakout.h">
       <Filter>Source Files\Breakout</Filter>
     </ClInclude>
     <ClInclude Include="source\math.h">
+      <Filter>Source Files\Breakout</Filter>
+    </ClInclude>
+    <ClInclude Include="source\brick.h">
       <Filter>Source Files\Breakout</Filter>
     </ClInclude>
   </ItemGroup>

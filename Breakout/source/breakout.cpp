@@ -33,6 +33,9 @@ glm::vec2 startPoint{0,0};
 glm::vec2 sphereCollisionPoint;
 std::pair<bool, float> PlaneCollision;
 
+#include"brick.h"
+std::vector<Brick> bricks;
+
 void BreakoutGame::Initialize()
 {
 	paddlePosition = glm::vec2(100, 100);
@@ -42,7 +45,15 @@ void BreakoutGame::Initialize()
 	ballDirection = glm::normalize(glm::vec2{50,50});
 	ballSpeed = 250.0f;
 
-	plane = Plane(line0, line1);
+	auto startPosition = glm::vec2{100,100};
+	auto brickSize = glm::vec2{100, 25};
+
+	for( int y = 0; y < 5; ++y ){
+		for( int i = 0; i < 13; ++i ){
+			auto position = glm::vec2{static_cast<float>(i) * (brickSize.x + 10), static_cast<float>(y) * (brickSize.y + 5)  };
+			bricks.emplace_back(std::move(Brick(startPosition + position + brickSize*0.5f, brickSize)));
+		}
+	}
 }
 
 void BreakoutGame::Deinitialize()
@@ -65,25 +76,40 @@ void BreakoutGame::Update(float delta)
 
 	paddlePosition.x = mousePosition.x - paddleSize.x * 0.5f;
 
-	ballPosition += ballDirection * ballSpeed * delta;
+
+	auto velocity = ballDirection * ballSpeed * delta;
 	
+	bool collision = false;
+	float fraction = 1.0f;
+	glm::vec2 normal{1,0};
+	Brick* collisionBrick = nullptr;
+	for( auto& brick : bricks ){
+		if( !brick.Active() )
+			continue;
+
+		auto [c, f, n] = brick.Collide(ballPosition, velocity, 15);
+
+		if( c && f < fraction ){
+			collision = true;
+			fraction = f;
+			normal = n;
+			collisionBrick = &brick;
+		}
+	}
+
+	if( collision ){
+		auto reflectedVelocity = velocity - 2 * glm::dot(normal, velocity) * normal;
+		ballDirection = glm::normalize(reflectedVelocity);
+		ballPosition = ballPosition + velocity * fraction;
+		collisionBrick->Deactivate();
+	}
+	else 
+		ballPosition += ballDirection * ballSpeed * delta;
+
 	if( ballPosition.x > windowSize.x || ballPosition.x < 0.0f )
 		ballDirection.x *= -1;
 	if( ballPosition.y > windowSize.y || ballPosition.y < 0.0f )
 		ballDirection.y *= -1;
-
-
-	collisionPointRectangle = {
-		std::fmax(collisionShapePosition.x - collisionShapeSize.x*0.5f, std::fmin(collisionShapePosition.x + collisionShapeSize.x*0.5f, mousePosition.x)),
-		std::fmax(collisionShapePosition.y - collisionShapeSize.y*0.5f, std::fmin(collisionShapePosition.y + collisionShapeSize.y*0.5f, mousePosition.y))
-	};
-
-	auto collisionDelta = mousePosition - collisionPointRectangle;
-
-	collided = (glm::dot(collisionDelta,collisionDelta) < 15 * 15);
-		
-
-	collisionPointSphere = collisionPointRectangle + glm::normalize(mousePosition - collisionPointRectangle) * (glm::distance(mousePosition, collisionPointRectangle) - 15.0f);
 }
 
 void BreakoutGame::Render()
@@ -91,29 +117,12 @@ void BreakoutGame::Render()
 	Render::NoLight();
 	Render::WireFrame();
 
-	Render::Quad(ballPosition, glm::vec2{15,15}, Colors::White);
+	Render::Circle(ballPosition, 15, Colors::White);
 	Render::Quad(paddlePosition, paddleSize, Colors::Red);
 	
-	auto color = Colors::Green;
-	if( collided ) color = Colors::Red;
-
-	Render::Rectangle(collisionShapePosition, collisionShapeSize, color);
-	Render::Circle(mousePosition, 15, color);
-
-
-
-	if( Services().Input().KeyDown(VKey_SPACE) )
-		startPoint = mousePosition;
-
-	PlaneCollision = plane.Collide(startPoint, mousePosition - startPoint, 25.0f);
-	sphereCollisionPoint = startPoint + (mousePosition-startPoint) * PlaneCollision.second;
-
-
-
-	Render::Line(line0, line1, Colors::Green);
-	Render::Line(startPoint, mousePosition, PlaneCollision.first ? Colors::Red : Colors::Blue );
-
-	Render::Circle(sphereCollisionPoint, 25, Colors::White);
+	for( const auto& brick : bricks ){
+		brick.Render();
+	}
 
 	if( Services().Input().KeyDown(VKey_F1) ){
 		Render::Line(collisionPointRectangle, collisionPointSphere, Colors::Green);

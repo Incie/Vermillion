@@ -97,6 +97,24 @@ void Render::Quad(float x, float y, float w, float h, const glm::vec3& color)
 	glPopMatrix();
 }
 
+void Render::Rectangle(const glm::vec2& p0, const glm::vec2& p1, const glm::vec2& p2, const glm::vec2& p3, const glm::vec3& color)
+{
+	glPushMatrix();
+		glDisable(GL_TEXTURE_2D);
+
+		glColor3fv(&color.x);
+		glBegin(GL_QUADS);
+			glVertex2fv(&p0.x);
+			glVertex2fv(&p1.x);
+			glVertex2fv(&p2.x);
+			glVertex2fv(&p3.x);
+		glEnd();
+
+		glColor3f(1, 1, 1);
+		glEnable(GL_TEXTURE_2D);
+	glPopMatrix();
+}
+
 void Render::Rectangle(const glm::vec2& position, const glm::vec2& size, const glm::vec3& color)
 {
 	glPushMatrix();
