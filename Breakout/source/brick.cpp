@@ -24,12 +24,12 @@ std::tuple<bool, float, glm::vec2> Brick::Collide(const glm::vec2& position, con
 	glm::vec2 normal{0,0};
 
 	for( auto& plane : planes ){
-		auto [collided, planeFraction] = plane.Collide(position, velocity, radius);
+		auto [collided, planeFraction, planeNormal] = plane.Collide(position, velocity, radius);
 
 		if( collided && planeFraction < fraction ){
 				collision = true;
 				fraction = planeFraction;
-				normal = plane.Normal();
+				normal = planeNormal;
 		}
 	}
 

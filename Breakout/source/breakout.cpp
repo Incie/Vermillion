@@ -12,29 +12,26 @@ glm::vec2 paddlePosition;
 glm::vec2 paddleSize;
 
 
-glm::vec2 collisionShapePosition{300,300};
-glm::vec2 collisionShapeSize{100,25};
-
-glm::vec2 mousePosition;
-
-bool collided = false;
-
-glm::vec2 collisionPointRectangle;
-glm::vec2 collisionPointSphere;
-
-glm::vec2 windowSize;
-
-
-Plane plane;
-glm::vec2 line0 {100,200};
-glm::vec2 line1 {700,200};
-
-glm::vec2 startPoint{0,0};
-glm::vec2 sphereCollisionPoint;
-std::pair<bool, float> PlaneCollision;
-
 #include"brick.h"
+#include"paddle.h"
+
+Brick collisionBrick{glm::vec2{250,600}, glm::vec2{100,25}};
+
+glm::vec2 p0{0,0};
+glm::vec2 p1{1000,1000};
+
+glm::vec2 collisionPoint;
+glm::vec2 reflectionLine;
+
+
+bool bAttached = true;
+glm::vec2 attachedAt{0, 30.0f};
 std::vector<Brick> bricks;
+Paddle paddle{glm::vec2{0,0}, glm::vec2{100, 20}};
+
+
+glm::vec2 windowSize{1,1};
+glm::vec2 mousePosition{1,1};
 
 void BreakoutGame::Initialize()
 {
@@ -74,42 +71,93 @@ void BreakoutGame::Update(float delta)
 	::mousePosition = mousePosition;
 
 
-	paddlePosition.x = mousePosition.x - paddleSize.x * 0.5f;
+	auto& input = Services().Input();
+	if( input.KeyDown(VKey_LBUTTON) ) p0 = mousePosition;
+	if( input.KeyDown(VKey_RBUTTON) ) p1 = mousePosition;
 
 
-	auto velocity = ballDirection * ballSpeed * delta;
-	
-	bool collision = false;
-	float fraction = 1.0f;
-	glm::vec2 normal{1,0};
-	Brick* collisionBrick = nullptr;
-	for( auto& brick : bricks ){
-		if( !brick.Active() )
-			continue;
+	paddlePosition.x = mousePosition.x;
+	paddle.SetCenterPosition(paddlePosition);
 
-		auto [c, f, n] = brick.Collide(ballPosition, velocity, 15);
+	if( bAttached ){
+		ballPosition = paddle.Position() - attachedAt;
 
-		if( c && f < fraction ){
-			collision = true;
-			fraction = f;
-			normal = n;
-			collisionBrick = &brick;
+		if( input.KeyOnce(VKey_SPACE) ){
+			bAttached = false;
+			ballDirection = glm::normalize(glm::vec2{0.2f,1.0f});
 		}
-	}
+	} else {
 
-	if( collision ){
-		auto reflectedVelocity = velocity - 2 * glm::dot(normal, velocity) * normal;
-		ballDirection = glm::normalize(reflectedVelocity);
-		ballPosition = ballPosition + velocity * fraction;
-		collisionBrick->Deactivate();
-	}
-	else 
-		ballPosition += ballDirection * ballSpeed * delta;
+		auto [col, frac, norm] = collisionBrick.Collide(p0, p1-p0, 15);
 
-	if( ballPosition.x > windowSize.x || ballPosition.x < 0.0f )
-		ballDirection.x *= -1;
-	if( ballPosition.y > windowSize.y || ballPosition.y < 0.0f )
-		ballDirection.y *= -1;
+		if( col ){
+			collisionPoint = p0 + (p1-p0) * frac;
+
+			auto reflectedVelocity = (p1-p0) - 2 * glm::dot(norm, (p1-p0)) * norm;
+			reflectionLine = reflectedVelocity * 100.0f;
+		} else {
+			collisionPoint = p1;
+			reflectionLine = {0,0};
+		}
+
+		auto velocity = ballDirection * ballSpeed * delta;
+	
+		bool collision = false;
+		float fraction = 1.0f;
+		glm::vec2 normal{1,0};
+		Brick* collisionBrick = nullptr;
+		for( auto& brick : bricks ){
+			if( !brick.Active() )
+				continue;
+
+			auto [c, f, n] = brick.Collide(ballPosition, velocity, 15);
+
+			if( c && f < fraction ){
+				collision = true;
+				fraction = f;
+				normal = n;
+				collisionBrick = &brick;
+			}
+		}
+
+		auto [paddleCollide, paddleFraction, paddleNormal] = paddle.Collide(ballPosition, velocity, 15);
+
+		if( paddleCollide && paddleFraction < fraction )
+		{
+			collision = true;
+			fraction = paddleFraction;
+			normal = paddleNormal;
+			collisionBrick = nullptr;
+		}
+
+		if( collision )
+		{
+			auto reflectedVelocity = velocity - 2 * glm::dot(normal, velocity) * normal;
+			ballDirection = glm::normalize(reflectedVelocity);
+			ballPosition = ballPosition + velocity * fraction;
+
+			if( collisionBrick != nullptr )
+				collisionBrick->Deactivate();
+			else {
+				auto paddleCollision = ballPosition - paddle.Position();
+				paddleCollision.y = paddle.Position().y + 100 * normal.y;
+
+				auto paddleReflection = glm::normalize(paddleCollision - paddle.Position());
+				ballDirection = paddleReflection;
+
+			}
+
+
+			ballSpeed += 15.0f;
+		}
+		else 
+			ballPosition += ballDirection * ballSpeed * delta;
+
+		if( ballPosition.x > windowSize.x || ballPosition.x < 0.0f )
+			ballDirection.x *= -1;
+		if( ballPosition.y > windowSize.y || ballPosition.y < 0.0f )
+			ballDirection.y *= -1;
+	}
 }
 
 void BreakoutGame::Render()
@@ -118,17 +166,17 @@ void BreakoutGame::Render()
 	Render::WireFrame();
 
 	Render::Circle(ballPosition, 15, Colors::White);
-	Render::Quad(paddlePosition, paddleSize, Colors::Red);
+	paddle.Render();
 	
 	for( const auto& brick : bricks ){
 		brick.Render();
 	}
 
-	if( Services().Input().KeyDown(VKey_F1) ){
-		Render::Line(collisionPointRectangle, collisionPointSphere, Colors::Green);
-		Render::Circle(collisionPointRectangle, 5, Colors::White);
-		Render::Circle(collisionPointSphere, 5, Colors::White);
-	}
+
+	Render::Line(p0, p1, Colors::Red);
+	Render::Line(collisionPoint, collisionPoint + reflectionLine, Colors::Green);
+	Render::Circle(collisionPoint, 15, Colors::Blue);
+	collisionBrick.Render();
 
 	Render::Fill();
 }

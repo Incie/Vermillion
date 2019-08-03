@@ -132,11 +132,13 @@
     <ClCompile Include="source\brick.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\math.cpp" />
+    <ClCompile Include="source\paddle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\breakout.h" />
     <ClInclude Include="source\brick.h" />
     <ClInclude Include="source\math.h" />
+    <ClInclude Include="source\paddle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -22,6 +22,9 @@
     <ClCompile Include="source\brick.cpp">
       <Filter>Source Files\Breakout</Filter>
     </ClCompile>
+    <ClCompile Include="source\paddle.cpp">
+      <Filter>Source Files\Breakout</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\breakout.h">
@@ -31,6 +34,9 @@
       <Filter>Source Files\Breakout</Filter>
     </ClInclude>
     <ClInclude Include="source\brick.h">
+      <Filter>Source Files\Breakout</Filter>
+    </ClInclude>
+    <ClInclude Include="source\paddle.h">
       <Filter>Source Files\Breakout</Filter>
     </ClInclude>
   </ItemGroup>
