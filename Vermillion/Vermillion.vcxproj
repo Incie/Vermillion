@@ -147,7 +147,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>source/pch/;$(VCPKG_64)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>source/pch/;$(VCPKG_64_STATIC)\include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -156,8 +156,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(VCPKG_64)\debug\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;xinput.lib;fmtd.lib;libpng16d.lib;freetyped.lib;glew32d.lib;zlibd.lib;bz2d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VCPKG_64_STATIC)\debug\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

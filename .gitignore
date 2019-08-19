@@ -19,5 +19,6 @@ version.h
 /Breakout/shaders
 /Breakout/levels
 /Breakout/fonts
+/Builds/
 
 log.txt

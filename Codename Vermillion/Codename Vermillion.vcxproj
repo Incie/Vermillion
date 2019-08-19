@@ -306,7 +306,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugStatic|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Build_Static\</OutDir>
+    <OutDir>$(SolutionDir)Builds\Gloomhaven</OutDir>
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
     <TargetName>Gloomhaven_d</TargetName>
   </PropertyGroup>
