@@ -2,9 +2,9 @@
 
 #include"activity.h"
 
-class BreakoutGame : public Activity {
+class GloomhavenGame : public Activity {
 public:
-	BreakoutGame() = default;
+	GloomhavenGame() = default;
 
 	virtual void Initialize() override;
 	virtual void Deinitialize() override;
