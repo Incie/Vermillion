@@ -76,8 +76,11 @@ Texture* Icons::Get(const std::string& name)
 	if(it == icons.end())
 		return nullptr;
 
+	static Texture texture; //ugly ugly hack, plz fix
 	auto pair = *it;
-	return &pair.second;
+	texture = it->second;
+
+	return &texture;
 }
 
 Texture* Icons::GetPlayerCard()
