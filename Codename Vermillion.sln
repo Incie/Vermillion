@@ -8,8 +8,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vermillion", "Vermillion\Vermillion.vcxproj", "{B28C12F8-A118-4B18-8004-6175B11437B1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Breakout", "Breakout\Breakout.vcxproj", "{F6B2BA9E-7445-4C67-BF57-655B2213B21A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B28C12F8-A118-4B18-8004-6175B11437B1} = {B28C12F8-A118-4B18-8004-6175B11437B1}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gloomhaven", "Gloomhaven\Gloomhaven.vcxproj", "{5D32DEBA-CBA4-41ED-ADF8-31012AA555E2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B28C12F8-A118-4B18-8004-6175B11437B1} = {B28C12F8-A118-4B18-8004-6175B11437B1}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
