@@ -20,60 +20,42 @@
     <Filter Include="Source Files\file">
       <UniqueIdentifier>{8bc6c48f-0c41-4815-a1fc-39bd09a1ba27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\textures">
+      <UniqueIdentifier>{117422a6-f5f0-42dd-9391-2403714823e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\timer">
+      <UniqueIdentifier>{1ebaa1ff-7eee-42f0-ba44-ffc73b37c342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{942b089a-e9ae-4926-8600-97641e7cced0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\window">
+      <UniqueIdentifier>{47c60088-75b4-47ec-a8a5-c665d6b76514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\service">
+      <UniqueIdentifier>{727e8f62-3bc1-477d-b893-2107216ae8b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\opengl">
+      <UniqueIdentifier>{423b08a6-b608-45c9-adc7-6839265fc9ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\render">
+      <UniqueIdentifier>{ee34eaf7-9c24-4d0a-b823-9d530167e0f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\input">
+      <UniqueIdentifier>{38a02bfb-d6e8-439b-8b20-ec3c362af56a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\text">
+      <UniqueIdentifier>{d49c61fb-48f1-4dfe-ae63-80803c1bc56b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\log">
+      <UniqueIdentifier>{ece66bff-6bf3-4652-825f-1d32de64c274}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\input.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\inputstate.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\log.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\opengl2.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\opengl2_shader.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\render.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\servicelocator.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\services.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\text.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\textures.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\textures_pngloader.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\timer.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\uilayer.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\uiview.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\vermillion.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="source\version.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\window.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\windowstate.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="source\pch\pch.h">
@@ -91,75 +73,60 @@
     <ClInclude Include="source\file.h">
       <Filter>Source Files\file</Filter>
     </ClInclude>
+    <ClInclude Include="source\textures.h">
+      <Filter>Source Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="source\textures_pngloader.h">
+      <Filter>Source Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="source\timer.h">
+      <Filter>Source Files\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\uilayer.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\uiview.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windowstate.h">
+      <Filter>Source Files\window</Filter>
+    </ClInclude>
+    <ClInclude Include="source\window.h">
+      <Filter>Source Files\window</Filter>
+    </ClInclude>
+    <ClInclude Include="source\servicelocator.h">
+      <Filter>Source Files\service</Filter>
+    </ClInclude>
+    <ClInclude Include="source\services.h">
+      <Filter>Source Files\service</Filter>
+    </ClInclude>
+    <ClInclude Include="source\opengl2.h">
+      <Filter>Source Files\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="source\opengl2_shader.h">
+      <Filter>Source Files\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="source\render.h">
+      <Filter>Source Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="source\inputstate.h">
+      <Filter>Source Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input.h">
+      <Filter>Source Files\input</Filter>
+    </ClInclude>
     <ClInclude Include="source\keycodes.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\log.h">
+      <Filter>Source Files\log</Filter>
+    </ClInclude>
+    <ClInclude Include="source\text.h">
+      <Filter>Source Files\text</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\input_getters.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\inputstate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\opengl2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\opengl2_shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\render.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\servicelocator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\text.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\textures.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\textures_pngloader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\uibutton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\uielement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\uiimage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\uilayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\uitext.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\vermillion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\windowclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\windowprocedure.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\windowstate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\pch\pch.cpp">
@@ -173,6 +140,69 @@
     </ClCompile>
     <ClCompile Include="source\file.cpp">
       <Filter>Source Files\file</Filter>
+    </ClCompile>
+    <ClCompile Include="source\textures.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="source\textures_pngloader.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="source\timer.cpp">
+      <Filter>Source Files\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\uibutton.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\uielement.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\uiimage.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\uilayer.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\uitext.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\window.cpp">
+      <Filter>Source Files\window</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windowclass.cpp">
+      <Filter>Source Files\window</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windowprocedure.cpp">
+      <Filter>Source Files\window</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windowstate.cpp">
+      <Filter>Source Files\window</Filter>
+    </ClCompile>
+    <ClCompile Include="source\servicelocator.cpp">
+      <Filter>Source Files\service</Filter>
+    </ClCompile>
+    <ClCompile Include="source\opengl2.cpp">
+      <Filter>Source Files\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="source\opengl2_shader.cpp">
+      <Filter>Source Files\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="source\render.cpp">
+      <Filter>Source Files\render</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input.cpp">
+      <Filter>Source Files\input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input_getters.cpp">
+      <Filter>Source Files\input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\inputstate.cpp">
+      <Filter>Source Files\input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\log.cpp">
+      <Filter>Source Files\log</Filter>
+    </ClCompile>
+    <ClCompile Include="source\text.cpp">
+      <Filter>Source Files\text</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
