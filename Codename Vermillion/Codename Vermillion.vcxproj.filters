@@ -543,6 +543,12 @@
     <None Include="..\versiongenerator.ps1">
       <Filter>Documentation</Filter>
     </None>
+    <None Include="..\Builds\Gloomhaven\shaders\msdf_shader.frag">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="..\Builds\Gloomhaven\shaders\msdf_shader.vert">
+      <Filter>Shader Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="libraries.txt">

@@ -187,6 +187,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
+    <None Include="..\Builds\Gloomhaven\shaders\msdf_shader.frag" />
+    <None Include="..\Builds\Gloomhaven\shaders\msdf_shader.vert" />
     <None Include="..\versiongenerator.ps1">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">true</ExcludedFromBuild>

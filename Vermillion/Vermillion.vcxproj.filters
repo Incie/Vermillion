@@ -204,5 +204,8 @@
     <ClCompile Include="source\text.cpp">
       <Filter>Source Files\text</Filter>
     </ClCompile>
+    <ClCompile Include="source\text_sdf.cpp">
+      <Filter>Source Files\text</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

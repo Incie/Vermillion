@@ -26,7 +26,7 @@ private:
 	GL2Renderer renderer;
 	InputManager inputManager;
 
-	Text text;
+	TextSDF text;
 	TextureManager textureManager;
 	ServiceLocator serviceLocator;
 	Timer renderTimer;

@@ -250,3 +250,4 @@ void RenderFaceToTextures(FT_Face &face)
 	glDisable(GL_TEXTURE_2D);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, previousUnpackAlignment);
 }
+
