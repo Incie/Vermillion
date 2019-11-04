@@ -6,6 +6,7 @@
 
 
 GLSLShader::GLSLShader()
+	: shaderId(0), shaderType(SHADER_NOT_INITIALIZED)
 {
 }
 
@@ -15,6 +16,8 @@ GLSLShader::~GLSLShader()
 
 bool GLSLShader::Load(const std::string & shaderFilePath)
 {
+	Log::Info("GLSLShader", fmt::format("Loading Shader {0}", shaderFilePath) );
+
 	if (shaderFilePath.find(".vert") != std::string::npos ) {
 		shaderId = glCreateShader(GL_VERTEX_SHADER);
 	}
@@ -24,6 +27,7 @@ bool GLSLShader::Load(const std::string & shaderFilePath)
 	else {
 		Log::Error("GLSLShader", "Shadertype not supported");
 		Log::Error("GLSLShader", shaderFilePath);
+		return false;
 	}
 
 	const auto shaderContent = FileReader::ReadFileContent(shaderFilePath);
@@ -46,14 +50,26 @@ bool GLSLProgram::LoadProgram(const std::string & shader)
 {
 	programId = glCreateProgram();
 
-	vertex.Load( fmt::format("{0}{1}", shader, ".vert") );
-	fragment.Load(fmt::format("{0}{1}", shader, ".frag"));
+	if (!vertex.Load(fmt::format("{0}{1}", shader, ".vert"))) {
+		Log::Error("GLSLProgram", fmt::format("Failed to load vertex shader {0}", shader).c_str() );
+		UnloadProgram();
+		return false;
+	}
+
+
+	if (!fragment.Load(fmt::format("{0}{1}", shader, ".frag"))) {
+		Log::Error("GLSLProgram", fmt::format("Failed to load fragment shader {0}", shader).c_str());
+		UnloadProgram();
+		return false;
+	}
 
 	glAttachShader(programId, vertex.shaderId);
 	glAttachShader(programId, fragment.shaderId);
 
 	glLinkProgram(programId);
-	glUseProgram(programId);	
+	glUseProgram(programId);
+
+	NoProgram();
 
 	return true;
 }

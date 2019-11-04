@@ -304,13 +304,13 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Build\</OutDir>
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
-    <TargetName>Gloomhaven_d_dll</TargetName>
+    <TargetName>CodeNameGloomhaven_d_dll</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugStatic|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Builds\Gloomhaven</OutDir>
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
-    <TargetName>Gloomhaven_d</TargetName>
+    <TargetName>CodenameGloomhaven_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -321,12 +321,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <TargetName>Gloomhaven_dll</TargetName>
+    <TargetName>CodeNameGloomhaven_dll</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Build_Static\</OutDir>
-    <TargetName>Gloomhaven</TargetName>
+    <TargetName>CodeNameGloomhaven</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

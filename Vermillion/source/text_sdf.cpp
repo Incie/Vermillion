@@ -80,7 +80,7 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 	sdfProgram.SetUniform("tex", 0);
 	sdfProgram.SetUniform("color", glm::vec4(color, 1.0f));
 
-	double scale = (double)fontHeight / (double)font_height;
+	float scale = (float)fontHeight / font_height;
 
 
 	glColor4f(1, 1, 1, 1);
@@ -88,7 +88,7 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glPushMatrix();
-	glTranslated(x, y, 0);
+	glTranslatef(x, y, 0);
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -107,7 +107,7 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 	{
 		const sdf_character &ch = sdfMap[*c];
 
-		float chx = x + static_cast<float>(ch.xoffset)* scale;
+		float chx = x + static_cast<float>(ch.xoffset) * scale;
 		float chy = static_cast<float>(ch.yoffset)*scale;
 		float chw = ch.width * scale;
 		float chh = ch.height * scale;
@@ -132,7 +132,7 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 		glTexCoordPointer(2, GL_FLOAT, 0, &texCoords[0].x);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
-		x += ch.xadvance * scale;
+		x += static_cast<float>(ch.xadvance) * scale;
 	}
 
 	glPopMatrix();
