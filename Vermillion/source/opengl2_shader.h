@@ -27,6 +27,8 @@ public:
 class GLSLProgram
 {
 public:
+	GLSLProgram();
+	~GLSLProgram();
 
 	bool LoadProgram(const std::string& shader);
 	void UnloadProgram();

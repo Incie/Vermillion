@@ -117,5 +117,3 @@ void Camera2D::UpdateCameraPosition()
 	positionTopLeft = center - halfScaledViewport;
 	positionBottomRight = center + halfScaledViewport;
 }
-
-

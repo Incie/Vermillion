@@ -81,7 +81,6 @@ void Vermillion::InitializeEngine()
 
 	window.Show();
 
-	//text.Init();
 	text.Init(textureManager);
 
 	renderTimer.LimitByMilliseconds(20);

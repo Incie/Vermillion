@@ -88,7 +88,7 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glPushMatrix();
-	glTranslatef(x, y, 0);
+	glTranslated(x, y, 0);
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);

@@ -6,7 +6,7 @@
 
 
 GLSLShader::GLSLShader()
-	: shaderId(0), shaderType(SHADER_NOT_INITIALIZED)
+	: shaderId(0), shaderType(ShaderType::SHADER_NOT_INITIALIZED)
 {
 }
 
@@ -44,6 +44,15 @@ void GLSLShader::Unload()
 	if( shaderId != 0 )
 		glDeleteShader(shaderId);
 	shaderId = 0;
+}
+
+GLSLProgram::GLSLProgram()
+	: programId(0)
+{
+}
+
+GLSLProgram::~GLSLProgram()
+{
 }
 
 bool GLSLProgram::LoadProgram(const std::string & shader)

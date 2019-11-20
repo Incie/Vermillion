@@ -45,6 +45,7 @@
     <ClInclude Include="source\windowstate.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\activity.cpp" />
     <ClCompile Include="source\camera2d.cpp" />
     <ClCompile Include="source\constants.cpp" />
     <ClCompile Include="source\file.cpp" />

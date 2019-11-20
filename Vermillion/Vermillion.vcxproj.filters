@@ -207,5 +207,8 @@
     <ClCompile Include="source\text_sdf.cpp">
       <Filter>Source Files\text</Filter>
     </ClCompile>
+    <ClCompile Include="source\activity.cpp">
+      <Filter>Source Files\activity</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
