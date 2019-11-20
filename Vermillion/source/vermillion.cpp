@@ -68,7 +68,7 @@ void Vermillion::Run()
 void Vermillion::InitializeEngine()
 {
 	Log::Info("", "");
-	Log::Info("Application", "Starting...");
+	Log::Info("Vermillion", "Engine initializing");
 
 	FrameworkPointers::window = &window;
 	FrameworkPointers::renderer = &renderer;
@@ -91,16 +91,19 @@ void Vermillion::InitializeEngine()
 	serviceAssigner.SetTextService(text);
 	serviceAssigner.SetTextureService(textureManager);
 	serviceAssigner.SetInputService(inputManager);
+
+	Log::Info("Vermillion", "Engine initialized");
 }
 
 void Vermillion::DeinitializeEngine()
 {
-	Log::Info("Application", "Shutting down");
+	Log::Info("Vermillion", "Shutting down");
 
 	if(runningActivity != nullptr)
 	{
 		runningActivity->Deinitialize();
 		delete runningActivity;
+		runningActivity = nullptr;
 	}
 	
 	text.Deinit();
@@ -108,4 +111,6 @@ void Vermillion::DeinitializeEngine()
 
 	renderer.DestroyRenderContext();
 	window.Destroy();
+
+	Log::Info("Vermillion", "Shut down");
 }
