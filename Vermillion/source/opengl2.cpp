@@ -5,6 +5,27 @@
 #include<gl/glu.h>
 #include"log.h"
 
+void CheckOpenGLErrors(const char* statement, const char* sourceFileName, int lineNumber)
+{
+	GLenum errorCode = 0;
+	while ((errorCode = glGetError()) != GL_NO_ERROR) {
+		const char* errorEnum = nullptr;
+		switch (errorCode) {
+			case GL_INVALID_ENUM: errorEnum = "GL_INVALID_ENUM"; break;
+			case GL_INVALID_VALUE: errorEnum = "GL_INVALID_VALUE"; break;
+			case GL_INVALID_OPERATION: errorEnum = "GL_INVALID_OPERATION"; break;
+			case GL_INVALID_FRAMEBUFFER_OPERATION: errorEnum = "GL_INVALID_FRAMEBUFFER_OPERATION"; break;
+			case GL_OUT_OF_MEMORY: errorEnum = "GL_OUT_OF_MEMORY"; break;
+			case GL_STACK_UNDERFLOW: errorEnum = "GL_STACK_UNDERFLOW"; break;
+			case GL_STACK_OVERFLOW: errorEnum = "GL_STACK_OVERFLOW"; break;
+			default: errorEnum = "unknown errorCode"; break;
+		}
+
+
+		Log::Error("GLError", fmt::format("OpenGL Error Code {}({}) [{}, {}, {}]", errorCode, statement, sourceFileName, lineNumber));
+	}
+}
+
 GL2Renderer::GL2Renderer()
 {
 	hWnd = nullptr;
@@ -20,6 +41,8 @@ void GL2Renderer::SetHandles(HWND hWnd)
 
 void GL2Renderer::CreateRenderContext()
 {
+	Log::Info("OpenGL2", "Creating renderingcontext");
+
 	PIXELFORMATDESCRIPTOR pfd;
 	memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
 	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
@@ -57,18 +80,21 @@ void GL2Renderer::CreateRenderContext()
 	if (glewInitResult != GLEW_OK) {
 		Log::Error("OpenGL2", fmt::format("GL Extension Wrangler failed to initialize with code: {0}", glewInitResult) );
 	}
+
+	Log::Info("OpenGL2", "Rendercontext created");
 }
 
 void GL2Renderer::DestroyRenderContext()
 {
+	Log::Info("OpenGL2", fmt::format("DestroyRenderContext {}", __FUNCTION__));
 	wglMakeCurrent(NULL, NULL);
 
-	if(hRC != nullptr) {
+	if (hRC != nullptr) {
 		Log::Info("OpenGL2", "Deleting Rendering Context");
 		wglDeleteContext(hRC);
 	}
 
-	if(hDC != nullptr) {
+	if (hDC != nullptr) {
 		Log::Info("OpenGL2", "Releasing DC");
 		ReleaseDC(hWnd, hDC);
 		hWnd = nullptr;
@@ -96,12 +122,12 @@ void GL2Renderer::SetViewport(int width, int height)
 
 void GL2Renderer::StartFrame()
 {
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
+	GLCHECK(glClearColor(0, 0, 0, 0))
+	GLCHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
+	GLCHECK(glLoadIdentity())
 }
 
 void GL2Renderer::EndFrame()
 {
-	SwapBuffers(hDC);
+	GLCHECK(SwapBuffers(hDC))
 }

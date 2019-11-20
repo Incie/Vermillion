@@ -36,7 +36,7 @@ bool GLSLShader::Load(const std::string & shaderFilePath)
 	glShaderSource(shaderId, 1, &charContent, &shaderContentLength);
 	glCompileShader(shaderId);
 
-	return false;
+	return true;
 }
 
 void GLSLShader::Unload()

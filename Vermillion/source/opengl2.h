@@ -20,10 +20,7 @@ public:
 	void StartFrame();
 	void EndFrame();
 
-
 private:
-
-	//Todo: try to extract these to a class to remove Windows.h include?
 	HWND hWnd;
 	HDC hDC;
 	HGLRC hRC;
