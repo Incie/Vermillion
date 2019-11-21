@@ -7,9 +7,12 @@
 
 #include<chrono>
 
+#define LogTag "Vermillion"
+
 Vermillion::Vermillion(Activity* activity, HINSTANCE hInstance)
 	: runningActivity(activity), hInstance(hInstance)
 {
+	TRACE(LogTag)
 	InitializeEngine();
 	
 	runningActivity->SetServiceLocator(serviceLocator);
@@ -18,12 +21,15 @@ Vermillion::Vermillion(Activity* activity, HINSTANCE hInstance)
 
 Vermillion::~Vermillion()
 {
+	TRACE(LogTag)
 	DeinitializeEngine();
 }
 
 
 void Vermillion::Run()
 {
+	TRACE(LogTag)
+
 	unsigned int fps = 0;
 	unsigned int fpsCounter = 0;
 
@@ -68,7 +74,7 @@ void Vermillion::Run()
 void Vermillion::InitializeEngine()
 {
 	Log::Info("", "");
-	Log::Info("Vermillion", "Engine initializing");
+	TRACE(LogTag)
 
 	FrameworkPointers::window = &window;
 	FrameworkPointers::renderer = &renderer;
@@ -96,7 +102,7 @@ void Vermillion::InitializeEngine()
 
 void Vermillion::DeinitializeEngine()
 {
-	Log::Info("Vermillion", "Shutting down");
+	TRACE(LogTag)
 
 	if(runningActivity != nullptr)
 	{

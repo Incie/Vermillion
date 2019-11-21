@@ -22,7 +22,7 @@ void WriteLog(const char* tag, const char* type, const std::string& text)
 {
 	std::ofstream logstream;
 	logstream.open("log.txt", std::ios::app);
-	logstream << logTime.TimeSinceInit() << "ms " << "[" << tag << "] [" << type << "]" << text << '\n';
+	logstream << logTime.TimeSinceInit() << "ms " << "[" << tag << "] [" << type << "] " << text << '\n';
 	logstream.close();
 }
 
