@@ -5,7 +5,7 @@
 #include<gl/glu.h>
 #include"log.h"
 
-void CheckOpenGLErrors(const char* statement, const char* sourceFileName, int lineNumber)
+void CheckOpenGLErrors(const char* statement, const char* sourceFilePath, int lineNumber)
 {
 	GLenum errorCode = 0;
 	while ((errorCode = glGetError()) != GL_NO_ERROR) {
@@ -20,9 +20,11 @@ void CheckOpenGLErrors(const char* statement, const char* sourceFileName, int li
 			case GL_STACK_OVERFLOW: errorEnum = "GL_STACK_OVERFLOW"; break;
 			default: errorEnum = "unknown errorCode"; break;
 		}
-
-
-		Log::Error("GLError", fmt::format("OpenGL Error Code {}({}) [{}, {}, {}]", errorCode, statement, sourceFileName, lineNumber));
+		
+		std::string filepath = sourceFilePath;
+		auto filename = filepath.substr( filepath.find_last_of("/\\") );
+		
+		Log::Error("GLError", fmt::format("OpenGL Error Code {}({}) [{}, {}, {}]", errorCode, statement, filename, lineNumber));
 	}
 }
 
@@ -82,6 +84,15 @@ void GL2Renderer::CreateRenderContext()
 	}
 
 	Log::Info("OpenGL2", "Rendercontext created");
+
+	auto vendor = GLCHECK(glGetString(GL_VENDOR));
+	auto renderer = GLCHECK(glGetString(GL_RENDERER));
+	auto version = GLCHECK(glGetString(GL_VERSION));
+	int versionMajor = 0, versionMinor = 0;
+	GLCHECK(glGetIntegerv(GL_MAJOR_VERSION, &versionMajor));
+	GLCHECK(glGetIntegerv(GL_MINOR_VERSION, &versionMinor));
+	Log::Info("OpenGL2", fmt::format("Vendor: {}, Renderer: {}, Version: {}, [{}.{}]", vendor, renderer, version, versionMajor, versionMinor));
+
 }
 
 void GL2Renderer::DestroyRenderContext()
@@ -110,14 +121,14 @@ void GL2Renderer::SetViewport(int width, int height)
 		return;
 	}
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+	GLCHECK(glMatrixMode(GL_PROJECTION))
+	GLCHECK(glLoadIdentity())
 
-	glViewport(0, 0, width, height);
-	glOrtho(0, width, height, 0, -100, 100);
+	GLCHECK(glViewport(0, 0, width, height))
+	GLCHECK(glOrtho(0, width, height, 0, -100, 100))
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	GLCHECK(glMatrixMode(GL_MODELVIEW))
+	GLCHECK(glLoadIdentity())
 }
 
 void GL2Renderer::StartFrame()

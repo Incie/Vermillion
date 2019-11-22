@@ -14,7 +14,7 @@ public:
 	unsigned char* data;
 };
 
-enum ImageLoaderStatus {
+enum class ImageLoaderStatus {
 	FILE_NOT_FOUND,
 	INVALID_IMAGE,
 	LOADER_SUCCESS,

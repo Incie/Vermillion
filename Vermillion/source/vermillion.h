@@ -27,7 +27,7 @@ private:
 	InputManager inputManager;
 
 	TextSDF text;
-	TextureManager textureManager;
+	TextureManagerGL textureManager;
 	ServiceLocator serviceLocator;
 	Timer renderTimer;
 	Timer fpsTimer;

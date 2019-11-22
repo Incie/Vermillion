@@ -79,8 +79,8 @@ void UIView::StartRender()
 	if (active == false)
 		return;
 
-	glPushMatrix();
-	glTranslatef(position.x, position.y, 0.0f);
+	GLCHECK(glPushMatrix());
+	GLCHECK(glTranslatef(position.x, position.y, 0.0f));
 }
 
 void UIView::Render(ServiceLocator & Services)
@@ -99,7 +99,7 @@ void UIView::EndRender()
 	if (active == false)
 		return;
 
-	glPopMatrix();
+	GLCHECK(glPopMatrix());
 }
 
 void UIView::OnEvent(WindowEvent type, int id)
@@ -115,8 +115,6 @@ void UIView::Resize(const TextService& text) {
 	const auto& windowSize = WindowState::Size();
 	Resize(glm::vec2((float)windowSize.x, (float)windowSize.y), text);
 }
-
-
 
 void UIView::SetAnchor(int newAnchor)
 {

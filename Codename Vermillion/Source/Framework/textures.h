@@ -5,11 +5,11 @@
 
 class ImageData;
 
-class TextureManager : public TextureService
+class TextureManagerGL : public TextureService
 {
 public:
-	TextureManager();
-	~TextureManager();
+	TextureManagerGL();
+	~TextureManagerGL();
 
 	Texture LoadTexture(const std::string& relativePath);
 	void UnloadAll();
