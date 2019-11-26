@@ -6,6 +6,7 @@
 
 std::string FileReader::ReadFileContent(const std::string & filepath)
 {
+	Log::Info("FileReader", fmt::format("Reading file: {}", filepath));
 	std::ifstream in(filepath, std::ios::in | std::ios::binary);
 	if (!in) 
 	{

@@ -4,7 +4,7 @@
 #include"glm/vec4.hpp"
 
 
-enum ShaderType {
+enum class ShaderType {
 	SHADER_VERTEX,
 	SHADER_FRAGMENT,
 	SHADER_GEOMETRY,

@@ -27,10 +27,6 @@ GLSLProgram sdfProgram;
 
 void TextSDF::Init(TextureService& textureService)
 {
-	//load png
-	//load json
-	//parse json
-
 	const std::string fontFile = "fonts/sdf/Roboto-Black.json";
 	std::string serializedJson = FileReader::ReadFileContent(fontFile);
 
@@ -57,10 +53,8 @@ void TextSDF::Init(TextureService& textureService)
 		sdfMap[sdfc.charvalue] = sdfc;
 	}
 
-
 	const std::string fontImage = "fonts/sdf/Roboto-Black_msdf.png";
 	fontTexture = textureService.LoadTexture(fontImage);
-
 
 	sdfProgram.LoadProgram("shaders/msdf_shader");
 }
@@ -83,15 +77,15 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 	float scale = (float)fontHeight / font_height;
 
 
-	glColor4f(1, 1, 1, 1);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	GLCHECK(glColor4f(1, 1, 1, 1));
+	GLCHECK(glEnable(GL_BLEND));
+	GLCHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-	glPushMatrix();
-	glTranslated(x, y, 0);
+	GLCHECK(glPushMatrix());
+	GLCHECK(glTranslated(x, y, 0));
 	
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	GLCHECK(glEnableClientState(GL_VERTEX_ARRAY));
+	GLCHECK(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
 
 	glm::vec2 texCoords[6];
 	glm::vec2 glyph[6];
@@ -99,15 +93,15 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 	x = 0;
 	y = 0;
 
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, fontTexture.textureId);
+	GLCHECK(glEnable(GL_TEXTURE_2D));
+	GLCHECK(glBindTexture(GL_TEXTURE_2D, fontTexture.textureId));
 
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
 	{
 		const sdf_character &ch = sdfMap[*c];
 
-		float chx = x + static_cast<float>(ch.xoffset) * scale;
+		float chx = static_cast<float>(x) + static_cast<float>(ch.xoffset) * scale;
 		float chy = static_cast<float>(ch.yoffset)*scale;
 		float chw = ch.width * scale;
 		float chh = ch.height * scale;
@@ -128,20 +122,20 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 		texCoords[4] = { static_cast<float>(ch.x + ch.width) / 512.0f, static_cast<float>(ch.y + ch.height) / 512.0f };
 		texCoords[5] = { static_cast<float>(ch.x) / 512.0f, static_cast<float>(ch.y + ch.height) / 512.0f };
 
-		glVertexPointer(2, GL_FLOAT, 0, &glyph[0].x);
-		glTexCoordPointer(2, GL_FLOAT, 0, &texCoords[0].x);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		GLCHECK(glVertexPointer(2, GL_FLOAT, 0, &glyph[0].x));
+		GLCHECK(glTexCoordPointer(2, GL_FLOAT, 0, &texCoords[0].x));
+		GLCHECK(glDrawArrays(GL_TRIANGLES, 0, 6));
 
-		x += static_cast<float>(ch.xadvance) * scale;
+		x += static_cast<double>(static_cast<float>(ch.xadvance) * scale);
 	}
 
-	glPopMatrix();
+	GLCHECK(glPopMatrix());
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	GLCHECK(glDisableClientState(GL_VERTEX_ARRAY));
+	GLCHECK(glDisableClientState(GL_TEXTURE_COORD_ARRAY));
 
-	glDisable(GL_BLEND);
-	glDisable(GL_TEXTURE_2D);
+	GLCHECK(glDisable(GL_BLEND));
+	GLCHECK(glDisable(GL_TEXTURE_2D));
 
 	sdfProgram.NoProgram();
 

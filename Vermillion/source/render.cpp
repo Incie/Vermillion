@@ -21,7 +21,7 @@ void Render::Quad(const glm::vec2& position, const glm::vec2& size, const Textur
 
 		glColor4f(color.x, color.y, color.z, 1.0f);
 		glBegin(GL_QUADS);
-			glTexCoord2f(0, 0); glVertex2f(0, 0);
+			glTexCoord2f(0, 0); glVertex2f(0     , 0);
 			glTexCoord2f(1, 0); glVertex2f(size.x, 0);
 			glTexCoord2f(1, 1); glVertex2f(size.x, size.y);
 			glTexCoord2f(0, 1); glVertex2f(0,	   size.y);
