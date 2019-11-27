@@ -1,6 +1,11 @@
 #include"pch.h"
 #include"activity.h"
 
+Activity::Activity()
+	: serviceLocator(nullptr)
+{
+}
+
 void Activity::Resize(const glm::ivec2& newWindowSize) {
 	for (auto view : layers)
 		view->Resize(newWindowSize, Services().Text());

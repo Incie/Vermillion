@@ -5,6 +5,8 @@
 #include<gl/glu.h>
 #include"log.h"
 
+
+
 void CheckOpenGLErrors(const char* statement, const char* sourceFilePath, int lineNumber)
 {
 	GLenum errorCode = 0;
@@ -20,15 +22,13 @@ void CheckOpenGLErrors(const char* statement, const char* sourceFilePath, int li
 			case GL_STACK_OVERFLOW: errorEnum = "GL_STACK_OVERFLOW"; break;
 			default: errorEnum = "unknown errorCode"; break;
 		}
-		
-		std::string filepath = sourceFilePath;
-		auto filename = filepath.substr( filepath.find_last_of("/\\") );
-		
-		Log::Error("GLError", fmt::format("OpenGL Error Code {}({}) [{}, {}, {}]", errorCode, statement, filename, lineNumber));
+
+		Log::Error("GLError", fmt::format("OpenGL Error Code {}({}) [{}, {}, {}]", errorCode, statement, GetFilenameFromPath(sourceFilePath), lineNumber));
 	}
 }
 
 GL2Renderer::GL2Renderer()
+	: hWnd(nullptr), hDC(nullptr), hRC(nullptr), logtag("OpenGL2")
 {
 	hWnd = nullptr;
 	hDC = nullptr;
@@ -43,7 +43,7 @@ void GL2Renderer::SetHandles(HWND hWnd)
 
 void GL2Renderer::CreateRenderContext()
 {
-	Log::Info("OpenGL2", "Creating renderingcontext");
+	Log::Info(logtag, "Creating renderingcontext");
 
 	PIXELFORMATDESCRIPTOR pfd;
 	memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
@@ -58,32 +58,35 @@ void GL2Renderer::CreateRenderContext()
 	int nPixelFormat = ChoosePixelFormat(hDC, &pfd);
 
 	if (nPixelFormat == 0) {
-		Log::Error("OpenGL2", "Could not find PixelFormat");
+		Log::Error(logtag, "Could not find PixelFormat");
 		return;
 	}
 
 	if (!SetPixelFormat(hDC, nPixelFormat, &pfd)) {
-		Log::Error("OpenGL2", "Could not find Set PixelFormat");
+		Log::Error(logtag, "Could not find Set PixelFormat");
 		return;
 	}
 
 	hRC = wglCreateContext(hDC);
 	if (hRC == NULL) {
-		Log::Error("OpenGL2", "Could not find Create Rendering Context");
+		Log::Error(logtag, "Could not find Create Rendering Context");
 		return;
 	}
 
 	if (!wglMakeCurrent(hDC, hRC)) {
-		Log::Error("OpenGL2", "Could not make Rendering Context Current");
+		Log::Error(logtag, "Could not make Rendering Context Current");
+		DestroyRenderContext();
 		return;
 	}
 
 	auto glewInitResult = glewInit();
 	if (glewInitResult != GLEW_OK) {
-		Log::Error("OpenGL2", fmt::format("GL Extension Wrangler failed to initialize with code: {0}", glewInitResult) );
+		Log::Error(logtag, fmt::format("GL Extension Wrangler failed to initialize with code: {0}", glewInitResult) );
+		DestroyRenderContext();
+		return;
 	}
 
-	Log::Info("OpenGL2", "Rendercontext created");
+	Log::Info(logtag, "Rendercontext created");
 
 	auto vendor = GLCHECK(glGetString(GL_VENDOR));
 	auto renderer = GLCHECK(glGetString(GL_RENDERER));
@@ -91,22 +94,22 @@ void GL2Renderer::CreateRenderContext()
 	int versionMajor = 0, versionMinor = 0;
 	GLCHECK(glGetIntegerv(GL_MAJOR_VERSION, &versionMajor));
 	GLCHECK(glGetIntegerv(GL_MINOR_VERSION, &versionMinor));
-	Log::Info("OpenGL2", fmt::format("Vendor: {}, Renderer: {}, Version: {}, [{}.{}]", vendor, renderer, version, versionMajor, versionMinor));
+	Log::Info(logtag, fmt::format("Vendor: {}, Renderer: {}, Version: {}, [{}.{}]", vendor, renderer, version, versionMajor, versionMinor));
 
 }
 
 void GL2Renderer::DestroyRenderContext()
 {
-	Log::Info("OpenGL2", fmt::format("DestroyRenderContext {}", __FUNCTION__));
+	TRACE(logtag)
 	wglMakeCurrent(NULL, NULL);
 
 	if (hRC != nullptr) {
-		Log::Info("OpenGL2", "Deleting Rendering Context");
+		Log::Info(logtag, "Deleting Rendering Context");
 		wglDeleteContext(hRC);
 	}
 
 	if (hDC != nullptr) {
-		Log::Info("OpenGL2", "Releasing DC");
+		Log::Info(logtag, "Releasing DC");
 		ReleaseDC(hWnd, hDC);
 		hWnd = nullptr;
 		hDC = nullptr;
@@ -117,7 +120,7 @@ void GL2Renderer::DestroyRenderContext()
 void GL2Renderer::SetViewport(int width, int height)
 {
 	if (height == 0) {
-		Log::Error("OpenGL2", "SetViewPort -> height == 0");
+		Log::Error(logtag, "SetViewPort -> height == 0");
 		return;
 	}
 

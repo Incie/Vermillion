@@ -6,6 +6,7 @@
 
 class Activity {
 public:
+	Activity();
 	virtual ~Activity() = default;
 
 	virtual void Initialize() = 0;
@@ -40,5 +41,5 @@ protected:
 
 private:
 	std::vector<UIView*> layers;
-	ServiceLocator *serviceLocator;
+	ServiceLocator* serviceLocator;
 };

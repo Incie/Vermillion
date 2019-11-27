@@ -12,7 +12,7 @@
 	void CheckOpenGLErrors(const char* statement, const char* sourceFileName, int lineNumber);
 
 	#define GLCHECK(statement) statement; CheckOpenGLErrors(#statement, __FILE__, __LINE__);
-	#define TRACE(tag) Log::Debug(tag, fmt::format("{}, {}, {}", __FUNCTION__, __FILE__, __LINE__));
+	#define TRACE(tag) Log::Trace(tag, __FUNCTION__, __FILE__, __LINE__);
 #else
 	#define vnew new
 	#define GLCHECK(statement) statement

@@ -1,5 +1,6 @@
 #include<Windows.h>
 #include<crtdbg.h>
+#include"log.h"
 
 #include"vermillion.h"
 

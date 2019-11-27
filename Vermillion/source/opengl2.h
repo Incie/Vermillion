@@ -24,4 +24,6 @@ private:
 	HWND hWnd;
 	HDC hDC;
 	HGLRC hRC;
+
+	const char* logtag;
 };
