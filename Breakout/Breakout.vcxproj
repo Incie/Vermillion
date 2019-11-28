@@ -133,14 +133,18 @@
     <ClCompile Include="source\breakout.cpp" />
     <ClCompile Include="source\brick.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\mainmenu.cpp" />
     <ClCompile Include="source\math.cpp" />
     <ClCompile Include="source\paddle.cpp" />
+    <ClCompile Include="source\splashscreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\breakout.h" />
     <ClInclude Include="source\brick.h" />
+    <ClInclude Include="source\mainmenu.h" />
     <ClInclude Include="source\math.h" />
     <ClInclude Include="source\paddle.h" />
+    <ClInclude Include="source\splashscreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
