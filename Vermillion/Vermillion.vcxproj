@@ -27,6 +27,7 @@
     <ClInclude Include="source\inputstate.h" />
     <ClInclude Include="source\keycodes.h" />
     <ClInclude Include="source\log.h" />
+    <ClInclude Include="source\event.h" />
     <ClInclude Include="source\opengl2.h" />
     <ClInclude Include="source\opengl2_shader.h" />
     <ClInclude Include="source\pch\pch.h" />
@@ -53,6 +54,7 @@
     <ClCompile Include="source\inputstate.cpp" />
     <ClCompile Include="source\input_getters.cpp" />
     <ClCompile Include="source\log.cpp" />
+    <ClCompile Include="source\event.cpp" />
     <ClCompile Include="source\opengl2.cpp" />
     <ClCompile Include="source\opengl2_shader.cpp" />
     <ClCompile Include="source\pch\pch.cpp">

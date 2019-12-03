@@ -5,16 +5,37 @@
 #include"glm/glm.hpp"
 #include"inputstate.h"
 #include"keycodes.h"
+#include<functional>
 
 
-class Texture {
+//MessageService
+class Event {
 public:
-	unsigned int textureId;
-	int width;
-	int height;
-	unsigned int channels;
+	Event(int eventId) : id(eventId) {}
+
+	int Id() { return id; }
+private:
+	const int id;
 };
 
+class EventMessage : public Event {
+public:
+	EventMessage(int eventId, int eventMessage) : Event(eventId), eventMessage(eventMessage) {}
+
+	int Message() { return eventMessage; }
+private:
+	int eventMessage;
+};
+
+class EventService {
+public:
+	virtual void DispatchEvent(const Event& eventData) = 0;
+	virtual void RegisterEventHandler(int eventId, const std::function<void(Event*)>& func) = 0;
+};
+
+
+
+//SoundService
 class SoundService {
 public:
 	virtual void PlaySound(const std::string& soundFile) = 0;
@@ -24,6 +45,15 @@ public:
 };
 
 
+//TextureService
+class Texture {
+public:
+	unsigned int textureId;
+	int width;
+	int height;
+	unsigned int channels;
+};
+
 class TextureService {
 public:
 	virtual Texture LoadTexture(const std::string& relativePath) = 0;
@@ -31,6 +61,7 @@ public:
 };
 
 
+//TextService
 class TextService {
 public:
 	virtual float CalculateWidth(const std::string& text, unsigned int fontHeight) const = 0;
@@ -40,6 +71,7 @@ public:
 };
 
 
+//InputService
 class InputService {
 public:
 	virtual void Update() = 0;

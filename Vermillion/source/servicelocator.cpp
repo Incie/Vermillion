@@ -26,6 +26,11 @@ TextureService& ServiceLocator::Textures()
 	return *textureService;
 }
 
+EventService& ServiceLocator::Events()
+{
+	return *eventService;
+}
+
 
 ServiceAssigner::ServiceAssigner(ServiceLocator& locator)
 {
@@ -50,4 +55,8 @@ void ServiceAssigner::SetInputService(InputService& inputService)
 void ServiceAssigner::SetSoundService(SoundService& soundService)
 {
 	locator->soundService = &soundService;
+}
+
+void ServiceAssigner::SetEventService(EventService& eventService)
+{
 }

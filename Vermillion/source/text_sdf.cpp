@@ -65,7 +65,15 @@ void TextSDF::Deinit()
 
 float TextSDF::CalculateWidth(const std::string& text, unsigned int fontHeight) const
 {
-	return 0.0f;
+	float width = 0.0f;
+	std::string::const_iterator c;
+	for (c = text.begin(); c != text.end(); c++)
+	{
+		const sdf_character& ch = sdfMap[*c];
+		width += static_cast<float>(ch.xadvance);
+	}
+
+	return width;
 }
 
 float TextSDF::Print(double x, double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color, bool center, bool newline) const

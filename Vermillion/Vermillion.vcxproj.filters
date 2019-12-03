@@ -50,6 +50,9 @@
     <Filter Include="Source Files\log">
       <UniqueIdentifier>{ece66bff-6bf3-4652-825f-1d32de64c274}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\event">
+      <UniqueIdentifier>{38e53c26-299f-406b-b099-92491587c4be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\vermillion.h">
@@ -123,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="source\text.h">
       <Filter>Source Files\text</Filter>
+    </ClInclude>
+    <ClInclude Include="source\event.h">
+      <Filter>Source Files\event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +215,9 @@
     </ClCompile>
     <ClCompile Include="source\activity.cpp">
       <Filter>Source Files\activity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\event.cpp">
+      <Filter>Source Files\event</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
