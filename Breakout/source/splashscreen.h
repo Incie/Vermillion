@@ -15,4 +15,6 @@ public:
 	void Render() override;
 
 private:
+	float timer;
+	float timerEnd;
 };
