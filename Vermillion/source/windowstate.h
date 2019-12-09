@@ -12,6 +12,7 @@ public:
 		hasChanged = true;
 	}
 
+	static glm::ivec2 Center() { return (windowSize / 2); }
 	static glm::ivec2 Size() { return windowSize; }
 	static int Width() { return windowSize.x; }
 	static int Height() { return windowSize.y; }

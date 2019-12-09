@@ -1,5 +1,6 @@
 #include"splashscreen.h"
 #include"pch/pch.h"
+#include"render.h"
 
 
 class Animation {
@@ -18,6 +19,7 @@ private:
 
 class Material {
 public:
+	Material() : color(1) {}
 	Material(const glm::vec4& color) : color(color) {}
 
 	
@@ -27,14 +29,30 @@ private:
 	//texture
 };
 
+
 class Location {
 public:
+	Location() : position(0), scale(1.0f), rotation(0.0f) {}
 
 
+private:
 	glm::vec3 position;
 	glm::vec2 scale;
 	float rotation;
 };
+
+
+class Geometry {
+public:
+	Geometry() : size(0) {}
+	Geometry(const glm::vec2& size) : size(size) {}
+	Geometry(float width, float height) : size(width, height) {}
+
+	const glm::vec2& Size() { return size; }
+private:
+	glm::vec2 size;
+};
+
 
 class Sprite {
 public:
@@ -42,6 +60,7 @@ public:
 
 
 private:
+	Geometry geometry;
 	Material material;
 	Location location;
 };
