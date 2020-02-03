@@ -12,7 +12,7 @@ using std::chrono::microseconds;
 Timer::Timer()
 	: delta(0.0),
 	timelast(NowAsMicroseconds()),
-	timestep(16000),
+	timestepMicroSeconds(16000),
 	one_second(1000000.0),
 	one_second_long(1000000)
 {
@@ -27,7 +27,7 @@ bool Timer::Tick()
 	long long now = NowAsMicroseconds();
 
 	long long timedelta = now - timelast;
-	if ( timedelta >= timestep) {
+	if ( timedelta >= timestepMicroSeconds) {
 		delta = (double)timedelta / one_second;
 		timelast = now;
 		return true;
@@ -51,18 +51,18 @@ void Timer::LimitByFPS(int fps)
 	if(fps == 0)
 		fps = 1;
 
-	timestep = one_second_long / fps;
+	timestepMicroSeconds = one_second_long / fps;
 }
 
 void Timer::LimitByMicroseconds(int us)
 {
-	timestep = us;
+	timestepMicroSeconds = us;
 }
 
 void Timer::LimitByMilliseconds(int ms)
 {
-	long long msToMicrosecondsMultiplier = 1000;
-	timestep = static_cast<long long>(ms) * msToMicrosecondsMultiplier;
+	constexpr long long msToMicrosecondsMultiplier = 1000;
+	timestepMicroSeconds = static_cast<long long>(ms) * msToMicrosecondsMultiplier;
 }
 
 long long Timer::NowAsMicroseconds()

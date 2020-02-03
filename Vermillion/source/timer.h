@@ -20,7 +20,7 @@ private:
 
 	double delta;
 
-	long long timestep;
+	long long timestepMicroSeconds;
 	long long timelast;
 
 	const double one_second;
