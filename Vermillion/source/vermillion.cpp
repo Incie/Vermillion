@@ -89,7 +89,7 @@ void Vermillion::InitializeEngine()
 
 	text.Init(textureManager);
 
-	renderTimer.LimitByMilliseconds(20);
+	renderTimer.LimitByFPS(55);
 	fpsTimer.LimitByMilliseconds(1000);
 
 	ServiceAssigner serviceAssigner(serviceLocator);
