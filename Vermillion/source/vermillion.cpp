@@ -9,12 +9,21 @@
 
 #define LogTag "Vermillion"
 
+Vermillion::Vermillion(HINSTANCE hInstance)
+	: hInstance(hInstance)
+{
+	TRACE(LogTag);
+	InitializeEngine();
+}
+
 Vermillion::Vermillion(Activity* activity, HINSTANCE hInstance)
-	: runningActivity(activity), hInstance(hInstance)
+	: hInstance(hInstance)
 {
 	TRACE(LogTag)
 	InitializeEngine();
 	
+	activities.push_back(activity);
+	auto runningActivity = activities[0];
 	runningActivity->SetServiceLocator(serviceLocator);
 	runningActivity->Initialize();
 }
@@ -25,6 +34,36 @@ Vermillion::~Vermillion()
 	DeinitializeEngine();
 }
 
+void Vermillion::ActivityFactory(std::function<Activity*(const std::string&activityId)> activityFactory)
+{
+	this->activityFactory = activityFactory;
+}
+
+void Vermillion::StartActivity(const std::string& activityId)
+{
+	//currently running activity is nullptr?
+	//activityId is currently running activity?
+	//factory null?
+	//call factory
+
+	//initialize new activity?
+	// -- set "intent" and let mainloop handle it?
+
+	if (activities.size() > 0) {
+		auto runningActivity = activities[0];
+
+		//if( runningActivity->Type() == Destroy )
+		/*
+			Destroy
+			Park
+		*/
+	}
+
+	auto activity = activityFactory(activityId);
+	activity->Initialize();
+
+	activities.insert(activities.begin(), activity);
+}
 
 void Vermillion::Run()
 {
@@ -46,6 +85,8 @@ void Vermillion::Run()
 		if( renderTimer.Tick() )
 		{
 			inputManager.Update();
+
+			auto runningActivity = activities[0];
 
 			if (WindowState::Changed()) {
 				runningActivity->Resize(WindowState::Size());
@@ -102,14 +143,19 @@ void Vermillion::InitializeEngine()
 
 void Vermillion::DeinitializeEngine()
 {
-	TRACE(LogTag)
+	TRACE(LogTag);
 
-	if(runningActivity != nullptr)
-	{
-		runningActivity->Deinitialize();
-		delete runningActivity;
-		runningActivity = nullptr;
+	for (auto activity : activities) {
+		if(activity != nullptr)
+		{
+			activity->Deinitialize();
+			delete activity;
+			activity = nullptr;
+		}
 	}
+
+	activities.clear();
+
 	
 	text.Deinit();
 	textureManager.UnloadAll();

@@ -24,6 +24,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{36B2C497-EA9B-4DD7-89BB-34A4DB1156B2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{77A066E9-24EB-4F7B-8FF0-A2F8C1C3D3EE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B28C12F8-A118-4B18-8004-6175B11437B1} = {B28C12F8-A118-4B18-8004-6175B11437B1}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
