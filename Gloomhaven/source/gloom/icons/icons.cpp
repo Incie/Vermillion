@@ -34,7 +34,7 @@ void Icons::Load(TextureService& textures)
 	Add(textures, "curse", "icons/curse.png");
 	Add(textures, "health", "icons/health.png");
 
-	texturePlayerCard = textures.LoadTexture("textures/player_ability_back.png");
+	texturePlayerCard = textures.LoadTexture(FilePath{ Paths::Textures, "player_ability_back.png" });
 
 	Add(textures, "monsterabilitycardback", "monster_ability_card_back.png");
 	Add(textures, "bandit guard", "monsters/Horz-Bandit Guard.png");
@@ -90,5 +90,5 @@ Texture* Icons::GetPlayerCard()
 
 void Icons::Add(TextureService& textures, const std::string& name, const std::string& relativePath)
 {
-	icons[name] = textures.LoadTexture("textures/" + relativePath);
+	icons[name] = textures.LoadTexture(FilePath{ Paths::Textures, relativePath });
 }

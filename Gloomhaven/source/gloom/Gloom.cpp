@@ -62,7 +62,7 @@ void Gloom::Initialize()
 	Icons::Load(Services().Textures());
 	InitializeUI();
 	
-	level.LoadMap("levels/scenario_001.json");
+	level.LoadMap(FilePath{ Paths::Levels, "scenario_001.json" });
 	level.SpawnRoom(1);
 
 	director.Initialize();

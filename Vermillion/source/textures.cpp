@@ -12,12 +12,12 @@ TextureManagerGL::~TextureManagerGL()
 {
 }
 
-Texture TextureManagerGL::LoadTexture(const std::string & relativePath)
+Texture TextureManagerGL::LoadTexture(const FilePath& relativePath)
 {
-	Log::Info("TextureManagerGL", fmt::format("Loading texture {}", relativePath));
+	Log::Info("TextureManagerGL", fmt::format("Loading texture {}", relativePath.tostring()));
 
 	auto loader = vnew PNGLoader();
-	auto imageLoadStatus = loader->Read(relativePath);
+	auto imageLoadStatus = loader->Read(relativePath.tostring());
 
 	if (imageLoadStatus != ImageLoaderStatus::LOADER_SUCCESS) {
 		return Texture();

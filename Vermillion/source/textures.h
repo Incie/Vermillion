@@ -10,7 +10,7 @@ public:
 	TextureManagerGL();
 	~TextureManagerGL();
 
-	Texture LoadTexture(const std::string& relativePath);
+	Texture LoadTexture(const FilePath& relativePath);
 	void UnloadAll();
 
 private:

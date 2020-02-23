@@ -6,6 +6,7 @@
 #include"inputstate.h"
 #include"keycodes.h"
 #include<functional>
+#include"file.h"
 
 
 //MessageService
@@ -38,8 +39,8 @@ public:
 //SoundService
 class SoundService {
 public:
-	virtual void PlaySound(const std::string& soundFile) = 0;
-	virtual void PlayMusic(const std::string& musicFile) = 0;
+	virtual void PlaySound(const FilePath& soundFile) = 0;
+	virtual void PlayMusic(const FilePath& musicFile) = 0;
 	virtual void Volume(int volume) = 0;
 	virtual int Volume() = 0;
 };
@@ -56,7 +57,7 @@ public:
 
 class TextureService {
 public:
-	virtual Texture LoadTexture(const std::string& relativePath) = 0;
+	virtual Texture LoadTexture(const FilePath& relativePath) = 0;
 	virtual void UnloadAll() = 0;
 };
 

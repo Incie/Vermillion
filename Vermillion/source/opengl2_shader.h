@@ -1,6 +1,6 @@
 #pragma once
 
-#include"pch.h"
+#include"file.h"
 #include"glm/vec4.hpp"
 
 
@@ -17,7 +17,7 @@ public:
 	GLSLShader();
 	~GLSLShader();
 
-	bool Load(const std::string& shader);
+	bool Load(const FilePath& shader);
 	void Unload();
 
 	int shaderId;

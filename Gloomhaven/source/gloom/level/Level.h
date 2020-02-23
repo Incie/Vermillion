@@ -19,7 +19,7 @@ public:
 	Level();
 	~Level();
 
-	void LoadMap(const std::string& fileName);
+	void LoadMap(const FilePath& fileName);
 	void Generate();
 	void SpawnRoom(int roomNumber);
 

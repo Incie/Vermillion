@@ -14,19 +14,19 @@ GLSLShader::~GLSLShader()
 {
 }
 
-bool GLSLShader::Load(const std::string & shaderFilePath)
+bool GLSLShader::Load(const FilePath& shaderFilePath)
 {
-	Log::Info("GLSLShader", fmt::format("Loading Shader {0}", shaderFilePath) );
+	Log::Info("GLSLShader", fmt::format("Loading Shader {0}", shaderFilePath.tostring()) );
 
-	if (shaderFilePath.find(".vert") != std::string::npos ) {
+	if (shaderFilePath.tostring().find(".vert") != std::string::npos ) {
 		shaderId = GLCHECK(glCreateShader(GL_VERTEX_SHADER))
 	}
-	else if (shaderFilePath.find(".frag") != std::string::npos) {
+	else if (shaderFilePath.tostring().find(".frag") != std::string::npos) {
 		shaderId = GLCHECK(glCreateShader(GL_FRAGMENT_SHADER))
 	}
 	else {
 		Log::Error("GLSLShader", "Shadertype not supported");
-		Log::Error("GLSLShader", shaderFilePath);
+		Log::Error("GLSLShader", shaderFilePath.tostring());
 		return false;
 	}
 
@@ -55,18 +55,19 @@ GLSLProgram::~GLSLProgram()
 {
 }
 
-bool GLSLProgram::LoadProgram(const std::string & shader)
+bool GLSLProgram::LoadProgram(const std::string& shader)
 {
 	programId = glCreateProgram();
 
-	if (!vertex.Load(fmt::format("{0}{1}", shader, ".vert"))) {
+	FilePath vertexPath = { Paths::Shaders, shader + ".vert" };
+	if (!vertex.Load(vertexPath)) {
 		Log::Error("GLSLProgram", fmt::format("Failed to load vertex shader {0}", shader).c_str() );
 		UnloadProgram();
 		return false;
 	}
 
-
-	if (!fragment.Load(fmt::format("{0}{1}", shader, ".frag"))) {
+	FilePath fragmentPath = { Paths::Shaders, shader + ".frag" };
+	if (!fragment.Load(fragmentPath)) {
 		Log::Error("GLSLProgram", fmt::format("Failed to load fragment shader {0}", shader).c_str());
 		UnloadProgram();
 		return false;

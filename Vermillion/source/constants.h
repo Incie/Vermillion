@@ -11,3 +11,13 @@ namespace Colors {
 	extern const glm::vec3 Green;
 	extern const glm::vec3 Blue;
 };
+
+namespace Paths {
+	#include"file.h"
+
+	extern const FilePath Data;
+	extern const FilePath Fonts;
+	extern const FilePath Textures;
+	extern const FilePath Shaders;
+	extern const FilePath Levels;
+};

@@ -27,8 +27,8 @@ GLSLProgram sdfProgram;
 
 void TextSDF::Init(TextureService& textureService)
 {
-	const std::string fontFile = "fonts/sdf/Roboto-Black.json";
-	std::string serializedJson = FileReader::ReadFileContent(fontFile);
+	const std::string fontFile = "sdf/Roboto-Black.json";
+	std::string serializedJson = FileReader::ReadFileContent(FilePath{Paths::Fonts, fontFile});
 
 	using json = nlohmann::json;
 	json j = json::parse(serializedJson);
@@ -53,10 +53,10 @@ void TextSDF::Init(TextureService& textureService)
 		sdfMap[sdfc.charvalue] = sdfc;
 	}
 
-	const std::string fontImage = "fonts/sdf/Roboto-Black_msdf.png";
-	fontTexture = textureService.LoadTexture(fontImage);
+	const std::string fontImage = "sdf/Roboto-Black_msdf.png";
+	fontTexture = textureService.LoadTexture(FilePath{ Paths::Fonts, fontImage });
 
-	sdfProgram.LoadProgram("shaders/msdf_shader");
+	sdfProgram.LoadProgram("msdf_shader");
 }
 
 void TextSDF::Deinit()

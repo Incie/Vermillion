@@ -19,7 +19,6 @@
 	#define TRACE(tag) 
 #endif
 
-
 #include<vector>
 #include<string>
 #include<sstream>
@@ -30,4 +29,5 @@
 
 #include"glm\glm.hpp"
 #include"fmt\format.h"
+#include"../file.h"
 #include"..\constants.h"

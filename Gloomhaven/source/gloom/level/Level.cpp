@@ -31,7 +31,7 @@ Level::~Level()
 
 #include"nlohmann/json.hpp"
 #include"file.h"
-void Level::LoadMap(const std::string& fileName)
+void Level::LoadMap(const FilePath& fileName)
 {
 	auto fileContent = FileReader::ReadFileContent(fileName);
 
