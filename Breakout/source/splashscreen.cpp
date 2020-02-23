@@ -34,6 +34,14 @@ class Location {
 public:
 	Location() : position(0), scale(1.0f), rotation(0.0f) {}
 
+	void Push() {
+		Render::PushMatrix();
+		Render::Translate2D(position);
+	}
+
+	void Pop() {
+		Render::PopMatrix();
+	}
 
 private:
 	glm::vec3 position;
@@ -49,8 +57,18 @@ public:
 	Geometry(float width, float height) : size(width, height) {}
 
 	const glm::vec2& Size() { return size; }
+
 private:
 	glm::vec2 size;
+};
+
+class TextGeometry : Geometry {
+public:
+	TextGeometry(const std::string& text, int textSize) : text(text), textSize(textSize) {}
+
+private:
+	std::string text;
+	int textSize;
 };
 
 
@@ -58,6 +76,14 @@ class Sprite {
 public:
 	Sprite() {}
 
+
+	void Update() {
+
+	}
+
+	void Render(const TextService& ts, const TextureService& texs) {
+
+	}
 
 private:
 	Geometry geometry;

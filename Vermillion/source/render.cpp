@@ -180,6 +180,36 @@ void Render::OriginCross(float size)
 	glEnd();
 }
 
+void Render::PushMatrix()
+{
+	glPushMatrix();
+}
+
+void Render::PopMatrix()
+{
+	glPopMatrix();
+}
+
+void Render::Translate2D(glm::vec3& p)
+{
+	glTranslatef(p.x, p.y, 0.0f);
+}
+
+void Render::Translate2D(glm::vec2& p)
+{
+	glTranslatef(p.x, p.y, 0.0f);
+}
+
+void Render::Scale(glm::vec3& s)
+{
+	glScalef(s.x, s.y, s.z);
+}
+
+void Render::Rotate2D(float angles)
+{
+	glRotatef(angles, 0, 0, 1);
+}
+
 
 //naughty global data
 namespace VermillionRenderer {

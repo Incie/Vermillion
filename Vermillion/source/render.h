@@ -23,6 +23,12 @@ public:
 
 	static void OriginCross(float size);
 
+	static void PushMatrix();
+	static void PopMatrix();
+	static void Translate2D(glm::vec3& p);
+	static void Translate2D(glm::vec2& p);
+	static void Scale(glm::vec3& s);
+	static void Rotate2D(float angles);
 
 	static void WireFrame();
 	static void Fill();
