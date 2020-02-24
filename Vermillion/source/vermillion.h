@@ -9,15 +9,34 @@
 #include"timer.h"
 #include<functional>
 
-class Vermillion
+//todo: move class definition to another file
+class ActivityInterface {
+public:
+	ActivityInterface();
+
+	void ActivityFactory(std::function<Activity * (const std::string&)> activityFactory);
+	void StartActivity(const std::string& activityId);
+
+	Activity* ActiveActivity();
+
+protected:
+	void StartActivityNow(Activity* activity, ServiceLocator& serviceLocator);
+	bool HasQueuedActivity();
+	void SetupQueuedActivity(ServiceLocator& serviceLocator);
+	void DeinitializeActivities();
+
+private:
+	std::string toBeStarted;
+	std::vector<Activity*> activities;
+	std::function<Activity* (const std::string&)> activityFactory;
+};
+
+class Vermillion : public ActivityInterface
 {
 public:
 	Vermillion(HINSTANCE hInstance);
 	Vermillion(Activity* activity, HINSTANCE hInstance);
 	~Vermillion();
-
-	void ActivityFactory(std::function<Activity*(const std::string&)> activityFactory);
-	void StartActivity(const std::string& activityId);
 
 	void InitializeEngine();
 	void DeinitializeEngine();
@@ -25,9 +44,6 @@ public:
 	void Run();
 
 private:
-	std::vector<Activity*> activities;
-	std::function<Activity*(const std::string&)> activityFactory;
-
 	Window window;
 	GL2Renderer renderer;
 	InputManager inputManager;

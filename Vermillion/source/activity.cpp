@@ -1,9 +1,12 @@
 #include"pch.h"
+#include"vermillion.h"
 #include"activity.h"
 
 Activity::Activity()
-	: serviceLocator(nullptr)
+	: serviceLocator(nullptr), activityInterface(nullptr)
 {
+	TRACE("Activity");
+
 }
 
 void Activity::Resize(const glm::ivec2& newWindowSize) {
@@ -15,12 +18,25 @@ void Activity::SetServiceLocator(ServiceLocator& locator) {
 	serviceLocator = &locator;
 }
 
+void Activity::SetActivityInterface(ActivityInterface* activityInterface)
+{
+	this->activityInterface = activityInterface;
+}
+
 void Activity::DeinitializeUI() {
 	for (auto view : layers) {
 		delete view;
 	}
 
 	layers.clear();
+}
+
+void Activity::StartActivity(const std::string& activityId)
+{
+	if(activityInterface == nullptr)
+		throw std::string("activityinterface == null");
+
+	activityInterface->StartActivity(activityId);
 }
 
 UIView* Activity::GetViewById(int id) {

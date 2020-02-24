@@ -6,14 +6,22 @@ Sandbox::Sandbox()
 {
 }
 
+std::string displayText;
+std::string goalText = "VERMILLION ENGINE";
+
+float elapsed = 0.0f;
+float timer = -10.0f;
+float timePerThing = 0.25f;
+
 void Sandbox::Initialize()
 {
-	TRACE("Sandbox")
+    TRACE("Sandbox");
+    timer = 0.0f;
 }
 
 void Sandbox::Deinitialize()
 {
-	TRACE("Sandbox")
+    TRACE("Sandbox");
 }
 
 void Sandbox::Update(float delta)
@@ -102,23 +110,45 @@ void Sandbox::Update(float delta)
    return true;
 */
 
+    elapsed += delta;
+
+    if (timer < 0.0f)
+        timer = 0.0f;
+
+    timer += delta;
+
+    if (timer >= timePerThing) {
+        timer -= timePerThing;
+        timePerThing -= 0.02f;
+        glm::min(timePerThing, 0.01f);
+
+        if( displayText.size() < goalText.size() )
+            displayText.push_back(goalText[displayText.size()]);
+    }
 
 
+    if (Services().Input().KeyOnce(VKey_SPACE)) {
+        displayText = "";
+        timer = 0.0f;
+        timePerThing = 0.25f;
+    }
 
+    if(elapsed > 5.0f) {
+        StartActivity("MenuTest");
+    }
 }
 
 void Sandbox::Render()
 {
 	auto& text = Services().Text();
-
-	const std::string displayText = "VERMILLION SANDBOX";
 	const int textHeight = 26;
 
 	auto width = text.CalculateWidth(displayText, textHeight);
 
-	auto midX = WindowState::Width() * 0.5f - width * 0.5f;
+    auto midX = WindowState::Width() * 0.5f - width * 0.5f;
 	auto midY = WindowState::Height() * 0.5f - static_cast<float>(textHeight) * 0.5f;
 
 
 	text.Print(midX, midY, displayText, textHeight, glm::vec3(1, 1, 1));
+    text.Print(0, 25, fmt::format("{}", elapsed), 55, Colors::White);
 }

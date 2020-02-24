@@ -73,6 +73,7 @@
     <ClCompile Include="source\uilayer.cpp" />
     <ClCompile Include="source\uitext.cpp" />
     <ClCompile Include="source\vermillion.cpp" />
+    <ClCompile Include="source\vermillion_activity.cpp" />
     <ClCompile Include="source\window.cpp" />
     <ClCompile Include="source\windowclass.cpp" />
     <ClCompile Include="source\windowprocedure.cpp" />

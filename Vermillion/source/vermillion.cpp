@@ -21,48 +21,13 @@ Vermillion::Vermillion(Activity* activity, HINSTANCE hInstance)
 {
 	TRACE(LogTag)
 	InitializeEngine();
-	
-	activities.push_back(activity);
-	auto runningActivity = activities[0];
-	runningActivity->SetServiceLocator(serviceLocator);
-	runningActivity->Initialize();
+	StartActivityNow(activity, serviceLocator);
 }
 
 Vermillion::~Vermillion()
 {
 	TRACE(LogTag)
 	DeinitializeEngine();
-}
-
-void Vermillion::ActivityFactory(std::function<Activity*(const std::string&activityId)> activityFactory)
-{
-	this->activityFactory = activityFactory;
-}
-
-void Vermillion::StartActivity(const std::string& activityId)
-{
-	//currently running activity is nullptr?
-	//activityId is currently running activity?
-	//factory null?
-	//call factory
-
-	//initialize new activity?
-	// -- set "intent" and let mainloop handle it?
-
-	if (activities.size() > 0) {
-		auto runningActivity = activities[0];
-
-		//if( runningActivity->Type() == Destroy )
-		/*
-			Destroy
-			Park
-		*/
-	}
-
-	auto activity = activityFactory(activityId);
-	activity->Initialize();
-
-	activities.insert(activities.begin(), activity);
 }
 
 void Vermillion::Run()
@@ -86,7 +51,11 @@ void Vermillion::Run()
 		{
 			inputManager.Update();
 
-			auto runningActivity = activities[0];
+			//Should be "HasQueuedEngineJob" at a later point
+			if(HasQueuedActivity())
+				SetupQueuedActivity(serviceLocator);
+
+			auto runningActivity = ActiveActivity();
 
 			if (WindowState::Changed()) {
 				runningActivity->Resize(WindowState::Size());
@@ -104,6 +73,7 @@ void Vermillion::Run()
 			renderer.EndFrame();
 
 			fpsCounter++;
+
 
 		}
 		else
@@ -145,18 +115,8 @@ void Vermillion::DeinitializeEngine()
 {
 	TRACE(LogTag);
 
-	for (auto activity : activities) {
-		if(activity != nullptr)
-		{
-			activity->Deinitialize();
-			delete activity;
-			activity = nullptr;
-		}
-	}
+	DeinitializeActivities();
 
-	activities.clear();
-
-	
 	text.Deinit();
 	textureManager.UnloadAll();
 

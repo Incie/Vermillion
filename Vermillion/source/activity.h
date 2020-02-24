@@ -4,6 +4,8 @@
 #include"uiview.h"
 #include"windowstate.h"
 
+class ActivityInterface;
+
 class Activity {
 public:
 	Activity();
@@ -17,6 +19,7 @@ public:
 	virtual void Render() = 0;
 
 	void SetServiceLocator(ServiceLocator& locator);
+	void SetActivityInterface(ActivityInterface* activityInterface);
 protected:
 	void AddView(UIView* view, int id);
 	bool UpdateUI(float deltaTime);
@@ -38,8 +41,10 @@ protected:
 	}
 
 	ServiceLocator& Services() { return *serviceLocator; }
+	void StartActivity(const std::string& activityId);
 
 private:
 	std::vector<UIView*> layers;
 	ServiceLocator* serviceLocator;
+	ActivityInterface* activityInterface;
 };

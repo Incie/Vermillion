@@ -15,9 +15,15 @@
     <ClCompile Include="source\sandbox.cpp">
       <Filter>Source\Activity</Filter>
     </ClCompile>
+    <ClCompile Include="source\menutest.cpp">
+      <Filter>Source\Activity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\sandbox.h">
+      <Filter>Source\Activity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\menutest.h">
       <Filter>Source\Activity</Filter>
     </ClInclude>
   </ItemGroup>

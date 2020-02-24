@@ -219,5 +219,8 @@
     <ClCompile Include="source\event.cpp">
       <Filter>Source Files\event</Filter>
     </ClCompile>
+    <ClCompile Include="source\vermillion_activity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

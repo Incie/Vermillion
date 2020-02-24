@@ -66,11 +66,12 @@ void TextSDF::Deinit()
 float TextSDF::CalculateWidth(const std::string& text, unsigned int fontHeight) const
 {
 	float width = 0.0f;
+	float scale = static_cast<float>(fontHeight) / font_height;
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
 	{
 		const sdf_character& ch = sdfMap[*c];
-		width += static_cast<float>(ch.xadvance);
+		width += static_cast<float>(ch.xadvance) * scale;
 	}
 
 	return width;
@@ -134,7 +135,8 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 		GLCHECK(glTexCoordPointer(2, GL_FLOAT, 0, &texCoords[0].x));
 		GLCHECK(glDrawArrays(GL_TRIANGLES, 0, 6));
 
-		x += static_cast<double>(static_cast<float>(ch.xadvance) * scale);
+		const float advance = static_cast<float>(ch.xadvance);
+		x += static_cast<double>(advance * scale);
 	}
 
 	GLCHECK(glPopMatrix());
