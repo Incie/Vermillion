@@ -1,7 +1,8 @@
 #include"pch.h"
 #include "window.h"
 #include"log.h"
-#include"version.h"
+//#include"version.h"
+//todo: fix version number inclusions
 
 LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT   uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam);
 
@@ -35,7 +36,7 @@ void Window::Create(HINSTANCE hInstance)
 
 	Log::Info(LOGTAG, "Creating Window");
 
-	std::string windowTitle = fmt::format("Project Vermillion - Version {0}", generatedVersionString);
+	std::string windowTitle = fmt::format("Project Vermillion - Version {0}", 2300); //generatedVersionString);
 
 	hWnd = CreateWindow(windowClass.classname().c_str(), windowTitle.c_str(), WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_OVERLAPPEDWINDOW, 250, 25, 1024, 1024, nullptr, nullptr, hInstance, nullptr);
 
