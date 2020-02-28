@@ -85,7 +85,6 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 
 	float scale = (float)fontHeight / font_height;
 
-
 	GLCHECK(glColor4f(1, 1, 1, 1));
 	GLCHECK(glEnable(GL_BLEND));
 	GLCHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -101,6 +100,10 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 
 	x = 0;
 	y = 0;
+
+	if(center) {
+		glTranslated(-CalculateWidth(text, fontHeight) * 0.5f, -static_cast<float>(fontHeight) * 0.5f, 0.0f);
+	}
 
 	GLCHECK(glEnable(GL_TEXTURE_2D));
 	GLCHECK(glBindTexture(GL_TEXTURE_2D, fontTexture.textureId));
@@ -154,8 +157,10 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 
 void TextSDF::NewLine(unsigned int fontHeight) const
 {
+	throw std::string("TextSDF::NewLine Not Implmented");
 }
 
 void TextSDF::PrintCenter(const double x, const double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color) const
 {
+	throw std::string("TextSDF::NewLine Not Implmented");
 }

@@ -31,6 +31,7 @@ glm::vec2 UIText::Measure(const TextService& text)
 {
 	float textWidth = text.CalculateWidth(this->text, static_cast<unsigned int>(fontHeight));
 	size.x = textWidth;
+	size.y = fontHeight; 
 	return glm::vec2(textWidth, fontHeight) + margin*2.0f;
 }
 

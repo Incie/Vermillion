@@ -118,7 +118,7 @@ void Sandbox::Update(float delta)
     timer += delta;
 
     if (timer >= timePerThing) {
-        timer -= timePerThing;
+        timer -= 0.0f;
         timePerThing -= 0.02f;
         glm::min(timePerThing, 0.01f);
 
@@ -131,9 +131,10 @@ void Sandbox::Update(float delta)
         displayText = "";
         timer = 0.0f;
         timePerThing = 0.25f;
+        elapsed = 0.0f;
     }
 
-    if(elapsed > 5.0f) {
+    if(elapsed > 5.0f || Services().Input().KeyOnce(VKey_LBUTTON) ) {
         StartActivity("MenuTest");
     }
 }

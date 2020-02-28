@@ -88,7 +88,7 @@ public:
 
 protected:
 	std::string text;
-	float fontHeight;;
+	float fontHeight;
 };
 
 class Button : public UIElement {
