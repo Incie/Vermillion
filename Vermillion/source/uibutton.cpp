@@ -44,7 +44,7 @@ void Button::SetColor(const glm::vec3& background)
 {
 	color = background;
 	backgroundColor = background;
-	hoverColor = background * 1.1f;
+	hoverColor = background * 1.2f;
 	clickColor = background * 1.3f;
 	disabledColor = background * 0.7f;
 }

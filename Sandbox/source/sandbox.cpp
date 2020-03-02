@@ -2,21 +2,27 @@
 #include"sandbox.h"
 
 Sandbox::Sandbox()
-	: timer(0.0f), timerEnd(1.5f)
+	: timer(0.0f), timerEnd(2.f), elapsed(0.0f), timePerThing(0.25f), goalText("VERMILLION ENGINE")
 {
 }
 
-std::string displayText;
-std::string goalText = "VERMILLION ENGINE";
+Sandbox::~Sandbox()
+{
+}
 
-float elapsed = 0.0f;
-float timer = -10.0f;
-float timePerThing = 0.25f;
+void Sandbox::ResetValues()
+{
+    timer = 0.0f;
+    timerEnd = 2.f;
+    elapsed = 0.0f;
+    timePerThing = 0.25f;
+    displayText = "";
+}
 
 void Sandbox::Initialize()
 {
     TRACE("Sandbox");
-    timer = 0.0f;
+    ResetValues();    
 }
 
 void Sandbox::Deinitialize()
@@ -134,7 +140,7 @@ void Sandbox::Update(float delta)
         elapsed = 0.0f;
     }
 
-    if(elapsed > 5.0f || Services().Input().KeyOnce(VKey_LBUTTON) ) {
+    if(elapsed > timerEnd || Services().Input().KeyOnce(VKey_LBUTTON) ) {
         StartActivity("MenuTest");
     }
 }
@@ -151,5 +157,7 @@ void Sandbox::Render()
 
 
 	text.Print(midX, midY, displayText, textHeight, glm::vec3(1, 1, 1));
-    text.Print(0, 25, fmt::format("{}", elapsed), 55, Colors::White);
+    text.Print(0, 25, fmt::format("{}", elapsed), 18, Colors::White);
 }
+
+

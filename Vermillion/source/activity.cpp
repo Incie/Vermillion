@@ -3,7 +3,7 @@
 #include"activity.h"
 
 Activity::Activity()
-	: serviceLocator(nullptr), activityInterface(nullptr)
+	: serviceLocator(nullptr), activityInterface(nullptr), markedAsFinished(false)
 {
 	TRACE("Activity");
 
@@ -21,6 +21,11 @@ void Activity::SetServiceLocator(ServiceLocator& locator) {
 void Activity::SetActivityInterface(ActivityInterface* activityInterface)
 {
 	this->activityInterface = activityInterface;
+}
+
+bool Activity::Finished() const
+{
+	return markedAsFinished;
 }
 
 void Activity::DeinitializeUI() {
@@ -48,6 +53,11 @@ UIView* Activity::GetViewById(int id) {
 	return nullptr;
 }
 
+
+void Activity::Finish()
+{
+	markedAsFinished = true;
+}
 
 void Activity::AddView(UIView* view, int id) {
 	view->SetId(id);

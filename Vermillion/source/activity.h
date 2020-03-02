@@ -20,7 +20,10 @@ public:
 
 	void SetServiceLocator(ServiceLocator& locator);
 	void SetActivityInterface(ActivityInterface* activityInterface);
+
+	bool Finished() const;
 protected:
+	void Finish();
 	void AddView(UIView* view, int id);
 	bool UpdateUI(float deltaTime);
 	void RenderUI();
@@ -47,4 +50,6 @@ private:
 	std::vector<UIView*> layers;
 	ServiceLocator* serviceLocator;
 	ActivityInterface* activityInterface;
+
+	bool markedAsFinished;
 };

@@ -30,11 +30,10 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 
 		vermillion.StartActivity("Sandbox");
 		vermillion.Run();
-		vermillion.DeinitializeEngine();
 	}
 	catch (const std::string exception) {
 		Log::Error("Exception Caught", exception);
-		MessageBoxA(nullptr, exception.c_str(), "Fatal Exception", MB_OK);
+		MessageBox(nullptr, std::wstring(exception.begin(), exception.end()).c_str(), L"Fatal Exception", MB_OK | MB_ICONERROR | MB_DEFAULT_DESKTOP_ONLY);
 	}
 
 	return 0;

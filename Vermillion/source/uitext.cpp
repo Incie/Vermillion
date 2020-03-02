@@ -4,12 +4,17 @@
 
 
 UIText::UIText(const std::string& text)
-	: text(text), fontHeight(20.0f)
+	: text(text), fontHeight(20.0f), color(glm::vec3(0))
 {
 }
 
 UIText::~UIText()
 {
+}
+
+void UIText::Color(const glm::vec3& color)
+{
+	this->color = color;
 }
 
 void UIText::Text(const std::string& text)
@@ -24,7 +29,7 @@ const std::string UIText::Text()
 
 void UIText::Render(ServiceLocator& Services)
 {
-	Services.Text().Print(position.x, position.y, text, static_cast<unsigned int>(fontHeight), glm::vec3(0), false, false);
+	Services.Text().Print(position.x, position.y, text, static_cast<unsigned int>(fontHeight), color, false, false);
 }
 
 glm::vec2 UIText::Measure(const TextService& text)

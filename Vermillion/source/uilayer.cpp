@@ -7,7 +7,7 @@
 #include<Windows.h>
 
 UIView::UIView()
-	: anchor(0), invalidated(true)
+	: anchor(0), invalidated(true), backgroundColor(glm::vec3(1))
 {
 }
 
@@ -34,6 +34,9 @@ bool UIView::HandleInput(const InputService & inputService)
 		child->SetState(UIElement::UIState::ENABLED);
 
 		if (child->IsPointInSide(windowLocalPosition)) {
+
+			//if( has children )
+			 // child->HandleInput( use_this_OnEvent() );
 
 			child->SetState(UIElement::UIState::HOVER);
 
@@ -88,7 +91,7 @@ void UIView::Render(ServiceLocator & Services)
 	if (!active)
 		return;
 
-	Render::Quad(0, 0, size.x, size.y, glm::vec3(1));
+	Render::Quad(0, 0, size.x, size.y, backgroundColor);
 
 	for (auto child : children)
 		child->Render(Services);
@@ -109,6 +112,11 @@ void UIView::OnEvent(WindowEvent type, int id)
 void UIView::AddChild(UIElement* child)
 {
 	children.push_back(child);
+}
+
+void UIView::BackgroundColor(const glm::vec3& color)
+{
+	this->backgroundColor = color;
 }
 
 void UIView::Resize(const TextService& text) {

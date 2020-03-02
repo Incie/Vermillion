@@ -49,6 +49,8 @@ void Vermillion::Run()
 
 		if( renderTimer.Tick() )
 		{
+			float deltaTime = static_cast<float>(renderTimer.GetDelta());
+
 			inputManager.Update();
 
 			//Should be "HasQueuedEngineJob" at a later point
@@ -62,7 +64,6 @@ void Vermillion::Run()
 				WindowState::ResetChanged();
 			}
 
-			float deltaTime = static_cast<float>(renderTimer.GetDelta());
 			runningActivity->Update(deltaTime);
 			
 			renderer.StartFrame();
@@ -72,6 +73,11 @@ void Vermillion::Run()
 
 			fpsCounter++;
 			lastFrameTime = renderTimer.TimeSinceTickAsMilliseconds();
+
+			if(runningActivity->Finished()) {
+				Log::Info("Run()", "Activity finished");
+				quitProgram = true;
+			}
 		}
 		else
 			Sleep(0);
@@ -97,7 +103,7 @@ void Vermillion::InitializeEngine()
 
 	text.Init(textureManager);
 
-	renderTimer.LimitByFPS(55);
+	renderTimer.LimitByFPS(59);
 	fpsTimer.LimitByMilliseconds(1000);
 
 	ServiceAssigner serviceAssigner(serviceLocator);

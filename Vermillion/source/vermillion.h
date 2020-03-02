@@ -31,6 +31,7 @@ private:
 	std::function<Activity* (const std::string&)> activityFactory;
 };
 
+
 class Vermillion : public ActivityInterface
 {
 public:
