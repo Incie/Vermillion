@@ -22,7 +22,7 @@
 
 #include"icons/icons.h"
 
-#include"uiview.h"
+#include"ui/uiview.h"
 #include"uilayer/AbilitySelector.h"
 #include"uilayer/CardSelection.h"
 #include"uilayer/CardSelector.h"

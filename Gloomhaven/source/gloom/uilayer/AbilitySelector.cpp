@@ -2,6 +2,7 @@
 #include"servicelocator.h"
 #include"AbilitySelector.h"
 #include"../cards/PlayerDeck.h"
+#include"ui/uibutton.h"
 
 AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)> callback)
 	: callback(callback)
@@ -14,7 +15,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 	cards[0] = nullptr;
 	cards[1] = nullptr;
 
-	auto button = vnew Button();
+	auto button = vnew UIButton();
 	button->SetColor(glm::vec3(0.6f));
 	button->SetTextColor(glm::vec3(0.3f));
 	button->SetText("End Turn");
@@ -22,7 +23,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 	children.push_back(button);
 
 	{
-		auto defaultTopButton = vnew Button();
+		auto defaultTopButton = vnew UIButton();
 		defaultTopButton->SetText("DT1");
 		defaultTopButton->SetTextSize(16 * cardScalar);
 		defaultTopButton->SetId(2);
@@ -30,7 +31,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		defaultTopButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(defaultTopButton);
 
-		auto defaultBottomButton = vnew Button();
+		auto defaultBottomButton = vnew UIButton();
 		defaultBottomButton->SetText("DB1");
 		defaultBottomButton->SetTextSize(16 * cardScalar);
 		defaultBottomButton->SetId(3);
@@ -38,7 +39,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		defaultBottomButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(defaultBottomButton);
 
-		auto topButton = vnew Button();
+		auto topButton = vnew UIButton();
 		topButton->SetText("T1");
 		topButton->SetTextSize(16 * cardScalar);
 		topButton->SetId(4);
@@ -46,7 +47,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		topButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(topButton);
 
-		auto bottomButton = vnew Button();
+		auto bottomButton = vnew UIButton();
 		bottomButton->SetText("B1");
 		bottomButton->SetTextSize(16 * cardScalar);
 		bottomButton->SetId(5);
@@ -57,7 +58,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 
 	{
 		float tX = 8 + cardScalar * texture.width + 8;
-		auto defaultTopButton = vnew Button();
+		auto defaultTopButton = vnew UIButton();
 		defaultTopButton->SetText("DT2");
 		defaultTopButton->SetTextSize(16 * cardScalar);
 		defaultTopButton->SetId(6);
@@ -65,7 +66,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		defaultTopButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(defaultTopButton);
 
-		auto defaultBottomButton = vnew Button();
+		auto defaultBottomButton = vnew UIButton();
 		defaultBottomButton->SetText("DB2");
 		defaultBottomButton->SetTextSize(16 * cardScalar);
 		defaultBottomButton->SetId(7);
@@ -73,7 +74,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		defaultBottomButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(defaultBottomButton);
 
-		auto topButton = vnew Button();
+		auto topButton = vnew UIButton();
 		topButton->SetText("T2");
 		topButton->SetTextSize(16 * cardScalar);
 		topButton->SetId(8);
@@ -81,7 +82,7 @@ AbilitySelector::AbilitySelector(Texture& texture, std::function<void(int, int)>
 		topButton->SetSize(30 * cardScalar, 20 * cardScalar);
 		children.push_back(topButton);
 
-		auto bottomButton = vnew Button();
+		auto bottomButton = vnew UIButton();
 		bottomButton->SetText("B2");
 		bottomButton->SetTextSize(16 * cardScalar);
 		bottomButton->SetId(9);
@@ -112,21 +113,21 @@ void AbilitySelector::Resize(const glm::vec2& windowSize, const TextService& tex
 	
 	UIView::Resize(windowSize, text);
 
-	auto button = dynamic_cast<Button*>(children[0]);
+	auto button = dynamic_cast<UIButton*>(children[0]);
 	button->SetSize(150.0f, 20.0f);
 	button->SetTextSize(16.0f);
 	button->SetPosition(size.x * 0.5f - 75.0f, size.y - 28);
 	float tX = 8 + cardScalar * texture->width + 8;
-	auto button5 = dynamic_cast<Button*>(children[5]);
+	auto button5 = dynamic_cast<UIButton*>(children[5]);
 	button5->SetPosition(tX, 250 * cardScalar);
 
-	auto button6 = dynamic_cast<Button*>(children[6]);
+	auto button6 = dynamic_cast<UIButton*>(children[6]);
 	button6->SetPosition(tX, 280 * cardScalar);
 
-	auto button7 = dynamic_cast<Button*>(children[7]);
+	auto button7 = dynamic_cast<UIButton*>(children[7]);
 	button7->SetPosition(tX + 150 * cardScalar, 70 * cardScalar);
 
-	auto button8 = dynamic_cast<Button*>(children[8]);
+	auto button8 = dynamic_cast<UIButton*>(children[8]);
 	button8->SetPosition(tX + 150 * cardScalar, 300 * cardScalar);
 
 }

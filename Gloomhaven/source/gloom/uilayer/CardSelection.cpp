@@ -3,6 +3,8 @@
 #include"../cards/PlayerDeck.h"
 #include"GL/glew.h"
 
+#include"ui/uibutton.h"
+
 #include"render.h"
 
 #include"services.h"
@@ -23,7 +25,7 @@ CardSelection::CardSelection(Texture& texture, std::function<void(CardSelection&
 	playerCards[0] = nullptr;
 	playerCards[1] = nullptr;
 
-	auto button = vnew Button();
+	auto button = vnew UIButton();
 	button->SetText("Ready");
 	button->SetState(UIElement::UIState::DISABLED);
 	button->SetColor(glm::vec3(0.6f));
@@ -33,7 +35,7 @@ CardSelection::CardSelection(Texture& texture, std::function<void(CardSelection&
 	button->SetTextSize(18.f);
 	children.push_back(button);
 
-	auto buttonShortRest = vnew Button();
+	auto buttonShortRest = vnew UIButton();
 	buttonShortRest->SetText("Short Rest");
 	buttonShortRest->SetColor(glm::vec3(0.6f));
 	buttonShortRest->SetTextColor(glm::vec3(0.2f));
@@ -42,7 +44,7 @@ CardSelection::CardSelection(Texture& texture, std::function<void(CardSelection&
 	buttonShortRest->SetTextSize(18.f);
 	children.push_back(buttonShortRest);
 
-	auto buttonLongRest = vnew Button();
+	auto buttonLongRest = vnew UIButton();
 	buttonLongRest->SetText("Long Rest");
 	buttonLongRest->SetColor(glm::vec3(0.6f));
 	buttonLongRest->SetTextColor(glm::vec3(0.2f));
@@ -66,7 +68,7 @@ void CardSelection::Resize(const glm::vec2& windowSize, const TextService& text)
 	auto x = size.x * 0.5f - 125.f * 0.5f;
 	auto y = size.y - (8 + 22.0f) * 3.0f;
 
-	auto button = dynamic_cast<Button*>(children[0]);
+	auto button = dynamic_cast<UIButton*>(children[0]);
 	button->SetPosition(x,y);
 
 	y += 30.0f;

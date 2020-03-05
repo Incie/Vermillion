@@ -3,6 +3,7 @@
 #include"..//icons/icons.h"
 #include"render.h"
 #include"textures.h"
+#include"ui/uibutton.h"
 
 EnemyAdvancer::EnemyAdvancer(std::function<void()> callback)
 	: callback(callback), texture(nullptr), currentAction(0)
@@ -10,7 +11,7 @@ EnemyAdvancer::EnemyAdvancer(std::function<void()> callback)
 	SetSize(100, 100);
 	SetAnchor(WindowAnchor::BOTTOM | WindowAnchor::RIGHT);
 	
-	auto button = vnew Button();
+	auto button = vnew UIButton();
 	button->SetText("Advance Enemy");
 	button->SetPosition(8, 8);
 	button->SetSize(150, 25);

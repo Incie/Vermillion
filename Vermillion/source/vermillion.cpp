@@ -39,6 +39,10 @@ void Vermillion::Run()
 
 	double lastFrameTime = 0.0;
 	bool quitProgram = false;
+
+	fpsTimer.Reset();
+	renderTimer.Reset();
+
 	while (!quitProgram) {
 		quitProgram = window.ProcessMessages();
 

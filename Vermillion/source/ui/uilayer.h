@@ -9,10 +9,12 @@ class InputService;
 class ServiceLocator;
 class Texture;
 
+enum class UILayerId;
+
 
 class UIElement {
 public:
-	UIElement() : id(-1), active(true), position(glm::vec2()), size(glm::vec2()), state(UIState::ENABLED), margin(glm::vec2(0)) {}
+	UIElement() : id(-1), active(true), position(glm::vec2()), size(glm::vec2()), state(UIState::ENABLED), margin(glm::vec2(8,8)) {}
 	virtual ~UIElement() {}
 
 	bool IsPointInSide(const glm::vec2& point);
@@ -25,13 +27,11 @@ public:
 		ENABLED,
 		HOVER,
 		ACTIVATED, 
-		DISABLED,
-		GONE //not implemented
+		DISABLED
 	};
 
 	virtual void Render(ServiceLocator& Services) = 0;
 
-	virtual void SetPosition(const glm::vec2& newPosition);
 	virtual void SetPosition(float x, float y);
 	virtual void SetSize(float width, float height);
 	virtual void SetMargin(float width, float height);
@@ -80,25 +80,23 @@ public:
 	~UIText();
 
 	virtual void Render(ServiceLocator& Services) override;
-	virtual glm::vec2 Measure(const TextService& text) override;
+	virtual glm::vec2 Measure(const TextService& text);
 
 	void FontHeight(float fontHeight);
 
-	void Color(const glm::vec3& color);
 	void Text(const std::string& text);
 	const std::string Text();
 
 protected:
-	glm::vec3 color;
 	std::string text;
-	float fontHeight;
+	float fontHeight;;
 };
 
-class Button : public UIElement {
+class UIButton : public UIElement {
 public:
-	Button();
-	Button(const std::string& text, unsigned int textSize, int id);
-	virtual ~Button();
+	UIButton();
+	UIButton(const std::string& text, unsigned int textSize, int id);
+	virtual ~UIButton();
 
 	virtual glm::vec2 Measure(const TextService& text);
 	virtual void Render(ServiceLocator& Services);
@@ -140,6 +138,7 @@ public:
 		UIElement::SetSize(width, height);
 	}
 
+	virtual UILayerId LayerId() = 0;
 	void SetAnchor(int newAnchor);
 
 	enum class WindowEvent {
@@ -161,13 +160,10 @@ public:
 
 	void AddChild(UIElement* child);
 
-	void BackgroundColor(const glm::vec3& color);
 	bool Invalidated() { return invalidated; }
 	void Invalidate() { invalidated = true; }
 protected:
 	void Resize(const TextService& text);
-
-	glm::vec3 backgroundColor;
 
 	bool invalidated;
 	std::vector<UIElement*> children;

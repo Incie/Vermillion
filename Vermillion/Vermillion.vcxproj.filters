@@ -85,12 +85,6 @@
     <ClInclude Include="source\timer.h">
       <Filter>Source Files\timer</Filter>
     </ClInclude>
-    <ClInclude Include="source\uilayer.h">
-      <Filter>Source Files\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="source\uiview.h">
-      <Filter>Source Files\ui</Filter>
-    </ClInclude>
     <ClInclude Include="source\windowstate.h">
       <Filter>Source Files\window</Filter>
     </ClInclude>
@@ -130,6 +124,27 @@
     <ClInclude Include="source\event.h">
       <Filter>Source Files\event</Filter>
     </ClInclude>
+    <ClInclude Include="source\ui\uibutton.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\uielement.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\uiimage.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\uitext.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\uiview.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\uiview_horizontal.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\uiview_vertical.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\vermillion.cpp">
@@ -155,21 +170,6 @@
     </ClCompile>
     <ClCompile Include="source\timer.cpp">
       <Filter>Source Files\timer</Filter>
-    </ClCompile>
-    <ClCompile Include="source\uibutton.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="source\uielement.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="source\uiimage.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="source\uilayer.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="source\uitext.cpp">
-      <Filter>Source Files\ui</Filter>
     </ClCompile>
     <ClCompile Include="source\window.cpp">
       <Filter>Source Files\window</Filter>
@@ -221,6 +221,27 @@
     </ClCompile>
     <ClCompile Include="source\vermillion_activity.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\uibutton.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\uielement.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\uiimage.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\uitext.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\uiview.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\uiview_horizontal.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\uiview_vertical.cpp">
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

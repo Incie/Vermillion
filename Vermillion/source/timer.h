@@ -7,6 +7,7 @@ public:
 	Timer();
 	~Timer();
 
+	void Reset();
 	bool Tick();
 	double GetDelta();
 

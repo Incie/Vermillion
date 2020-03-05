@@ -1,6 +1,6 @@
 #include"pch.h"
-#include"uiview.h"
-#include"servicelocator.h"
+#include"uitext.h"
+#include"../servicelocator.h"
 
 
 UIText::UIText(const std::string& text)

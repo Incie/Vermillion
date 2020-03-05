@@ -2,6 +2,8 @@
 #include"..//icons/icons.h"
 #include"StatusBar.h"
 #include"servicelocator.h"
+#include"ui/uitext.h"
+#include"ui/uiimage.h"
 
 StatusBar::StatusBar()
 	: roundNumber(1)
@@ -11,17 +13,17 @@ StatusBar::StatusBar()
 	SetPosition(0, 0);
 
 	auto imageSize = glm::vec2(30, 30);
-	AddChild(vnew Image(imageSize, Icons::Get("element_ice")));
-	AddChild(vnew Image(imageSize, Icons::Get("element_fire")));
-	AddChild(vnew Image(imageSize, Icons::Get("element_earth")));
+	AddChild(vnew UIImage(imageSize, Icons::Get("element_ice")));
+	AddChild(vnew UIImage(imageSize, Icons::Get("element_fire")));
+	AddChild(vnew UIImage(imageSize, Icons::Get("element_earth")));
 	AddChild(vnew UIText("Round 1"));
-	AddChild(vnew Image(imageSize, Icons::Get("element_dark")));
-	AddChild(vnew Image(imageSize, Icons::Get("element_light")));
-	AddChild(vnew Image(imageSize, Icons::Get("element_wind")));
+	AddChild(vnew UIImage(imageSize, Icons::Get("element_dark")));
+	AddChild(vnew UIImage(imageSize, Icons::Get("element_light")));
+	AddChild(vnew UIImage(imageSize, Icons::Get("element_wind")));
 
 	int i = 0;
 	for(auto child : children) {
-		auto imageChild = dynamic_cast<Image*>(child);
+		auto imageChild = dynamic_cast<UIImage*>(child);
 		if(imageChild == nullptr)
 			continue;
 		

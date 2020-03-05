@@ -1,26 +1,26 @@
 #include"pch.h"
-#include"uiview.h"
-#include"..//render.h"
+#include"uiimage.h"
+#include"../render.h"
 
 
-Image::Image(const glm::vec2& size, const Texture* texture) 
+UIImage::UIImage(const glm::vec2& size, const Texture* texture) 
 	: texture(texture), color(glm::vec3(1.0f))
 {
 	SetSize(size.x, size.y);
 
 }
 
-Image::~Image()
+UIImage::~UIImage()
 {
 	texture = nullptr;
 }
 
-void Image::Render(ServiceLocator& Services)
+void UIImage::Render(ServiceLocator& Services)
 {
 	Render::Quad(position, size, *texture, color);
 }
 
-void Image::SetBrightness(float brightness)
+void UIImage::SetBrightness(float brightness)
 {
 	color.r = brightness;
 	color.g = brightness;

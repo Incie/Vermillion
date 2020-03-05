@@ -7,6 +7,7 @@
 #include"servicelocator.h"
 #include<Windows.h>
 
+
 CardSelect::CardSelect(PlayerDeck& cards, Texture& texture, std::function<void(const std::string&)> onclick)
 	: texture(texture), cardList(&cards)
 {

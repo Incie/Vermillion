@@ -1,10 +1,9 @@
 #include"pch.h"
 #include"uiview.h"
-#include"services.h"
-#include"windowstate.h"
+#include"../services.h"
+#include"../windowstate.h"
 #include"GL/glew.h"
-#include"render.h"
-#include<Windows.h>
+#include"../render.h"
 
 UIView::UIView()
 	: anchor(0), invalidated(true), backgroundColor(glm::vec3(1))
@@ -12,35 +11,35 @@ UIView::UIView()
 }
 
 UIView::~UIView() {
-	for (auto child : children)
+	for(auto child : children)
 		delete child;
 	children.clear();
 }
 
-bool UIView::HandleInput(const InputService & inputService)
+bool UIView::HandleInput(const InputService& inputService)
 {
 	const auto& mouseposition = inputService.GetMousePosition();
 
-	if (!IsPointInSide(mouseposition)) {
+	if(!IsPointInSide(mouseposition)) {
 		return false;
 	}
 
 	const auto windowLocalPosition = mouseposition - position;
-	for (auto child : children) {
+	for(auto child : children) {
 
-		if (child->State() == UIElement::UIState::DISABLED)
+		if(child->State() == UIElement::UIState::DISABLED)
 			continue;
 
 		child->SetState(UIElement::UIState::ENABLED);
 
-		if (child->IsPointInSide(windowLocalPosition)) {
+		if(child->IsPointInSide(windowLocalPosition)) {
 
 			//if( has children )
 			 // child->HandleInput( use_this_OnEvent() );
 
 			child->SetState(UIElement::UIState::HOVER);
 
-			if (inputService.KeyOnce(VK_LBUTTON)) {
+			if(inputService.KeyOnce(VKey_LBUTTON)) {
 				child->SetState(UIElement::UIState::ACTIVATED);
 				OnEvent(UIView::WindowEvent::CLICK, child->Id());
 			}
@@ -50,22 +49,22 @@ bool UIView::HandleInput(const InputService & inputService)
 	return true;
 }
 
-void UIView::Resize(const glm::vec2 & windowSize, const TextService& text)
+void UIView::Resize(const glm::vec2& windowSize, const TextService& text)
 {
 	Measure(windowSize, text);
 
-	if (anchor & WindowAnchor::LEFT && anchor & WindowAnchor::RIGHT)
+	if(anchor & WindowAnchor::LEFT && anchor & WindowAnchor::RIGHT)
 		position.x = windowSize.x * 0.5f - size.x * 0.5f;
-	else if (anchor & WindowAnchor::LEFT)
+	else if(anchor & WindowAnchor::LEFT)
 		position.x = 0.0f;
-	else if (anchor & WindowAnchor::RIGHT)
+	else if(anchor & WindowAnchor::RIGHT)
 		position.x = windowSize.x - size.x;
 
-	if (anchor & WindowAnchor::TOP && anchor & WindowAnchor::BOTTOM)
+	if(anchor & WindowAnchor::TOP && anchor & WindowAnchor::BOTTOM)
 		position.y = windowSize.y * 0.5f - size.y * 0.5f;
-	else if (anchor & WindowAnchor::TOP)
+	else if(anchor & WindowAnchor::TOP)
 		position.y = 0.0f;
-	else if (anchor & WindowAnchor::BOTTOM)
+	else if(anchor & WindowAnchor::BOTTOM)
 		position.y = windowSize.y - size.y;
 
 	invalidated = false;
@@ -73,33 +72,33 @@ void UIView::Resize(const glm::vec2 & windowSize, const TextService& text)
 
 void UIView::Update(float deltaTime, ServiceLocator& services)
 {
-	if (active == false)
+	if(active == false)
 		return;
 }
 
 void UIView::StartRender()
 {
-	if (active == false)
+	if(active == false)
 		return;
 
 	GLCHECK(glPushMatrix());
 	GLCHECK(glTranslatef(position.x, position.y, 0.0f));
 }
 
-void UIView::Render(ServiceLocator & Services)
+void UIView::Render(ServiceLocator& Services)
 {
-	if (!active)
+	if(!active)
 		return;
 
 	Render::Quad(0, 0, size.x, size.y, backgroundColor);
 
-	for (auto child : children)
+	for(auto child : children)
 		child->Render(Services);
 }
 
 void UIView::EndRender()
 {
-	if (active == false)
+	if(active == false)
 		return;
 
 	GLCHECK(glPopMatrix());

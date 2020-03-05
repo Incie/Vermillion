@@ -1,7 +1,7 @@
 #pragma once
 
 #include"servicelocator.h"
-#include"uiview.h"
+#include"ui/uiview.h"
 #include"windowstate.h"
 
 class ActivityInterface;

@@ -74,7 +74,7 @@ ImageLoaderStatus PNGLoader::Read(const std::string& filepath)
 	unsigned char header[8];    // 8 is the maximum size that can be checked
 	fread(header, 1, 8, fp);
 	if (png_sig_cmp(header, 0, 8)) {
-		Log::Error(LOGTAG, fmt::format("Png Headercheck: Image ({0}) is not a valid PNG", filepath));
+		Log::Error(LOGTAG, fmt::format("Png Headercheck: UIImage ({0}) is not a valid PNG", filepath));
 		return ImageLoaderStatus::INVALID_IMAGE;
 	}
 	

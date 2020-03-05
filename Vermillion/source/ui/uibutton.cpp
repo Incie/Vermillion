@@ -1,17 +1,17 @@
 #include"pch.h"
-#include"uiview.h"
+#include"uibutton.h"
 
-#include"render.h"
-#include"servicelocator.h"
+#include"../render.h"
+#include"../servicelocator.h"
 
-Button::Button()
+UIButton::UIButton()
 	: textSize(20.0f)
 {
 	SetColor(glm::vec3(0.5f));
 	SetState(state);
 }
 
-Button::Button(const std::string& text, unsigned int textSize, int id)
+UIButton::UIButton(const std::string& text, unsigned int textSize, int id)
 	: text(text), textSize( static_cast<float>(textSize) )
 {
 	SetId(id);
@@ -19,11 +19,11 @@ Button::Button(const std::string& text, unsigned int textSize, int id)
 	SetState(state);
 }
 
-Button::~Button()
+UIButton::~UIButton()
 {
 }
 
-glm::vec2 Button::Measure(const TextService& text)
+glm::vec2 UIButton::Measure(const TextService& text)
 {
 	float textWidth = text.CalculateWidth(this->text, static_cast<unsigned int>(textSize));
 
@@ -33,14 +33,14 @@ glm::vec2 Button::Measure(const TextService& text)
 	return size + margin * 2.0f;
 }
 
-void Button::Render(ServiceLocator& Services)
+void UIButton::Render(ServiceLocator& Services)
 {
 	Render::Quad(position, size, color);
 	auto center = Center();
 	Services.Text().Print(center.x, center.y, text, (unsigned int)textSize, glm::vec3(textColor.x, textColor.y, textColor.z), true);
 }
 
-void Button::SetColor(const glm::vec3& background)
+void UIButton::SetColor(const glm::vec3& background)
 {
 	color = background;
 	backgroundColor = background;
@@ -49,7 +49,7 @@ void Button::SetColor(const glm::vec3& background)
 	disabledColor = background * 0.7f;
 }
 
-void Button::SetState(UIState newState)
+void UIButton::SetState(UIState newState)
 {
 	if (newState == state)
 		return;
@@ -77,7 +77,7 @@ void Button::SetState(UIState newState)
 	}
 }
 
-void Button::SetTextColor(const glm::vec3& textColor)
+void UIButton::SetTextColor(const glm::vec3& textColor)
 {
 	this->textColor = textColor;
 	this->enabledTextColor = textColor;

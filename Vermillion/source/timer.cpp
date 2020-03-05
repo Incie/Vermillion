@@ -22,6 +22,11 @@ Timer::~Timer()
 {
 }
 
+void Timer::Reset()
+{
+	timelast = NowAsMicroseconds();
+}
+
 bool Timer::Tick()
 {
 	long long now = NowAsMicroseconds();
