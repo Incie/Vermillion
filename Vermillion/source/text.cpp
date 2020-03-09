@@ -1,6 +1,6 @@
 #include"pch.h"
 
-#include "text.h"
+#include"text.h"
 #include"ft2build.h"
 #include"freetype\freetype.h"
 #include"log.h"
@@ -10,21 +10,12 @@
 #include"GL\glew.h"
 #include"glm\glm.hpp"
 
+void RenderFaceToTextures(FT_Face& face, std::map<char, Character>& characters);
 
-void RenderFaceToTextures(FT_Face &face);
-
-struct Character {
-	GLuint     TextureID;  // ID handle of the glyph texture
-	glm::ivec2 Size;       // Size of glyph
-	glm::ivec2 Bearing;    // Offset from baseline to left/top of glyph
-	int        Advance;    // Offset to advance to next glyph
-};
-
-std::map<GLchar, Character> characters;
-
-GLSLProgram fontProgram;
-
-unsigned int font_face_rendered_height = 48;
+Text::Text()
+	: font_face_rendered_height(48)
+{
+}
 
 void Text::Init()
 {
@@ -37,25 +28,26 @@ void Text::Init()
 	}
 
 	//std::string fontName{ "fonts/PirataOne-Gloomhaven.ttf" };
-	std::string fontName{ "fonts/Roboto-Black.ttf" };
-
+	//std::string fontName{ "fonts/Roboto-Black.ttf" };
+	std::string fontName{"chesspieces_cases.ttf"};
+	auto path = FilePath{Paths::Fonts, fontName};
 	FT_Face face;
-	if (FT_New_Face(ft, fontName.c_str(), 0, &face)) {
+	if (FT_New_Face(ft, path.tochar(), 0, &face)) {
 		Log::Error("Freetype", "Failed to load font");
+		throw std::string(fmt::format("Failed to load font '{}'", fontName));
 		return;
 	}
 
 	FT_Set_Pixel_Sizes(face, 0, font_face_rendered_height);
 
 	Log::Info("Freetype", "Rendering Font");
-	RenderFaceToTextures(face);
+	RenderFaceToTextures(face, characters);
 	Log::Info("Freetype", "Rendered Font");
 
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
 
-
-	fontProgram.LoadProgram("shaders/helloworld");
+	fontProgram.LoadProgram("helloworld");
 }
 
 void Text::Deinit()
@@ -80,7 +72,7 @@ float Text::CalculateWidth(const std::string& text, unsigned int fontHeight) con
 
 	for (std::string::const_iterator c = text.begin(); c != text.end(); c++)
 	{
-		const Character& ch = characters[*c];
+		const Character& ch = characters.at(*c);
 
 		// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
 		textWidth += static_cast<float>(ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
@@ -140,7 +132,7 @@ void Text::PrintText(double x, double y, const std::string& text, unsigned int f
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
 	{
-		Character ch = characters[*c];
+		Character ch = characters.at(*c);
 
 		double xpos = x + ch.Bearing.x * scale;
 		double ypos = y - ((double)-ch.Size.y + (double)ch.Bearing.y) * scale;
@@ -187,8 +179,7 @@ void Text::PrintCenter(const double x, const double y, const std::string& text, 
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
 	{
-		const Character &ch = characters[*c];
-
+		const Character& ch = characters.at(*c);
 		// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
 		w += (ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
 	}
@@ -196,7 +187,7 @@ void Text::PrintCenter(const double x, const double y, const std::string& text, 
 	Print(x - w * 0.5, centerY, text, fontHeight, color);
 }
 
-void RenderFaceToTextures(FT_Face &face)
+void RenderFaceToTextures(FT_Face &face, std::map<char, Character>& characters)
 {
 	int previousUnpackAlignment = -1;
 	glGetIntegerv(GL_UNPACK_ALIGNMENT, &previousUnpackAlignment);
@@ -205,7 +196,7 @@ void RenderFaceToTextures(FT_Face &face)
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glEnable(GL_TEXTURE_2D);
 
-	for (int c = 0; c < 128; ++c) {
+	for (int c = 0; c < 256; ++c) {
 		// Load character glyph 
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
 		{

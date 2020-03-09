@@ -97,6 +97,21 @@ void Render::Quad(float x, float y, float w, float h, const glm::vec3& color)
 	glPopMatrix();
 }
 
+void Render::Quads(const glm::vec2* coords, const glm::vec3* colors, int vertexCount)
+{
+	glDisable(GL_TEXTURE_2D);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+
+	glVertexPointer(2, GL_FLOAT, 0, &coords->x);
+	glColorPointer(3, GL_FLOAT, 0, &colors->x);
+
+	glDrawArrays(GL_QUADS, 0, vertexCount);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+}
+
 void Render::Rectangle(const glm::vec2& p0, const glm::vec2& p1, const glm::vec2& p2, const glm::vec2& p3, const glm::vec3& color)
 {
 	glPushMatrix();

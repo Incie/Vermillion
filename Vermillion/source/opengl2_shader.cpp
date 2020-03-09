@@ -95,30 +95,30 @@ void GLSLProgram::UnloadProgram()
 	GLCHECK(glDeleteProgram(programId))
 }
 
-void GLSLProgram::SetUniform(const std::string & uniformname, int value)
+void GLSLProgram::SetUniform(const std::string & uniformname, int value) const
 {
 	auto uniformlocation = glGetUniformLocation(programId, uniformname.c_str());
 	GLCHECK(glUniform1i(uniformlocation, value))
 }
 
-void GLSLProgram::SetUniform(const std::string & uniformname, const glm::vec4 & color)
+void GLSLProgram::SetUniform(const std::string & uniformname, const glm::vec4 & color) const
 {
 	auto uniformlocation = glGetUniformLocation(programId, uniformname.c_str());
 	GLCHECK(glUniform4f(uniformlocation, color.r, color.g, color.b, color.a))
 }
 
-void GLSLProgram::SetUniform(const std::string & uniformname, const glm::vec3& color)
+void GLSLProgram::SetUniform(const std::string & uniformname, const glm::vec3& color) const
 {
 	auto uniformlocation = glGetUniformLocation(programId, uniformname.c_str());
 	GLCHECK(glUniform4f(uniformlocation, color.r, color.g, color.b, 1.0f))
 }
 
-void GLSLProgram::Use()
+void GLSLProgram::Use() const
 {
 	GLCHECK(glUseProgram(programId))
 }
 
-void GLSLProgram::NoProgram()
+void GLSLProgram::NoProgram() const
 {
 	GLCHECK(glUseProgram(0))
 }

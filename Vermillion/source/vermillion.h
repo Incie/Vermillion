@@ -14,7 +14,7 @@ class ActivityInterface {
 public:
 	ActivityInterface();
 
-	void ActivityFactory(std::function<Activity * (const std::string&)> activityFactory);
+	void RegisterActivityFactory(std::function<Activity * (const std::string&)> activityFactory);
 	void StartActivity(const std::string& activityId);
 
 	Activity* ActiveActivity();
@@ -49,7 +49,7 @@ private:
 	GL2Renderer renderer;
 	InputManager inputManager;
 
-	TextSDF text;
+	Text text;
 	TextureManagerGL textureManager;
 	ServiceLocator serviceLocator;
 	Timer renderTimer;

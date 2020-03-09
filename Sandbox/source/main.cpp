@@ -7,6 +7,7 @@
 
 #include"sandbox.h"
 #include"menutest.h"
+#include"activitychess.h"
 
 int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ LPSTR cmdLine, _In_ int nShow)
 {
@@ -16,13 +17,16 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	try {
 		auto vermillion = Vermillion(hInstance);
 
-		vermillion.ActivityFactory([](const std::string& activityId) -> Activity* {
+		vermillion.RegisterActivityFactory([](const std::string& activityId) -> Activity* {
 
 			if (activityId == "MenuTest")
 				return new MenuTest();
 
 			if (activityId == "Sandbox")
 				return new Sandbox();
+
+			if(activityId == "ActivityChess")
+				return new ActivityChess();
 
 			throw std::string(fmt::format("Could not find activity by id '{}'", activityId));
 			}

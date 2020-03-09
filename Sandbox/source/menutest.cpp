@@ -26,7 +26,7 @@ void MenuTest::Initialize()
 	auto vw = new VerticalWindow([this](int id) {
 		if(id == 1)
 		{
-			StartActivity("Sandbox");
+			StartActivity("ActivityChess");
 			return;
 		}
 
@@ -75,5 +75,19 @@ void MenuTest::Update(float delta)
 
 void MenuTest::Render()
 {
+	std::string pawns = "pppppppp";
+	std::string notpawns = "rnbqkbnr";
+
+	std::string pawns2 = "oooooooo";
+	std::string notpawns2 = "tmvwlvmt";
+
+	auto& text = Services().Text();
+	text.Print(25, 440, notpawns2, 30, Colors::White);
+	text.Print(25, 470, pawns2, 30, Colors::White);
+
+	text.Print(25, 500, pawns, 30, Colors::White);
+	text.Print(25, 530, notpawns, 30, Colors::White);
+	text.Print(25, 400, "VERMILLION", 26, glm::vec3(1, 1, 1));
+
 	RenderUI();
 }

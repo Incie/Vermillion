@@ -7,6 +7,9 @@
     <Filter Include="Source\Activity">
       <UniqueIdentifier>{7a95c54f-fc01-4cfe-ad14-af9339360e60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\chess">
+      <UniqueIdentifier>{e2579970-53b9-44c0-93d7-1bd97e8fc81c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -18,6 +21,12 @@
     <ClCompile Include="source\menutest.cpp">
       <Filter>Source\Activity</Filter>
     </ClCompile>
+    <ClCompile Include="source\activitychess.cpp">
+      <Filter>Source\Activity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\chessboard.cpp">
+      <Filter>Source\chess</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\sandbox.h">
@@ -25,6 +34,12 @@
     </ClInclude>
     <ClInclude Include="source\menutest.h">
       <Filter>Source\Activity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\activitychess.h">
+      <Filter>Source\Activity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\chessboard.h">
+      <Filter>Source\chess</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

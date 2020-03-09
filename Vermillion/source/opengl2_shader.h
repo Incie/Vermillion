@@ -33,12 +33,12 @@ public:
 	bool LoadProgram(const std::string& shader);
 	void UnloadProgram();
 
-	void SetUniform(const std::string& uniformname, int value);
-	void SetUniform(const std::string& uniformname, const glm::vec4& color);
-	void SetUniform(const std::string& uniformname, const glm::vec3& color);
+	void SetUniform(const std::string& uniformname, int value) const;
+	void SetUniform(const std::string& uniformname, const glm::vec4& color) const;
+	void SetUniform(const std::string& uniformname, const glm::vec3& color) const;
 
-	void Use();
-	void NoProgram();
+	void Use() const;
+	void NoProgram() const;
 
 private:
 	int programId;

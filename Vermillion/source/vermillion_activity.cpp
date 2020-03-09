@@ -9,7 +9,7 @@ ActivityInterface::ActivityInterface()
 	toBeStarted = "";
 }
 
-void ActivityInterface::ActivityFactory(std::function<Activity* (const std::string&)> activityFactory)
+void ActivityInterface::RegisterActivityFactory(std::function<Activity* (const std::string&)> activityFactory)
 {
 	TRACE("ActivityFactory");
 	this->activityFactory = activityFactory;

@@ -3,12 +3,22 @@
 #include"services.h"
 #include"glm/vec3.hpp"
 #include"glm/vec4.hpp"
+#include"opengl2_shader.h"
+#include<map>
 
 class TextureService;
+
+struct Character {
+	unsigned int TextureID;  // ID handle of the glyph texture
+	glm::ivec2   Size;       // Size of glyph
+	glm::ivec2   Bearing;    // Offset from baseline to left/top of glyph
+	int          Advance;    // Offset to advance to next glyph
+};
 
 class Text : public TextService
 {
 public:
+	Text();
 
 	void Init();
 	void Deinit();
@@ -21,6 +31,10 @@ public:
 
 	float CalculateWidth(const std::string& text, unsigned int fontHeight) const;
 
+private:
+	unsigned int font_face_rendered_height;
+	std::map<char, Character> characters;
+	GLSLProgram fontProgram;
 };
 
 

@@ -149,11 +149,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\activitychess.cpp" />
+    <ClCompile Include="source\chessboard.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\menutest.cpp" />
     <ClCompile Include="source\sandbox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\activitychess.h" />
+    <ClInclude Include="source\chessboard.h" />
     <ClInclude Include="source\menutest.h" />
     <ClInclude Include="source\sandbox.h" />
   </ItemGroup>
