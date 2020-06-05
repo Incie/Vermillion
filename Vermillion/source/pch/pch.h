@@ -22,6 +22,7 @@
 #include<vector>
 #include<string>
 #include<sstream>
+#include<memory>
 #include<algorithm>
 #include<map>
 #include<set>

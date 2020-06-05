@@ -1,6 +1,7 @@
 #pragma once
 
 #include"activity.h"
+#include"chessboard.h"
 
 class ActivityChess : public Activity {
 public:
@@ -10,4 +11,7 @@ public:
 	void Deinitialize() override;
 	void Update(float delta) override;
 	void Render() override;
+
+private:
+	ChessBoard chessboard;
 };

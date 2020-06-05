@@ -8,27 +8,28 @@
 #include"textures.h"
 #include"timer.h"
 #include<functional>
+#include<memory>
 
 //todo: move class definition to another file
 class ActivityInterface {
 public:
 	ActivityInterface();
 
-	void RegisterActivityFactory(std::function<Activity * (const std::string&)> activityFactory);
+	void RegisterActivityFactory(std::function<std::unique_ptr<Activity> (const std::string&)> activityFactory);
 	void StartActivity(const std::string& activityId);
 
-	Activity* ActiveActivity();
+	std::unique_ptr<Activity>& ActiveActivity();
 
 protected:
-	void StartActivityNow(Activity* activity, ServiceLocator& serviceLocator);
+	void StartActivityNow(std::unique_ptr<Activity>& activity, ServiceLocator& serviceLocator);
 	bool HasQueuedActivity();
 	void SetupQueuedActivity(ServiceLocator& serviceLocator);
 	void DeinitializeActivities();
 
 private:
 	std::string toBeStarted;
-	std::vector<Activity*> activities;
-	std::function<Activity* (const std::string&)> activityFactory;
+	std::vector<std::unique_ptr<Activity>> activities;
+	std::function<std::unique_ptr<Activity> (const std::string&)> activityFactory;
 };
 
 
@@ -36,7 +37,7 @@ class Vermillion : public ActivityInterface
 {
 public:
 	Vermillion(HINSTANCE hInstance);
-	Vermillion(Activity* activity, HINSTANCE hInstance);
+	Vermillion(std::unique_ptr<Activity> activity, HINSTANCE hInstance);
 	~Vermillion();
 
 	void InitializeEngine();

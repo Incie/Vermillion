@@ -16,7 +16,7 @@ Vermillion::Vermillion(HINSTANCE hInstance)
 	InitializeEngine();
 }
 
-Vermillion::Vermillion(Activity* activity, HINSTANCE hInstance)
+Vermillion::Vermillion(std::unique_ptr<Activity> activity, HINSTANCE hInstance)
 	: hInstance(hInstance)
 {
 	TRACE(LogTag)
@@ -61,7 +61,7 @@ void Vermillion::Run()
 			if(HasQueuedActivity())
 				SetupQueuedActivity(serviceLocator);
 
-			auto runningActivity = ActiveActivity();
+			auto& runningActivity = ActiveActivity();
 
 			if (WindowState::Changed()) {
 				runningActivity->Resize(WindowState::Size());

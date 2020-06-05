@@ -3,39 +3,10 @@
 #include"services.h"
 #include"render.h"
 
+
 ChessBoard::ChessBoard()
 {
-	board = new glm::vec2[64 * 4];
-	colors = new glm::vec3[64 * 4];
-
-	float tileSize = 50.0f;
-
-	glm::vec3 black = glm::vec3(0.2f), 
-			  white = glm::vec3(0.8f);
-	glm::vec3 color = black;
-	int colorCounter = 0;
-
-	for(int y = 0; y < 8; ++y) {
-		for(int x = 0; x < 8; ++x) {
-			if(colorCounter % 2 == y % 2)
-				color = black;
-			else color = white;
-			colorCounter++;
-
-			int i = x * 4 + y * 4 * 8;
-			float tX = x * tileSize;
-			float tY = y * tileSize;
-			board[i+0] = glm::vec2(tX, tY);
-			board[i+1] = glm::vec2(tX+tileSize, tY);
-			board[i+2] = glm::vec2(tX + tileSize, tY + tileSize);
-			board[i+3] = glm::vec2(tX, tY + tileSize);
-
-			colors[i+0] = color;
-			colors[i+1] = color;
-			colors[i+2] = color;
-			colors[i+3] = color;
-		}
-	}
+	GenerateBoard();
 
 	SpawnPiece({0,0}, ChessTeam::Black, ChessPieceType::Rook);
 	SpawnPiece({7,0}, ChessTeam::Black, ChessPieceType::Rook);
@@ -43,8 +14,8 @@ ChessBoard::ChessBoard()
 	SpawnPiece({6,0}, ChessTeam::Black, ChessPieceType::Knight);
 	SpawnPiece({2,0}, ChessTeam::Black, ChessPieceType::Bishop);
 	SpawnPiece({5,0}, ChessTeam::Black, ChessPieceType::Bishop);
-	SpawnPiece({3,0}, ChessTeam::Black, ChessPieceType::King);
-	SpawnPiece({4,0}, ChessTeam::Black, ChessPieceType::Queen);
+	SpawnPiece({4,0}, ChessTeam::Black, ChessPieceType::King);
+	SpawnPiece({3,0}, ChessTeam::Black, ChessPieceType::Queen);
 	for(int i = 0; i < 8; ++i) {
 		SpawnPiece({i,1}, ChessTeam::Black, ChessPieceType::Pawn);
 	}
@@ -55,11 +26,14 @@ ChessBoard::ChessBoard()
 	SpawnPiece({6,7}, ChessTeam::White, ChessPieceType::Knight);
 	SpawnPiece({2,7}, ChessTeam::White, ChessPieceType::Bishop);
 	SpawnPiece({5,7}, ChessTeam::White, ChessPieceType::Bishop);
-	SpawnPiece({3,7}, ChessTeam::White, ChessPieceType::King);
-	SpawnPiece({4,7}, ChessTeam::White, ChessPieceType::Queen);
+	SpawnPiece({4,7}, ChessTeam::White, ChessPieceType::King);
+	SpawnPiece({3,7}, ChessTeam::White, ChessPieceType::Queen);
 	for(int i = 0; i < 8; ++i) {
 		SpawnPiece({i,6}, ChessTeam::White, ChessPieceType::Pawn);
 	}
+
+	clickedPiece.x = -1;
+	clickedSquare.x = -1;
 }
 
 ChessBoard::~ChessBoard()
@@ -70,22 +44,299 @@ ChessBoard::~ChessBoard()
 	pieces.clear();
 }
 
+bool ChessBoard::HasSelection() 
+{
+	return (clickedSquare.x > -1);
+}
+
+void ChessBoard::HighlightPieceMoves(const ChessPiece& piece)
+{
+	if(piece.type == ChessPieceType::Pawn) {
+		auto direction = 1; //black 
+		if(piece.team == ChessTeam::White)
+			direction = -1;
+
+		auto coord = glm::ivec2{piece.coords.x, piece.coords.y + 1 * direction};
+		if(HighlightIfEmpty(coord) ) {
+			auto coord2 = glm::ivec2{piece.coords.x, piece.coords.y + 2 * direction};
+
+			constexpr int whitePawnStart = 6;
+			constexpr int blackPawnStart = 1;
+			if((piece.coords.y == whitePawnStart && piece.team == ChessTeam::White) || (piece.coords.y == blackPawnStart && piece.team == ChessTeam::Black)) {
+				HighlightIfEmpty(coord2);
+			}
+		}
+
+		HighlightIfNotEmpty(piece.coords + glm::ivec2{1, 1}, piece);
+		HighlightIfNotEmpty(piece.coords + glm::ivec2{-1, 1}, piece);
+		return;
+	}
+
+	if(piece.type == ChessPieceType::Knight) {
+		std::vector<glm::ivec2> knightMoves{{2, 1}, {2,-1}, {-2,1}, {-2,-1}, {1,2}, {-1, 2}, {1, -2}, {-1,-2}};
+		for(auto& km : knightMoves) {
+			if(!HighlightIfEmpty(piece.coords + km)) {
+				HighlightIfNotEmpty(piece.coords + km, piece);
+			}
+		}
+
+		return;
+	}
+
+	if(piece.type == ChessPieceType::King) {
+		std::vector<glm::ivec2> kingMoves{{1,0},{-1,0},{1,1}, {0,1}, {-1,1}, {1,-1}, {0,-1}, {-1,-1}};
+		for(auto& km : kingMoves) {
+			if(!HighlightIfEmpty(piece.coords + km)) {
+				HighlightIfNotEmpty(piece.coords + km, piece);
+			}
+		}
+		return;
+	}
+
+	int maxStride = 8;
+	std::vector<glm::ivec2> directions;
+
+	if(piece.type == ChessPieceType::Bishop) {
+		directions.emplace_back(glm::ivec2{-1,-1});
+		directions.emplace_back(glm::ivec2{ 1,-1});
+		directions.emplace_back(glm::ivec2{ 1, 1});
+		directions.emplace_back(glm::ivec2{-1, 1});
+	} 
+	if(piece.type == ChessPieceType::Queen) {
+		directions.emplace_back(glm::ivec2{-1,-1});
+		directions.emplace_back(glm::ivec2{1,-1});
+		directions.emplace_back(glm::ivec2{1, 1});
+		directions.emplace_back(glm::ivec2{-1, 1});
+		directions.emplace_back(glm::ivec2{0,-1});
+		directions.emplace_back(glm::ivec2{0, 1});
+		directions.emplace_back(glm::ivec2{1, 0});
+		directions.emplace_back(glm::ivec2{-1, 0});
+	}
+	if(piece.type == ChessPieceType::Rook) {
+		directions.emplace_back(glm::ivec2{ 0,-1});
+		directions.emplace_back(glm::ivec2{ 0, 1});
+		directions.emplace_back(glm::ivec2{ 1, 0});
+		directions.emplace_back(glm::ivec2{-1, 0});
+	}
+
+	for(auto& d : directions) {
+		HighlightUntilHit(piece.coords, d, piece, maxStride);
+	}
+}
+
+bool ChessBoard::HighlightIfEmpty(const glm::ivec2& coord)
+{
+	auto piece = GetPieceAt(coord);
+
+	if(piece == nullptr) {
+		auto pm = PossibleMove{coord, CenterOfTileAt(coord), glm::vec3(1,1,0), false};
+		possibleMoves.emplace_back(pm);
+		return true;
+	}
+
+	return false;
+}
+
+bool ChessBoard::HighlightIfNotEmpty(const glm::ivec2& coord, const ChessPiece& p)
+{
+	auto piece = GetPieceAt(coord);
+
+	if(piece != nullptr && p.team != piece->team) {
+		auto pm = PossibleMove{coord, CenterOfTileAt(coord), glm::vec3(1,0,0), false};
+		possibleMoves.emplace_back(pm);
+		return true;
+	}
+
+	return false;
+}
+
+void ChessBoard::HighlightUntilHit(const glm::ivec2& fromCoord, const glm::ivec2& direction, const ChessPiece& piece, int maxLength)
+{
+	int strides = 1;
+	auto coord = fromCoord + direction;
+	while(this->InsideBoardBounds(coord)) {
+		if(!HighlightIfEmpty(coord)) {
+			HighlightIfNotEmpty(coord, piece);
+			return;
+		}
+
+		coord += direction;
+		strides++;
+		if(strides == maxLength)
+			return;
+	}
+}
+
+
+void ChessBoard::Release(const glm::vec2& mousePosition)
+{
+	if(!HasSelection())
+		return;
+
+	auto boardCoords = ScreenToBoardCoordinates(mousePosition);
+
+
+	bool found = false;
+	for(auto& pm : possibleMoves) {
+		if(pm.coords == boardCoords)
+			found = true;
+	}
+
+	if(!found) {
+		clickedSquare.x = -1;
+		clickedPiece.x = -1;
+		possibleMoves.clear();
+		return;
+	}
+
+
+	auto piece = GetPieceAt(boardCoords);
+	if(piece != nullptr) {
+		//capture
+		auto removed = std::remove_if(pieces.begin(), pieces.end(), [&piece](const ChessPiece& p) { return p.coords == piece->coords; });
+		pieces.erase(removed);
+	}
+
+	auto pieceToMove = GetPieceAt(clickedPiece);
+	pieceToMove->coords = boardCoords;
+	pieceToMove->position = glm::vec2(static_cast<float>(boardCoords.x) * tileSize, static_cast<float>(boardCoords.y) * tileSize) + glm::vec2(tileSize * 0.5f);
+
+	clickedSquare.x = -1;
+	clickedPiece.x = -1;
+	possibleMoves.clear();
+}
+
+void ChessBoard::Click(const glm::vec2& mousePosition)
+{
+	auto boardCoords = ScreenToBoardCoordinates(mousePosition);
+
+	if(!InsideBoardBounds(boardCoords))
+		return;
+
+	if(HasSelection())
+		return;
+
+	auto piece = GetPieceAt(boardCoords);
+
+	if(piece == nullptr)
+		return;
+
+	clickedSquare = piece->position - 0.5f*tileSize + 1.0f;
+	clickedPiece = piece->coords;
+	hover.x = -1;
+
+	HighlightPieceMoves(*piece);
+}
+
+void ChessBoard::Update(const glm::vec2& mousePosition)
+{
+	if(clickedSquare.x > -1)
+		return;
+
+	hover.x = -1;
+	if(PointInBounds(mousePosition)) {
+		auto coord = glm::floor(mousePosition / tileSize) * tileSize;
+
+		if(!HasSelection()) {
+			hover = coord + glm::vec2(1.0f);
+
+			//if isPiece
+			 // soft highlight
+		}
+	}
+}
 
 void ChessBoard::Render(const TextService& text)
 {
-	Render::Quads(board, colors, 64 * 4);
+	constexpr auto vertexCount = 64 * 4;
+	Render::Quads(board, colors, vertexCount);
 
+	if(hover.x >= 0.0f) {
+		Render::Quad(hover, glm::vec2(tileSize - 2.0f), Colors::Red);
+	}
+
+	if(clickedSquare.x >= 0.0f )
+		Render::Quad(clickedSquare, glm::vec2(tileSize - 2.0f), Colors::Green);
+
+	constexpr auto fontSize = 35;
 	for(auto& p : pieces) {
-		std::string s(1, (unsigned char)p.type);
-		text.Print(p.position.x, p.position.y, s, 35, p.color, true);
+		std::string s(1, static_cast<char>(p.type));
+		text.Print(p.position.x, p.position.y, s, fontSize, p.color, true);
+	}
+
+
+	for(auto& m : possibleMoves) {
+		Render::Circle(m.tileCenter, 5.0f, m.color);
+	}
+}
+
+glm::vec2 ChessBoard::CenterOfTileAt(const glm::ivec2& pos)
+{
+	return glm::vec2(pos.x*tileSize + tileSize*0.5f, pos.y * tileSize + tileSize * 0.5f);
+}
+
+ChessPiece* ChessBoard::GetPieceAt(const glm::ivec2& boardCoordinate)
+{
+	for(auto& piece : pieces) {
+		if(piece.coords == boardCoordinate)
+			return &piece;
+	}
+
+	return nullptr;
+}
+
+glm::ivec2 ChessBoard::ScreenToBoardCoordinates(const glm::vec2& screenCoords)
+{
+	auto fcoords = glm::floor(screenCoords / tileSize);
+	return glm::ivec2(static_cast<int>(fcoords.x), static_cast<int>(fcoords.y));
+}
+
+void ChessBoard::GenerateBoard()
+{
+	constexpr int tileCount = 64;
+	constexpr int vertexCount = tileCount * 4;
+	board = new glm::vec2[vertexCount];
+	colors = new glm::vec3[vertexCount];
+
+	tileSize = 50.0f;
+
+	size = glm::vec2(8, 8) * 50.0f;
+
+	glm::vec3 black = glm::vec3(0.4f);
+	glm::vec3 white = glm::vec3(0.8f);
+
+	glm::vec3 color = black;
+	int colorCounter = 0;
+
+	for(int y = 0; y < 8; ++y) {
+		for(int x = 0; x < 8; ++x) {
+			if(colorCounter % 2 == y % 2)
+				color = black;
+			else
+				color = white;
+
+			colorCounter++;
+
+			int i = x * 4 + y * 4 * 8;
+			float tX = x * tileSize;
+			float tY = y * tileSize;
+			board[i + 0] = glm::vec2(tX, tY);
+			board[i + 1] = glm::vec2(tX + tileSize, tY);
+			board[i + 2] = glm::vec2(tX + tileSize, tY + tileSize);
+			board[i + 3] = glm::vec2(tX, tY + tileSize);
+
+			colors[i + 0] = color;
+			colors[i + 1] = color;
+			colors[i + 2] = color;
+			colors[i + 3] = color;
+		}
 	}
 }
 
 void ChessBoard::SpawnPiece(const glm::vec2& coordinate, ChessTeam team, ChessPieceType type)
 {
-	pieces.push_back(ChessPiece());
+	pieces.emplace_back(ChessPiece());
 	auto& piece = pieces.back();
-
 
 	piece.coords = coordinate;
 	piece.team = team;
@@ -96,4 +347,20 @@ void ChessBoard::SpawnPiece(const glm::vec2& coordinate, ChessTeam team, ChessPi
 		piece.color = glm::vec3(0);
 	if(piece.team == ChessTeam::White)
 		piece.color = glm::vec3(1);
+}
+
+bool ChessBoard::InsideBoardBounds(const glm::ivec2& coords)
+{
+	if(coords.x < 0 || coords.y < 0)
+		return false;
+
+	if(coords.x > 7 || coords.y > 7)
+		return false;
+
+	return true;
+}
+
+bool ChessBoard::PointInBounds(const glm::vec2& coords)
+{
+	return (coords.x >= 0.0f && coords.y >= 0.0f && coords.x < size.x && coords.y < size.y);
 }

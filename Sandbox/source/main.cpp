@@ -1,5 +1,7 @@
 #include<Windows.h>
 #include<crtdbg.h>
+#include<memory>
+
 #include"log.h"
 
 #include"fmt/format.h"
@@ -17,16 +19,15 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 	try {
 		auto vermillion = Vermillion(hInstance);
 
-		vermillion.RegisterActivityFactory([](const std::string& activityId) -> Activity* {
-
-			if (activityId == "MenuTest")
-				return new MenuTest();
+		vermillion.RegisterActivityFactory([](const std::string& activityId) -> std::unique_ptr<Activity> {
+			if(activityId == "MenuTest")
+				return std::make_unique<MenuTest>();
 
 			if (activityId == "Sandbox")
-				return new Sandbox();
+				return std::make_unique<Sandbox>();
 
 			if(activityId == "ActivityChess")
-				return new ActivityChess();
+				return std::make_unique<ActivityChess>();
 
 			throw std::string(fmt::format("Could not find activity by id '{}'", activityId));
 			}
@@ -34,6 +35,7 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 
 		vermillion.StartActivity("Sandbox");
 		vermillion.Run();
+		vermillion.DeinitializeEngine();
 	}
 	catch (const std::string exception) {
 		Log::Error("Exception Caught", exception);
