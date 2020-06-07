@@ -82,11 +82,12 @@ void MenuTest::Render()
 	std::string notpawns2 = "tmvwlvmt";
 
 	auto& text = Services().Text();
-	text.Print(25, 440, notpawns2, 30, Colors::White);
-	text.Print(25, 470, pawns2, 30, Colors::White);
+	auto& chessText = Services().Text(1);
+	chessText.Print(25, 440, notpawns2, 30, Colors::White);
+	chessText.Print(25, 470, pawns2, 30, Colors::White);
 
-	text.Print(25, 500, pawns, 30, Colors::White);
-	text.Print(25, 530, notpawns, 30, Colors::White);
+	chessText.Print(25, 500, pawns, 30, Colors::White);
+	chessText.Print(25, 530, notpawns, 30, Colors::White);
 	text.Print(25, 400, "VERMILLION", 26, glm::vec3(1, 1, 1));
 
 	RenderUI();

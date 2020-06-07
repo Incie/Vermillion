@@ -2,8 +2,7 @@
 #include "servicelocator.h"
 
 ServiceLocator::ServiceLocator()
-	: textService(nullptr),
-	  textureService(nullptr)
+	: textureService(nullptr), inputService(nullptr), eventService(nullptr)
 {
 }
 
@@ -18,7 +17,19 @@ InputService& ServiceLocator::Input()
 
 TextService& ServiceLocator::Text()
 {
-	return *textService;
+	if(textServices.size() == 0)
+		throw std::exception("no textservices registered");
+	return *textServices[0];
+}
+
+TextService& ServiceLocator::Text(int id)
+{
+	for(auto ts : textServices) {
+		if(ts->ServiceId() == id)
+			return *ts;
+	}
+	
+	return *textServices[0];
 }
 
 TextureService& ServiceLocator::Textures()
@@ -39,7 +50,16 @@ ServiceAssigner::ServiceAssigner(ServiceLocator& locator)
 
 void ServiceAssigner::SetTextService(TextService& textService)
 {
-	locator->textService = &textService;
+	if(textService.ServiceId() == -1)
+		throw std::exception("service id == -1");
+
+	for(auto ts : locator->textServices) {
+		if(ts->ServiceId() == textService.ServiceId()) {
+			throw std::exception("service id already exists");
+		}
+	}
+
+	locator->textServices.push_back(&textService);
 }
 
 void ServiceAssigner::SetTextureService(TextureService& textureService)

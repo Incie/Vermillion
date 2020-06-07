@@ -26,5 +26,5 @@ void ActivityChess::Update(float delta)
 
 void ActivityChess::Render()
 {
-	chessboard.Render(Services().Text());
+	chessboard.Render(Services().Text(1));
 }

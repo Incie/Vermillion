@@ -37,6 +37,16 @@ private:
 	GLSLProgram fontProgram;
 };
 
+struct sdf_character {
+	int charvalue;
+	int x;
+	int y;
+	int width;
+	int height;
+	int xoffset;
+	int yoffset;
+	int xadvance;
+};
 
 class TextSDF : public TextService
 {
@@ -50,5 +60,10 @@ public:
 	void PrintCenter(const double x, const double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color) const;
 
 private:
+	float font_height;
 
+	std::map<int, sdf_character> sdfMap;
+	Texture fontTexture;
+
+	GLSLProgram sdfProgram;
 };

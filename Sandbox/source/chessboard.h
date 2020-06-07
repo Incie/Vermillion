@@ -52,6 +52,7 @@ private:
 	void HighlightUntilHit(const glm::ivec2& fromCoord, const glm::ivec2& direction, const ChessPiece& piece, int maxLength = 8);
 
 
+	bool ValidMove(const glm::ivec2& boardPosition);
 	glm::vec2 CenterOfTileAt(const glm::ivec2& pos);
 	ChessPiece* GetPieceAt(const glm::ivec2& boardCoordinate);
 	glm::ivec2 ScreenToBoardCoordinates(const glm::vec2& screen);
@@ -68,6 +69,7 @@ private:
 
 	glm::vec2 hover;
 	float tileSize;
+	glm::vec2 position;
 	glm::vec2 size;
 	glm::vec2* board;
 	glm::vec3* colors;

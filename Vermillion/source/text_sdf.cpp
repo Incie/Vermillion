@@ -6,27 +6,9 @@
 #include"opengl2_shader.h"
 #include"nlohmann/json.hpp"
 
-
-struct sdf_character {
-	int charvalue;
-	int x;
-	int y;
-	int width;
-	int height;
-	int xoffset;
-	int yoffset;
-	int xadvance;
-};
-
-float font_height = 42.0f;
-
-std::map<int, sdf_character> sdfMap;
-Texture fontTexture;
-
-GLSLProgram sdfProgram;
-
 void TextSDF::Init(TextureService& textureService)
 {
+	font_height = 42.0f;
 	const std::string fontFile = "sdf/Roboto-Black.json";
 	std::string serializedJson = FileReader::ReadFileContent(FilePath{Paths::Fonts, fontFile});
 
@@ -70,7 +52,8 @@ float TextSDF::CalculateWidth(const std::string& text, unsigned int fontHeight) 
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
 	{
-		const sdf_character& ch = sdfMap[*c];
+		auto cc = static_cast<int>(*c);
+		const sdf_character& ch = sdfMap.at(cc);
 		width += static_cast<float>(ch.xadvance) * scale;
 	}
 
@@ -111,7 +94,7 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
 	{
-		const sdf_character &ch = sdfMap[*c];
+		const sdf_character &ch = sdfMap.at(*c);
 
 		float chx = static_cast<float>(x) + static_cast<float>(ch.xoffset) * scale;
 		float chy = static_cast<float>(ch.yoffset)*scale;

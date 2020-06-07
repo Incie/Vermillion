@@ -1,6 +1,7 @@
 #pragma once
 
 #include"services.h"
+#include<vector>
 
 class ServiceLocator
 {
@@ -10,6 +11,7 @@ public:
 
 	InputService& Input();
 	TextService& Text();
+	TextService& Text(int id);
 	TextureService& Textures();
 	SoundService& Sound();
 	EventService& Events();
@@ -18,7 +20,7 @@ private:
 
 	InputService* inputService;
 	TextureService* textureService;
-	TextService* textService;
+	std::vector<TextService*> textServices;
 	SoundService* soundService;
 	EventService* eventService;
 };

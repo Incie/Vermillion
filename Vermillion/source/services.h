@@ -65,10 +65,19 @@ public:
 //TextService
 class TextService {
 public:
+	TextService() : serviceId(-1) {}
+	
+	int ServiceId() { return serviceId; }
+	void SetServiceId(int id) { if(serviceId == -1) { serviceId = id; } else throw std::exception("service id already set"); }
+
 	virtual float CalculateWidth(const std::string& text, unsigned int fontHeight) const = 0;
 	virtual float Print(double x, double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color, bool center = false, bool newline = false) const = 0;
 	virtual void NewLine(unsigned int fontHeight) const = 0;
 	virtual void PrintCenter(const double x, const double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color) const = 0;
+
+private:
+	int serviceId;
+	
 };
 
 

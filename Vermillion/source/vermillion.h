@@ -51,6 +51,7 @@ private:
 	InputManager inputManager;
 
 	Text text;
+	TextSDF textSdf;
 	TextureManagerGL textureManager;
 	ServiceLocator serviceLocator;
 	Timer renderTimer;
