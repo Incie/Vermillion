@@ -9,6 +9,7 @@ public:
 
 	void Initialize() override;
 	void Deinitialize() override;
+	void Resize(const glm::ivec2& newWindowSize) override;
 	void Update(float delta) override;
 	void Render() override;
 

@@ -19,6 +19,7 @@ namespace UI {
 
 MenuTest::MenuTest()
 {
+	TRACE("~MenuTest");
 }
 
 void MenuTest::Initialize()
@@ -34,8 +35,6 @@ void MenuTest::Initialize()
 			Finish();
 			return;
 		}
-
-		throw std::string(fmt::format("Clicked {}", id));
 	});
 	vw->BackgroundColor(UI::Dark);
 	vw->SetPosition(glm::vec2(50, 100));

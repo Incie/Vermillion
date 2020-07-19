@@ -6,9 +6,26 @@
 
 ChessBoard::ChessBoard()
 {
-	position = {50,50};
 	GenerateBoard();
+	SpawnBoardPieces();
 
+	position = {150,50};
+	clickedPiece.x = -1;
+	clickedSquare.x = -1;
+	teamToMove = ChessTeam::White;
+	checkState = false;
+}
+
+ChessBoard::~ChessBoard()
+{
+	delete[]board;
+	delete[]colors;
+
+	pieces.clear();
+}
+
+void ChessBoard::SpawnBoardPieces()
+{
 	SpawnPiece({0,0}, ChessTeam::Black, ChessPieceType::Rook);
 	SpawnPiece({7,0}, ChessTeam::Black, ChessPieceType::Rook);
 	SpawnPiece({1,0}, ChessTeam::Black, ChessPieceType::Knight);
@@ -32,22 +49,31 @@ ChessBoard::ChessBoard()
 	for(int i = 0; i < 8; ++i) {
 		SpawnPiece({i,6}, ChessTeam::White, ChessPieceType::Pawn);
 	}
-
-	clickedPiece.x = -1;
-	clickedSquare.x = -1;
-}
-
-ChessBoard::~ChessBoard()
-{
-	delete[]board;
-	delete[]colors;
-
-	pieces.clear();
 }
 
 bool ChessBoard::HasSelection() 
 {
 	return (clickedSquare.x > -1);
+}
+
+void ChessBoard::IsInCheck()
+{
+	auto oldHighlight = possibleMoves;
+	possibleMoves.clear();
+
+	for(auto piece : pieces) {
+		HighlightPieceMoves(piece);
+	}
+
+	checkState = false;
+	for(auto pm : possibleMoves) {
+		if(pm.isCheck) {
+			checkState = true;
+		}
+	}
+
+	possibleMoves.clear();
+	possibleMoves = oldHighlight;
 }
 
 void ChessBoard::HighlightPieceMoves(const ChessPiece& piece)
@@ -68,8 +94,8 @@ void ChessBoard::HighlightPieceMoves(const ChessPiece& piece)
 			}
 		}
 
-		HighlightIfNotEmpty(piece.coords + glm::ivec2{1, 1}, piece);
-		HighlightIfNotEmpty(piece.coords + glm::ivec2{-1, 1}, piece);
+		HighlightIfNotEmpty(piece.coords + glm::ivec2{1, direction}, piece);
+		HighlightIfNotEmpty(piece.coords + glm::ivec2{-1, direction}, piece);
 		return;
 	}
 
@@ -78,7 +104,7 @@ void ChessBoard::HighlightPieceMoves(const ChessPiece& piece)
 		for(auto& knightMove : knightMoves) {
 			auto boardKnightMove = piece.coords + knightMove;
 
-			if(!ValidMove(boardKnightMove))
+			if(!IsInsideBounds(boardKnightMove))
 				continue;
 
 			if(!HighlightIfEmpty(boardKnightMove)) {
@@ -94,7 +120,7 @@ void ChessBoard::HighlightPieceMoves(const ChessPiece& piece)
 		for(auto& kingMove : kingMoves) {
 			auto boardKingMove = piece.coords + kingMove;
 
-			if(!ValidMove(boardKingMove))
+			if(!IsInsideBounds(boardKingMove))
 				continue;
 
 			if(!HighlightIfEmpty(boardKingMove)) {
@@ -140,7 +166,7 @@ bool ChessBoard::HighlightIfEmpty(const glm::ivec2& coord)
 	auto piece = GetPieceAt(coord);
 
 	if(piece == nullptr) {
-		auto pm = PossibleMove{coord, CenterOfTileAt(coord), glm::vec3(1,1,0), false};
+		auto pm = PossibleMove{coord, CenterOfTileAt(coord), glm::vec3(1,1,0), false, false};
 		possibleMoves.emplace_back(pm);
 		return true;
 	}
@@ -153,7 +179,11 @@ bool ChessBoard::HighlightIfNotEmpty(const glm::ivec2& coord, const ChessPiece& 
 	auto piece = GetPieceAt(coord);
 
 	if(piece != nullptr && p.team != piece->team) {
-		auto pm = PossibleMove{coord, CenterOfTileAt(coord), glm::vec3(1,0,0), false};
+		auto pm = PossibleMove{coord, CenterOfTileAt(coord), glm::vec3(1,0,0), false, false};
+
+		if(piece->type == ChessPieceType::King)
+			pm.isCheck = true;
+
 		possibleMoves.emplace_back(pm);
 		return true;
 	}
@@ -186,7 +216,6 @@ void ChessBoard::Release(const glm::vec2& mousePosition)
 
 	auto boardCoords = ScreenToBoardCoordinates(mousePosition);
 
-
 	bool found = false;
 	for(auto& pm : possibleMoves) {
 		if(pm.coords == boardCoords)
@@ -200,11 +229,9 @@ void ChessBoard::Release(const glm::vec2& mousePosition)
 		return;
 	}
 
-
-	auto piece = GetPieceAt(boardCoords);
-	if(piece != nullptr) {
-		//capture
-		auto removed = std::remove_if(pieces.begin(), pieces.end(), [&piece](const ChessPiece& p) { return p.coords == piece->coords; });
+	auto capturedPiece = GetPieceAt(boardCoords);
+	if(capturedPiece != nullptr) {
+		auto removed = std::remove_if(pieces.begin(), pieces.end(), [&capturedPiece](const ChessPiece& p) { return p.coords == capturedPiece->coords; });
 		pieces.erase(removed);
 	}
 
@@ -215,6 +242,8 @@ void ChessBoard::Release(const glm::vec2& mousePosition)
 	clickedSquare.x = -1;
 	clickedPiece.x = -1;
 	possibleMoves.clear();
+
+	teamToMove = (teamToMove == ChessTeam::White) ? ChessTeam::Black : ChessTeam::White;
 }
 
 void ChessBoard::Click(const glm::vec2& mousePosition)
@@ -230,6 +259,9 @@ void ChessBoard::Click(const glm::vec2& mousePosition)
 	auto piece = GetPieceAt(boardCoords);
 
 	if(piece == nullptr)
+		return;
+
+	if(piece->team != teamToMove)
 		return;
 
 	clickedSquare = piece->position - 0.5f*tileSize + 1.0f;
@@ -251,43 +283,47 @@ void ChessBoard::Update(const glm::vec2& mousePosition)
 		auto coord = glm::floor(boardMousePosition / tileSize) * tileSize;
 
 		if(!HasSelection()) {
-			hover = coord + glm::vec2(1.0f);
+			auto piece = GetPieceAt(ScreenToBoardCoordinates(mousePosition));
 
-			//if isPiece
-			 // soft highlight
+			if(piece != nullptr) {
+				if(piece->team == teamToMove)
+					hover = coord + glm::vec2(1.0f);
+			}
 		}
 	}
 }
 
-void ChessBoard::Render(const TextService& text)
+void ChessBoard::Render(const TextService& chessText, const TextService& text)
 {
 	Render::PushMatrix();
-	Render::Translate2D(position);
+		Render::Translate2D(position);
 
-	constexpr auto vertexCount = 64 * 4;
-	Render::Quads(board, colors, vertexCount);
+		constexpr auto vertexCount = 64 * 4;
+		Render::Quads(board, colors, vertexCount);
 
-	if(hover.x >= 0.0f) {
-		Render::Quad(hover, glm::vec2(tileSize - 2.0f), Colors::Red);
-	}
+		if(hover.x >= 0.0f) {
+			Render::Quad(hover, glm::vec2(tileSize - 2.0f), Colors::Red);
+		}
 
-	if(clickedSquare.x >= 0.0f )
-		Render::Quad(clickedSquare, glm::vec2(tileSize - 2.0f), Colors::Green);
+		if(clickedSquare.x >= 0.0f )
+			Render::Quad(clickedSquare, glm::vec2(tileSize - 2.0f), Colors::Green);
 
-	constexpr auto fontSize = 35;
-	for(auto& p : pieces) {
-		std::string s(1, static_cast<char>(p.type));
-		text.Print(p.position.x, p.position.y, s, fontSize, p.color, true);
-	}
+		constexpr auto fontSize = 35;
+		for(auto& p : pieces) {
+			std::string s(1, static_cast<char>(p.type));
+			chessText.Print(p.position.x, p.position.y, s, fontSize, p.color, true);
+		}
 
 
-	for(auto& m : possibleMoves) {
-		Render::Circle(m.tileCenter, 5.0f, m.color);
-	}
+		for(auto& m : possibleMoves) {
+			Render::Circle(m.tileCenter, 5.0f, m.color);
+		}
 	Render::PopMatrix();
+
+	text.Print(5.0, 30.0, fmt::format("{} to move", (teamToMove == ChessTeam::White ? "White" : "Black")), 20, Colors::White);
 }
 
-bool ChessBoard::ValidMove(const glm::ivec2& boardPosition)
+bool ChessBoard::IsInsideBounds(const glm::ivec2& boardPosition)
 {
 	if(boardPosition.x < 0 || boardPosition.y < 0)
 		return false;
