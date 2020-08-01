@@ -18,6 +18,20 @@ std::string FileReader::ReadFileContent(const FilePath& filepath)
 	return(std::string((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>()));
 }
 
+std::vector<char> FileReader::ReadFileBytes(const FilePath& filepath)
+{
+	Log::Info("FileReader", fmt::format("Reading file: {}", filepath.tostring()));
+	std::ifstream in(filepath.tostring(), std::ios::in | std::ios::binary);
+	if(!in.is_open())
+	{
+		auto errorMessage = fmt::format("file {} not found ({})", filepath.tostring(), errno);
+		Log::Error("FileReader", errorMessage);
+		throw(errorMessage);
+	}
+
+	return(std::vector<char>((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>()));
+}
+
 FilePath::FilePath(int bootstrap, const std::string& path)
 	: filepath(path)
 {

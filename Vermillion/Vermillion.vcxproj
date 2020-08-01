@@ -47,6 +47,8 @@
     <ClInclude Include="source\ui\uiview_vertical.h" />
     <ClInclude Include="source\vermillion.h" />
     <ClInclude Include="source\version.h" />
+    <ClInclude Include="source\vulkan.h" />
+    <ClInclude Include="source\vulkan_validator.h" />
     <ClInclude Include="source\window.h" />
     <ClInclude Include="source\windowstate.h" />
   </ItemGroup>
@@ -81,6 +83,8 @@
     <ClCompile Include="source\ui\uiview_vertical.cpp" />
     <ClCompile Include="source\vermillion.cpp" />
     <ClCompile Include="source\vermillion_activity.cpp" />
+    <ClCompile Include="source\vulkan.cpp" />
+    <ClCompile Include="source\vulkan_validator.cpp" />
     <ClCompile Include="source\window.cpp" />
     <ClCompile Include="source\windowclass.cpp" />
     <ClCompile Include="source\windowprocedure.cpp" />
@@ -159,7 +163,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>source/pch/;$(VCPKG_64_STATIC)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>source/pch/;$(VCPKG_64_STATIC)\include;C:\devapps\VulkanSDK\1.2.141.2\Include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>

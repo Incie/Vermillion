@@ -2,6 +2,7 @@
 
 #include"activity.h"
 #include"opengl2.h"
+#include"vulkan.h"
 #include"window.h"
 #include"input.h"
 #include"text.h"
@@ -48,6 +49,7 @@ public:
 private:
 	Window window;
 	GL2Renderer renderer;
+	VulkanRenderer vrenderer;
 	InputManager inputManager;
 
 	Text text;

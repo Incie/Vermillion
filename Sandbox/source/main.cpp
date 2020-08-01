@@ -10,6 +10,7 @@
 #include"sandbox.h"
 #include"menutest.h"
 #include"activitychess.h"
+#include"activityblank.h"
 
 int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ LPSTR cmdLine, _In_ int nShow)
 {
@@ -20,6 +21,9 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 		auto vermillion = Vermillion(hInstance);
 
 		vermillion.RegisterActivityFactory([](const std::string& activityId) -> std::unique_ptr<Activity> {
+			if(activityId == "Blank")
+				return std::make_unique<ActivityBlank>();
+
 			if(activityId == "MenuTest")
 				return std::make_unique<MenuTest>();
 
@@ -33,7 +37,7 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 			}
 		);
 
-		vermillion.StartActivity("Sandbox");
+		vermillion.StartActivity("Blank");
 		vermillion.Run();
 		vermillion.DeinitializeEngine();
 	}

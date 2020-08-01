@@ -13,5 +13,4 @@ SCENARIO("Hello World") {
 			REQUIRE(retVal == 0);
 		}
 	}
-
 }

@@ -64,5 +64,5 @@ void Window::Destroy()
 void Window::Show()
 {
 	Log::Info(LOGTAG, "Showing Window");
-	ShowWindow(hWnd, SW_MAXIMIZE);
+	ShowWindow(hWnd, SW_SHOW);
 }

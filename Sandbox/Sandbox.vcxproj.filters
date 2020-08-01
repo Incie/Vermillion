@@ -27,6 +27,9 @@
     <ClCompile Include="source\chessboard.cpp">
       <Filter>Source\chess</Filter>
     </ClCompile>
+    <ClCompile Include="source\activityblank.cpp">
+      <Filter>Source\Activity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\sandbox.h">
@@ -40,6 +43,9 @@
     </ClInclude>
     <ClInclude Include="source\chessboard.h">
       <Filter>Source\chess</Filter>
+    </ClInclude>
+    <ClInclude Include="source\activityblank.h">
+      <Filter>Source\Activity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

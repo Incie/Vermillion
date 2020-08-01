@@ -53,6 +53,9 @@
     <Filter Include="Source Files\event">
       <UniqueIdentifier>{38e53c26-299f-406b-b099-92491587c4be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\vulkan">
+      <UniqueIdentifier>{c9043792-45c1-44d5-9d61-a71caefa625e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\vermillion.h">
@@ -144,6 +147,12 @@
     </ClInclude>
     <ClInclude Include="source\ui\uiview_vertical.h">
       <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vulkan.h">
+      <Filter>Source Files\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vulkan_validator.h">
+      <Filter>Source Files\vulkan</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +251,12 @@
     </ClCompile>
     <ClCompile Include="source\ui\uiview_vertical.cpp">
       <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan_validator.cpp">
+      <Filter>Source Files\vulkan</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

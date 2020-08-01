@@ -23,7 +23,7 @@ void CheckOpenGLErrors(const char* statement, const char* sourceFilePath, int li
 			default: errorEnum = "unknown errorCode"; break;
 		}
 
-		Log::Error("GLError", fmt::format("OpenGL Error Code {}({}) [{}, {}, {}]", errorCode, statement, GetFilenameFromPath(sourceFilePath), lineNumber));
+		Log::Error("GLError", fmt::format("OpenGL Error Code {}({}) [{}, {}]", errorCode, statement, GetFilenameFromPath(sourceFilePath), lineNumber, errorEnum));
 	}
 }
 
@@ -119,6 +119,9 @@ void GL2Renderer::DestroyRenderContext()
 
 void GL2Renderer::SetViewport(int width, int height)
 {
+	if(hWnd == nullptr)
+		return;
+
 	if (height == 0) {
 		Log::Error(logtag, "SetViewPort -> height == 0");
 		return;

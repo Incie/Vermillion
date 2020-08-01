@@ -19,4 +19,5 @@ class FileReader
 {
 public:
 	static std::string ReadFileContent(const FilePath& filepath);
+	static std::vector<char> ReadFileBytes(const FilePath& filepath);
 };

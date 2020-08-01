@@ -100,8 +100,10 @@ void Vermillion::InitializeEngine()
 
 	window.Create(hInstance);
 
-	renderer.SetHandles(window.hwnd());
-	renderer.CreateRenderContext();
+	vrenderer.SetHandles(window.hwnd());
+	vrenderer.Initialize();
+	//renderer.SetHandles(window.hwnd());
+	//renderer.CreateRenderContext();
 
 	window.Show();
 
@@ -131,6 +133,7 @@ void Vermillion::DeinitializeEngine()
 	text.Deinit();
 	textureManager.UnloadAll();
 
+	vrenderer.Deinitialize();
 	renderer.DestroyRenderContext();
 	window.Destroy();
 

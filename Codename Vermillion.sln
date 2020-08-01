@@ -28,6 +28,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.
 		{B28C12F8-A118-4B18-8004-6175B11437B1} = {B28C12F8-A118-4B18-8004-6175B11437B1}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{2A26C74A-837E-45C1-BA0C-31751C092C6C}"
+	ProjectSection(SolutionItems) = preProject
+		Builds\Data\shaders\compile.bat = Builds\Data\shaders\compile.bat
+		Builds\Data\shaders\helloworld.frag = Builds\Data\shaders\helloworld.frag
+		Builds\Data\shaders\helloworld.vert = Builds\Data\shaders\helloworld.vert
+		Builds\Data\shaders\helloworldvulkan.frag = Builds\Data\shaders\helloworldvulkan.frag
+		Builds\Data\shaders\helloworldvulkan.vert = Builds\Data\shaders\helloworldvulkan.vert
+		Builds\Data\shaders\msdf_shader.frag = Builds\Data\shaders\msdf_shader.frag
+		Builds\Data\shaders\msdf_shader.vert = Builds\Data\shaders\msdf_shader.vert
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -145,6 +156,7 @@ Global
 		{F6B2BA9E-7445-4C67-BF57-655B2213B21A} = {36B2C497-EA9B-4DD7-89BB-34A4DB1156B2}
 		{5D32DEBA-CBA4-41ED-ADF8-31012AA555E2} = {36B2C497-EA9B-4DD7-89BB-34A4DB1156B2}
 		{0964880A-5D00-4202-8325-78A5B2AD25E9} = {131279E1-E098-4551-B2E7-E4638CA50B3D}
+		{2A26C74A-837E-45C1-BA0C-31751C092C6C} = {131279E1-E098-4551-B2E7-E4638CA50B3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F095882-5F96-459B-8739-9138DB20024D}
