@@ -92,14 +92,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Vermillion\source;$(VCPKG_64_STATIC)\include;C:\devapps\VulkanSDK\1.2.141.2\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Vermillion\source;$(VCPKG_64_STATIC)\include;$(VK_SDK_PATH)\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>vulkan-1.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;uuid.lib;xinput.lib;fmtd.lib;libpng16d.lib;freetyped.lib;glew32d.lib;zlibd.lib;bz2d.lib;vermillion.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\x64\Debug\;$(VCPKG_64_STATIC)\debug\lib;C:\devapps\VulkanSDK\1.2.141.2\Lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\x64\Debug\;$(VCPKG_64_STATIC)\debug\lib;$(VK_SDK_PATH)\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

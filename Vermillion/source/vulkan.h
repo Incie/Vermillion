@@ -13,6 +13,8 @@ public:
 
 	void SetHandles(HWND hWnd);
 
+	void DrawFrame();
+
 	bool Initialize();
 	void Deinitialize();
 
@@ -30,6 +32,7 @@ private:
 	void CreateFramebuffers();
 	void CreateCommandPool();
 	void CreateCommandBuffers();
+	void CreateSemaphores();
 
 	VkInstance instance;
 	VkDebugUtilsMessengerEXT debugMessenger;
@@ -42,6 +45,9 @@ private:
 	VkPipelineLayout pipelineLayout;
 	VkPipeline graphicsPipeline;
 	VkCommandPool commandPool;
+
+	VkSemaphore imageAvailableSemaphore;
+	VkSemaphore renderFinishedSemaphore;
 
 	std::vector<VkFramebuffer> swapChainFramebuffers;
 	std::vector<VkCommandBuffer> commandBuffers;

@@ -163,7 +163,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>source/pch/;$(VCPKG_64_STATIC)\include;C:\devapps\VulkanSDK\1.2.141.2\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>source/pch/;$(VCPKG_64_STATIC)\include;$(VK_SDK_PATH)\include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>

@@ -70,10 +70,11 @@ void Vermillion::Run()
 
 			runningActivity->Update(deltaTime);
 			
-			renderer.StartFrame();
+			//renderer.StartFrame();
+				vrenderer.DrawFrame();
 				runningActivity->Render();
-				textSdf.Print(0, 0, fmt::format("FPS: {0} ({1}ms)", fps, lastFrameTime), 12, Colors::White );
-			renderer.EndFrame();
+				//textSdf.Print(0, 0, fmt::format("FPS: {0} ({1}ms)", fps, lastFrameTime), 12, Colors::White );
+			//renderer.EndFrame();
 
 			fpsCounter++;
 			lastFrameTime = renderTimer.TimeSinceTickAsMilliseconds();
@@ -107,17 +108,17 @@ void Vermillion::InitializeEngine()
 
 	window.Show();
 
-	textSdf.Init(textureManager);
-	textSdf.SetServiceId(0);
-	text.Init();
-	text.SetServiceId(1);
+	//textSdf.Init(textureManager);
+	//textSdf.SetServiceId(0);
+	//text.Init();
+	//text.SetServiceId(1);
 
 	renderTimer.LimitByFPS(59);
 	fpsTimer.LimitByMilliseconds(1000);
 
 	ServiceAssigner serviceAssigner(serviceLocator);
-	serviceAssigner.SetTextService(textSdf);
-	serviceAssigner.SetTextService(text);
+	//serviceAssigner.SetTextService(textSdf);
+	//serviceAssigner.SetTextService(text);
 	serviceAssigner.SetTextureService(textureManager);
 	serviceAssigner.SetInputService(inputManager);
 
@@ -130,7 +131,7 @@ void Vermillion::DeinitializeEngine()
 
 	DeinitializeActivities();
 
-	text.Deinit();
+	// text.Deinit();
 	textureManager.UnloadAll();
 
 	vrenderer.Deinitialize();
