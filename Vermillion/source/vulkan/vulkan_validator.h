@@ -6,7 +6,6 @@
 #include<optional>
 
 namespace vulkan {
-	void ValidateInstance(int result);
 	void CheckRequiredExtensions(const std::vector<std::string>& requiredExtensions);
 	void CheckValidationLayers();
 	void CheckDeviceExtensionSupport(VkPhysicalDevice physicalDevice);

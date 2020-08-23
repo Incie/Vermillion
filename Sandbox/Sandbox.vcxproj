@@ -101,6 +101,10 @@
       <AdditionalDependencies>vulkan-1.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;uuid.lib;xinput.lib;fmtd.lib;libpng16d.lib;freetyped.lib;glew32d.lib;zlibd.lib;bz2d.lib;vermillion.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\x64\Debug\;$(VCPKG_64_STATIC)\debug\lib;$(VK_SDK_PATH)\lib</AdditionalLibraryDirectories>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -148,10 +148,13 @@
     <ClInclude Include="source\ui\uiview_vertical.h">
       <Filter>Source Files\ui</Filter>
     </ClInclude>
-    <ClInclude Include="source\vulkan.h">
+    <ClInclude Include="source\vulkan\vulkan_common.h">
       <Filter>Source Files\vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="source\vulkan_validator.h">
+    <ClInclude Include="source\vulkan\vulkan.h">
+      <Filter>Source Files\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vulkan\vulkan_validator.h">
       <Filter>Source Files\vulkan</Filter>
     </ClInclude>
   </ItemGroup>
@@ -252,10 +255,40 @@
     <ClCompile Include="source\ui\uiview_vertical.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
-    <ClCompile Include="source\vulkan.cpp">
+    <ClCompile Include="source\vulkan\vulkan.cpp">
       <Filter>Source Files\vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="source\vulkan_validator.cpp">
+    <ClCompile Include="source\vulkan\vulkan_validator.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan\vulkan_error_helpers.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan\vulkan_instance.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan\vulkan_device.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan\vulkan_win32.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan\vulkan_surface.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan\vulkan_swapchain.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan\vulkan_pipeline.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan\vulkan_command.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan\vulkan_image.cpp">
+      <Filter>Source Files\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vulkan\vulkan_texture.cpp">
       <Filter>Source Files\vulkan</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,6 +7,9 @@
 
 #include<chrono>
 
+#include"vulkan/vulkan.h"
+VulkanRenderer vrenderer;
+
 #define LogTag "Vermillion"
 
 Vermillion::Vermillion(HINSTANCE hInstance)
@@ -16,12 +19,12 @@ Vermillion::Vermillion(HINSTANCE hInstance)
 	InitializeEngine();
 }
 
-Vermillion::Vermillion(std::unique_ptr<Activity> activity, HINSTANCE hInstance)
+Vermillion::Vermillion(std::unique_ptr<Activity> startActivity, HINSTANCE hInstance)
 	: hInstance(hInstance)
 {
 	TRACE(LogTag)
 	InitializeEngine();
-	StartActivityNow(activity, serviceLocator);
+	StartActivityNow(startActivity, serviceLocator);
 }
 
 Vermillion::~Vermillion()

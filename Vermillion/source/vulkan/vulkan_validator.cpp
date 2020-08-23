@@ -1,40 +1,8 @@
 #include"pch.h"
-#include "vulkan_validator.h"
+#include"vulkan_validator.h"
+#include"vulkan_common.h"
 
 static const char* tag = "VulkanValidator";
-
-void vulkan::ValidateInstance(int result)
-{
-    if(result == VK_SUCCESS)
-        return;
-
-    std::string errorName;
-
-    switch(result) {
-    case VK_ERROR_OUT_OF_DEVICE_MEMORY:
-        errorName = "VK_ERROR_OUT_OF_DEVICE_MEMORY";
-        break;
-    case VK_ERROR_INITIALIZATION_FAILED:
-        errorName = "VK_ERROR_INITIALIZATION_FAILED";
-        break;
-    case VK_ERROR_LAYER_NOT_PRESENT:
-        errorName = "VK_ERROR_LAYER_NOT_PRESENT";
-        break;
-    case VK_ERROR_EXTENSION_NOT_PRESENT:
-        errorName = "VK_ERROR_EXTENSION_NOT_PRESENT";
-        break;
-    case VK_ERROR_INCOMPATIBLE_DRIVER:
-        errorName = "VK_ERROR_INCOMPATIBLE_DRIVER";
-        break;
-    default:
-        errorName = fmt::format("switch default hit code{}", (int)result);
-        break;
-    }
-
-    auto errorMessage = fmt::format("Failed to create vulkan instance: Code[{}], [{}]", (int)result, errorName);
-    Log::Error(tag, errorMessage);
-    throw errorMessage;
-}
 
 void vulkan::CheckRequiredExtensions(const std::vector<std::string>& requiredExtensions)
 {
@@ -105,12 +73,10 @@ void vulkan::CheckDeviceExtensionSupport(VkPhysicalDevice physicalDevice)
 
 void vulkan::LogPhysicalDevice(VkPhysicalDevice physicalDevice)
 {
+
     VkPhysicalDeviceProperties deviceProperties;
-    VkPhysicalDeviceFeatures deviceFeatures;
-
     vkGetPhysicalDeviceProperties(physicalDevice, &deviceProperties);
-    vkGetPhysicalDeviceFeatures(physicalDevice, &deviceFeatures);
-
+    
     Log::Info(tag, fmt::format("DeviceProperties: [{}] [{}] [{}] [{}] [{}] [{}]", 
         deviceProperties.apiVersion, 
         deviceProperties.deviceID, 
@@ -119,6 +85,8 @@ void vulkan::LogPhysicalDevice(VkPhysicalDevice physicalDevice)
         deviceProperties.driverVersion,
         deviceProperties.vendorID));
 
+    VkPhysicalDeviceFeatures deviceFeatures;
+    vkGetPhysicalDeviceFeatures(physicalDevice, &deviceFeatures);
     Log::Info(tag, fmt::format("DeviceFeatures: [geometryshader: {}] [tesselationshader: {}] ",
         deviceFeatures.geometryShader,
         deviceFeatures.tessellationShader));
@@ -133,23 +101,48 @@ vulkan::QueueFamilies vulkan::EnumerateQueueFamilies(VkPhysicalDevice physicalDe
     std::vector<VkQueueFamilyProperties> queueFamilies(queueCount);
     vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueCount, queueFamilies.data());
 
+    Log::Info(tag, fmt::format("Queues {}", queueFamilies.size()));
     uint32_t index = 0;
     for(auto queue : queueFamilies) {
-        Log::Info(tag, fmt::format("queue {}:{}", queue.queueCount, queue.queueFlags));
+        Log::Info(tag, fmt::format("queue #{} [count: {} flags: [{}]", index, queue.queueCount, queue.queueFlags));
 
-        if(queue.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-            queues.graphics = index;
+        if(queue.queueFlags & VkQueueFlagBits::VK_QUEUE_GRAPHICS_BIT) {
+            Log::Info(tag, fmt::format("{}:{}", "Graphics Bit", static_cast<int>(VkQueueFlagBits::VK_QUEUE_GRAPHICS_BIT)));
 
+            if( queues.graphics.has_value() == false)
+                queues.graphics = index;
+        }
+
+        if(queue.queueFlags & VkQueueFlagBits::VK_QUEUE_COMPUTE_BIT) {
+            Log::Info(tag, fmt::format("{}:{}", "Compute Bit", static_cast<int>(VkQueueFlagBits::VK_QUEUE_COMPUTE_BIT)));
+        }
+
+        if(queue.queueFlags & VkQueueFlagBits::VK_QUEUE_PROTECTED_BIT) {
+            Log::Info(tag, fmt::format("{}:{}", "Protected Bit", static_cast<int>(VkQueueFlagBits::VK_QUEUE_PROTECTED_BIT)));
+        }
+
+        if(queue.queueFlags & VkQueueFlagBits::VK_QUEUE_SPARSE_BINDING_BIT) {
+            Log::Info(tag, fmt::format("{}:{}", "Sparse binding Bit", static_cast<int>(VkQueueFlagBits::VK_QUEUE_SPARSE_BINDING_BIT)));
+        }
+
+        if(queue.queueFlags & VkQueueFlagBits::VK_QUEUE_TRANSFER_BIT) {
+            Log::Info(tag, fmt::format("{}:{}", "Transfer Bit", static_cast<int>(VkQueueFlagBits::VK_QUEUE_TRANSFER_BIT)));
+        }
 
         VkBool32 presentSupport = false;
-        vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, index, surface, &presentSupport);
+        VKCHECK(vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, index, surface, &presentSupport));
 
         if(presentSupport) {
-            queues.present = index;
+            Log::Info(tag, "Present 'Bit'");
+
+            if( queues.present.has_value() == false )
+                queues.present = index;
         }
 
         index++;
     }
+
+    Log::Info(tag, fmt::format("Chosen familyindices {} {}", queues.present.value(), queues.graphics.value()));
 
     return queues;
 }

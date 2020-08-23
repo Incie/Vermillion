@@ -47,8 +47,9 @@
     <ClInclude Include="source\ui\uiview_vertical.h" />
     <ClInclude Include="source\vermillion.h" />
     <ClInclude Include="source\version.h" />
-    <ClInclude Include="source\vulkan.h" />
-    <ClInclude Include="source\vulkan_validator.h" />
+    <ClInclude Include="source\vulkan\vulkan.h" />
+    <ClInclude Include="source\vulkan\vulkan_common.h" />
+    <ClInclude Include="source\vulkan\vulkan_validator.h" />
     <ClInclude Include="source\window.h" />
     <ClInclude Include="source\windowstate.h" />
   </ItemGroup>
@@ -83,8 +84,18 @@
     <ClCompile Include="source\ui\uiview_vertical.cpp" />
     <ClCompile Include="source\vermillion.cpp" />
     <ClCompile Include="source\vermillion_activity.cpp" />
-    <ClCompile Include="source\vulkan.cpp" />
-    <ClCompile Include="source\vulkan_validator.cpp" />
+    <ClCompile Include="source\vulkan\vulkan.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_command.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_device.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_error_helpers.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_image.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_instance.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_pipeline.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_surface.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_swapchain.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_texture.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_validator.cpp" />
+    <ClCompile Include="source\vulkan\vulkan_win32.cpp" />
     <ClCompile Include="source\window.cpp" />
     <ClCompile Include="source\windowclass.cpp" />
     <ClCompile Include="source\windowprocedure.cpp" />
