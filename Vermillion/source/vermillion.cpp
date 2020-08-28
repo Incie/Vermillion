@@ -5,8 +5,6 @@
 #include "text.h"
 #include "windowstate.h"
 
-#include<chrono>
-
 #define LogTag "Vermillion"
 
 Vermillion::Vermillion(HINSTANCE hInstance)
@@ -72,11 +70,13 @@ void Vermillion::Run()
 			
 			renderer.StartFrame();
 				runningActivity->Render();
-				textSdf.Print(0, 0, fmt::format("FPS: {0} ({1}ms)", fps, lastFrameTime), 12, Colors::White );
+				textSdf.Print(0, 0, fmt::format("FPS: {0} ({1}us [{2}])", fps, lastFrameTime, static_cast<uint32_t>(1.0 / (lastFrameTime / 1e6))), 12, Colors::White );
 			renderer.EndFrame();
 
 			fpsCounter++;
-			lastFrameTime = renderTimer.TimeSinceTickAsMilliseconds();
+
+			if( fpsCounter % 5 == 0 )
+				lastFrameTime = renderTimer.TimeSinceTickAsMicroseconds();
 
 			if(runningActivity->Finished()) {
 				Log::Info("Run()", "Activity finished");
@@ -119,7 +119,7 @@ void Vermillion::InitializeEngine()
 	serviceAssigner.SetTextureService(textureManager);
 	serviceAssigner.SetInputService(inputManager);
 
-	Log::Info("Vermillion", "Engine initialized");
+	Log::Info(LogTag, "Engine initialized");
 }
 
 void Vermillion::DeinitializeEngine()
@@ -134,5 +134,5 @@ void Vermillion::DeinitializeEngine()
 	renderer.DestroyRenderContext();
 	window.Destroy();
 
-	Log::Info("Vermillion", "Shut down");
+	Log::Info(LogTag, "Shut down");
 }

@@ -48,7 +48,13 @@ double Timer::GetDelta()
 double Timer::TimeSinceTickAsMilliseconds()
 {
 	long long nowMinusLastTime = NowAsMicroseconds() - timelast;
-	return (double) (nowMinusLastTime / 1000);
+	return static_cast<double>(nowMinusLastTime / 1000);
+}
+
+double Timer::TimeSinceTickAsMicroseconds()
+{
+	long long nowMinusLastTime = NowAsMicroseconds() - timelast;
+	return static_cast<double>(nowMinusLastTime);
 }
 
 void Timer::LimitByFPS(int fps)

@@ -12,6 +12,7 @@ public:
 	double GetDelta();
 
 	double TimeSinceTickAsMilliseconds();
+	double TimeSinceTickAsMicroseconds();
 
 	void LimitByFPS(int fps);
 	void LimitByMicroseconds(int us);
