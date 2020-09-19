@@ -9,6 +9,8 @@
 
 void CheckOpenGLErrors(const char* statement, const char* sourceFilePath, int lineNumber)
 {
+	int maxStackDepth = 25;
+
 	GLenum errorCode = 0;
 	while ((errorCode = glGetError()) != GL_NO_ERROR) {
 		const char* errorEnum = nullptr;
@@ -23,7 +25,14 @@ void CheckOpenGLErrors(const char* statement, const char* sourceFilePath, int li
 			default: errorEnum = "unknown errorCode"; break;
 		}
 
-		Log::Error("GLError", fmt::format("OpenGL Error Code {}({}) [{}, {}, {}]", errorCode, statement, GetFilenameFromPath(sourceFilePath), lineNumber));
+		Log::Error("GLError", fmt::format("OpenGL Error Code {}({}) [{}, {}]", errorCode, statement, GetFilenameFromPath(sourceFilePath), lineNumber));
+
+		maxStackDepth--;
+
+		if(maxStackDepth <= 0) {
+			Log::Error("GLError", "Max Stack Depth reached, exiting CheckOpenGLErrors");
+			break;
+		}
 	}
 }
 

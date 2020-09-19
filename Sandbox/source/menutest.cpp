@@ -24,7 +24,7 @@ MenuTest::MenuTest()
 
 void MenuTest::Initialize()
 {
-	auto vw = new VerticalWindow([this](int id) {
+	auto vw = vnew VerticalWindow([this](int id) {
 		if(id == 1)
 		{
 			StartActivity("ActivityChess");
@@ -39,21 +39,21 @@ void MenuTest::Initialize()
 	vw->BackgroundColor(UI::Dark);
 	vw->SetPosition(glm::vec2(50, 100));
 
-	auto title = new UIText("Game Title Here");
+	auto title = vnew UIText("Game Title Here");
 	title->Color(UI::Light);
 	title->FontHeight(46.0f);
 	title->SetSize(100, 26);
 	title->SetMargin(4.0f, 8.0f);
 	vw->AddChild(title);
 
-	auto buttonStart = new UIButton("Start", 26, 1);
+	auto buttonStart = vnew UIButton("Start", 26, 1);
 	buttonStart->SetSize(100, 26);
 	buttonStart->SetColor(UI::Light);
 	buttonStart->SetTextColor(UI::Dark);
 	buttonStart->SetMargin(0, 2.0f);
 	vw->AddChild(buttonStart);
 
-	auto buttonExit = new UIButton("Exit", 26, 9);
+	auto buttonExit = vnew UIButton("Exit", 26, 9);
 	buttonExit->SetSize(100, 26);
 	buttonExit->SetColor(UI::Negative);
 	buttonExit->SetTextColor(UI::Dark);

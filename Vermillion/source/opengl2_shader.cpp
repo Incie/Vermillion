@@ -4,9 +4,10 @@
 #include"log.h"
 #include"file.h"
 
+constexpr int INVALID_SHADER_ID = -1;
 
 GLSLShader::GLSLShader()
-	: shaderId(0), shaderType(ShaderType::SHADER_NOT_INITIALIZED)
+	: shaderId(INVALID_SHADER_ID), shaderType(ShaderType::SHADER_NOT_INITIALIZED)
 {
 }
 
@@ -41,9 +42,9 @@ bool GLSLShader::Load(const FilePath& shaderFilePath)
 
 void GLSLShader::Unload()
 {
-	if( shaderId != 0 )
+	if( shaderId != INVALID_SHADER_ID)
 		GLCHECK(glDeleteShader(shaderId))
-	shaderId = 0;
+	shaderId = INVALID_SHADER_ID;
 }
 
 GLSLProgram::GLSLProgram()
@@ -86,28 +87,35 @@ bool GLSLProgram::LoadProgram(const std::string& shader)
 
 void GLSLProgram::UnloadProgram()
 {
-	GLCHECK(glDetachShader(programId, fragment.shaderId))
-	GLCHECK(glDetachShader(programId, vertex.shaderId))
+	if(fragment.shaderId != INVALID_SHADER_ID) {
+		GLCHECK(glDetachShader(programId, fragment.shaderId));
+		fragment.Unload();
+	}
 
-	fragment.Unload();
-	vertex.Unload();
+	if(vertex.shaderId != INVALID_SHADER_ID) {
+		GLCHECK(glDetachShader(programId, vertex.shaderId));
+		vertex.Unload();
+	}
 
-	GLCHECK(glDeleteProgram(programId))
+	if(programId != INVALID_SHADER_ID) {
+		GLCHECK(glDeleteProgram(programId));
+		programId = INVALID_SHADER_ID;
+	}
 }
 
-void GLSLProgram::SetUniform(const std::string & uniformname, int value) const
+void GLSLProgram::SetUniform(const std::string& uniformname, int value) const
 {
 	auto uniformlocation = glGetUniformLocation(programId, uniformname.c_str());
 	GLCHECK(glUniform1i(uniformlocation, value))
 }
 
-void GLSLProgram::SetUniform(const std::string & uniformname, const glm::vec4 & color) const
+void GLSLProgram::SetUniform(const std::string& uniformname, const glm::vec4& color) const
 {
 	auto uniformlocation = glGetUniformLocation(programId, uniformname.c_str());
 	GLCHECK(glUniform4f(uniformlocation, color.r, color.g, color.b, color.a))
 }
 
-void GLSLProgram::SetUniform(const std::string & uniformname, const glm::vec3& color) const
+void GLSLProgram::SetUniform(const std::string& uniformname, const glm::vec3& color) const
 {
 	auto uniformlocation = glGetUniformLocation(programId, uniformname.c_str());
 	GLCHECK(glUniform4f(uniformlocation, color.r, color.g, color.b, 1.0f))

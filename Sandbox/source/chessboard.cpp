@@ -359,8 +359,8 @@ void ChessBoard::GenerateBoard()
 {
 	constexpr int tileCount = 64;
 	constexpr int vertexCount = tileCount * 4;
-	board = new glm::vec2[vertexCount];
-	colors = new glm::vec3[vertexCount];
+	board = vnew glm::vec2[vertexCount];
+	colors = vnew glm::vec3[vertexCount];
 
 	tileSize = 50.0f;
 

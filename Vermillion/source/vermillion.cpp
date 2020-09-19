@@ -128,6 +128,7 @@ void Vermillion::DeinitializeEngine()
 
 	DeinitializeActivities();
 
+	textSdf.Deinit();
 	text.Deinit();
 	textureManager.UnloadAll();
 
