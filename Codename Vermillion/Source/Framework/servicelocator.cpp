@@ -46,3 +46,8 @@ void ServiceAssigner::SetInputService(InputService& inputService)
 {
 	locator->inputService = &inputService;
 }
+
+void ServiceAssigner::SetSoundService(SoundService& soundService)
+{
+	locator->soundService = &soundService;
+}

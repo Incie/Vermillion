@@ -21,7 +21,7 @@ Testing::~Testing()
 
 void Testing::Update(double deltaTime)
 {
-	PlayerInput *gp = new PlayerInputKeys();
+	PlayerInput *gp = vnew PlayerInputKeys();
 	PlayerInput& input = *gp;
 	aimposition = position + input.GetAim(position) * (float)input.GetAimMultiplier();
 	auto movement = input.GetMovement();

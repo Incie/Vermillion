@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{5D32DEBA-CBA4-41ED-ADF8-31012AA555E2}</ProjectGuid>
+    <RootNamespace>Gloomhaven</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)Builds\Gloomhaven\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Vermillion\source;$(VCPKG_64_STATIC)\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)\x64\Debug\;$(VCPKG_64_STATIC)\debug\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;uuid.lib;xinput.lib;fmtd.lib;libpng16d.lib;freetyped.lib;glew32d.lib;zlibd.lib;bz2d.lib;vermillion.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Gloom\action\ActionAttack.cpp" />
+    <ClCompile Include="source\Gloom\action\ActionElement.cpp" />
+    <ClCompile Include="source\Gloom\action\ActionMove.cpp" />
+    <ClCompile Include="source\Gloom\action\ActionShieldSelf.cpp" />
+    <ClCompile Include="source\Gloom\action\CardAction.cpp" />
+    <ClCompile Include="source\Gloom\cards\CardGenerator.cpp" />
+    <ClCompile Include="source\Gloom\cards\Modifiers.cpp" />
+    <ClCompile Include="source\Gloom\cards\MonsterCardGenerator.cpp" />
+    <ClCompile Include="source\Gloom\cards\MonsterDeck.cpp" />
+    <ClCompile Include="source\Gloom\cards\PlayerCard.cpp" />
+    <ClCompile Include="source\Gloom\cards\PlayerDeck.cpp" />
+    <ClCompile Include="source\Gloom\cards\PlayerRound.cpp" />
+    <ClCompile Include="source\Gloom\Director.cpp" />
+    <ClCompile Include="source\Gloom\director\Initiative.cpp" />
+    <ClCompile Include="source\Gloom\enemyai\actions\EnemyAction.cpp" />
+    <ClCompile Include="source\Gloom\enemyai\actions\EnemyAttack.cpp" />
+    <ClCompile Include="source\Gloom\enemyai\actions\EnemyMove.cpp" />
+    <ClCompile Include="source\Gloom\enemyai\actions\EnemyShield.cpp" />
+    <ClCompile Include="source\Gloom\enemyai\EnemyAI.cpp" />
+    <ClCompile Include="source\Gloom\enemyai\EnemyRound.cpp" />
+    <ClCompile Include="source\Gloom\entity\Entity.cpp" />
+    <ClCompile Include="source\gloom\Gloom.cpp" />
+    <ClCompile Include="source\Gloom\gloomhaven.cpp" />
+    <ClCompile Include="source\Gloom\icons\icons.cpp" />
+    <ClCompile Include="source\Gloom\level\Hexagon.cpp" />
+    <ClCompile Include="source\Gloom\level\Level.cpp" />
+    <ClCompile Include="source\Gloom\level\Spawner.cpp" />
+    <ClCompile Include="source\Gloom\level\Tile.cpp" />
+    <ClCompile Include="source\Gloom\uilayer\AbilitySelector.cpp" />
+    <ClCompile Include="source\Gloom\uilayer\CardSelection.cpp" />
+    <ClCompile Include="source\Gloom\uilayer\CardSelector.cpp" />
+    <ClCompile Include="source\Gloom\uilayer\CombatLog.cpp" />
+    <ClCompile Include="source\Gloom\uilayer\EnemyAdvancer.cpp" />
+    <ClCompile Include="source\Gloom\uilayer\HoverCard.cpp" />
+    <ClCompile Include="source\Gloom\uilayer\InitiativeUI.cpp" />
+    <ClCompile Include="source\Gloom\uilayer\PortraitPanel.cpp" />
+    <ClCompile Include="source\Gloom\uilayer\StatusBar.cpp" />
+    <ClCompile Include="source\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Gloom\action\Action.h" />
+    <ClInclude Include="source\Gloom\action\ActionAttack.h" />
+    <ClInclude Include="source\Gloom\action\ActionMove.h" />
+    <ClInclude Include="source\Gloom\action\ActionShieldSelf.h" />
+    <ClInclude Include="source\Gloom\action\CardAction.h" />
+    <ClInclude Include="source\Gloom\cards\CardGenerator.h" />
+    <ClInclude Include="source\Gloom\cards\Modifiers.h" />
+    <ClInclude Include="source\Gloom\cards\MonsterCardGenerator.h" />
+    <ClInclude Include="source\Gloom\cards\MonsterDeck.h" />
+    <ClInclude Include="source\Gloom\cards\PlayerCard.h" />
+    <ClInclude Include="source\Gloom\cards\PlayerDeck.h" />
+    <ClInclude Include="source\Gloom\cards\PlayerRound.h" />
+    <ClInclude Include="source\Gloom\Director.h" />
+    <ClInclude Include="source\Gloom\director\Initiative.h" />
+    <ClInclude Include="source\Gloom\enemyai\actions\EnemyAction.h" />
+    <ClInclude Include="source\Gloom\enemyai\actions\EnemyAttack.h" />
+    <ClInclude Include="source\Gloom\enemyai\actions\EnemyMove.h" />
+    <ClInclude Include="source\Gloom\enemyai\actions\EnemyShield.h" />
+    <ClInclude Include="source\Gloom\enemyai\EnemyAI.h" />
+    <ClInclude Include="source\Gloom\enemyai\EnemyRound.h" />
+    <ClInclude Include="source\Gloom\entity\Entity.h" />
+    <ClInclude Include="source\Gloom\entity\StatusEffect.h" />
+    <ClInclude Include="source\gloom\Gloom.h" />
+    <ClInclude Include="source\Gloom\gloomhaven.h" />
+    <ClInclude Include="source\Gloom\icons\icons.h" />
+    <ClInclude Include="source\Gloom\level\Hexagon.h" />
+    <ClInclude Include="source\Gloom\level\Level.h" />
+    <ClInclude Include="source\Gloom\level\Spawner.h" />
+    <ClInclude Include="source\Gloom\level\Tile.h" />
+    <ClInclude Include="source\Gloom\uilayer\AbilitySelector.h" />
+    <ClInclude Include="source\Gloom\uilayer\CardSelection.h" />
+    <ClInclude Include="source\Gloom\uilayer\CardSelector.h" />
+    <ClInclude Include="source\Gloom\uilayer\CombatLog.h" />
+    <ClInclude Include="source\Gloom\uilayer\EnemyAdvancer.h" />
+    <ClInclude Include="source\Gloom\uilayer\HoverCard.h" />
+    <ClInclude Include="source\Gloom\uilayer\InitiativeUI.h" />
+    <ClInclude Include="source\Gloom\uilayer\PortraitPanel.h" />
+    <ClInclude Include="source\Gloom\uilayer\StatusBar.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

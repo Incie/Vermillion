@@ -1,7 +1,7 @@
 #pragma once
 
 #include"pch.h"
-#include"point.h"
+#include"glm/vec4.hpp"
 
 
 enum ShaderType {
@@ -32,7 +32,7 @@ public:
 
 	void SetUniform(const std::string& uniformname, int value);
 	void SetUniform(const std::string& uniformname, const glm::vec4& color);
-	void SetUniform(const std::string & uniformname, const Colorf& color);
+	void SetUniform(const std::string& uniformname, const glm::vec3& color);
 
 	void Use();
 	void NoProgram();

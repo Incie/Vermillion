@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Gloom">
+      <UniqueIdentifier>{a67aa060-e503-4a8d-8c19-df17894e5d90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloom\director">
+      <UniqueIdentifier>{c75c4487-3abc-4406-9ad0-9220654d4830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloom\action">
+      <UniqueIdentifier>{c5a02f74-1a63-42c8-b0d7-38af5cf0c638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloom\cards">
+      <UniqueIdentifier>{cf21105e-df51-4c52-9cc6-abc3ea3dc163}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloom\enemyai">
+      <UniqueIdentifier>{8977adf1-9a93-4afa-a28a-6edcb8b4edcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloom\entity">
+      <UniqueIdentifier>{67bdb2ad-6d5b-4b45-b0cf-ed2522bfc326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloom\icons">
+      <UniqueIdentifier>{55442b87-ab5d-467a-9bb3-d49529609c3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloom\uilayer">
+      <UniqueIdentifier>{f294dcb2-ab79-4b62-8ab2-4d27ea060653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloom\level">
+      <UniqueIdentifier>{b90779df-d069-4f1f-b7ef-26fbd33fe527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloom\enemyai\enemyactions">
+      <UniqueIdentifier>{d12b03ee-2627-46f1-a05a-6b6ad92fb40a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\gloomhaven.cpp">
+      <Filter>Source Files\Gloom</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\Director.cpp">
+      <Filter>Source Files\Gloom\director</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\uilayer\CardSelector.cpp">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\uilayer\CombatLog.cpp">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\uilayer\EnemyAdvancer.cpp">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\uilayer\HoverCard.cpp">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\uilayer\InitiativeUI.cpp">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\uilayer\PortraitPanel.cpp">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\uilayer\StatusBar.cpp">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\uilayer\AbilitySelector.cpp">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\uilayer\CardSelection.cpp">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\level\Spawner.cpp">
+      <Filter>Source Files\Gloom\level</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\level\Tile.cpp">
+      <Filter>Source Files\Gloom\level</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\level\Hexagon.cpp">
+      <Filter>Source Files\Gloom\level</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\level\Level.cpp">
+      <Filter>Source Files\Gloom\level</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\icons\icons.cpp">
+      <Filter>Source Files\Gloom\icons</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\entity\Entity.cpp">
+      <Filter>Source Files\Gloom\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\enemyai\EnemyRound.cpp">
+      <Filter>Source Files\Gloom\enemyai</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\enemyai\EnemyAI.cpp">
+      <Filter>Source Files\Gloom\enemyai</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\enemyai\actions\EnemyMove.cpp">
+      <Filter>Source Files\Gloom\enemyai\enemyactions</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\enemyai\actions\EnemyShield.cpp">
+      <Filter>Source Files\Gloom\enemyai\enemyactions</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\enemyai\actions\EnemyAction.cpp">
+      <Filter>Source Files\Gloom\enemyai\enemyactions</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\enemyai\actions\EnemyAttack.cpp">
+      <Filter>Source Files\Gloom\enemyai\enemyactions</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\director\Initiative.cpp">
+      <Filter>Source Files\Gloom\director</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\cards\MonsterCardGenerator.cpp">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\cards\MonsterDeck.cpp">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\cards\PlayerCard.cpp">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\cards\PlayerDeck.cpp">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\cards\PlayerRound.cpp">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\cards\CardGenerator.cpp">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\cards\Modifiers.cpp">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\action\ActionElement.cpp">
+      <Filter>Source Files\Gloom\action</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\action\ActionMove.cpp">
+      <Filter>Source Files\Gloom\action</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\action\ActionShieldSelf.cpp">
+      <Filter>Source Files\Gloom\action</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\action\CardAction.cpp">
+      <Filter>Source Files\Gloom\action</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gloom\action\ActionAttack.cpp">
+      <Filter>Source Files\Gloom\action</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gloom\Gloom.cpp">
+      <Filter>Source Files\Gloom</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Gloom\gloomhaven.h">
+      <Filter>Source Files\Gloom</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\Director.h">
+      <Filter>Source Files\Gloom\director</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\uilayer\CardSelection.h">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\uilayer\CardSelector.h">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\uilayer\CombatLog.h">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\uilayer\EnemyAdvancer.h">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\uilayer\HoverCard.h">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\uilayer\InitiativeUI.h">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\uilayer\PortraitPanel.h">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\uilayer\StatusBar.h">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\uilayer\AbilitySelector.h">
+      <Filter>Source Files\Gloom\uilayer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\level\Spawner.h">
+      <Filter>Source Files\Gloom\level</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\level\Tile.h">
+      <Filter>Source Files\Gloom\level</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\level\Hexagon.h">
+      <Filter>Source Files\Gloom\level</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\level\Level.h">
+      <Filter>Source Files\Gloom\level</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\icons\icons.h">
+      <Filter>Source Files\Gloom\icons</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\entity\Entity.h">
+      <Filter>Source Files\Gloom\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\entity\StatusEffect.h">
+      <Filter>Source Files\Gloom\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\enemyai\EnemyAI.h">
+      <Filter>Source Files\Gloom\enemyai</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\enemyai\EnemyRound.h">
+      <Filter>Source Files\Gloom\enemyai</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\enemyai\actions\EnemyAttack.h">
+      <Filter>Source Files\Gloom\enemyai\enemyactions</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\enemyai\actions\EnemyMove.h">
+      <Filter>Source Files\Gloom\enemyai\enemyactions</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\enemyai\actions\EnemyShield.h">
+      <Filter>Source Files\Gloom\enemyai\enemyactions</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\enemyai\actions\EnemyAction.h">
+      <Filter>Source Files\Gloom\enemyai\enemyactions</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\director\Initiative.h">
+      <Filter>Source Files\Gloom\director</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\cards\Modifiers.h">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\cards\MonsterCardGenerator.h">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\cards\MonsterDeck.h">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\cards\PlayerCard.h">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\cards\PlayerDeck.h">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\cards\PlayerRound.h">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\cards\CardGenerator.h">
+      <Filter>Source Files\Gloom\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\action\ActionMove.h">
+      <Filter>Source Files\Gloom\action</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\action\ActionShieldSelf.h">
+      <Filter>Source Files\Gloom\action</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\action\CardAction.h">
+      <Filter>Source Files\Gloom\action</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\action\Action.h">
+      <Filter>Source Files\Gloom\action</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gloom\action\ActionAttack.h">
+      <Filter>Source Files\Gloom\action</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gloom\Gloom.h">
+      <Filter>Source Files\Gloom</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

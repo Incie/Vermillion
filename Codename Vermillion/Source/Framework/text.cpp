@@ -36,8 +36,11 @@ void Text::Init()
 		return;
 	}
 
+	//std::string fontName{ "fonts/PirataOne-Gloomhaven.ttf" };
+	std::string fontName{ "fonts/Roboto-Black.ttf" };
+
 	FT_Face face;
-	if (FT_New_Face(ft, "fonts/Roboto-Black.ttf", 0, &face)) {
+	if (FT_New_Face(ft, fontName.c_str(), 0, &face)) {
 		Log::Error("Freetype", "Failed to load font");
 		return;
 	}
@@ -57,7 +60,6 @@ void Text::Init()
 
 void Text::Deinit()
 {
-	//auto iter = ;
 	Log::Info("Freetype", "Deleting");
 	std::map<GLchar, Character>::const_iterator iter;
 	
@@ -71,15 +73,52 @@ void Text::Deinit()
 	fontProgram.UnloadProgram();
 }
 
-void Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const Colorf& color) const
+float Text::CalculateWidth(const std::string& text, unsigned int fontHeight) const
+{
+	float textWidth = 0;
+	float scale = static_cast<float>(fontHeight) / static_cast<float>(font_face_rendered_height);
+
+	for (std::string::const_iterator c = text.begin(); c != text.end(); c++)
+	{
+		const Character& ch = characters[*c];
+
+		// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+		textWidth += static_cast<float>(ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
+	}
+
+	return textWidth;
+}
+
+void Text::NewLine(unsigned int fontHeight) const 
+{
+	glTranslatef(0, fontHeight + 2.0f, 0);
+}
+
+float Text::Print(double x, double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color, bool center, bool newline) const
+{
+	double textWidth = static_cast<double>(CalculateWidth(text, fontHeight));
+
+	if(center) {
+		x -= textWidth * 0.5;
+		y -= static_cast<double>(fontHeight) * 0.5;
+	}
+
+	PrintText(x, y, text, fontHeight, color);
+	
+	if (newline)
+		NewLine(fontHeight);
+
+	return (float)textWidth;
+}
+
+void Text::PrintText(double x, double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color) const
 {
 	fontProgram.Use();
 	fontProgram.SetUniform("tex", 0);
-	fontProgram.SetUniform("color", color);
+	fontProgram.SetUniform("color", glm::vec4(color, 1.0f));
 
 	glColor4f(1,1,1,1);
 	glEnable(GL_BLEND);
-	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glPushMatrix();
@@ -104,19 +143,19 @@ void Text::Print(double x, double y, const std::string& text, unsigned int fontH
 		Character ch = characters[*c];
 
 		double xpos = x + ch.Bearing.x * scale;
-		double ypos = y - (-ch.Size.y + ch.Bearing.y) * scale;
+		double ypos = y - ((double)-ch.Size.y + (double)ch.Bearing.y) * scale;
 
-		double w = ch.Size.x * scale;
-		double h = ch.Size.y * scale;
+		double width = ch.Size.x * scale;
+		double height = ch.Size.y * scale;
 
 		double vertices[6][2] = {
-			{ xpos,     ypos - h},
+			{ xpos,     ypos - height},
 			{ xpos,     ypos},
-			{ xpos + w, ypos},
+			{ xpos + width, ypos},
 
-			{ xpos,     ypos - h},
-			{ xpos + w, ypos},
-			{ xpos + w, ypos - h}
+			{ xpos,     ypos - height},
+			{ xpos + width, ypos},
+			{ xpos + width, ypos - height}
 		};
 
 		glBindTexture(GL_TEXTURE_2D, ch.TextureID);
@@ -133,10 +172,28 @@ void Text::Print(double x, double y, const std::string& text, unsigned int fontH
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 
 	fontProgram.NoProgram();
+}
+
+void Text::PrintCenter(const double x, const double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color) const
+{
+	double centerY = y - fontHeight * 0.5;
+
+	double w = 0;
+	double scale = (double)fontHeight / (double)font_face_rendered_height;
+
+	std::string::const_iterator c;
+	for (c = text.begin(); c != text.end(); c++)
+	{
+		const Character &ch = characters[*c];
+
+		// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+		w += (ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
+	}
+
+	Print(x - w * 0.5, centerY, text, fontHeight, color);
 }
 
 void RenderFaceToTextures(FT_Face &face)

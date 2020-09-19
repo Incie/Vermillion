@@ -4,17 +4,17 @@
 
 #include"GL\glew.h"
 
-TextureManager::TextureManager()
+TextureManagerGL::TextureManagerGL()
 {
 }
 
-TextureManager::~TextureManager()
+TextureManagerGL::~TextureManagerGL()
 {
 }
 
-Texture TextureManager::LoadTexture(const std::string & relativePath)
+Texture TextureManagerGL::LoadTexture(const std::string & relativePath)
 {
-	auto loader = new PNGLoader();
+	auto loader = vnew PNGLoader();
 	auto imageLoadStatus = loader->Read(relativePath);
 
 	if (imageLoadStatus != ImageLoaderStatus::LOADER_SUCCESS) {
@@ -31,7 +31,7 @@ Texture TextureManager::LoadTexture(const std::string & relativePath)
 	return Texture{texture, imageData.width, imageData.height, imageData.channels};
 }
 
-void TextureManager::UnloadAll()
+void TextureManagerGL::UnloadAll()
 {
 	for (auto texture : textures) {
 		UnloadTexture(*texture);
@@ -40,13 +40,13 @@ void TextureManager::UnloadAll()
 	textures.clear();
 }
 
-void TextureManager::UnloadTexture(Texture & texture)
+void TextureManagerGL::UnloadTexture(Texture & texture)
 {
 	glDeleteTextures(1, &texture.textureId);
 	texture.textureId = 0;
 }
 
-unsigned int TextureManager::UploadToGPU(const ImageData& imageData)
+unsigned int TextureManagerGL::UploadToGPU(const ImageData& imageData)
 {
 	GLint format = GL_RGB;
 	if (imageData.channels == 4)

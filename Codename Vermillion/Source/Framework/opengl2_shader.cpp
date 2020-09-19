@@ -1,5 +1,5 @@
 #include"pch.h"
-#include "opengl2_shader.h"
+#include"opengl2_shader.h"
 #include"GL\glew.h"
 #include"log.h"
 #include"file.h"
@@ -81,10 +81,10 @@ void GLSLProgram::SetUniform(const std::string & uniformname, const glm::vec4 & 
 	glUniform4f(uniformlocation, color.r, color.g, color.b, color.a);
 }
 
-void GLSLProgram::SetUniform(const std::string & uniformname, const Colorf& color)
+void GLSLProgram::SetUniform(const std::string & uniformname, const glm::vec3& color)
 {
 	auto uniformlocation = glGetUniformLocation(programId, uniformname.c_str());
-	glUniform4f(uniformlocation, color.r, color.g, color.b, color.a);
+	glUniform4f(uniformlocation, color.r, color.g, color.b, 1.0f);
 }
 
 void GLSLProgram::Use()

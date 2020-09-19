@@ -1,9 +1,10 @@
 #pragma once
 
-#include"pch.h"
-#include"point.h"
+
+#include<string>
 #include"glm/glm.hpp"
 #include"inputstate.h"
+
 
 class Texture {
 public:
@@ -11,6 +12,14 @@ public:
 	int width;
 	int height;
 	unsigned int channels;
+};
+
+class SoundService {
+public:
+	virtual void PlaySound(const std::string& soundFile) = 0;
+	virtual void PlayMusic(const std::string& musicFile) = 0;
+	virtual void Volume(int volume) = 0;
+	virtual int Volume() = 0;
 };
 
 
@@ -23,7 +32,10 @@ public:
 
 class TextService {
 public:
-	virtual void Print(double x, double y, const std::string &text, unsigned int fontHeight, const Colorf& color) const = 0;
+	virtual float CalculateWidth(const std::string& text, unsigned int fontHeight) const = 0;
+	virtual float Print(double x, double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color, bool center = false, bool newline = false) const = 0;
+	virtual void NewLine(unsigned int fontHeight) const = 0;
+	virtual void PrintCenter(const double x, const double y, const std::string& text, unsigned int fontHeight, const glm::vec3& color) const = 0;
 };
 
 

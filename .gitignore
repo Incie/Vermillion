@@ -4,7 +4,22 @@ Build_Release/
 Debug/
 Release/
 x64/
+old/
 *.dgml
 
+vendor/
+External/
+
+version.h
 
 .user
+*.rar
+/Build_Static
+/Breakout/textures
+/Breakout/sounds
+/Breakout/shaders
+/Breakout/levels
+/Breakout/fonts
+/Builds/
+
+log.txt

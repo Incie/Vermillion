@@ -34,7 +34,9 @@ void Camera2D::SetDepth(float newDepth)
 
 void Camera2D::SetPositionCenter(const glm::vec2& position)
 {
+	UpdateViewportSize();
 	this->positionTopLeft = position - (viewportSize * 0.5f);
+	this->center = position;
 }
 
 void Camera2D::SetPositionTopLeft(const glm::vec2& position)

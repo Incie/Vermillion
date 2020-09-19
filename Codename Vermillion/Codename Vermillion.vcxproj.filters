@@ -41,19 +41,64 @@
     <Filter Include="Source Files\Framework\Timer">
       <UniqueIdentifier>{ee3445e6-cbc2-4104-840c-4b92d6c8d561}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Test\Gloom">
-      <UniqueIdentifier>{37a5f5a6-9dad-4bd3-a501-6a128cdbc9f8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Framework\Camera">
       <UniqueIdentifier>{1444139c-3086-4c06-889a-610f4ac65fc0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Test\Gloom\Actions">
-      <UniqueIdentifier>{5ace2854-0855-40ac-85ac-900a600a8910}</UniqueIdentifier>
+    <Filter Include="Source Files\Gloomhaven">
+      <UniqueIdentifier>{915320fb-bc9e-4925-8876-fe62d7948521}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Test\Gloom\Entity">
-      <UniqueIdentifier>{2a0f5301-6255-4383-843b-823f744a32a2}</UniqueIdentifier>
+    <Filter Include="Source Files\Gloomhaven\Level">
+      <UniqueIdentifier>{b2bd7934-d57e-4439-b0f5-5e8bbad719cf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Precompiled">
+    <Filter Include="Source Files\Gloomhaven\Cards">
+      <UniqueIdentifier>{d9bf962b-b124-40c5-8e73-5cbfc0e24dca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\EnemyAI">
+      <UniqueIdentifier>{c05c1673-de87-4747-8250-835a309a957c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\Entity">
+      <UniqueIdentifier>{d00d3646-7b2e-4367-a31b-e5e23744716c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\Actions">
+      <UniqueIdentifier>{dd8be4da-caa1-47db-a525-22537bee0f4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\Director">
+      <UniqueIdentifier>{bee1f7af-359a-4df7-a828-f94a12ff2cfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Render">
+      <UniqueIdentifier>{927e2919-e719-456b-a089-f79ed0c8b450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\Icons">
+      <UniqueIdentifier>{657e9374-7a10-4fce-bbfb-665cb3b243c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\UI">
+      <UniqueIdentifier>{7a977a87-2603-4779-8987-52d9d44ea0fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Services">
+      <UniqueIdentifier>{afd4461e-12d1-46e5-b39f-bfdc3b2865bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven_LevelEditor">
+      <UniqueIdentifier>{b280b695-e43b-46d6-8941-fada906c2b6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven_LevelEditor\UI">
+      <UniqueIdentifier>{ce1aeb5a-b537-462e-86e5-729b34f3051c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\UI">
+      <UniqueIdentifier>{50977cc3-9f0a-4380-bc35-86bc2dd95608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{4d706eb4-45eb-4e6c-b746-c870ce9214be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\Cards\Generators">
+      <UniqueIdentifier>{764bc998-8c08-433f-8ba1-928e9c5b6c43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\Cards\Player">
+      <UniqueIdentifier>{6f14e6e9-e703-43b1-a786-6ac05f239e09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gloomhaven\EnemyAI\Actions">
+      <UniqueIdentifier>{675b901f-6da8-4dfb-9d69-b97e7c347fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompiled Header">
       <UniqueIdentifier>{1b08c3e9-dfd7-4ad7-9e90-378b0cbcfcee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -66,9 +111,6 @@
     </ClCompile>
     <ClCompile Include="Source\Test\GamepadTest.cpp">
       <Filter>Source Files\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\point.h">
-      <Filter>Source Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\inputstate.cpp">
       <Filter>Source Files\Framework\shared</Filter>
@@ -115,38 +157,173 @@
     <ClCompile Include="Source\Framework\timer.cpp">
       <Filter>Source Files\Framework\Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Framework\servicelocator.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Test\Gloom.cpp">
-      <Filter>Source Files\Test\Gloom</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utils\Hexagon.cpp">
-      <Filter>Source Files\Test\Gloom</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Framework\input_getters.cpp">
       <Filter>Source Files\Framework\Input</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\camera2d.cpp">
       <Filter>Source Files\Framework\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Test\Level.cpp">
-      <Filter>Source Files\Test\Gloom</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Test\ActionMove.cpp">
-      <Filter>Source Files\Test\Gloom\Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Test\Entity.cpp">
-      <Filter>Source Files\Test\Gloom\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Test\Spawner.cpp">
-      <Filter>Source Files\Test\Gloom\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Test\Tile.cpp">
-      <Filter>Source Files\Test\Gloom</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Framework\pch\pch.cpp">
-      <Filter>Source Files\Precompiled</Filter>
+      <Filter>Precompiled Header</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\Gloom.cpp">
+      <Filter>Source Files\Gloomhaven</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\action\ActionAttack.cpp">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\action\ActionMove.cpp">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\Modifiers.cpp">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\enemyai\EnemyAI.cpp">
+      <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\entity\Entity.cpp">
+      <Filter>Source Files\Gloomhaven\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\level\Level.cpp">
+      <Filter>Source Files\Gloomhaven\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\level\Tile.cpp">
+      <Filter>Source Files\Gloomhaven\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\level\Hexagon.cpp">
+      <Filter>Source Files\Gloomhaven\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\enemyai\EnemyRound.cpp">
+      <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\action\CardAction.cpp">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\level\Spawner.cpp">
+      <Filter>Source Files\Gloomhaven\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\Director.cpp">
+      <Filter>Source Files\Gloomhaven\Director</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\director\Initiative.cpp">
+      <Filter>Source Files\Gloomhaven\Director</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Test\CardRendering.cpp">
+      <Filter>Source Files\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\render.cpp">
+      <Filter>Source Files\Framework\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\icons\icons.cpp">
+      <Filter>Source Files\Gloomhaven\Icons</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\uilayer.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\CardSelection.cpp">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\CardSelector.cpp">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\uielement.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\uibutton.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\AbilitySelector.cpp">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\PortraitPanel.cpp">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\StatusBar.cpp">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\InitiativeUI.cpp">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\EnemyAdvancer.cpp">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\action\ActionShieldSelf.cpp">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\vermillion.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\servicelocator.cpp">
+      <Filter>Source Files\Framework\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\Gloom_EditorBoard.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\ActionSelector.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\TileModifier.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\SaveLoadUI.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\uiimage.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\uitext.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven_Leveleditor\ui\PaintProperties.cpp">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\constants.cpp">
+      <Filter>Source Files\Framework\shared</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\MonsterDeck.cpp">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\CombatLog.cpp">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\uilayer\HoverCard.cpp">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Test\Sandbox.cpp">
+      <Filter>Source Files\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\CardGenerator.cpp">
+      <Filter>Source Files\Gloomhaven\Cards\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\MonsterCardGenerator.cpp">
+      <Filter>Source Files\Gloomhaven\Cards\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerCard.cpp">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerDeck.cpp">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\cards\PlayerRound.cpp">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyAction.cpp">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyAttack.cpp">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyMove.cpp">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\enemyai\actions\EnemyShield.cpp">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gloomhaven\action\ActionElement.cpp">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -192,41 +369,167 @@
     <ClInclude Include="Source\Framework\timer.h">
       <Filter>Source Files\Framework\Timer</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Framework\servicelocator.h">
-      <Filter>Source Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\services.h">
-      <Filter>Source Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Test\Gloom.h">
-      <Filter>Source Files\Test\Gloom</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utils\Hexagon.h">
-      <Filter>Source Files\Test\Gloom</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Framework\activity.h">
       <Filter>Source Files\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\camera2d.h">
       <Filter>Source Files\Framework\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Test\Level.h">
-      <Filter>Source Files\Test\Gloom</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Test\ActionMove.h">
-      <Filter>Source Files\Test\Gloom\Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Test\Entity.h">
-      <Filter>Source Files\Test\Gloom\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Test\Spawner.h">
-      <Filter>Source Files\Test\Gloom\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Test\Tile.h">
-      <Filter>Source Files\Test\Gloom</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Framework\pch\pch.h">
-      <Filter>Source Files\Precompiled</Filter>
+      <Filter>Precompiled Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\Gloom.h">
+      <Filter>Source Files\Gloomhaven</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\action\ActionAttack.h">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\action\ActionMove.h">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\action\Action.h">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\Modifiers.h">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\enemyai\EnemyAI.h">
+      <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\entity\Entity.h">
+      <Filter>Source Files\Gloomhaven\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\level\Hexagon.h">
+      <Filter>Source Files\Gloomhaven\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\level\Level.h">
+      <Filter>Source Files\Gloomhaven\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\level\Tile.h">
+      <Filter>Source Files\Gloomhaven\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\enemyai\EnemyRound.h">
+      <Filter>Source Files\Gloomhaven\EnemyAI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\action\CardAction.h">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\level\Spawner.h">
+      <Filter>Source Files\Gloomhaven\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\Director.h">
+      <Filter>Source Files\Gloomhaven\Director</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\director\Initiative.h">
+      <Filter>Source Files\Gloomhaven\Director</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Test\CardRendering.h">
+      <Filter>Source Files\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\render.h">
+      <Filter>Source Files\Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\icons\icons.h">
+      <Filter>Source Files\Gloomhaven\Icons</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\CardSelection.h">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\CardSelector.h">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\AbilitySelector.h">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\PortraitPanel.h">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\StatusBar.h">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\InitiativeUI.h">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\EnemyAdvancer.h">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\action\ActionShieldSelf.h">
+      <Filter>Source Files\Gloomhaven\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\vermillion.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\servicelocator.h">
+      <Filter>Source Files\Framework\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\services.h">
+      <Filter>Source Files\Framework\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_Editor.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\Gloom_EditorBoard.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\ActionSelector.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\TileModifier.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\SaveLoadUI.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven_Leveleditor\ui\PaintProperties.h">
+      <Filter>Source Files\Gloomhaven_LevelEditor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\constants.h">
+      <Filter>Source Files\Framework\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\MonsterDeck.h">
+      <Filter>Source Files\Gloomhaven\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\uiview.h">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\CombatLog.h">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\uilayer\HoverCard.h">
+      <Filter>Source Files\Gloomhaven\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Test\SandBox.h">
+      <Filter>Source Files\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\CardGenerator.h">
+      <Filter>Source Files\Gloomhaven\Cards\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\MonsterCardGenerator.h">
+      <Filter>Source Files\Gloomhaven\Cards\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerCard.h">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerDeck.h">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\cards\PlayerRound.h">
+      <Filter>Source Files\Gloomhaven\Cards\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyAction.h">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyAttack.h">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyMove.h">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\enemyai\actions\EnemyShield.h">
+      <Filter>Source Files\Gloomhaven\EnemyAI\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gloomhaven\entity\StatusEffect.h">
+      <Filter>Source Files\Gloomhaven\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -237,5 +540,19 @@
     <None Include="Source\Shaders\helloworld.vert">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="..\versiongenerator.ps1">
+      <Filter>Documentation</Filter>
+    </None>
+    <None Include="..\Builds\Gloomhaven\shaders\msdf_shader.frag">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="..\Builds\Gloomhaven\shaders\msdf_shader.vert">
+      <Filter>Shader Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="libraries.txt">
+      <Filter>Documentation</Filter>
+    </Text>
   </ItemGroup>
 </Project>

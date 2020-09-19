@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\MainMenu">
+      <UniqueIdentifier>{2b724e69-1635-461a-86fb-211bd716a588}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{0515fb13-858a-4880-802f-45917e0c285d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\MainMenu\ActivityMainMenu.cpp">
+      <Filter>Source Files\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MainMenu\Menu.cpp">
+      <Filter>Source Files\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MainMenu\MenuPage.cpp">
+      <Filter>Source Files\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\ActivitySideScroller.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\EntityManager.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\Level.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\MainMenu\ActivityMainMenu.h">
+      <Filter>Source Files\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MainMenu\Menu.h">
+      <Filter>Source Files\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\ActivitySideScroller.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\Entity.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\EntityManager.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\Level.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

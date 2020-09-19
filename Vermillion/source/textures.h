@@ -1,0 +1,21 @@
+#pragma once
+
+#include"services.h"
+
+class ImageData;
+
+class TextureManagerGL : public TextureService
+{
+public:
+	TextureManagerGL();
+	~TextureManagerGL();
+
+	Texture LoadTexture(const FilePath& relativePath);
+	void UnloadAll();
+
+private:
+	void UnloadTexture(Texture& texture);
+	unsigned int UploadToGPU(const ImageData& imageData);
+
+	std::vector<Texture*> textures;
+};
