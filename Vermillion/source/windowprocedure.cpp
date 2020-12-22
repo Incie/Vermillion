@@ -29,6 +29,13 @@ LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT   uMsg, _In_ WPARAM wParam
 			InputState::SetKeyUp(wParam & 0xFF);
 			break;
 
+		case WM_MOUSEWHEEL: {
+			auto wheelDelta = GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA;
+			Log::Info("WheelDelta", fmt::format("{}", wheelDelta));
+			InputState::SetMouseScrollState(wheelDelta);
+			break;
+		}
+
 		case WM_SIZE:
 		case WM_MOVE:
 		{

@@ -1,4 +1,7 @@
 #include"pch.h"
+
+module render;
+
 #include"render.h"
 
 #include"textures.h"
@@ -187,6 +190,22 @@ void Render::Line(const glm::vec2& point0, const glm::vec2& point1, const glm::v
 	glColor3f(1,1,1);
 }
 
+void Render::LineGrid(const glm::vec2& from, const glm::vec2& to, const glm::vec3& color, float step)
+{
+	glColor3f(0.3f, 0.3f, 0.3f);
+	glBegin(GL_LINES);
+	for(auto y = from.y; y < to.y; y += 50.0f) {
+		glVertex2f(from.x, y);
+		glVertex2f(to.x, y);
+	}
+
+	for(auto x = from.x; x < to.x; x += 50.0f) {
+		glVertex2f(x, from.y);
+		glVertex2f(x, to.y);
+	}
+	glEnd();
+}
+
 void Render::OriginCross(float size)
 {
 	glBegin(GL_LINES);
@@ -205,12 +224,17 @@ void Render::PopMatrix()
 	glPopMatrix();
 }
 
-void Render::Translate2D(glm::vec3& p)
+void Render::Translate3D(const glm::vec3& p) 
+{
+	glTranslatef(p.x, p.y, p.z);
+}
+
+void Render::Translate2D(const glm::vec3& p)
 {
 	glTranslatef(p.x, p.y, 0.0f);
 }
 
-void Render::Translate2D(glm::vec2& p)
+void Render::Translate2D(const glm::vec2& p)
 {
 	glTranslatef(p.x, p.y, 0.0f);
 }

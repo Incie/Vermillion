@@ -1,5 +1,6 @@
 #include"pch/pch.h"
 #include"sandbox.h"
+#include"testwindow.h"
 
 Sandbox::Sandbox()
 	: timer(0.0f), timerEnd(2.f), elapsed(0.0f), timePerThing(0.25f), goalText("VERMILLION ENGINE")
@@ -7,6 +8,10 @@ Sandbox::Sandbox()
 }
 
 Sandbox::~Sandbox()
+{
+}
+
+void Sandbox::NewWindow(BaseWindow::WindowAnchor anchor, glm::vec2 size, glm::vec2 position)
 {
 }
 
@@ -22,7 +27,25 @@ void Sandbox::ResetValues()
 void Sandbox::Initialize()
 {
     TRACE("Sandbox");
-    ResetValues();    
+    ResetValues();
+
+    auto view = AddView<TestWindow>(0);
+    view->Anchor(BaseWindow::WindowAnchor::CenterRight);
+    view->Size({250, 0});
+    view->Position({0,0});
+    view->Title(fmt::format("window {}", 0));
+    view->TitleFontHeight(14.0f);
+    view->TitleColor({1,1,1,1});
+    view->Resize(Services().Text());
+
+    view = AddView<TestWindow>(1);
+    view->Anchor(BaseWindow::WindowAnchor::CenterLeft);
+    view->Size({250, 0});
+    view->Position({0,0});
+    view->Title(fmt::format("window {}", 0));
+    view->TitleFontHeight(14.0f);
+    view->TitleColor({1,1,1,1});
+    view->Resize(Services().Text());
 }
 
 void Sandbox::Deinitialize()
@@ -116,33 +139,7 @@ void Sandbox::Update(float delta)
    return true;
 */
 
-    elapsed += delta;
 
-    if (timer < 0.0f)
-        timer = 0.0f;
-
-    timer += delta;
-
-    if (timer >= timePerThing) {
-        timer -= 0.0f;
-        timePerThing -= 0.02f;
-        glm::min(timePerThing, 0.01f);
-
-        if( displayText.size() < goalText.size() )
-            displayText.push_back(goalText[displayText.size()]);
-    }
-
-
-    if (Services().Input().KeyOnce(VKey_SPACE)) {
-        displayText = "";
-        timer = 0.0f;
-        timePerThing = 0.25f;
-        elapsed = 0.0f;
-    }
-
-    if(elapsed > timerEnd || Services().Input().KeyOnce(VKey_LBUTTON) ) {
-        StartActivity("MenuTest");
-    }
 }
 
 void Sandbox::Render()
@@ -150,14 +147,7 @@ void Sandbox::Render()
 	auto& text = Services().Text();
 	const int textHeight = 26;
 
-	auto width = text.CalculateWidth(displayText, textHeight);
-
-    auto midX = WindowState::Width() * 0.5f - width * 0.5f;
-	auto midY = WindowState::Height() * 0.5f - static_cast<float>(textHeight) * 0.5f;
-
-
-	text.Print(midX, midY, displayText, textHeight, glm::vec3(1, 1, 1));
-    text.Print(0, 25, fmt::format("{}", elapsed), 18, Colors::White);
+    RenderUI();
 }
 
 

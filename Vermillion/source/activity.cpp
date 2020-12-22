@@ -6,12 +6,12 @@ Activity::Activity()
 	: serviceLocator(nullptr), activityInterface(nullptr), markedAsFinished(false)
 {
 	TRACE("Activity");
-
 }
 
 void Activity::Resize(const glm::ivec2& newWindowSize) {
-	for (auto view : layers)
-		view->Resize(newWindowSize, Services().Text());
+	const auto& textService = Services().Text();
+	for (auto view : windows)
+		view->Resize(textService);
 }
 
 void Activity::SetServiceLocator(ServiceLocator& locator) {
@@ -29,11 +29,7 @@ bool Activity::Finished() const
 }
 
 void Activity::DeinitializeUI() {
-	for (auto view : layers) {
-		delete view;
-	}
-
-	layers.clear();
+	windows.clear();
 }
 
 void Activity::StartActivity(const std::string& activityId)
@@ -44,8 +40,8 @@ void Activity::StartActivity(const std::string& activityId)
 	activityInterface->StartActivity(activityId);
 }
 
-UIView* Activity::GetViewById(int id) {
-	for (auto view : layers) {
+std::shared_ptr<BaseWindow> Activity::GetViewById(int id) {
+	for (auto view : windows) {
 		if (view->Id() == id)
 			return view;
 	}
@@ -59,26 +55,25 @@ void Activity::Finish()
 	markedAsFinished = true;
 }
 
-void Activity::AddView(UIView* view, int id) {
-	view->SetId(id);
-	layers.push_back(view);
+void Activity::AddView(BaseWindow* view, int id) {
+	throw std::string("Activity::AddView(UIView*, int) deprecated");
 }
 
 bool Activity::UpdateUI(float deltaTime) {
 	bool inputHandled = false;
-	for (auto layer : layers) {
-		layer->Update(deltaTime, Services());
+	for (auto layer : windows) {
+		//layer->Update(deltaTime, Services());
 
-		if (layer->Active() == false)
-			continue;
+		//if (layer->Active() == false)
+		//	continue;
 
-		if (layer->Invalidated()) {
-			auto p = WindowState::Size();
-			layer->Resize(glm::vec2(p.x, p.y), Services().Text());
-		}
+		//if (layer->Invalidated()) {
+		//	auto p = WindowState::Size();
+		//	layer->Resize(glm::vec2(p.x, p.y), Services().Text());
+		//}
 
-		if (!inputHandled)
-			inputHandled = layer->HandleInput(Services().Input());
+		//if (!inputHandled)
+		//	inputHandled = layer->HandleInput(Services().Input());
 	}
 
 	return inputHandled;
@@ -87,11 +82,9 @@ bool Activity::UpdateUI(float deltaTime) {
 void Activity::RenderUI() {
 	auto& services = Services();
 
-	for (auto view : layers) {
-		if (view->Active() == false)
-			continue;
-		view->StartRender();
-		view->Render(services);
-		view->EndRender();
+	for (auto view : windows) {
+		//if (view->Active() == false)
+		//	continue;
+		view->Render(services.Text());
 	}
 }

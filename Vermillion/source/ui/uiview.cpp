@@ -6,47 +6,22 @@
 #include"../render.h"
 
 UIView::UIView()
-	: anchor(0), invalidated(true), backgroundColor(glm::vec3(1))
+	: anchor(WindowAnchor::NONE), invalidated(true), backgroundColor(glm::vec3(1))
 {
 }
 
 UIView::~UIView() {
-	for(auto child : children)
-		delete child;
 	children.clear();
 }
 
 bool UIView::HandleInput(const InputService& inputService)
 {
 	const auto& mouseposition = inputService.GetMousePosition();
+	return HandleInput(inputService, *this, mouseposition);
+}
 
-	if(!IsPointInSide(mouseposition)) {
-		return false;
-	}
-
-	const auto windowLocalPosition = mouseposition - position;
-	for(auto child : children) {
-
-		if(child->State() == UIElement::UIState::DISABLED)
-			continue;
-
-		child->SetState(UIElement::UIState::ENABLED);
-
-		if(child->IsPointInSide(windowLocalPosition)) {
-
-			//if( has children )
-			 // child->HandleInput( use_this_OnEvent() );
-
-			child->SetState(UIElement::UIState::HOVER);
-
-			if(inputService.KeyOnce(VKey_LBUTTON)) {
-				child->SetState(UIElement::UIState::ACTIVATED);
-				OnEvent(UIView::WindowEvent::CLICK, child->Id());
-			}
-		}
-	}
-
-	return true;
+void UIView::Measure(const glm::vec2& windowSize, const TextService& text)
+{
 }
 
 void UIView::Resize(const glm::vec2& windowSize, const TextService& text)
@@ -108,14 +83,45 @@ void UIView::OnEvent(WindowEvent type, int id)
 {
 }
 
-void UIView::AddChild(UIElement* child)
-{
-	children.push_back(child);
-}
-
 void UIView::BackgroundColor(const glm::vec3& color)
 {
 	this->backgroundColor = color;
+}
+
+bool UIView::HandleInput(const InputService& inputService, UIView& view, const glm::vec2& parentLocalPosition)
+{
+	if(!view.IsPointInSide(parentLocalPosition)) {
+		return false;
+	}
+
+	const auto windowLocalPosition = parentLocalPosition - view.Position();
+	auto viewChildren = view.Children();
+	for(auto child : viewChildren ) {
+
+		if(child->State() == UIElement::UIState::DISABLED)
+			continue;
+
+		if(child->HasChildren()) {
+			auto childView = std::dynamic_pointer_cast<UIView>(child);
+			if( childView )
+				HandleInput(inputService, *childView, windowLocalPosition);
+		}
+
+		//reset to enabled
+		child->SetState(UIElement::UIState::ENABLED);
+
+		if(child->IsPointInSide(windowLocalPosition)) {
+
+			child->SetState(UIElement::UIState::HOVER);
+
+			if(inputService.KeyOnce(VKey_LBUTTON)) {
+				child->SetState(UIElement::UIState::ACTIVATED);
+				OnEvent(UIView::WindowEvent::CLICK, child->Id());
+			}
+		}
+	}
+
+	return true;
 }
 
 void UIView::Resize(const TextService& text) {

@@ -14,6 +14,7 @@ public:
 	bool KeyDown(char keyCode) const;
 	bool KeyOnce(char keyCode) const;
 	bool KeyUp(char keyCode) const;
+	int ScrollState() const;
 
 	glm::vec2 GetMousePosition() const;
 	glm::vec2 GetMouseDelta() const;

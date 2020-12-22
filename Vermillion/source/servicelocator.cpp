@@ -2,7 +2,7 @@
 #include "servicelocator.h"
 
 ServiceLocator::ServiceLocator()
-	: textureService(nullptr), inputService(nullptr), eventService(nullptr)
+	: textureService(nullptr), inputService(nullptr), eventService(nullptr), soundService(nullptr)
 {
 }
 
@@ -34,7 +34,14 @@ TextService& ServiceLocator::Text(int id)
 
 TextureService& ServiceLocator::Textures()
 {
+	assert(textureService);
 	return *textureService;
+}
+
+SoundService& ServiceLocator::Sound()
+{
+	assert(soundService);
+	return *soundService;
 }
 
 EventService& ServiceLocator::Events()

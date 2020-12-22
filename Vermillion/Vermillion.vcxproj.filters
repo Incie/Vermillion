@@ -53,6 +53,18 @@
     <Filter Include="Source Files\event">
       <UniqueIdentifier>{38e53c26-299f-406b-b099-92491587c4be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\sound">
+      <UniqueIdentifier>{7c731f6b-30c8-43c1-8117-774cda8e1faa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\containers">
+      <UniqueIdentifier>{dfaa1682-d512-4389-a754-c8ac575a0844}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\widgets">
+      <UniqueIdentifier>{e3b920a0-888f-45ec-9d3f-91f56e9e91bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\ui2.0">
+      <UniqueIdentifier>{961a2266-9ff6-45c4-95a8-91fe07062b11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\vermillion.h">
@@ -124,26 +136,38 @@
     <ClInclude Include="source\event.h">
       <Filter>Source Files\event</Filter>
     </ClInclude>
-    <ClInclude Include="source\ui\uibutton.h">
-      <Filter>Source Files\ui</Filter>
-    </ClInclude>
     <ClInclude Include="source\ui\uielement.h">
       <Filter>Source Files\ui</Filter>
     </ClInclude>
+    <ClInclude Include="source\sound_soloud.h">
+      <Filter>Source Files\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\uibutton.h">
+      <Filter>Source Files\ui\widgets</Filter>
+    </ClInclude>
     <ClInclude Include="source\ui\uiimage.h">
-      <Filter>Source Files\ui</Filter>
+      <Filter>Source Files\ui\widgets</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\uitext.h">
-      <Filter>Source Files\ui</Filter>
+      <Filter>Source Files\ui\widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\uigrid.h">
+      <Filter>Source Files\ui\containers</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\uiview.h">
-      <Filter>Source Files\ui</Filter>
+      <Filter>Source Files\ui\containers</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\uiview_horizontal.h">
-      <Filter>Source Files\ui</Filter>
+      <Filter>Source Files\ui\containers</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\uiview_vertical.h">
-      <Filter>Source Files\ui</Filter>
+      <Filter>Source Files\ui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\basewindow.h">
+      <Filter>Source Files\ui\ui2.0</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\baseview.h">
+      <Filter>Source Files\ui\ui2.0</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -222,26 +246,38 @@
     <ClCompile Include="source\vermillion_activity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\ui\uibutton.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
     <ClCompile Include="source\ui\uielement.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="source\sound_soloud.cpp">
+      <Filter>Source Files\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\uibutton.cpp">
+      <Filter>Source Files\ui\widgets</Filter>
+    </ClCompile>
     <ClCompile Include="source\ui\uiimage.cpp">
-      <Filter>Source Files\ui</Filter>
+      <Filter>Source Files\ui\widgets</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\uitext.cpp">
-      <Filter>Source Files\ui</Filter>
+      <Filter>Source Files\ui\widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\uigrid.cpp">
+      <Filter>Source Files\ui\containers</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\uiview.cpp">
-      <Filter>Source Files\ui</Filter>
+      <Filter>Source Files\ui\containers</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\uiview_horizontal.cpp">
-      <Filter>Source Files\ui</Filter>
+      <Filter>Source Files\ui\containers</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\uiview_vertical.cpp">
-      <Filter>Source Files\ui</Filter>
+      <Filter>Source Files\ui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\basewindow.cpp">
+      <Filter>Source Files\ui\ui2.0</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\baseview.cpp">
+      <Filter>Source Files\ui\ui2.0</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

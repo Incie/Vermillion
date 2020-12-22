@@ -16,6 +16,11 @@ bool InputManager::KeyUp(char keyCode) const
 	return keyStates[keyCode] <= 0;
 }
 
+int InputManager::ScrollState() const
+{
+	return InputStates::mouseState.mouseScrollState;
+}
+
 glm::vec2 InputManager::GetMousePosition() const
 {
 	const auto& mpos = InputStates::mouseState.mousePositionCurrent;

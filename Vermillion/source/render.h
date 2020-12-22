@@ -1,3 +1,5 @@
+export module render;
+
 #pragma once
 
 #include"glm/glm.hpp"
@@ -21,13 +23,15 @@ public:
 	static void Circle(const glm::vec2& position, float radius, const glm::vec3& color);
 	static void Line(const glm::vec2& point0, const glm::vec2& point1, const glm::vec3& color);
 
+	static void LineGrid(const glm::vec2& from, const glm::vec2& to, const glm::vec3& color, float step);
 
 	static void OriginCross(float size);
 
 	static void PushMatrix();
 	static void PopMatrix();
-	static void Translate2D(glm::vec3& p);
-	static void Translate2D(glm::vec2& p);
+	static void Translate3D(const glm::vec3& p);
+	static void Translate2D(const glm::vec3& p);
+	static void Translate2D(const glm::vec2& p);
 	static void Scale(glm::vec3& s);
 	static void Rotate2D(float angles);
 

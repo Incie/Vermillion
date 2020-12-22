@@ -1,8 +1,6 @@
 #pragma once
 
-
 #include"activity.h"
-
 
 class Sandbox : public Activity
 {
@@ -16,6 +14,7 @@ public:
 	void Render() override;
 
 private:
+	void NewWindow(BaseWindow::WindowAnchor anchor, glm::vec2 size, glm::vec2 position);
 	void ResetValues();
 
 	float timer;

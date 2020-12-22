@@ -12,37 +12,41 @@ TextureManagerGL::~TextureManagerGL()
 {
 }
 
-Texture TextureManagerGL::LoadTexture(const FilePath& relativePath)
+std::shared_ptr<Texture> TextureManagerGL::LoadTexture(const FilePath& relativePath)
 {
 	Log::Info("TextureManagerGL", fmt::format("Loading texture {}", relativePath.tostring()));
 
-	auto loader = vnew PNGLoader();
+	auto exist = FindExisting(relativePath);
+	if(exist != nullptr) {
+		Log::Info("TextureManagerGL", fmt::format("Found existing texture {}", relativePath.tostring()));
+		return exist;
+	}
+
+	auto loader = std::make_unique<PNGLoader>();
 	auto imageLoadStatus = loader->Read(relativePath.tostring());
 
 	if (imageLoadStatus != ImageLoaderStatus::LOADER_SUCCESS) {
-		return Texture();
+		return nullptr;
 	}
 
-	auto imageData = loader->Get();
+	const auto& imageData = loader->Get();
 
-	auto texture = UploadToGPU(imageData);
+	auto textureId = UploadToGPU(imageData);
+	auto texture = Texture{textureId, imageData.width, imageData.height, imageData.channels, relativePath.tostring() };
 
-	loader->Free();
-	delete loader;
-
-	return Texture{texture, imageData.width, imageData.height, imageData.channels};
+	return textures.emplace_back(std::make_shared<Texture>(texture));
 }
 
 void TextureManagerGL::UnloadAll()
 {
 	for (auto texture : textures) {
-		UnloadTexture(*texture);
+		UnloadTexture(*texture.get());
 	}
 
 	textures.clear();
 }
 
-void TextureManagerGL::UnloadTexture(Texture & texture)
+void TextureManagerGL::UnloadTexture(Texture& texture)
 {
 	GLCHECK(glDeleteTextures(1, &texture.textureId))
 	texture.textureId = 0;
@@ -72,13 +76,18 @@ unsigned int TextureManagerGL::UploadToGPU(const ImageData& imageData)
 	// Set texture options
 	GLCHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 	GLCHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-	GLCHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
-	GLCHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
-
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	GLCHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+	GLCHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 
 	return textureId;
+}
+
+std::shared_ptr<Texture> TextureManagerGL::FindExisting(const FilePath& relativePath)
+{
+	for(auto texture : textures) {
+		if(texture->file == relativePath.tostring() )
+			return texture;
+	}
+
+	return nullptr;
 }

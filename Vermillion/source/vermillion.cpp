@@ -37,6 +37,7 @@ void Vermillion::Run()
 
 	double lastFrameTime = 0.0;
 	bool quitProgram = false;
+	bool doSleep = true;
 
 	fpsTimer.Reset();
 	renderTimer.Reset();
@@ -75,15 +76,15 @@ void Vermillion::Run()
 
 			fpsCounter++;
 
-			if( fpsCounter % 5 == 0 )
-				lastFrameTime = renderTimer.TimeSinceTickAsMicroseconds();
+			lastFrameTime = renderTimer.TimeSinceTickAsMicroseconds();
 
 			if(runningActivity->Finished()) {
 				Log::Info("Run()", "Activity finished");
 				quitProgram = true;
 			}
 		}
-		else
+			
+		if( doSleep )
 			Sleep(0);
 	}
 }
@@ -109,15 +110,17 @@ void Vermillion::InitializeEngine()
 	textSdf.SetServiceId(0);
 	text.Init();
 	text.SetServiceId(1);
+	sounds.Init();
 
 	renderTimer.LimitByFPS(59);
 	fpsTimer.LimitByMilliseconds(1000);
 
 	ServiceAssigner serviceAssigner(serviceLocator);
 	serviceAssigner.SetTextService(textSdf);
-	serviceAssigner.SetTextService(text);
+	// serviceAssigner.SetTextService(text);
 	serviceAssigner.SetTextureService(textureManager);
 	serviceAssigner.SetInputService(inputManager);
+	serviceAssigner.SetSoundService(sounds);
 
 	Log::Info(LogTag, "Engine initialized");
 }
@@ -131,6 +134,7 @@ void Vermillion::DeinitializeEngine()
 	textSdf.Deinit();
 	text.Deinit();
 	textureManager.UnloadAll();
+	sounds.Deinit();
 
 	renderer.DestroyRenderContext();
 	window.Destroy();

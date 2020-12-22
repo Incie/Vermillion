@@ -6,6 +6,7 @@
 #include"input.h"
 #include"text.h"
 #include"textures.h"
+#include"sound_soloud.h"
 #include"timer.h"
 #include<functional>
 #include<memory>
@@ -53,7 +54,10 @@ private:
 	Text text;
 	TextSDF textSdf;
 	TextureManagerGL textureManager;
+	SoundSoLoud sounds;
+	
 	ServiceLocator serviceLocator;
+
 	Timer renderTimer;
 	Timer fpsTimer;
 

@@ -1,8 +1,9 @@
 #pragma once
 
 #include"servicelocator.h"
-#include"ui/uiview.h"
+#include"ui/basewindow.h"
 #include"windowstate.h"
+#include<memory>
 
 class ActivityInterface;
 
@@ -24,18 +25,29 @@ public:
 	bool Finished() const;
 protected:
 	void Finish();
-	void AddView(UIView* view, int id);
+
+	void AddView(BaseWindow* view, int id);
+
+	template<class T = BaseWindow> 
+	std::shared_ptr<BaseWindow> AddView(int id) {
+		auto view = std::make_shared<T>();
+		view->Id(id);
+		windows.push_back(std::dynamic_pointer_cast<BaseWindow>(view));
+		return view;
+	}
+
 	bool UpdateUI(float deltaTime);
 	void RenderUI();
 	void DeinitializeUI();
-	UIView* GetViewById(int id);
+	std::shared_ptr<BaseWindow> GetViewById(int id);
 
-	template<class T>  T* GetViewById(int id) {
-		for(auto view : layers) {
+	template<class T>  
+	std::shared_ptr<T> GetViewById(int id) {
+		for(auto view : windows) {
 			if(view->Id() == id) {
-				auto v = dynamic_cast<T*>(view);
+				auto v = std::dynamic_pointer_cast<T>(view);
 				
-				if(v != nullptr)
+				if(v)
 					return v;
 			}
 		}
@@ -47,7 +59,7 @@ protected:
 	void StartActivity(const std::string& activityId);
 
 private:
-	std::vector<UIView*> layers;
+	std::vector<std::shared_ptr<BaseWindow>> windows;
 	ServiceLocator* serviceLocator;
 	ActivityInterface* activityInterface;
 

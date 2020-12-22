@@ -6,6 +6,21 @@
 #include"opengl2_shader.h"
 #include"nlohmann/json.hpp"
 
+constexpr unsigned int maxBufferSize = 10000 * 3 * 2;
+
+TextSDF::TextSDF() : font_height(42.f)
+{
+	fontTexture = nullptr;
+	texcoordBuffer.resize(maxBufferSize);
+	vertexBuffer.resize(maxBufferSize);
+}
+
+TextSDF::~TextSDF()
+{
+	texcoordBuffer.clear();
+	vertexBuffer.clear();
+}
+
 void TextSDF::Init(TextureService& textureService)
 {
 	font_height = 42.0f;
@@ -78,18 +93,17 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 	GLCHECK(glEnableClientState(GL_VERTEX_ARRAY));
 	GLCHECK(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
 
-	glm::vec2 texCoords[6];
-	glm::vec2 glyph[6];
-
 	x = 0;
 	y = 0;
 
 	if(center) {
-		glTranslated(-CalculateWidth(text, fontHeight) * 0.5f, -static_cast<float>(fontHeight) * 0.5f, 0.0f);
+		glTranslatef(-CalculateWidth(text, fontHeight) * 0.5f, -static_cast<float>(fontHeight) * 0.5f, 0.0f);
 	}
 
 	GLCHECK(glEnable(GL_TEXTURE_2D));
-	GLCHECK(glBindTexture(GL_TEXTURE_2D, fontTexture.textureId));
+	GLCHECK(glBindTexture(GL_TEXTURE_2D, fontTexture->textureId));
+
+	int bufferPosition = 0;
 
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
@@ -101,29 +115,31 @@ float TextSDF::Print(double x, double y, const std::string& text, unsigned int f
 		float chw = ch.width * scale;
 		float chh = ch.height * scale;
 
-		glyph[0] = { chx      , chy };
-		glyph[1] = { chx + chw, chy };
-		glyph[2] = { chx + chw, chy + chh};
+		vertexBuffer[bufferPosition+0] = { chx      , chy };
+		vertexBuffer[bufferPosition+1] = { chx + chw, chy };
+		vertexBuffer[bufferPosition+2] = { chx + chw, chy + chh};
+					 
+		vertexBuffer[bufferPosition+3] = { chx      , chy };
+		vertexBuffer[bufferPosition+4] = { chx + chw, chy + chh };
+		vertexBuffer[bufferPosition+5] = { chx      , chy + chh };
 
-		glyph[3] = { chx      , chy };
-		glyph[4] = { chx + chw, chy + chh };
-		glyph[5] = { chx      , chy + chh };
-		
-		texCoords[0] = { static_cast<float>(ch.x) / 512.0f, static_cast<float>(ch.y) / 512.0f };
-		texCoords[1] = { static_cast<float>(ch.x + ch.width) / 512.0f, static_cast<float>(ch.y) / 512.0f };
-		texCoords[2] = { static_cast<float>(ch.x + ch.width) / 512.0f, static_cast<float>(ch.y + ch.height) / 512.0f };
+		texcoordBuffer[bufferPosition+0] = { static_cast<float>(ch.x) / 512.0f, static_cast<float>(ch.y) / 512.0f };
+		texcoordBuffer[bufferPosition+1] = { static_cast<float>(ch.x + ch.width) / 512.0f, static_cast<float>(ch.y) / 512.0f };
+		texcoordBuffer[bufferPosition+2] = { static_cast<float>(ch.x + ch.width) / 512.0f, static_cast<float>(ch.y + ch.height) / 512.0f };
 
-		texCoords[3] = { static_cast<float>(ch.x) / 512.0f, static_cast<float>(ch.y) / 512.0f };
-		texCoords[4] = { static_cast<float>(ch.x + ch.width) / 512.0f, static_cast<float>(ch.y + ch.height) / 512.0f };
-		texCoords[5] = { static_cast<float>(ch.x) / 512.0f, static_cast<float>(ch.y + ch.height) / 512.0f };
-
-		GLCHECK(glVertexPointer(2, GL_FLOAT, 0, &glyph[0].x));
-		GLCHECK(glTexCoordPointer(2, GL_FLOAT, 0, &texCoords[0].x));
-		GLCHECK(glDrawArrays(GL_TRIANGLES, 0, 6));
+		texcoordBuffer[bufferPosition+3] = { static_cast<float>(ch.x) / 512.0f, static_cast<float>(ch.y) / 512.0f };
+		texcoordBuffer[bufferPosition+4] = { static_cast<float>(ch.x + ch.width) / 512.0f, static_cast<float>(ch.y + ch.height) / 512.0f };
+		texcoordBuffer[bufferPosition+5] = { static_cast<float>(ch.x) / 512.0f, static_cast<float>(ch.y + ch.height) / 512.0f };
 
 		const float advance = static_cast<float>(ch.xadvance);
-		x += static_cast<double>(advance * scale);
+		x += static_cast<double>(advance) * static_cast<double>(scale);
+		bufferPosition += 6;
+		assert(bufferPosition < maxBufferSize);
 	}
+
+	GLCHECK(glVertexPointer(2, GL_FLOAT, 0, &vertexBuffer[0].x));
+	GLCHECK(glTexCoordPointer(2, GL_FLOAT, 0, &texcoordBuffer[0].x));
+	GLCHECK(glDrawArrays(GL_TRIANGLES, 0, bufferPosition));
 
 	GLCHECK(glPopMatrix());
 

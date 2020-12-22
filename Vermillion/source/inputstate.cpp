@@ -3,16 +3,24 @@
 #include"log.h"
 #include"inputstate.h"
 
-
+//InputStates
 unsigned char InputStates::keyboardStates[256];
 GamePadState InputStates::gamepadState;
 MouseState InputStates::mouseState;
+
+//InputState
+int InputState::mouseScrollState;
 
 
 void InputState::UpdateStates()
 {
 	UpdateMouseState();
 	UpdateGamepadState();
+}
+
+void InputState::SetMouseScrollState(int delta)
+{
+	mouseScrollState += delta;
 }
 
 void InputState::SetKeyDown(unsigned char keyCode)
@@ -33,7 +41,6 @@ void InputState::SetKeyUp(unsigned char keyCode)
 
 void InputState::Reset()
 {
-	Log::Info("InputState", "Reset");
 	memset(InputStates::keyboardStates, 0, 256);
 }
 
@@ -74,6 +81,8 @@ void InputState::UpdateMouseState()
 	
 	InputStates::keyboardStates[VK_LBUTTON] = GetAsyncKeyState(VK_LBUTTON) ? 1 : 0;
 	InputStates::keyboardStates[VK_RBUTTON] = GetAsyncKeyState(VK_RBUTTON) ? 1 : 0;
+	InputStates::mouseState.mouseScrollState = mouseScrollState;
+	mouseScrollState = 0;
 
 	InputStates::mouseState.mousePositionDelta.x = static_cast<float>(InputStates::mouseState.mousePositionCurrent.x) - InputStates::mouseState.mousePositionLast.x;
 	InputStates::mouseState.mousePositionDelta.y = static_cast<float>(InputStates::mouseState.mousePositionCurrent.y) - InputStates::mouseState.mousePositionLast.y;
@@ -104,13 +113,15 @@ void InputState::UpdateGamepadState()
 	gpState.pushButtons[GP_Start] = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_START) != 0);
 	gpState.pushButtons[GP_Select] = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_BACK) != 0);
 
-	gpState.stickRight.x = fmax(-1.0f, (float)state.Gamepad.sThumbRX / 32767.0f);
-	gpState.stickRight.y = -fmax(-1.0f, (float)state.Gamepad.sThumbRY / 32767.0f);
+	constexpr float maxThumbState = 32767.0f;
+	gpState.stickRight.x = fmax(-1.0f, (float)state.Gamepad.sThumbRX / maxThumbState);
+	gpState.stickRight.y = -fmax(-1.0f, (float)state.Gamepad.sThumbRY / maxThumbState);
 
-	gpState.stickLeft.x = fmax(-1.0f, (float)state.Gamepad.sThumbLX / 32767.0f);
-	gpState.stickLeft.y = -fmax(-1.0f, (float)state.Gamepad.sThumbLY / 32767.0f);
+	gpState.stickLeft.x = fmax(-1.0f, (float)state.Gamepad.sThumbLX / maxThumbState);
+	gpState.stickLeft.y = -fmax(-1.0f, (float)state.Gamepad.sThumbLY / maxThumbState);
 
-	gpState.triggerLeft = state.Gamepad.bLeftTrigger / 255.0f;
-	gpState.triggerRight = state.Gamepad.bRightTrigger / 255.0f;
+	constexpr float maxTriggerState = 255.0f;
+	gpState.triggerLeft = state.Gamepad.bLeftTrigger / maxTriggerState;
+	gpState.triggerRight = state.Gamepad.bRightTrigger / maxTriggerState;
 }
 

@@ -58,6 +58,7 @@ GLSLProgram::~GLSLProgram()
 
 bool GLSLProgram::LoadProgram(const std::string& shader)
 {
+	Log::Info("GLSLProgram", fmt::format("Loading shaderprogram {}", shader));
 	programId = glCreateProgram();
 
 	FilePath vertexPath = { Paths::Shaders, shader + ".vert" };

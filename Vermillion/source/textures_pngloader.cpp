@@ -5,8 +5,6 @@
 #include"pnglibconf.h"
 #include"log.h"
 
-//todo: logtag macro?
-//automaticly use logtag in a LOG macro?
 static const char* const LOGTAG = "PNGLoader";
 
 PNGLoader::PNGLoader()
@@ -15,6 +13,7 @@ PNGLoader::PNGLoader()
 
 PNGLoader::~PNGLoader()
 {
+	Free();
 }
 
 bool ReadPNGInfo(FILE* fp, png_structp& png_ptr, png_infop& info_ptr, ImageData& imageData) {
@@ -82,13 +81,13 @@ ImageLoaderStatus PNGLoader::Read(const std::string& filepath)
 	png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
 		Log::Error(LOGTAG, fmt::format("Failed during png_create_read_struct on file: {0}", filepath));
-		return ImageLoaderStatus::UNDEFINED;
+		return ImageLoaderStatus::UNDEFINED_ERROR;
 	}
 
 	png_infop info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
 		Log::Error(LOGTAG, fmt::format("Failed during png_create_info_struct on file: {0}", filepath));
-		return ImageLoaderStatus::UNDEFINED;
+		return ImageLoaderStatus::UNDEFINED_ERROR;
 	}
 
 	ReadPNGInfo(fp, png_ptr, info_ptr, imageData);

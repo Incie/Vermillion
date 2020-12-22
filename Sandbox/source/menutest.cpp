@@ -24,42 +24,42 @@ MenuTest::MenuTest()
 
 void MenuTest::Initialize()
 {
-	auto vw = vnew VerticalWindow([this](int id) {
-		if(id == 1)
-		{
-			StartActivity("ActivityChess");
-			return;
-		}
+	//auto vw = vnew VerticalWindow([this](int id) {
+	//	if(id == 1)
+	//	{
+	//		StartActivity("ActivityChess");
+	//		return;
+	//	}
 
-		if(id == 9) {
-			Finish();
-			return;
-		}
-	});
-	vw->BackgroundColor(UI::Dark);
-	vw->SetPosition(glm::vec2(50, 100));
+	//	if(id == 9) {
+	//		Finish();
+	//		return;
+	//	}
+	//});
+	//vw->BackgroundColor(UI::Dark);
+	//vw->SetPosition(glm::vec2(50, 100));
 
-	auto title = vnew UIText("Game Title Here");
-	title->Color(UI::Light);
-	title->FontHeight(46.0f);
-	title->SetSize(100, 26);
-	title->SetMargin(4.0f, 8.0f);
-	vw->AddChild(title);
+	//auto title = vnew UIText("Game Title Here");
+	//title->Color(UI::Light);
+	//title->FontHeight(46.0f);
+	//title->SetSize(100, 26);
+	//title->SetMargin(4.0f, 8.0f);
+	//vw->AddChild(title);
 
-	auto buttonStart = vnew UIButton("Start", 26, 1);
-	buttonStart->SetSize(100, 26);
-	buttonStart->SetColor(UI::Light);
-	buttonStart->SetTextColor(UI::Dark);
-	buttonStart->SetMargin(0, 2.0f);
-	vw->AddChild(buttonStart);
+	//auto buttonStart = vnew UIButton("Start", 26, 1);
+	//buttonStart->SetSize(100, 26);
+	//buttonStart->SetColor(UI::Light);
+	//buttonStart->SetTextColor(UI::Dark);
+	//buttonStart->SetMargin(0, 2.0f);
+	//vw->AddChild(buttonStart);
 
-	auto buttonExit = vnew UIButton("Exit", 26, 9);
-	buttonExit->SetSize(100, 26);
-	buttonExit->SetColor(UI::Negative);
-	buttonExit->SetTextColor(UI::Dark);
-	vw->AddChild(buttonExit);
+	//auto buttonExit = vnew UIButton("Exit", 26, 9);
+	//buttonExit->SetSize(100, 26);
+	//buttonExit->SetColor(UI::Negative);
+	//buttonExit->SetTextColor(UI::Dark);
+	//vw->AddChild(buttonExit);
 
-	AddView(vw, 1);
+	//AddView(vw, 1);
 }
 
 void MenuTest::Deinitialize()

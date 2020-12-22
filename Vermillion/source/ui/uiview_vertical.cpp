@@ -13,7 +13,12 @@ VerticalWindow::~VerticalWindow() {
 void VerticalWindow::Measure(const glm::vec2& windowSize, const TextService& text) {
 	glm::vec2 size(0, 0);
 	for(auto view : children) {
-		view->Measure(text);
+		if(view->HasChildren()) {
+			std::dynamic_pointer_cast<UIView>(view)->Measure(windowSize, text);
+		}
+		else {
+			view->Measure(text);
+		}
 		size.x = glm::max(view->Size().x + view->Margin().x * 2.0f, size.x);
 		size.y += view->Size().y + view->Margin().y * 2.0f;
 	}
@@ -24,10 +29,17 @@ void VerticalWindow::Measure(const glm::vec2& windowSize, const TextService& tex
 void VerticalWindow::Resize(const glm::vec2& windowSize, const TextService& text) {
 	UIView::Resize(windowSize, text);
 
-	size.x = children[0]->Size().x + children[0]->Margin().x * 2.0f;
-
 	glm::vec2 position(0, 0);
 	for(auto view : children) {
+		if(view->HasChildren()) {
+			auto uiview = std::dynamic_pointer_cast<UIView>(view);
+			if(uiview) {
+				uiview->Resize(size, text);
+			}
+		}
+
+		size.x = glm::max( size.x, view->Size().x + view->Margin().x * 2.0f );
+
 		position.x = view->Margin().x;
 		position.y += view->Margin().y;
 		view->SetPosition(position);

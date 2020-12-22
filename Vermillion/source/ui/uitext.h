@@ -6,6 +6,7 @@
 
 class UIText : public UIElement {
 public:
+	UIText() = default;
 	UIText(const std::string& text);
 	~UIText();
 

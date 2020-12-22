@@ -5,6 +5,8 @@
 #include"glm/vec4.hpp"
 #include"opengl2_shader.h"
 #include<map>
+#include<vector>
+#include<memory>
 
 class TextureService;
 
@@ -51,6 +53,9 @@ struct sdf_character {
 class TextSDF : public TextService
 {
 public:
+	TextSDF();
+	~TextSDF();
+
 	void Init(TextureService& textureService);
 	void Deinit();
 
@@ -63,7 +68,9 @@ private:
 	float font_height;
 
 	std::map<int, sdf_character> sdfMap;
-	Texture fontTexture;
+	std::shared_ptr<Texture> fontTexture;
 
 	GLSLProgram sdfProgram;
+	mutable std::vector<glm::vec2> vertexBuffer;
+	mutable std::vector<glm::vec2> texcoordBuffer;
 };

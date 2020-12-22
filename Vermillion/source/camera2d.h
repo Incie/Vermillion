@@ -24,6 +24,8 @@ public:
 	void Push();
 	void Pop();
 
+	glm::vec2 GetTopLeft() { return positionTopLeft; }
+	glm::vec2 GetBottomRight() { return positionBottomRight; }
 	float GetZoomValue() { return zoomValue; }
 
 private:

@@ -26,6 +26,7 @@ public:
 
 	virtual void Render(ServiceLocator& Services) = 0;
 
+	glm::vec2 Position() { return position; }
 	virtual void SetPosition(const glm::vec2& newPosition);
 	virtual void SetPosition(float x, float y);
 	virtual void SetSize(float width, float height);
@@ -40,6 +41,7 @@ public:
 	UIState State() { return state; }
 	virtual void SetState(UIState newState) { state = newState; }
 
+	virtual bool HasChildren() const { return false; }
 protected:
 	glm::vec2 Center() {
 		return glm::vec2(

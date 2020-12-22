@@ -17,7 +17,7 @@ enum class ImageLoaderStatus {
 	INVALID_IMAGE,
 	LOADER_SUCCESS,
 	LOADER_FAILED,
-	UNDEFINED
+	UNDEFINED_ERROR
 };
 
 

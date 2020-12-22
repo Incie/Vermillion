@@ -39,8 +39,8 @@ public:
 //SoundService
 class SoundService {
 public:
-	virtual void PlaySound(const FilePath& soundFile) = 0;
-	virtual void PlayMusic(const FilePath& musicFile) = 0;
+	virtual void Play(const FilePath& soundFile) = 0;
+	virtual void PlayStream(const FilePath& musicFile) = 0;
 	virtual void Volume(int volume) = 0;
 	virtual int Volume() = 0;
 };
@@ -53,11 +53,12 @@ public:
 	int width;
 	int height;
 	unsigned int channels;
+	std::string file;
 };
 
 class TextureService {
 public:
-	virtual Texture LoadTexture(const FilePath& relativePath) = 0;
+	virtual std::shared_ptr<Texture> LoadTexture(const FilePath& relativePath) = 0;
 	virtual void UnloadAll() = 0;
 };
 
@@ -89,6 +90,7 @@ public:
 	virtual bool KeyDown(char keyCode) const = 0;
 	virtual bool KeyOnce(char keyCode) const = 0;
 	virtual bool KeyUp(char keyCode) const = 0;
+	virtual int ScrollState() const = 0;
 
 	virtual glm::vec2 GetMousePosition() const = 0;
 	virtual glm::vec2 GetMousePositionNormalized() const = 0;
