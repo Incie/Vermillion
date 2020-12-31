@@ -20,16 +20,16 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrev, _In_ L
 		auto vermillion = Vermillion(hInstance);
 
 		vermillion.RegisterActivityFactory([](const std::string& activityId) -> std::unique_ptr<Activity> {
-			if(activityId == "MenuTest")
-				return std::make_unique<MenuTest>();
+				if(activityId == "MenuTest")
+					return std::make_unique<MenuTest>();
 
-			if (activityId == "Sandbox")
-				return std::make_unique<Sandbox>();
+				if (activityId == "Sandbox")
+					return std::make_unique<Sandbox>();
 
-			if(activityId == "ActivityChess")
-				return std::make_unique<ActivityChess>();
+				if(activityId == "ActivityChess")
+					return std::make_unique<ActivityChess>();
 
-			throw std::string(fmt::format("Could not find activity by id '{}'", activityId));
+				throw std::string(fmt::format("Could not find activity by id '{}'", activityId));
 			}
 		);
 

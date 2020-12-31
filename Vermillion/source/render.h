@@ -1,5 +1,3 @@
-export module render;
-
 #pragma once
 
 #include"glm/glm.hpp"

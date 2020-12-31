@@ -75,7 +75,7 @@ void BaseWindow::Render(const TextService& text)
 	Render::PushMatrix();
 		Render::Translate2D(properties.position + glm::vec2{properties.padding.x, properties.padding.y});
 		Render::Quad({0,0}, properties.size, properties.backgroundColor);
-		text.Print(properties.padding.x, properties.padding.y, properties.title, properties.titleHeight, properties.titleTextColor);
+		text.Print(properties.padding.x, properties.padding.y, properties.title, static_cast<uint32_t>(properties.titleHeight), properties.titleTextColor);
 
 		for(auto& view : views) {
 			view->Render(text);

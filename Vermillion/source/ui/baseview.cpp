@@ -2,7 +2,7 @@
 #include"baseview.h"
 #include"../services.h"
 
-import render;
+#include"../render.h"
 
 void LayoutVertical::Resize(const glm::vec2& windowSize)
 {

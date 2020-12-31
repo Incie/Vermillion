@@ -1,7 +1,5 @@
 #include"pch.h"
 
-module render;
-
 #include"render.h"
 
 #include"textures.h"
