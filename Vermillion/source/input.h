@@ -13,7 +13,9 @@ public:
 
 	bool KeyDown(char keyCode) const;
 	bool KeyOnce(char keyCode) const;
+	bool KeyOnceUp(char keyCode) const;
 	bool KeyUp(char keyCode) const;
+	int KeyState(char keyCode) const;
 	int ScrollState() const;
 
 	glm::vec2 GetMousePosition() const;
@@ -30,5 +32,5 @@ public:
 private:
 	void UpdateKeyboard();
 
-	unsigned char keyStates[256];
+	char keyStates[256];
 };

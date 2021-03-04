@@ -89,7 +89,9 @@ public:
 
 	virtual bool KeyDown(char keyCode) const = 0;
 	virtual bool KeyOnce(char keyCode) const = 0;
+	virtual bool KeyOnceUp(char keyCode) const = 0;
 	virtual bool KeyUp(char keyCode) const = 0;
+	virtual int KeyState(char keyCode) const = 0;
 	virtual int ScrollState() const = 0;
 
 	virtual glm::vec2 GetMousePosition() const = 0;

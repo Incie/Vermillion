@@ -61,7 +61,21 @@ void Activity::AddView(BaseWindow* view, int id) {
 
 bool Activity::UpdateUI(float deltaTime) {
 	bool inputHandled = false;
-	for (auto layer : windows) {
+	auto& input = Services().Input();
+
+
+	//if mouseclick
+	// check if click hits window, and return inputHandled = true
+
+	//click and drag, how to get mousedeltas to the component?
+	//keyboard, gamepad input, how?
+	//have a window focusable/focused flag?
+
+
+	for (auto &window : windows) {
+
+		window->Update(input);
+
 		//layer->Update(deltaTime, Services());
 
 		//if (layer->Active() == false)
@@ -82,7 +96,7 @@ bool Activity::UpdateUI(float deltaTime) {
 void Activity::RenderUI() {
 	auto& services = Services();
 
-	for (auto view : windows) {
+	for (auto& view : windows) {
 		//if (view->Active() == false)
 		//	continue;
 		view->Render(services.Text());

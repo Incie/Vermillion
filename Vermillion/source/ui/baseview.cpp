@@ -64,7 +64,78 @@ void ViewGroup::Render(const TextService& text)
 void Button::Render(const TextService& text)
 {
 	Render::Quad(position, size, Color());
+
 	float x = position.x + padding.x;
 	float y = position.y + padding.y;
-	text.Print(x, y, this->text, 14, Colors::White);
+	text.Print(x, y, this->text, 14, Foreground());
+}
+
+View::View()
+	: padding({4,4,4,4}), margin({2,2,2,2}), color({0.1f, 0.2f, 0.3f, 1.0f}), theme(UITheme::Default())
+{
+	Log::Debug("View", "View");
+}
+
+glm::vec4 View::Color() const
+{
+	if(viewStates.disabled)
+		return theme.bg_disabled;
+	if(viewStates.activated)
+		return theme.bg_activated;
+	if(viewStates.mouseInside)
+		return theme.bg_hover;
+
+	return theme.bg;
+}
+
+glm::vec4 View::Foreground() const
+{
+	if(viewStates.disabled)
+		return theme.fg_disabled;
+	if(viewStates.activated)
+		return theme.fg_activated;
+	if(viewStates.mouseInside)
+		return theme.fg_hover;
+	return theme.fg;
+}
+
+Slider::Slider()
+{
+	theme = UITheme::Button();
+	value = .25;
+}
+
+void Slider::Update(const glm::vec2& mousepos)
+{
+	if (this->viewStates.activated) {
+		if (mousepos.x < 0.0f)
+			value = 0.0;
+		else if (mousepos.x > size.x)
+			value = 1.0;
+		else {
+			value = mousepos.x / size.x;
+		}
+	}
+}
+
+void Slider::Render(const TextService& text)
+{
+	auto sizeLeft = glm::vec2{ size.x * (float)value, size.y };
+	auto sizeRight = glm::vec2{ size.x * (float)(1.0 - value), size.y };
+
+	Render::Quad(position, sizeLeft, Color());
+	Render::Quad(position + glm::vec2{ sizeLeft.x, 0.0f }, sizeRight, Colors::Red);
+
+	auto center = position + size * 0.5f;
+	text.Print(center.x, center.y, fmt::format("{}", static_cast<int>(value*100.0)), static_cast<uint32_t>(size.y * 0.5f), Colors::White, true);
+}
+
+double Slider::Value()
+{
+	return value;
+}
+
+void Slider::Value(double val)
+{
+	value = val;
 }

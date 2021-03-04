@@ -45,6 +45,7 @@
     <ClInclude Include="source\ui\uigrid.h" />
     <ClInclude Include="source\ui\uiimage.h" />
     <ClInclude Include="source\ui\uitext.h" />
+    <ClInclude Include="source\ui\uitheme.h" />
     <ClInclude Include="source\ui\uiview.h" />
     <ClInclude Include="source\ui\uiview_horizontal.h" />
     <ClInclude Include="source\ui\uiview_vertical.h" />
@@ -83,6 +84,7 @@
     <ClCompile Include="source\ui\uigrid.cpp" />
     <ClCompile Include="source\ui\uiimage.cpp" />
     <ClCompile Include="source\ui\uitext.cpp" />
+    <ClCompile Include="source\ui\uitheme.cpp" />
     <ClCompile Include="source\ui\uiview.cpp" />
     <ClCompile Include="source\ui\uiview_horizontal.cpp" />
     <ClCompile Include="source\ui\uiview_vertical.cpp" />
@@ -158,6 +160,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgTriplet>x64-windows-static</VcpkgTriplet>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -167,7 +172,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>source/pch/;$(VCPKG_64_STATIC)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>source/pch/</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <EnableModules>true</EnableModules>
@@ -177,7 +182,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(VCPKG_64_STATIC)\debug\lib; $(SolutionDir)vendor\soloud20200207\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\soloud20200207\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>

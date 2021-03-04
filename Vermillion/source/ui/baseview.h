@@ -5,34 +5,50 @@
 #include"glm/glm.hpp"
 #include"../log.h"
 #include"../constants.h"
+#include"uitheme.h"
 
 class TextService;
 class InputService;
 
+struct ViewState {
+	ViewState() : activated(false), mouseInside(false), invalidated(true), disabled(false), visible(true) {}
+
+	bool activated;
+	bool mouseInside;
+	bool invalidated;
+	bool disabled;
+	bool visible;
+};
+
+
 class View {
 public:
-	View() : padding({4,4,4,4}), margin({2,2,2,2}), color({0.1f, 0.2f, 0.3f, 1.0f}) { Log::Debug("View", "View"); }
+	View();
 	virtual ~View() {}
 
+	virtual void Update(const glm::vec2& mousepos) {}
 	virtual void Render(const TextService& text) = 0;
 	virtual bool HasChildren() { return false; }
-
 
 	//Properties
 	int Id() { return id; }
 	void Id(int newId) { id = newId; }
 
-	glm::vec4 Color() { return color; }
-	glm::vec4 Padding() { return padding; }
-	glm::vec4 Margin() { return margin; }
-	glm::vec2 Position() { return position; }
-	glm::vec2 Size() { return size; }
+	glm::vec4 Color() const;
+	glm::vec4 Foreground() const;
+
+	glm::vec4 Padding() const { return padding; }
+	glm::vec4 Margin() const { return margin; }
+	glm::vec2 Position() const { return position; }
+	glm::vec2 Size() const { return size; }
 
 	void Color(const glm::vec4& newColor) { color = newColor; }
 	void Padding(const glm::vec4& newPadding) { padding = newPadding; }
 	void Margin(const glm::vec4& newMargin) { margin = newMargin; }
 	void Position(const glm::vec2& newPosition) { position = newPosition; }
 	void Size(const glm::vec2& newSize) { size = newSize; }
+
+	ViewState& ViewStates() { return viewStates; }
 protected:
 	int id;
 
@@ -41,11 +57,14 @@ protected:
 	glm::vec4 padding;
 	glm::vec4 margin;
 	glm::vec4 color;
+
+	Theme theme;
+	ViewState viewStates;
 };
 
 class Button : public View {
 public:
-	Button() { Log::Debug("View", "Button"); color = Colors::ColorFromRGB(40); }
+	Button() { Log::Debug("View", "Button"); theme = UITheme::Button(); }
 	virtual ~Button() {}
 
 	virtual void Render(const TextService& text) override;
@@ -55,6 +74,20 @@ public:
 
 private:
 	std::string text;
+};
+
+class Slider : public View {
+public:
+	Slider();
+
+	virtual void Update(const glm::vec2& mousepos) override;
+	virtual void Render(const TextService& text) override;
+
+	double Value();
+	void Value(double val);
+
+private:
+	double value;
 };
 
 

@@ -13,6 +13,14 @@ Sandbox::~Sandbox()
 
 void Sandbox::NewWindow(BaseWindow::WindowAnchor anchor, glm::vec2 size, glm::vec2 position)
 {
+    auto view = AddView<TestWindow>(0);
+    view->Anchor(anchor);
+    view->Size(size);
+    view->Position(position);
+    view->Title(fmt::format("window {}", 0));
+    view->TitleFontHeight(14.0f);
+    view->TitleColor({1,1,1,1});
+    view->Resize(Services().Text());
 }
 
 void Sandbox::ResetValues()
@@ -29,23 +37,9 @@ void Sandbox::Initialize()
     TRACE("Sandbox");
     ResetValues();
 
-    auto view = AddView<TestWindow>(0);
-    view->Anchor(BaseWindow::WindowAnchor::CenterRight);
-    view->Size({250, 0});
-    view->Position({0,0});
-    view->Title(fmt::format("window {}", 0));
-    view->TitleFontHeight(14.0f);
-    view->TitleColor({1,1,1,1});
-    view->Resize(Services().Text());
-
-    view = AddView<TestWindow>(1);
-    view->Anchor(BaseWindow::WindowAnchor::CenterLeft);
-    view->Size({250, 0});
-    view->Position({0,0});
-    view->Title(fmt::format("window {}", 0));
-    view->TitleFontHeight(14.0f);
-    view->TitleColor({1,1,1,1});
-    view->Resize(Services().Text());
+    NewWindow(BaseWindow::WindowAnchor::CenterRight, {350,0}, {0,0});
+    NewWindow(BaseWindow::WindowAnchor::CenterLeft, {350,0}, {0,0});
+    NewWindow(BaseWindow::WindowAnchor::CenterBottom, { 0,350 }, { 0,0 });
 }
 
 void Sandbox::Deinitialize()
@@ -55,6 +49,8 @@ void Sandbox::Deinitialize()
 
 void Sandbox::Update(float delta)
 {
+
+    UpdateUI(delta);
 /*
   if(!initGLEW(hInstance))return false;
 
@@ -148,6 +144,8 @@ void Sandbox::Render()
 	const int textHeight = 26;
 
     RenderUI();
+
+    auto& input = Services().Input();
 }
 
 

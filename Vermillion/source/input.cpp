@@ -30,7 +30,13 @@ void InputManager::UpdateKeyboard()
 	for (int key = 0; key < 256; ++key) 
 	{
 		if (InputStates::keyboardStates[key] == 0) {
-			keyStates[key] = 0;
+			if(keyStates[key] > 0) {
+				keyStates[key] = -1;
+			}
+			else {
+				keyStates[key] = 0;
+			}
+
 			continue;
 		}
 		

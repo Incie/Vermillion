@@ -11,9 +11,19 @@ bool InputManager::KeyOnce(char keyCode) const
 	return keyStates[keyCode] == 1;
 }
 
+bool InputManager::KeyOnceUp(char keyCode) const
+{
+	return keyStates[keyCode] == -1;
+}
+
 bool InputManager::KeyUp(char keyCode) const
 {
 	return keyStates[keyCode] <= 0;
+}
+
+int InputManager::KeyState(char keyCode) const
+{
+	return keyStates[keyCode];
 }
 
 int InputManager::ScrollState() const

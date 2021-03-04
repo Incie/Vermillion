@@ -14,18 +14,17 @@ spdlog:x64-windows-static                          1.7.0            Very fast, h
 zlib:x64-windows-static                            1.2.11#9         A compression library
 
 
-vcpkg install bzip2:x64-windows-static
-vcpkg install fmt:x64-windows-static
-vcpkg install freetype:x64-windows-static
-vcpkg install glew:x64-windows-static
-vcpkg install glm:x64-windows-static
-vcpkg install libpng:x64-windows-static
-vcpkg install spdlog:x64-windows-static
-vcpkg install zlib:x64-windows-static
-vcpkg install enet:x64-windows-static
-vcpkg install spdlog:x64-windows-static
-vcpkg install nlohmann-json:x64-windows-static
-vcpkg install catch2:x64-windows-static
+vcpkg.exe install bzip2:x64-windows-static
+vcpkg.exe install fmt:x64-windows-static
+vcpkg.exe install freetype:x64-windows-static
+vcpkg.exe install glew:x64-windows-static
+vcpkg.exe install glm:x64-windows-static
+vcpkg.exe install libpng:x64-windows-static
+vcpkg.exe install spdlog:x64-windows-static
+vcpkg.exe install zlib:x64-windows-static
+vcpkg.exe install enet:x64-windows-static
+vcpkg.exe install nlohmann-json:x64-windows-static
+vcpkg.exe install catch2:x64-windows-static
 
 $(VCPKG_64_STATIC) = vcpkg\installed\x64-windows-static
 

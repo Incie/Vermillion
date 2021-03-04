@@ -78,8 +78,19 @@ protected:
 
 	int id;
 	bool invalidated;
+	bool mouseInside;
 	WindowProperties properties;
+	Theme theme;
 
+
+	bool Update(ViewGroup& viewGroup, const glm::vec2& mouseLocal, const InputService& input);
+	bool PointInside(const glm::vec2& point);
+
+	void HandleView(View* view, const glm::vec2& point, bool mouseInside);
+	bool PointInside(const View* view, const glm::vec2& point);
+
+	bool HandleClick(View* view, const glm::vec2& point);
+	bool HandleClickUp(View* view);
 
 	template<class T>
 	T* AddView() {
