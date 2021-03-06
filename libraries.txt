@@ -36,5 +36,6 @@ miniaudio
 https://github.com/dr-soft/miniaudio
 
 soloud
-
+https://sol.gfxile.net/soloud/index.html
+.\genie.exe --with-nosound --with-miniaudio --with-tools --platform=x64 vs2019
 
